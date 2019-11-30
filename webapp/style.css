@@ -1,3 +1,23 @@
+/*
+BLACK = 0x000000;
+WHITE = 0xFFFFFF;
+GREEN = 0x00FF00;
+RED = 0xFF0000;
+MAROON = 0x880000;
+FOREST = 0x008800;
+SALMON = 0xFF8888;
+YELLOW = 0xFFFF00;
+LIME = 0x88FF88;
+CYAN = 0x00AAFF;
+BLUE = 0x000088;
+GR86 = 0xDDDDDD;
+GR80 = 0xCCCCCC;
+GR40 = 0x666666;
+GR26 = 0x444444;
+GR20 = 0x333333;
+DKBL = 0x000055;
+*/
+
 body {    
   display: flex;
   justify-content: center;
@@ -6,7 +26,7 @@ body {
   margin: 0px;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
-  font-size: 16pt;
+  font-size: 14pt;
   cursor: none;
 }
 
@@ -19,11 +39,6 @@ body {
   max-height: 320px;
 }
 
-#titlebar {
-  justify-content: space-between;
-  font-size: 12pt;
-}
-
 #contents {
   display: flex;
   flex-direction: column;
@@ -34,6 +49,11 @@ body {
   max-height: 320px;
 }
 
+#titlebar {
+  justify-content: space-between;
+  font-size: 12pt;
+}
+
 #stations {
 }
 
@@ -42,16 +62,19 @@ body {
 }
 
 #message {
-  color: green;
+  color: #0F0; /* green; */
+  margin-bottom: 2px;
 }
 
 .selection {
-  border: thin solid green;
+  border: thin solid #0F0;
 } 
 
 .trip-card {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
+  margin-top: -4px;
 }
 
 .train-number {
