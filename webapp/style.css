@@ -6,7 +6,7 @@ body {
   margin: 0px;
   padding: 0px;
   text-align: center;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 19pt;
   cursor: none;
 }
@@ -33,12 +33,10 @@ body {
   margin: auto 0;
   width: 240px;
   max-height: 320px;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100); */
 }
 
 #stations {
-  font-size: 17pt;
+  font-size: 16pt;
 }
 
 #schedule {
@@ -46,7 +44,7 @@ body {
 }
 
 #message {
-  font-size: 17pt;
+  font-size: 16pt;
   color: green;
 }
 
