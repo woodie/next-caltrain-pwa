@@ -20,9 +20,9 @@
     </div>
     <div id="titlebar" style="display: none;">
       <div id="appName">Next Caltrain</div>
-      <div id="timeNow">10:10pm</div>
+      <div id="timeNow">- - -</div>
     </div>
-    <div id="stations">Palo Alto to<br>So San Francisco</div>
+    <div id="stations">Palo Alto to<br>San Francisco</div>
     <div id="schedule">
       <div id="message"># # #</div>
       <div class="trip-card" nowrap>
@@ -37,6 +37,7 @@
   (function() {
     attach_listeners();
     load_schedule();
+    updateTime();
   })();
   </script>
   </body>

@@ -21,23 +21,22 @@ DKBL = 0x000055;
 body {    
   display: flex;
   justify-content: center;
-  background-color: gray;
+  background-color: black;
   color: white;
   margin: 0px;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-size: 14pt;
-  cursor: none;
 }
 
 #contents {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: black;
   margin: auto 0;
   width: 240px;
   max-height: 295px;
+  cursor: none;
 }
 
 .btn {
@@ -83,6 +82,7 @@ body {
 .train-number {
   font-size: 12pt;
   padding-left: 3px;
+  padding-right: 3px;
 }
 
 .train-time {

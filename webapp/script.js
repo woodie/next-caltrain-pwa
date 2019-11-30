@@ -12,6 +12,16 @@ var fullScreenView = function () {
   document.getElementById('hints').style['display'] = full ? 'none' : 'flex';
 };
 
+var updateTime = function () {
+  var d = new Date();
+  var hr = d.getHours();
+  var min = d.getMinutes();
+  if (min < 10) { min = "0" + min; }
+  var ampm = "am";
+  if( hr > 12 ) { hr -= 12; ampm = "pm"; } // hr + ":" + min + ampm ;
+  document.getElementById('timeNow').innerHTML = `${hr}:${min}${ampm}`;
+};
+
 var load_schedule = function () {
   var schedule = document.getElementById('schedule');
   var tripCard = document.getElementsByClassName('trip-card')[0];
