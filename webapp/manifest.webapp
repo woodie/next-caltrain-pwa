@@ -1,0 +1,14 @@
+{
+  "name": "Next Caltrain",
+  "description": "Caltrain Schedule for KaiOS phones.",
+  "launch_path": "/index.html",
+  "icons": {
+    "16": "/favicon-16x16.png",
+    "128": "/favicon-128x128.png"
+  },
+  "developer": {
+    "name": "John Woodell",
+    "url": "http://netpress.com",
+    "display": "fullscreen"
+  }
+}

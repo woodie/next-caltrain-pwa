@@ -1,0 +1,72 @@
+body {    
+  display: flex;
+  justify-content: center;
+  background-color: gray;
+  color: white;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 19pt;
+  cursor: none;
+}
+
+#contents {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  margin: auto 0;
+  width: 240px;
+  max-height: 320px;
+}
+
+#titlebar {
+  justify-content: space-between;
+  font-size: 12pt;
+}
+
+#contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: black;
+  margin: auto 0;
+  width: 240px;
+  max-height: 320px;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100); */
+}
+
+#stations {
+  font-size: 17pt;
+}
+
+#schedule {
+  width: 100%;
+}
+
+#message {
+  font-size: 17pt;
+  color: green;
+}
+
+.selection {
+  border: thin solid green;
+} 
+
+.trip-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.train-number {
+  font-size: 12pt;
+}
+
+.train-time {
+} 
+
+.meridiem {
+  font-size: 12pt;
+  padding-left: 2px;
+}

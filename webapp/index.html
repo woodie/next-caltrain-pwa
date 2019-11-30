@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Next Caltrain</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+  </head>
+  <body>
+
+  <div id="contents">
+    <div id="titlebar" style="display: none;">
+      <div id="appName">Next Caltrain</div>
+      <div id="timeNow">10:12pm</div>
+    </div>
+    <div id="stations">Palo Alto to<br>So San Francisco</div>
+    <div id="schedule">
+      <div id="message">- - -</div>
+      <div class="trip-card" nowrap>
+        <div class="train-number">#123</div>
+        <div class="train-time">10:22<span class="meridiem">pm</span></div>
+        <div class="train-time">11:04<span class="meridiem">pm</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    attach_listeners();
+    load_schedule();
+  })();
+  </script>
+  </body>
+</html>
+
