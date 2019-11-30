@@ -4,10 +4,9 @@ body {
   background-color: gray;
   color: white;
   margin: 0px;
-  padding: 0px;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
-  font-size: 19pt;
+  font-size: 16pt;
   cursor: none;
 }
 
@@ -36,7 +35,6 @@ body {
 }
 
 #stations {
-  font-size: 16pt;
 }
 
 #schedule {
@@ -44,7 +42,6 @@ body {
 }
 
 #message {
-  font-size: 16pt;
   color: green;
 }
 
@@ -62,9 +59,10 @@ body {
 }
 
 .train-time {
+  font-size: 18pt;
 } 
 
 .meridiem {
   font-size: 12pt;
-  padding-left: 2px;
+  padding-left: 1px;
 }
