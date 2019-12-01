@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcloud app deploy app.yaml
+gcloud app deploy app.yaml --project=next-caltrain-pwa

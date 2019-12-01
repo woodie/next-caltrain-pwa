@@ -3,92 +3,94 @@ var appState = {
 };
 
 var fullScreenView = function () {
-  full = appState.fullScreen
-  var elements = document.getElementsByClassName('full-screen-only');
-  for(var i=0; i < elements.length; i++){
-    elements[i].style['display'] = full ? 'flex' : 'none';
-  }
-  document.getElementById('titlebar').style['display'] = full ? 'flex' : 'none';
-  document.getElementById('hints').style['display'] = full ? 'none' : 'flex';
+  fs = appState.fullScreen
+  document.getElementById('trip4').style['display'] = fs ? 'flex' : 'none';
+  document.getElementById('trip5').style['display'] = fs ? 'flex' : 'none';
+  document.getElementById('title').style['display'] = fs ? 'flex' : 'none';
+  document.getElementById('hints').style['display'] = fs ? 'none' : 'flex';
+  document.getElementById('contents').style['height'] = fs ? 290 : 228;
 };
 
-var updateTime = function () {
+var loadSchedule = function () {
+  // Set the time
   var d = new Date();
   var hr = d.getHours();
   var min = d.getMinutes();
   if (min < 10) { min = "0" + min; }
   var ampm = "am";
   if( hr > 12 ) { hr -= 12; ampm = "pm"; } // hr + ":" + min + ampm ;
-  document.getElementById('timeNow').innerHTML = `${hr}:${min}${ampm}`;
-};
-
-var load_schedule = function () {
-  var schedule = document.getElementById('schedule');
-  var tripCard = document.getElementsByClassName('trip-card')[0];
-  for (var i=0; i < 5; i++) {
-    var clone = tripCard.cloneNode(true);
-    if (i > 2) {
-      clone.classList.add('full-screen-only');
-      clone.style.display = 'none';
-    } else {
-    }
-    schedule.appendChild(clone);
+  //document.getElementById('timeNow').innerHTML = `${hr}:${min}${ampm}`;
+  document.getElementById('timeNow').innerHTML = '7:58am'; // fake
+  // Load the schdule
+  document.getElementById('stations').innerHTML = `San Jose Diridon<br>to San Francisco`;
+  document.getElementById('message').innerHTML = `in 6 min 22 sec`;
+  var filler = [[329, '8:04', 'am', '9:13', 'am'],
+                [231, '8:23', 'am', '9:52', 'am'],
+                [233, '8:39', 'am','10:09', 'am'],
+                [135, '9:13', 'am','10:52', 'am'],
+                [237, '9:50', 'am','11:19', 'am'],
+                [139,'10:13', 'am','11:48', 'am']];
+  for (var i=0; i < 6; i++) {
+    var data = filler[i]
+    var card = `<div class="train-number">#${data[0]}</div>
+        <div class="train-time">${data[1]}<span class="meridiem">${data[2]}</span></div>
+        <div class="train-time">${data[3]}<span class="meridiem">${data[4]}</span></div>`;
+    document.getElementById(`trip${i}`).innerHTML = card;
   }
-  tripCard.classList.add('selection')
 };
 
-var display_message = function (message) {
+var displayMessage = function (message) {
   document.getElementById('message').innerHTML = message;
 };
 
-var attach_listeners = function () {
+var attachListeners = function () {
   document.onfullscreenchange = function (event) {
     appState.fullScreen = appState.fullScreen ? false : true;
     fullScreenView();
   };
   document.body.addEventListener("mousemove", function (e) {
     if (e.movementY > 0) {
-      display_message("down");
+      displayMessage("down");
     } else if (e.movementY < 0) {
-      display_message("up");
+      displayMessage("up");
     } else if (e.movementX > 0) {
-      display_message("right");
+      displayMessage("right");
     } else if (e.movementX < 0) {
-      display_message("left");
+      displayMessage("left");
     }
   });
   document.addEventListener('keydown', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code == 0 || code == 13) {
-      display_message('select');
+      displayMessage('select');
     } else if (code == 8) { // hangup
-      display_message('hangup');    // hangup
+      displayMessage('hangup');    // hangup
     } else if (code == 163) { // #
-      display_message('hash');      // hash
+      displayMessage('hash');      // hash
     } else if (code == 170) { // *
-      display_message('splat');     // splat
+      displayMessage('splat');     // splat
     } else if (code == 49) { // 1
-      display_message('zoom out');  // zoom out
+      displayMessage('zoom out');  // zoom out
     } else if (code == 50) { // 2
       openFullScreen();             // cursor
     } else if (code == 51) { // 3
-      display_message('zoom in');   // zoom in
+      displayMessage('zoom in');   // zoom in
     } else if (code == 53) { // 5
-      display_message('page up');   // page up
+      displayMessage('page up');   // page up
     } else if (code == 56) { // 8
-      display_message('page down'); // page down
+      displayMessage('page down'); // page down
     } else if (code >= 48 && code <= 57) {
-      display_message('#' + (code - 48));
+      displayMessage('#' + (code - 48));
     } else if (code == 37) {
-      display_message("left");
+      displayMessage("left");
     } else if (code == 38) {
-      display_message("up");
+      displayMessage("up");
     } else if (code == 39) {
-      display_message("right");
+      displayMessage("right");
     } else if (code == 40) {
-      display_message("down");
+      displayMessage("down");
     } else {
-      display_message(code);
+      displayMessage(code);
     }
   });
 };

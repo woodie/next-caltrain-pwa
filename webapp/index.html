@@ -18,26 +18,26 @@
       <span><span class="btn">＊</span>Options &nbsp;
       <span class="btn">2</span>Full-sreen</span>
     </div>
-    <div id="titlebar" style="display: none;">
+    <div id="title" style="display: none;">
       <div id="appName">Next Caltrain</div>
       <div id="timeNow">- - -</div>
     </div>
-    <div id="stations">Palo Alto to<br>San Francisco</div>
+    <div id="stations">Origin to<br>Destination</div>
     <div id="schedule">
-      <div id="message"># # #</div>
-      <div class="trip-card" nowrap>
-        <div class="train-number">#123</div>
-        <div class="train-time">10:22<span class="meridiem">pm</span></div>
-        <div class="train-time">11:04<span class="meridiem">pm</span></div>
-      </div>
+      <div id="message"></div>
+      <div id="trip0" class="trip-card selection"></div>
+      <div id="trip1" class="trip-card"></div>
+      <div id="trip2" class="trip-card"></div>
+      <div id="trip3" class="trip-card"></div>
+      <div id="trip4" class="trip-card" style="display: none;"></div>
+      <div id="trip5" class="trip-card" style="display: none;"></div>
     </div>
   </div>
 
   <script>
   (function() {
-    attach_listeners();
-    load_schedule();
-    updateTime();
+    attachListeners();
+    loadSchedule();
   })();
   </script>
   </body>

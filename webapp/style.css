@@ -18,10 +18,10 @@ GR20 = 0x333333;
 DKBL = 0x000055;
 */
 
-body {    
+body {
   display: flex;
   justify-content: center;
-  background-color: black;
+  background-color: gray;
   color: white;
   margin: 0px;
   text-align: center;
@@ -32,11 +32,11 @@ body {
 #contents {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: black;
   margin: auto 0;
   width: 240px;
-  max-height: 295px;
-  cursor: none;
+  height: 228; /* 290 */
 }
 
 .btn {
@@ -53,9 +53,10 @@ body {
   padding: 1px;
 }
 
-#titlebar {
+#title {
   justify-content: space-between;
   font-size: 12pt;
+  padding: 0 3px;
 }
 
 #schedule {
@@ -70,7 +71,7 @@ body {
 .selection {
   border-radius: 5px;
   border: thin solid #0F0;
-} 
+}
 
 .trip-card {
   display: flex;
@@ -88,7 +89,7 @@ body {
 .train-time {
   font-size: 18pt;
   padding-right: 3px;
-} 
+}
 
 .meridiem {
   font-size: 12pt;
