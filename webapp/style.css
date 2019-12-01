@@ -81,12 +81,16 @@ body {
 }
 
 .train-number {
+  flex: 1;
+  text-align: left;
   font-size: 12pt;
   padding-left: 3px;
   padding-right: 3px;
 }
 
 .train-time {
+  flex: 3;
+  text-align: right;
   font-size: 18pt;
   padding-right: 3px;
 }
