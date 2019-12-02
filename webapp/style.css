@@ -1,4 +1,4 @@
-/*
+/*z
 BLACK = 0x000000;
 WHITE = 0xFFFFFF;
 GREEN = 0x00FF00;
@@ -69,9 +69,49 @@ body {
   margin-bottom: 2px;
 }
 
+/*
+     if (swapped) {
+        g.setColor(CYAN);
+        boolean weekday = (CaltrainService.schedule(dotw, true) == CaltrainService.WEEKDAY);
+        blurb = (weekday) ? "Weekday Schedule" : "Weekend Schedule";
+      } else if (data.length < 1) {
+        g.setColor(CYAN);
+        blurb = (toggle) ? "NO TRAINS" : "";
+      } else if (betweenMinutes < 0) {
+        g.setColor(GR40);
+        blurb = "";
+      } else if (betweenMinutes < 1) {
+        g.setColor(YELLOW);
+        blurb = (toggle) ? "DEPARTING" : "";
+      } else {
+        g.setColor(GREEN);
+        blurb = GoodTimes.countdown(betweenMinutes, second);
+      }
+*/
+
+.train-departed {
+  color: #0AF;
+}
+
+.selection-swapped {
+  border: 2px solid #0Af;
+}
+
+.selection-departing {
+  border: 2px solid #FF0;
+}
+
+.selection-departed {
+  border: 2px solid #666;
+}
+
+.selection-arriving {
+  border: 2px solid #0F0;
+}
+
 .selection {
   border-radius: 5px;
-  border: thin solid #0F0;
+  border-width: 1px;
 }
 
 .trip-card {
@@ -92,6 +132,7 @@ body {
 .train-time {
   flex: 3;
   text-align: right;
+  cursor: crosshair;
   font-size: 18pt;
   padding-right: 3px;
 }

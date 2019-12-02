@@ -1,6 +1,6 @@
 var appState = {
   fullScreen: false,
-  offset: 3,
+  offset: 8,
 };
 
 var fullScreenView = function () {
@@ -21,11 +21,16 @@ var loadSchedule = function () {
   var ampm = "am";
   if( hr > 12 ) { hr -= 12; ampm = "pm"; } // hr + ":" + min + ampm ;
   //document.getElementById('timeNow').innerHTML = `${hr}:${min}${ampm}`;
-  document.getElementById('timeNow').innerHTML = '7:58am'; // fake
+  fakeTime = '7:58am';
+  document.getElementById('timeNow').innerHTML = fakeTime;
   // Load the schdule
   document.getElementById('stations').innerHTML = `San Jose Diridon<br>to San Francisco`;
-  document.getElementById('message').innerHTML = `in 6 min 22 sec`;
   var filler = [
+      [309, '6:04', 'am', '7:09', 'am'],
+      [211, '6:23', 'am', '7:57', 'am'],
+      [217, '6:59', 'am', '8:24', 'am'],
+      [313, '6:49', 'am', '7:52', 'am'],
+      [215, '6:54', 'am', '8:08', 'am'],
       [319, '7:04', 'am', '8:13', 'am'],
       [221, '7:23', 'am', '9:00', 'am'],
       [323, '7:49', 'am', '9:00', 'am'],
@@ -37,22 +42,55 @@ var loadSchedule = function () {
       [139,'10:13', 'am','11:48', 'am'],
       [143,'11:13', 'am','12:48', 'pm'],
       [147,'12:13', 'pm', '1:48', 'pm'],
-      [151, '1:13', 'pm', '2:48', 'pm'] ];
+      [151, '1:13', 'pm', '2:48', 'pm'],
+      [155, '2:13', 'pm', '3:52', 'pm'],
+      [257, '2:24', 'pm', '3:57', 'pm'],
+      [159, '3:13', 'pm', '4:53', 'pm'],
+      [261, '3:40', 'pm', '5:02', 'pm'],
+      [263, '4:12', 'pm', '5:38', 'pm'],
+      [365, '4:24', 'pm', '5:33', 'pm'] ];
   for (var i=0; i < 6; i++) {
     var data = filler[appState.offset + i]
     var card = `<div class="train-number">#${data[0]}</div>
         <div class="train-time">${data[1]}<span class="meridiem">${data[2]}</span></div>
         <div class="train-time">${data[3]}<span class="meridiem">${data[4]}</span></div>`;
-    document.getElementById(`trip${i}`).innerHTML = card;
+    var element = document.getElementById(`trip${i}`)
+    element.innerHTML = card;
+    var classes = ['trip-card'];
+    var inThePast = appState.offset + i < 8;
+    if (inThePast) classes.push('train-departed');
+    if (i === 0) {
+      classes.push('selection');
+      classes.push(inThePast ? 'selection-departed' : 'selection-arriving');
+      fakeCountdown =  countdownFake(fakeTime, data[1] + data[2]);
+      document.getElementById('message').innerHTML = fakeCountdown;
+    }
+    element.className = classes.join(' ');
   }
 };
+
+// The countdownFake function works with minutes (not seconds)
+var countdownFake = function(clockNowTime, selectedTime) {
+  var clockNowParts = clockNowTime.split(':');
+  var selectedParts = selectedTime.split(':');
+  clockNow = (parseInt(clockNowParts[0]) * 60 + parseInt(clockNowParts[1]));
+  selected = (parseInt(selectedParts[0]) * 60 + parseInt(selectedParts[1]));
+  if (selectedParts[1].endsWith('pm')) { selected += 1440; }
+  var timeDifference = selected - clockNow;
+  if (timeDifference < 0) { return '&nbsp;'; }
+  if (timeDifference < 60) {
+    return `in ${Math.floor(timeDifference % 60)} min 22 sec`;
+  } else {
+    return `in ${Math.floor(timeDifference / 60)} hr ${Math.floor(timeDifference % 60)} min`;
+  }
+}
 
 var displayMessage = function (message) {
   document.getElementById('message').innerHTML = message;
   if (message === 'up' && appState.offset > 0) {
     appState.offset = appState.offset - 1;
     loadSchedule();
-  } else if (message === 'down' && appState.offset < 6) {
+  } else if (message === 'down' && appState.offset < 17) {
     appState.offset = appState.offset + 1;
     loadSchedule();
   }
