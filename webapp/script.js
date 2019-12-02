@@ -8,7 +8,7 @@ var fullScreenView = function () {
   document.getElementById('trip5').style['display'] = fs ? 'flex' : 'none';
   document.getElementById('title').style['display'] = fs ? 'flex' : 'none';
   document.getElementById('hints').style['display'] = fs ? 'none' : 'flex';
-  document.getElementById('contents').style['height'] = fs ? 290 : 228;
+  document.getElementById('contents').style['height'] = fs ? '290px' : '228px';
 };
 
 var loadSchedule = function () {
@@ -24,12 +24,13 @@ var loadSchedule = function () {
   // Load the schdule
   document.getElementById('stations').innerHTML = `San Jose Diridon<br>to San Francisco`;
   document.getElementById('message').innerHTML = `in 6 min 22 sec`;
-  var filler = [[329, '8:04', 'am', '9:13', 'am'],
-                [231, '8:23', 'am', '9:52', 'am'],
-                [233, '8:39', 'am','10:09', 'am'],
-                [135, '9:13', 'am','10:52', 'am'],
-                [237, '9:50', 'am','11:19', 'am'],
-                [139,'10:13', 'am','11:48', 'am']];
+  var filler = [
+      [329, '8:04', 'am', '9:13', 'am'],
+      [231, '8:23', 'am', '9:52', 'am'],
+      [233, '8:39', 'am','10:09', 'am'],
+      [135, '9:13', 'am','10:52', 'am'],
+      [237, '9:50', 'am','11:19', 'am'],
+      [139,'10:13', 'am','11:48', 'am']];
   for (var i=0; i < 6; i++) {
     var data = filler[i]
     var card = `<div class="train-number">#${data[0]}</div>
