@@ -1,5 +1,6 @@
 var appState = {
   fullScreen: false,
+  offset: 3,
 };
 
 var fullScreenView = function () {
@@ -25,14 +26,20 @@ var loadSchedule = function () {
   document.getElementById('stations').innerHTML = `San Jose Diridon<br>to San Francisco`;
   document.getElementById('message').innerHTML = `in 6 min 22 sec`;
   var filler = [
+      [319, '7:04', 'am', '8:13', 'am'],
+      [221, '7:23', 'am', '9:00', 'am'],
+      [323, '7:49', 'am', '9:00', 'am'],
       [329, '8:04', 'am', '9:13', 'am'],
       [231, '8:23', 'am', '9:52', 'am'],
       [233, '8:39', 'am','10:09', 'am'],
       [135, '9:13', 'am','10:52', 'am'],
       [237, '9:50', 'am','11:19', 'am'],
-      [139,'10:13', 'am','11:48', 'am']];
+      [139,'10:13', 'am','11:48', 'am'],
+      [143,'11:13', 'am','12:48', 'pm'],
+      [147,'12:13', 'pm', '1:48', 'pm'],
+      [151, '1:13', 'pm', '2:48', 'pm'] ];
   for (var i=0; i < 6; i++) {
-    var data = filler[i]
+    var data = filler[appState.offset + i]
     var card = `<div class="train-number">#${data[0]}</div>
         <div class="train-time">${data[1]}<span class="meridiem">${data[2]}</span></div>
         <div class="train-time">${data[3]}<span class="meridiem">${data[4]}</span></div>`;
@@ -42,6 +49,13 @@ var loadSchedule = function () {
 
 var displayMessage = function (message) {
   document.getElementById('message').innerHTML = message;
+  if (message === 'up' && appState.offset > 0) {
+    appState.offset = appState.offset - 1;
+    loadSchedule();
+  } else if (message === 'down' && appState.offset < 6) {
+    appState.offset = appState.offset + 1;
+    loadSchedule();
+  }
 };
 
 var attachListeners = function () {
@@ -77,9 +91,9 @@ var attachListeners = function () {
     } else if (code == 51) { // 3
       displayMessage('zoom in');   // zoom in
     } else if (code == 53) { // 5
-      displayMessage('page up');   // page up
+      displayMessage('up');   // page up
     } else if (code == 56) { // 8
-      displayMessage('page down'); // page down
+      displayMessage('down'); // page down
     } else if (code >= 48 && code <= 57) {
       displayMessage('#' + (code - 48));
     } else if (code == 37) {
