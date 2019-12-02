@@ -1,6 +1,7 @@
 var appState = {
   fullScreen: false,
   offset: 8,
+  kaios: false,
 };
 
 var fullScreenView = function () {
@@ -97,11 +98,13 @@ var displayMessage = function (message) {
 };
 
 var attachListeners = function () {
+  if (navigator.userAgent.includes('KAIOS')) appState.kaios = true;
   document.onfullscreenchange = function (event) {
     appState.fullScreen = appState.fullScreen ? false : true;
     fullScreenView();
   };
   document.body.addEventListener("mousemove", function (e) {
+    if (appState.kaios == false) return;
     if (e.movementY > 0) {
       displayMessage("down");
     } else if (e.movementY < 0) {
