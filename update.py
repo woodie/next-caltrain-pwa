@@ -1,0 +1,124 @@
+#!/usr/bin/env python
+
+import csv
+import os
+import time
+import subprocess
+from collections import OrderedDict
+
+xstr = lambda s: s or '-1'
+
+def main():
+  fetch_schedule_data()
+  #trips = parse_trip_data()
+  stops = parse_station_data()
+  times = parse_schedule_data(stops)
+  write_schedule_data(times, stops)
+
+def fetch_schedule_data():
+  source = 'http://www.caltrain.com/Assets/GTFS/caltrain/CT-GTFS.zip'
+  basedir = os.getcwd()
+  subprocess.call(['mkdir', '-p', 'downloads'])
+  os.chdir('downloads')
+  subprocess.call(['rm', 'CT-GTFS.zip'])
+  subprocess.call(['curl', '-o', 'CT-GTFS.zip', source])
+  os.chdir(basedir)
+  subprocess.call(['mkdir', '-p', 'CT-GTFS'])
+  os.chdir('CT-GTFS')
+  subprocess.call(['unzip', '-o', '../downloads/CT-GTFS.zip'])
+  os.chdir(basedir)
+
+def parse_trip_data():
+  _trips = {}
+  with open('CT-GTFS/trips.txt', 'rb') as tripsFile:
+    tripsReader = csv.reader(tripsFile)
+    header = next(tripsReader, None)
+    trip_id_x = header.index('trip_id')
+    try:
+      trip_name_x = header.index('trip_short_name')
+    except:
+      trip_name_x = trip_id_x
+    for row in tripsReader:
+      trip_id = row[trip_id_x]
+      trip_name = row[trip_name_x]
+      _trips[trip_id] = trip_name
+  return _trips
+
+def parse_station_data():
+  _stops = {'north':[], 'south':[], 'labels':{}}
+  extra = ['Caltrain', 'Station']
+  with open('CT-GTFS/stops.txt', 'rb') as stopsFile:
+    stopsReader = csv.reader(stopsFile)
+    header = next(stopsReader, None)
+    stop_id_x = header.index('stop_id')
+    stop_name_x = header.index('stop_name')
+    for row in stopsReader:
+      stop_id = int(row[stop_id_x])
+      if (stop_id > 70400):
+        continue # skip fake stops
+      stop_name = ' '.join(i for i in row[stop_name_x].split() if i not in extra)
+      stop_name = stop_name.replace("South San", "So San")
+      _stops['labels'][stop_id] = stop_name
+      if (stop_id % 2 == 1):
+        _stops['north'].insert(0, stop_id)
+      else:
+        _stops['south'].append(stop_id)
+  return _stops
+
+def parse_schedule_data(stops):
+  _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
+            'weekend':{'north':OrderedDict(), 'south':OrderedDict()}}
+  with open('CT-GTFS/stop_times.txt', 'rb') as timesFile:
+    timesReader = csv.reader(timesFile)
+    header = next(timesReader, None)
+    trip_id_x = header.index('trip_id')
+    stop_id_x = header.index('stop_id')
+    departure_x = header.index('departure_time')
+    sortedLines = sorted(timesReader, key=lambda row: int(row[departure_x].replace(':','')))
+    for row in sortedLines:
+      try:
+        trip_id = int(row[trip_id_x])
+      except:
+        continue
+      stop_id = int(row[stop_id_x])
+      hour = int(row[departure_x][0:-6])
+      minute = int(row[departure_x][-5:-3])
+      departure = str(hour * 60 + minute)
+      direction = 'north' if (stop_id % 2 == 1) else 'south'
+      schedule = 'weekday' if (trip_id < 400) else 'weekend'
+      if (trip_id < 800 and trip_id > 500):
+        continue # skip special times
+      if (trip_id not in _times[schedule][direction]):
+        _times[schedule][direction][trip_id] = [None] * len(stops[direction])
+      _times[schedule][direction][trip_id][stops[direction].index(stop_id)] = departure
+  return _times
+
+def write_schedule_data(times, stops):
+  with open('webapp/caltrainServiceData.js', 'w') as f:
+    f.write("// caltrainServiceData\n")
+    stat = os.stat('CT-GTFS/stop_times.txt')
+    creation = 0
+    creation = long(stat.st_mtime * 1000)
+    f.write("\nconst schedule_date = %d;\n" % creation)
+    for direction in ['north', 'south']:
+      f.write("\nconst %s_stops = [" % (direction))
+      f.write('\n      "')
+      labels = ['']
+      for stop_id in stops[direction]:
+        labels.append(stops['labels'][stop_id])
+      f.write('","'.join(labels))
+      f.write('"];\n')
+      for schedule in ['weekday', 'weekend']:
+        f.write("\nconst %s_%s = [" % (direction, schedule))
+        f.write('\n      [')
+        header = ['0']
+        for stop_id in stops[direction]:
+          header.append(str(stop_id))
+        f.write(','.join(header))
+        for trip_id in times[schedule][direction]:
+          f.write('],\n      [')
+          f.write(','.join(map(xstr,[str(trip_id)] + times[schedule][direction][trip_id])))
+        f.write(']];\n')
+
+if __name__ == "__main__":
+    main()
