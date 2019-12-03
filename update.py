@@ -95,21 +95,21 @@ def parse_schedule_data(stops):
 
 def write_schedule_data(times, stops):
   with open('webapp/caltrainServiceData.js', 'w') as f:
-    f.write("// caltrainServiceData\n")
+    f.write("var caltrainServiceData = {\n")
     stat = os.stat('CT-GTFS/stop_times.txt')
     creation = 0
     creation = long(stat.st_mtime * 1000)
-    f.write("\nconst schedule_date = %d;\n" % creation)
+    f.write("\n  schedule_date: %d,\n" % creation)
     for direction in ['north', 'south']:
-      f.write("\nconst %s_stops = [" % (direction))
+      f.write("\n  %s_stops: [" % (direction))
       f.write('\n      "')
       labels = ['']
       for stop_id in stops[direction]:
         labels.append(stops['labels'][stop_id])
       f.write('","'.join(labels))
-      f.write('"];\n')
+      f.write('"],\n')
       for schedule in ['weekday', 'weekend']:
-        f.write("\nconst %s_%s = [" % (direction, schedule))
+        f.write("\n  %s_%s: [" % (direction, schedule))
         f.write('\n      [')
         header = ['0']
         for stop_id in stops[direction]:
@@ -118,7 +118,8 @@ def write_schedule_data(times, stops):
         for trip_id in times[schedule][direction]:
           f.write('],\n      [')
           f.write(','.join(map(xstr,[str(trip_id)] + times[schedule][direction][trip_id])))
-        f.write(']];\n')
+        f.write(']],\n')
+    f.write('\n}\n')
 
 if __name__ == "__main__":
     main()
