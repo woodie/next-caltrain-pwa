@@ -1,13 +1,6 @@
-class CaltrainTrip {
+// requires CaltrainService: SOUTH, NORTH, SUNDAY, SATURDAY, WEEKDAY, WEEKEND
 
-  stops = [];
-  times = [];
-  static SOUTH = 0;
-  static NORTH = 1;
-  static SUNDAY = 1;
-  static SATURDAY = 7;
-  static WEEKDAY = 8;
-  static WEEKEND = 0;
+class CaltrainTrip {
 
  /**
   * A train with times for each station stop.
@@ -16,24 +9,26 @@ class CaltrainTrip {
   */
   constructor(trip) {
     this.trip = trip;
+    this.stops = [];
+    this.times = [];
     this.direction = (trip % 2 == SOUTH) ? SOUTH : NORTH;
     this.schedule = (trip < 400) ? WEEKDAY: WEEKEND;
-    setService();
+    this.setService();
   }
 
  /**
   * Set the time and station name for a trip ID.
   */
   setService() {
-    let mins = CaltrainService.tripStops(trip, direction, schedule);
-    let strs = (this.direction == NORTH) ? CaltrainServiceData.north_stops : CaltrainServiceData.south_stops;
+    let mins = CaltrainService.tripStops(this.trip, this.direction, this.schedule);
+    let strs = (this.direction == NORTH) ? caltrainServiceData.north_stops : caltrainServiceData.south_stops;
     // determine size
     let getSize = 0;
     for (let i = 1; i < mins.length; i++) {
       if (mins[i] != -1) getSize++;
     }
-    this.times = []; // int[getSize];
-    this.stops = []; // String[getSize];
+    this.times = [];
+    this.stops = [];
     // populate instance
     let setSize = 0;
     for (let i = 1; i < mins.length; i++) {
@@ -58,23 +53,23 @@ class CaltrainTrip {
   }
 
   label() {
-    return `#${trip} ${direction}`;
+    return `#${this.trip} ${this.directionString()}`;
   }
 
   description() {
-    return `${CaltrainTrip.type(trip)}  /  ${schedule()}`;
+    return `${CaltrainTrip.type(this.trip)} / ${this.scheduleString()}`;
   }
 
-  direction() {
-    return (direction == NORTH) ? "Northbound" : "Southbound";
+  directionString() {
+    return (this.direction == NORTH) ? "Northbound" : "Southbound";
   }
 
-  schedule() {
-    if (schedule == WEEKDAY) {
+  scheduleString() {
+    if (this.schedule == WEEKDAY) {
       return "Weekday";
     } else {
       for (let x = 0; x < CaltrainService.saturday_trip_ids.length; x++) {
-        if (trip == CaltrainService.saturday_trip_ids[x]) return "Saturday";
+        if (this.trip == CaltrainService.saturday_trip_ids[x]) return "Saturday";
       }
       return "Weekend";
     }

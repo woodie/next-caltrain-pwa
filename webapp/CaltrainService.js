@@ -1,27 +1,25 @@
+const SOUTH = 0;
+const NORTH = 1;
+const WEEKEND = 0;
+const SUNDAY = 1;
+const SATURDAY = 7;
+const WEEKDAY = 8;
+const TRAIN = 0;
+const DEPART = 1;
+const ARRIVE = 2;
+const DIRECTION = 0;
+const SCHEDULE = 1;
+const TRIP_IDX = 2;
+const saturday_trip_ids = [421,443,442,444]; // Saturday Only
+
 /**
 * A utility to simplify working with caltrainServiceData.
 */
 class CaltrainService {
 
-  northStops = {};
-  southStops = {};
-  static SOUTH = 0;
-  static NORTH = 1;
-  static WEEKEND = 0;
-  static SUNDAY = 1;
-  static SATURDAY = 7;
-  static WEEKDAY = 8;
-  static TRAIN = 0;
-  static DEPART = 1;
-  static ARRIVE = 2;
-  static DIRECTION = 0;
-  static SCHEDULE = 1;
-  static TRIP_IDX = 2;
-  static saturday_trip_ids = [421,443,442,444]; // Saturday Only
-
   constructor() {
-    this.northStops = mapStops(NORTH);
-    this.southStops = mapStops(SOUTH);
+    this.northStops = this.mapStops(NORTH);
+    this.southStops = this.mapStops(SOUTH);
   }
 
  /**
@@ -30,10 +28,10 @@ class CaltrainService {
   * @return Hashmap of Station Name keys
   */
   mapStops(direction) {
-    out = {};
-    stops = (direction == NORTH) ? caltrainServiceData.north_stops : caltrainServiceData.south_stops;
+    let out = {};
+    let stops = (direction == NORTH) ? caltrainServiceData.north_stops : caltrainServiceData.south_stops;
     for (let i = 1; i < stops.length; i++) {
-      out.put(stops[i], new Integer(i));
+      out.put(stops[i], new Integer(i)); // TODO: Java to JS
     }
     return out;
   }
@@ -46,7 +44,7 @@ class CaltrainService {
   * @return array of Station stop times.
   */ 
   static tripStops(trip, direction, schedule) {
-    trips = CaltrainService.select(direction, schedule);
+    let trips = CaltrainService.select(direction, schedule);
     for (let i = 1; i < trips.length; i++) {
       if (trips[i][TRAIN] == trip) return trips[i];
     }
@@ -84,13 +82,13 @@ class CaltrainService {
   * @return a two dementional array or ints
   */
   routes(departStop, arriveStop, dotw, swap) {
-    let schedule = schedule(dotw, swap);
-    let direction = direction(departStop, arriveStop);
-    let trains = times(null, direction, schedule);
-    let departTimes = times(departStop, direction, schedule);
-    let arriveTimes = times(arriveStop, direction, schedule);
+    let schedule = CaltrainService.schedule(dotw, swap);
+    let direction = this.direction(departStop, arriveStop);
+    let trains = this.times(null, direction, schedule);
+    let departTimes = this.times(departStop, direction, schedule);
+    let arriveTimes = this.times(arriveStop, direction, schedule);
     let skip = (dotw == SUNDAY) ? CaltrainService.saturday_trip_ids : [];
-    return merge(trains, departTimes, arriveTimes, skip);
+    return this.merge(trains, departTimes, arriveTimes, skip);
   }
 
  /**
@@ -155,7 +153,7 @@ class CaltrainService {
   times(stop, direction, schedule) {
     let source = CaltrainService.select(direction, schedule);
     let times = []; // offset for stop_id header
-    let column = (null == stop) ? 0 : stops(direction).indexOf(stop);
+    let column = (null == stop) ? 0 : this.stops(direction).indexOf(stop);
     for (let i = 0; i < times.length; i++) {
       times[i] = source[i + 1][column];       // skip the stop_id header
     }
