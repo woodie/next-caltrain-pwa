@@ -6,7 +6,7 @@ import time
 import subprocess
 from collections import OrderedDict
 
-xstr = lambda s: s or '-1'
+xstr = lambda s: s or ''
 
 def main():
   fetch_schedule_data()
