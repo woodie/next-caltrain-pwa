@@ -10,7 +10,7 @@ const ARRIVE = 2;
 const DIRECTION = 0;
 const SCHEDULE = 1;
 const TRIP_IDX = 2;
-const saturday_trip_ids = [421,443,442,444]; // Saturday Only
+const saturdayTripIds = [421,443,442,444]; // Saturday Only
 
 /**
 * A utility to simplify working with caltrainServiceData.
@@ -29,7 +29,7 @@ class CaltrainService {
   */
   mapStops(direction) {
     let out = {};
-    let stops = (direction == NORTH) ? caltrainServiceData.north_stops : caltrainServiceData.south_stops;
+    let stops = (direction == NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     for (let i = 1; i < stops.length; i++) {
       out.put(stops[i], new Integer(i)); // TODO: Java to JS
     }
@@ -67,8 +67,8 @@ class CaltrainService {
   * @return the direction of this trip: NORTH or SOUTH
   */
   direction(departStop, arriveStop) {
-    let depart = caltrainServiceData.south_stops.indexOf(departStop);
-    let arrive = caltrainServiceData.south_stops.indexOf(arriveStop);
+    let depart = caltrainServiceData.southStops.indexOf(departStop);
+    let arrive = caltrainServiceData.southStops.indexOf(arriveStop);
     return (depart < arrive) ? SOUTH : NORTH;
   }
 
@@ -87,7 +87,7 @@ class CaltrainService {
     let trains = this.times(null, direction, schedule);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-    let skip = (dotw == SUNDAY) ? CaltrainService.saturday_trip_ids : [];
+    let skip = (dotw == SUNDAY) ? CaltrainService.saturdayTripIds : [];
     return this.merge(trains, departTimes, arriveTimes, skip);
   }
 
@@ -152,10 +152,10 @@ class CaltrainService {
   */
   times(stop, direction, schedule) {
     let source = CaltrainService.select(direction, schedule);
-    let times = []; // offset for stop_id header
+    let times = []; // offset for stopId header
     let column = (null == stop) ? 0 : this.stops(direction).indexOf(stop);
     for (let i = 0; i < times.length; i++) {
-      times[i] = source[i + 1][column];       // skip the stop_id header
+      times[i] = source[i + 1][column];       // skip the stopId header
     }
     return times;
   }
@@ -168,9 +168,9 @@ class CaltrainService {
   */
   static select(direction, schedule) {
     if (direction == NORTH) {
-      return (schedule == WEEKDAY) ? caltrainServiceData.north_weekday : caltrainServiceData.north_weekend;
+      return (schedule == WEEKDAY) ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
     } else {
-      return (schedule == WEEKDAY) ? caltrainServiceData.south_weekday : caltrainServiceData.south_weekend;
+      return (schedule == WEEKDAY) ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
     }
   }
 

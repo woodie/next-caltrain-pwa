@@ -21,7 +21,7 @@ class CaltrainTrip {
   */
   setService() {
     let mins = CaltrainService.tripStops(this.trip, this.direction, this.schedule);
-    let strs = (this.direction == NORTH) ? caltrainServiceData.north_stops : caltrainServiceData.south_stops;
+    let strs = (this.direction == NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     // determine size
     let getSize = 0;
     for (let i = 1; i < mins.length; i++) {
@@ -68,8 +68,8 @@ class CaltrainTrip {
     if (this.schedule == WEEKDAY) {
       return "Weekday";
     } else {
-      for (let x = 0; x < CaltrainService.saturday_trip_ids.length; x++) {
-        if (this.trip == CaltrainService.saturday_trip_ids[x]) return "Saturday";
+      for (let x = 0; x < CaltrainService.saturdayTripIds.length; x++) {
+        if (this.trip == CaltrainService.saturdayTripIds[x]) return "Saturday";
       }
       return "Weekend";
     }

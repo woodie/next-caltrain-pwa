@@ -99,9 +99,9 @@ def write_schedule_data(times, stops):
     stat = os.stat('CT-GTFS/stop_times.txt')
     creation = 0
     creation = long(stat.st_mtime * 1000)
-    f.write("\n  schedule_date: %d,\n" % creation)
+    f.write("\n  scheduleDate: %d,\n" % creation)
     for direction in ['north', 'south']:
-      f.write("\n  %s_stops: [" % (direction))
+      f.write("\n  %sStops: [" % (direction))
       f.write('\n      "')
       labels = ['']
       for stop_id in stops[direction]:
@@ -109,7 +109,7 @@ def write_schedule_data(times, stops):
       f.write('","'.join(labels))
       f.write('"],\n')
       for schedule in ['weekday', 'weekend']:
-        f.write("\n  %s_%s: [" % (direction, schedule))
+        f.write("\n  %s%s: [" % (direction, schedule.capitalize()))
         f.write('\n      [')
         header = ['0']
         for stop_id in stops[direction]:
