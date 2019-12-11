@@ -103,22 +103,20 @@ def write_schedule_data(times, stops):
     for direction in ['north', 'south']:
       f.write("\n  %sStops: [" % (direction))
       f.write('\n      "')
-      labels = ['']
+      labels = []
       for stop_id in stops[direction]:
         labels.append(stops['labels'][stop_id])
       f.write('","'.join(labels))
       f.write('"],\n')
       for schedule in ['weekday', 'weekend']:
-        f.write("\n  %s%s: [" % (direction, schedule.capitalize()))
-        f.write('\n      [')
-        header = ['0']
-        for stop_id in stops[direction]:
-          header.append(str(stop_id))
-        f.write(','.join(header))
+        comma = ''
+        f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:
-          f.write('],\n      [')
-          f.write(','.join(map(xstr,[str(trip_id)] + times[schedule][direction][trip_id])))
-        f.write(']],\n')
+          f.write('%s\n      %s: [' % (comma, str(trip_id)))
+          f.write(','.join(map(xstr, times[schedule][direction][trip_id])))
+          f.write(']')
+          comma = ','
+        f.write('},\n')
     f.write('\n}\n')
 
 if __name__ == "__main__":

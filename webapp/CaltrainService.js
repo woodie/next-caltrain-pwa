@@ -25,13 +25,13 @@ class CaltrainService {
  /**
   * Station name maps to index of column with stop times
   * @param direction the northbound and southbound schedules
-  * @return Hashmap of Station Name keys
+  * @return Map of Station Name keys
   */
   mapStops(direction) {
-    let out = {};
-    let stops = (direction == NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+    let out = new Map();
+    let stops = (direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     for (let i = 1; i < stops.length; i++) {
-      out.put(stops[i], new Integer(i)); // TODO: Java to JS
+      out.set(stops[i], i);
     }
     return out;
   }
@@ -46,7 +46,7 @@ class CaltrainService {
   static tripStops(trip, direction, schedule) {
     let trips = CaltrainService.select(direction, schedule);
     for (let i = 1; i < trips.length; i++) {
-      if (trips[i][TRAIN] == trip) return trips[i];
+      if (trips[i][TRAIN] === trip) return trips[i];
     }
     return [];
   }
@@ -57,7 +57,7 @@ class CaltrainService {
   * @return stop name string mapping to schedule columns.
   */
   stops(direction) {
-    return (direction == NORTH) ? this.northStops : this.southStops;
+    return (direction === NORTH) ? this.northStops : this.southStops;
   }
 
  /**
@@ -87,7 +87,7 @@ class CaltrainService {
     let trains = this.times(null, direction, schedule);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-    let skip = (dotw == SUNDAY) ? CaltrainService.saturdayTripIds : [];
+    let skip = (dotw === SUNDAY) ? CaltrainService.saturdayTripIds : [];
     return this.merge(trains, departTimes, arriveTimes, skip);
   }
 
@@ -99,9 +99,9 @@ class CaltrainService {
   */
   static schedule(dotw, swap) {
     if (swap) {
-      return ((dotw == SATURDAY) || (dotw == SUNDAY)) ? WEEKDAY : SATURDAY;
+      return ((dotw === SATURDAY) || (dotw === SUNDAY)) ? WEEKDAY : SATURDAY;
     } else {
-      return ((dotw == SATURDAY) || (dotw == SUNDAY)) ? dotw : WEEKDAY;
+      return ((dotw === SATURDAY) || (dotw === SUNDAY)) ? dotw : WEEKDAY;
     }
   }
 
@@ -118,9 +118,9 @@ class CaltrainService {
     let count = 0;
     for (let i = 0; i < trains.length; i++) {
       for (let x = 0; x < skip.length; x++) {
-        if (trains[i] == x) continue;
+        if (trains[i] === x) continue;
       }
-      if ((departTimes[i] != -1) && (arriveTimes[i] != -1)) {
+      if ((departTimes[i] !== -1) && (arriveTimes[i] !== -1)) {
         tmp[count][TRAIN] = trains[i];
         tmp[count][DEPART] = departTimes[i];
         tmp[count][ARRIVE] = arriveTimes[i];
@@ -153,7 +153,7 @@ class CaltrainService {
   times(stop, direction, schedule) {
     let source = CaltrainService.select(direction, schedule);
     let times = []; // offset for stopId header
-    let column = (null == stop) ? 0 : this.stops(direction).indexOf(stop);
+    let column = (null === stop) ? 0 : this.stops(direction).indexOf(stop);
     for (let i = 0; i < times.length; i++) {
       times[i] = source[i + 1][column];       // skip the stopId header
     }
@@ -167,10 +167,10 @@ class CaltrainService {
   * @return a two dementional array or ints
   */
   static select(direction, schedule) {
-    if (direction == NORTH) {
-      return (schedule == WEEKDAY) ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
+    if (direction === NORTH) {
+      return (schedule === WEEKDAY) ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
     } else {
-      return (schedule == WEEKDAY) ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
+      return (schedule === WEEKDAY) ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
     }
   }
 

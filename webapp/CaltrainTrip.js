@@ -1,4 +1,7 @@
-// requires CaltrainService: SOUTH, NORTH, SUNDAY, SATURDAY, WEEKDAY, WEEKEND
+// const SOUTH = 0;
+// const NORTH = 1;
+// const WEEKEND = 0;
+// const WEEKDAY = 8;
 
 class CaltrainTrip {
 
@@ -11,7 +14,7 @@ class CaltrainTrip {
     this.trip = trip;
     this.stops = [];
     this.times = [];
-    this.direction = (trip % 2 == SOUTH) ? SOUTH : NORTH;
+    this.direction = (trip % 2 === SOUTH) ? SOUTH : NORTH;
     this.schedule = (trip < 400) ? WEEKDAY: WEEKEND;
     this.setService();
   }
@@ -21,18 +24,18 @@ class CaltrainTrip {
   */
   setService() {
     let mins = CaltrainService.tripStops(this.trip, this.direction, this.schedule);
-    let strs = (this.direction == NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+    let strs = (this.direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     // determine size
     let getSize = 0;
     for (let i = 1; i < mins.length; i++) {
-      if (mins[i] != -1) getSize++;
+      if (mins[i] !== -1) getSize++;
     }
     this.times = [];
     this.stops = [];
     // populate instance
     let setSize = 0;
     for (let i = 1; i < mins.length; i++) {
-      if (mins[i] == -1) continue;
+      if (mins[i] === -1) continue;
       this.times[setSize] = mins[i];
       this.stops[setSize] = strs[i];
       setSize++;
@@ -61,15 +64,15 @@ class CaltrainTrip {
   }
 
   directionString() {
-    return (this.direction == NORTH) ? "Northbound" : "Southbound";
+    return (this.direction === NORTH) ? "Northbound" : "Southbound";
   }
 
   scheduleString() {
-    if (this.schedule == WEEKDAY) {
+    if (this.schedule === WEEKDAY) {
       return "Weekday";
     } else {
       for (let x = 0; x < CaltrainService.saturdayTripIds.length; x++) {
-        if (this.trip == CaltrainService.saturdayTripIds[x]) return "Saturday";
+        if (this.trip === CaltrainService.saturdayTripIds[x]) return "Saturday";
       }
       return "Weekend";
     }
