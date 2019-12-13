@@ -1,7 +1,4 @@
-// const SOUTH = 0;
-// const NORTH = 1;
-// const WEEKEND = 0;
-// const WEEKDAY = 8;
+// SOUTH:0, NORTH:1, WEEKEND:0, WEEKDAY:8
 
 class CaltrainTrip {
 

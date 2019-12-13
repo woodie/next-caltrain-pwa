@@ -135,6 +135,14 @@ var attachListeners = function () {
       displayMessage('up');   // page up
     } else if (code == 56) { // 8
       displayMessage('down'); // page down
+    } else if (code == 52) {
+      stopAM = (stopAM == stations.length - 1) ? 1 : ++stopAM;
+    } else if (code == 54) {
+      stopAM = (stopAM <= 1) ? stations.length - 1: --stopAM;
+    } else if (code == 55) {
+      stopPM = (stopPM == stations.length - 1) ? 1 : ++stopPM;
+    } else if (code == 57) {
+      stopPM = (stopPM <= 1) ? stations.length - 1: --stopPM;
     } else if (code >= 48 && code <= 57) {
       displayMessage('#' + (code - 48));
     } else if (code == 37) {

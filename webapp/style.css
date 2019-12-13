@@ -111,13 +111,13 @@ body {
 .selection {
   border-radius: 5px;
   border-width: 1px;
+  margin-bottom: 1px;
 }
 
 .trip-card {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-top: -2px;
 }
 
 .train-number {
@@ -126,17 +126,20 @@ body {
   font-size: 12pt;
   padding-left: 3px;
   padding-right: 3px;
+  margin-bottom: -2px;
 }
 
 .train-time {
   flex: 3;
   text-align: right;
   cursor: crosshair;
-  font-size: 18pt;
+  font-size: 20pt;
   padding-right: 3px;
+  margin-top: -6px;
+  margin-bottom: -3px;
 }
 
 .meridiem {
-  font-size: 12pt;
+  font-size: 11pt;
   padding-left: 1px;
 }
