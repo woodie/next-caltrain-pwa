@@ -2,9 +2,16 @@ class Preferences {
 
   constructor(stations) {
     this.stations = stations;
-    this.stopAM = 16, // Should be in
-    this.stopPM = 0,  // local storage.
-    this.swapped = false; // true when PM
+    this.swapped = new Date().getHours() >= 12;
+    if (localStorage.getItem('stopAM') === null) localStorage.setItem('stopAM', 16);
+    if (localStorage.getItem('stopPM') === null) localStorage.setItem('stopPM', 0);
+    this.stopAM = localStorage.getItem("stopAM");
+    this.stopPM = localStorage.getItem("stopPM");
+  }
+
+  saveStops() {
+    localStorage.setItem('stopAM', this.stopAM);
+    localStorage.setItem('stopPM', this.stopPM);
   }
 
   swapStations() {
@@ -14,15 +21,11 @@ class Preferences {
   tripLabels() {
     this.origin = this.stations[this.swapped ? this.stopPM : this.stopAM];
     this.destin = this.stations[this.swapped ? this.stopAM : this.stopPM];
-    let out = [];
     if (this.origin.length >= this.destin.length) {
-      out[0] = this.origin;
-      out[1] = `to ${this.destin}`;
+      return [this.origin, `to ${this.destin}`];
     } else {
-      out[0] = `${this.origin} to`;
-      out[1] = this.destin;
+      return [`${this.origin} to`, this.destin];
     }
-    return out;
   }
 
   bumpStations(origin, increment) {

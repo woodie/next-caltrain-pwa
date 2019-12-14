@@ -126,6 +126,7 @@ var attachListeners = function () {
       return;
     } else if (code == 8) { // hangup
       displayMessage('hangup');    // hangup
+      prefs.saveStops();
       return;
     } else if (code == 163) { // #
       displayMessage('hash');      // hash
@@ -177,6 +178,5 @@ var openFullScreen = function () {
   try {
     if (!appState.fullScreen) document.documentElement.requestFullscreen();
   } catch(error) {
-    console.log('requestFullscreen() failed');
   }
 };
