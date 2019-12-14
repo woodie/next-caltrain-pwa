@@ -4,6 +4,7 @@ const WEEKEND = 0;
 const SUNDAY = 1;
 const SATURDAY = 7;
 const WEEKDAY = 8;
+const MODIFIED = 9;
 const TRAIN = 0;
 const DEPART = 1;
 const ARRIVE = 2;
@@ -14,12 +15,13 @@ const saturdayTripIds = [421,443,442,444]; // Saturday Only
 
 /**
 * A utility to simplify working with caltrainServiceData.
+* Some odd structures as this is a port from a Java app.
 */
 class CaltrainService {
 
   constructor() {
-    this.northStops = this.mapStops(NORTH);
-    this.southStops = this.mapStops(SOUTH);
+    this.northStops = CaltrainService.mapStops(NORTH);
+    this.southStops = CaltrainService.mapStops(SOUTH);
   }
 
  /**
@@ -27,7 +29,7 @@ class CaltrainService {
   * @param direction the northbound and southbound schedules
   * @return Map of Station Name keys
   */
-  mapStops(direction) {
+  static mapStops(direction) {
     let out = new Map();
     let stops = (direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     for (let i = 0; i < stops.length; i++) {
@@ -38,17 +40,19 @@ class CaltrainService {
 
  /**
   * Station name maps to index of column with stop times
-  * @param trip is trip ID.
+  * @param train is train number.
   * @param direction is NORTH or SOUTH.
   * @param schedule is WEEKDAY or WEEKEND.
   * @return array of Station stop times.
   */
-  static tripStops(trip, direction, schedule) {
-    let trips = CaltrainService.select(direction, schedule);
-    for (let i = 1; i < trips.length; i++) {
-      if (trips[i][TRAIN] === trip) return trips[i];
+  static tripStops(train, direction, schedule) {
+    let stops = (direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+    let times = CaltrainService.select(direction, schedule)[train];
+    let out = [];
+    for (let i = 0; i < times.length; i++) {
+      if (times[i]) out.push([stops[i], times[i]]);
     }
-    return [];
+    return out;
   }
 
  /**
@@ -56,7 +60,7 @@ class CaltrainService {
   * @param direction is NORTH or SOUTH
   * @return stop name string mapping to schedule columns.
   */
-  stops(direction) {
+  stopMap(direction) {
     return (direction === NORTH) ? this.northStops : this.southStops;
   }
 
@@ -66,7 +70,7 @@ class CaltrainService {
   * @param arriveStop the arriving stop name string
   * @return the direction of this trip: NORTH or SOUTH
   */
-  direction(departStop, arriveStop) {
+  static direction(departStop, arriveStop) {
     let depart = caltrainServiceData.southStops.indexOf(departStop);
     let arrive = caltrainServiceData.southStops.indexOf(arriveStop);
     return (depart < arrive) ? SOUTH : NORTH;
@@ -83,11 +87,11 @@ class CaltrainService {
   */
   routes(departStop, arriveStop, dotw, swap) {
     let schedule = CaltrainService.schedule(dotw, swap);
-    let direction = this.direction(departStop, arriveStop);
+    let direction = CaltrainService.direction(departStop, arriveStop);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
     let skip = (dotw === SUNDAY) ? CaltrainService.saturdayTripIds : [];
-    return this.merge(departTimes, arriveTimes, skip);
+    return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
 
  /**
@@ -112,14 +116,14 @@ class CaltrainService {
   * @param skip over these trips
   * @return a two dementional array or ints
   */
-  merge(departTimes, arriveTimes, skip) {
+  static merge(departTimes, arriveTimes, skip) {
     for (x of skip) {
       departTimes.delete(x);
     }
     let arr = [];
-    for (let stopId of departTimes.keys()) {
-      if (arriveTimes.has(stopId)) {
-        arr.push([stopId, departTimes.get(stopId), arriveTimes.get(stopId)]);
+    for (let train of departTimes.keys()) {
+      if (arriveTimes.has(train)) {
+        arr.push([train, departTimes.get(train), arriveTimes.get(train)]);
       }
     }
     let sorted = arr.sort(function(a,b) {
@@ -137,11 +141,10 @@ class CaltrainService {
   */
   times(stop, direction, schedule) {
     let source = CaltrainService.select(direction, schedule);
-    let index = this.stops(direction).get(stop);
-    let keys = Object.keys(source).map(Number);
+    let index = this.stopMap(direction).get(stop);
     let times = new Map();
-    for (let i = 0; i < keys.length; i++) {
-      if (source[keys[i]][index]) times.set(keys[i], source[keys[i]][index]);
+    for (let train of Object.keys(source).map(Number)) {
+      if (source[train][index]) times.set(train, source[train][index]);
     }
     return times;
   }
