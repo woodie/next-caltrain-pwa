@@ -1,3 +1,5 @@
+let prefs = new Preferences(caltrainServiceData.southStops);
+
 var appState = {
   fullScreen: false,
   offset: 8,
@@ -25,7 +27,9 @@ var loadSchedule = function () {
   fakeTime = '7:58am';
   document.getElementById('timeNow').innerHTML = fakeTime;
   // Load the schdule
-  document.getElementById('stations').innerHTML = `San Jose Diridon<br>to San Francisco`;
+  let tripLabels = prefs.tripLabels();
+  document.getElementById('origin').innerHTML = tripLabels[0];
+  document.getElementById('destin').innerHTML = tripLabels[1];
   var filler = [
       [309, '6:04', 'am', '7:09', 'am'],
       [211, '6:23', 'am', '7:57', 'am'],
@@ -135,14 +139,21 @@ var attachListeners = function () {
       displayMessage('up');   // page up
     } else if (code == 56) { // 8
       displayMessage('down'); // page down
-    } else if (code == 52) {
-      stopAM = (stopAM == stations.length - 1) ? 1 : ++stopAM;
-    } else if (code == 54) {
-      stopAM = (stopAM <= 1) ? stations.length - 1: --stopAM;
-    } else if (code == 55) {
-      stopPM = (stopPM == stations.length - 1) ? 1 : ++stopPM;
-    } else if (code == 57) {
-      stopPM = (stopPM <= 1) ? stations.length - 1: --stopPM;
+    } else if (code == 52) { // 4
+      prefs.bumpStations(true, false);
+      loadSchedule();
+    } else if (code == 54) { // 5
+      prefs.bumpStations(true, true);
+      loadSchedule();
+    } else if (code == 55) { // 7
+      prefs.bumpStations(false, false);
+      loadSchedule();
+    } else if (code == 57) { // 9
+      prefs.bumpStations(false, true);
+      loadSchedule();
+    } else if (code == 48) { // 0
+      prefs.swapStations();
+      loadSchedule();
     } else if (code >= 48 && code <= 57) {
       displayMessage('#' + (code - 48));
     } else if (code == 37) {

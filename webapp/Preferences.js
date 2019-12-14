@@ -1,32 +1,41 @@
-const stations = caltrainServiceData.southStops;
-
 class Preferences {
 
-  constructor() {
-    this.amStop = 17, // should be in
-    this.pmStop = 0,  // local storage
+  constructor(stations) {
+    this.stations = stations;
+    this.stopAM = 16, // Should be in
+    this.stopPM = 0,  // local storage.
+    this.swapped = false; // true when PM
   }
 
-  setStops(swap) {
-    stopAM = ((stopAM > 0) && (stopAM < stations.length)) ? stopAM : 17; // Preferences.defaults[0];
-    stopPM = ((stopPM > 0) && (stopPM < stations.length)) ? stopPM : 0;  //Preferences.defaults[1];
-    if (swap != false) {
-      let tmp = stopAM;
-      stopAM = stopPM;
-      stopPM = tmp;
-    }
+  swapStations() {
+    this.swapped = this.swapped ? false : true;
   }
 
-  tripLabels(from, dest) {
-    let out = []; 
-    if (from.length >= dest.length) {
-      out[0] = from;
-      out[1] = `to ${dest}`;
+  tripLabels() {
+    this.origin = this.stations[this.swapped ? this.stopPM : this.stopAM];
+    this.destin = this.stations[this.swapped ? this.stopAM : this.stopPM];
+    let out = [];
+    if (this.origin.length >= this.destin.length) {
+      out[0] = this.origin;
+      out[1] = `to ${this.destin}`;
     } else {
-      out[0] = `${from} to`;
-      out[1] = dest;
+      out[0] = `${this.origin} to`;
+      out[1] = this.destin;
     }
     return out;
   }
 
+  bumpStations(origin, increment) {
+    let max = this.stations.length - 1;
+    if (this.swapped) origin = !origin;
+    if (origin && increment) {
+      this.stopAM = (this.stopAM === max) ? 0 : ++this.stopAM;
+    } else if (origin && !increment) {
+      this.stopAM = (this.stopAM === 0) ? max: --this.stopAM;
+    } else if (!origin && increment) {
+      this.stopPM = (this.stopPM === max) ? 0 : ++this.stopPM;
+    } else if (!origin && !increment) {
+      this.stopPM = (this.stopPM === 0) ? max: --this.stopPM;
+    }
+  }
 }
