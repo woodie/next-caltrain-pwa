@@ -30,7 +30,7 @@ class CaltrainService {
   mapStops(direction) {
     let out = new Map();
     let stops = (direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
-    for (let i = 1; i < stops.length; i++) {
+    for (let i = 0; i < stops.length; i++) {
       out.set(stops[i], i);
     }
     return out;
@@ -42,7 +42,7 @@ class CaltrainService {
   * @param direction is NORTH or SOUTH.
   * @param schedule is WEEKDAY or WEEKEND.
   * @return array of Station stop times.
-  */ 
+  */
   static tripStops(trip, direction, schedule) {
     let trips = CaltrainService.select(direction, schedule);
     for (let i = 1; i < trips.length; i++) {
@@ -84,11 +84,10 @@ class CaltrainService {
   routes(departStop, arriveStop, dotw, swap) {
     let schedule = CaltrainService.schedule(dotw, swap);
     let direction = this.direction(departStop, arriveStop);
-    let trains = this.times(null, direction, schedule);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
     let skip = (dotw === SUNDAY) ? CaltrainService.saturdayTripIds : [];
-    return this.merge(trains, departTimes, arriveTimes, skip);
+    return this.merge(departTimes, arriveTimes, skip);
   }
 
  /**
@@ -113,49 +112,36 @@ class CaltrainService {
   * @param skip over these trips
   * @return a two dementional array or ints
   */
-  merge(trains, departTimes, arriveTimes, skip) {
-    let tmp = [];
-    let count = 0;
-    for (let i = 0; i < trains.length; i++) {
-      for (let x = 0; x < skip.length; x++) {
-        if (trains[i] === x) continue;
-      }
-      if ((departTimes[i] !== -1) && (arriveTimes[i] !== -1)) {
-        tmp[count][TRAIN] = trains[i];
-        tmp[count][DEPART] = departTimes[i];
-        tmp[count][ARRIVE] = arriveTimes[i];
-        count++;
+  merge(departTimes, arriveTimes, skip) {
+    for (x of skip) {
+      departTimes.delete(x);
+    }
+    let arr = [];
+    for (let stopId of departTimes.keys()) {
+      if (arriveTimes.has(stopId)) {
+        arr.push([stopId, departTimes.get(stopId), arriveTimes.get(stopId)]);
       }
     }
-    let out = [];
-    for (let i = 0; i < count; i++) {
-      if ((i > 0) && (out[i - 1][DEPART] > tmp[i][DEPART])) {
-        for (let n = 0; n < 3; n++) {
-          out[i][n] = out[i - 1][n];
-          out[i - 1][n] = tmp[i][n];
-        }
-      } else {
-        for (let n = 0; n < 3; n++) {
-          out[i][n] = tmp[i][n];
-        }
-      }
-    }
-    return out;
+    let sorted = arr.sort(function(a,b) {
+      return a[1] - b[1];
+    });
+    return sorted;
   }
 
  /**
-  * For direction and day-of-the-week: train times (or IDs)
-  * @param stop the Stop name (or null for IDs)
+  * For direction and day-of-the-week: train times
+  * @param stop the Stop name
   * @param direction is NORTH or SOUTH
   * @param schedule is WEEKDAY, SATURDAY or SUNDAY
-  * @return the stop times (or IDs)
+  * @return Map of stopID times
   */
   times(stop, direction, schedule) {
     let source = CaltrainService.select(direction, schedule);
-    let times = []; // offset for stopId header
-    let column = (null === stop) ? 0 : this.stops(direction).indexOf(stop);
-    for (let i = 0; i < times.length; i++) {
-      times[i] = source[i + 1][column];       // skip the stopId header
+    let index = this.stops(direction).get(stop);
+    let keys = Object.keys(source).map(Number);
+    let times = new Map();
+    for (let i = 0; i < keys.length; i++) {
+      if (source[keys[i]][index]) times.set(keys[i], source[keys[i]][index]);
     }
     return times;
   }
