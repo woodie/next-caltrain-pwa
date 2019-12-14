@@ -28,13 +28,13 @@ class Preferences {
   bumpStations(origin, increment) {
     let max = this.stations.length - 1;
     if (this.swapped) origin = !origin;
-    if (origin && increment) {
+    if (origin && !increment) {
       this.stopAM = (this.stopAM === max) ? 0 : ++this.stopAM;
-    } else if (origin && !increment) {
+    } else if (origin && increment) {
       this.stopAM = (this.stopAM === 0) ? max: --this.stopAM;
-    } else if (!origin && increment) {
-      this.stopPM = (this.stopPM === max) ? 0 : ++this.stopPM;
     } else if (!origin && !increment) {
+      this.stopPM = (this.stopPM === max) ? 0 : ++this.stopPM;
+    } else if (!origin && increment) {
       this.stopPM = (this.stopPM === 0) ? max: --this.stopPM;
     }
   }

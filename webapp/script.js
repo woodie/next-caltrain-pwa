@@ -142,7 +142,7 @@ var attachListeners = function () {
     } else if (code == 52) { // 4
       prefs.bumpStations(true, false);
       loadSchedule();
-    } else if (code == 54) { // 5
+    } else if (code == 54) { // 6
       prefs.bumpStations(true, true);
       loadSchedule();
     } else if (code == 55) { // 7
