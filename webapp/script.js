@@ -123,8 +123,10 @@ var attachListeners = function () {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code == 0 || code == 13) {
       displayMessage('select');
+      return;
     } else if (code == 8) { // hangup
       displayMessage('hangup');    // hangup
+      return;
     } else if (code == 163) { // #
       displayMessage('hash');      // hash
     } else if (code == 170) { // *
@@ -132,7 +134,7 @@ var attachListeners = function () {
     } else if (code == 49) { // 1
       displayMessage('zoom out');  // zoom out
     } else if (code == 50) { // 2
-      openFullScreen();             // cursor
+      displayMessage('cursor');    // cursor
     } else if (code == 51) { // 3
       displayMessage('zoom in');   // zoom in
     } else if (code == 53) { // 5
@@ -167,9 +169,14 @@ var attachListeners = function () {
     } else {
       displayMessage(code);
     }
+    openFullScreen();
   });
 };
 
 var openFullScreen = function () {
-  document.documentElement.requestFullscreen();
+  try {
+    if (!appState.fullScreen) document.documentElement.requestFullscreen();
+  } catch(error) {
+    console.log('requestFullscreen() failed');
+  }
 };
