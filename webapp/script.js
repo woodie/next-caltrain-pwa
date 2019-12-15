@@ -30,43 +30,48 @@ var loadSchedule = function () {
   document.getElementById('origin').innerHTML = tripLabels[0];
   document.getElementById('destin').innerHTML = tripLabels[1];
   // Load the schdule (CaltrainService WEEKDAY: 8)
-  let routes = sched.routes(tripLabels[0], tripLabels[1], WEEKDAY, prefs.swapped);
-  let minsNow = hr * 60 + min;
-  debugger;
-  let minsSet = routes[appState.offset][1];
+  let routes = sched.routes(prefs.origin, prefs.destin, WEEKDAY, prefs.swapped);
   for (let i=0; i < 6; i++) {
+    let element = document.getElementById(`trip${i}`)
+    if (!routes[i]) {
+      element.innerHTML = '';
+      continue;
+    }
+    let minsNow = Math.floor(hr / 60) + min;
+    let minsSet = routes[i][1];
+    let inThePast = minsSet < minsNow;
+    if (i === 0) {
+      document.getElementById('message').innerHTML = countdown(minsNow, minsSet);
+    }
     let data = routes[appState.offset + i];
     // Should be moved into GoodTimes class
     let originStr = originMer = destinStr = destinMer = null;
-    let om = data[1] % 60;
-    let dm = data[2] % 60;
+    let om = Math.floor(data[1] % 60);
+    let dm = Math.floor(data[2] % 60);
     if (data[1] > 720) {
-      originStr = `${(data[1] - 720) / 60}:${om < 10 ? 0 : ''}${om}`;
+      originStr = `${Math.floor((data[1] - 720) / 60)}:${om < 10 ? 0 : ''}${om}`;
       originMer = 'pm';
     } else {
-      originStr = `${data[1] / 60}:${om < 10 ? 0 : ''}${om}`;
+      originStr = `${Math.floor(data[1] / 60)}:${om < 10 ? 0 : ''}${om}`;
       originMer = 'am';
     }
     if (data[1] > 720) {
-      destinStr = `${(data[2] - 720) / 60}:${dm < 10 ? 0 : ''}${dm}`;
+      destinStr = `${Math.floor((data[2] - 720) / 60)}:${dm < 10 ? 0 : ''}${dm}`;
       destinMer = 'pm';
     } else {
-      destinStr = `${data[2] / 60}:${dm < 10 ? 0 : ''}${dm}`;
+      destinStr = `${Math.floor(data[2] / 60)}:${dm < 10 ? 0 : ''}${dm}`;
       destinMer = 'am';
     }
-    // Create each trip card.
+    // Populate each trip card.
     let card = `<div class="train-number">#${data[0]}</div>
         <div class="train-time">${originStr}<span class="meridiem">${originMer}</span></div>
         <div class="train-time">${destinStr}<span class="meridiem">${destinMer}</span></div>`;
-    let element = document.getElementById(`trip${i}`)
     element.innerHTML = card;
     let classes = ['trip-card'];
-    let inThePast = appState.offset + i < 8;
     if (inThePast) classes.push('train-departed');
     if (i === 0) {
       classes.push('selection');
       classes.push(inThePast ? 'selection-departed' : 'selection-arriving');
-      document.getElementById('message').innerHTML = countdown(timeNow, selectedTime);
     }
     element.className = classes.join(' ');
   }
