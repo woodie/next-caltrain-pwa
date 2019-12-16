@@ -1,120 +1,62 @@
-const AM = Calendar.AM;
-const PM = Calendar.PM;
-const AM_PM = Calendar.AM_PM;
-
 /**
- * A utility to simplify working with the Calendar.
+ * A utility to simplify working with the date and time.
  */
 class GoodTimes{
 
-  constructor(epoch) {
-    calendar = Calendar.getInstance();
-    Date date = new Date(epoch);
-    calendar.setTime(date);
+  constructor() {
+    this.today = new Date();
+    this.minutes = Math.floor(this.today.getHours() / 60) + this.today.getMinutes();
+    this.seconds = 60 - this.today.getSeconds();
   }
 
-  get(int n) {
-    return calendar.get(n);
+  static partTime(minutes) {
+    let mer = 'am';
+    let hrs = Math.floor(minutes / 60);
+    let min = minutes % 60;
+    if (min < 10) { min = '0' + min; }
+    if (hrs > 12) {
+      hrs -= 12;
+      if (hrs > 12) {
+        hrs -= 12;
+      } else {
+        mer = 'pm';
+      }
+    }
+    if (hrs < 1) { hrs = 12; }
+    return [`${hrs}:${min}`, mer];
+  } 
+
+  partTime() {
+    return GoodTimes.partTime(this.minutes);
   }
 
-
-  String dayOfTheWeek() {
-    return GoodTimes.daysOfWeek[dotw()];
+  static fullTime(minutes) {
+    return GoodTimes.partTime(minutes).join('');
   }
 
-  String dateString() {
-    StringBuffer buf = new StringBuffer(20);
-    buf.append(GoodTimes.monthsOfYear[calendar.get(Calendar.MONTH)]);
-    buf.append(" ");
-    buf.append(calendar.get(Calendar.DAY_OF_MONTH));
-    buf.append(", ");
-    buf.append(calendar.get(Calendar.YEAR));
-    return buf.toString();
+  fullTime() { 
+    GoodTimes.fullTime(this.minute);
   }
 
-  static countdown(int minutes, int second) {
-    StringBuffer buf = new StringBuffer(20);
-    buf.append("in ");
+  dayOfTheWeek() {
+    return this.today.getDay();
+  }
+
+  dateString() {
+    return this.today.toString().split(' ').slice(1, 4).join(' ');
+  }
+
+  inThePast(target) {
+    return (target - this.minutes < 0);
+  }
+
+  countdown(target) {
+    let minutes = target - this.minutes;
     if (minutes > 59) {
-      buf.append(minutes / 60);
-      buf.append(" hr ");
-      buf.append(minutes % 60);
-      buf.append(" min");
+      return `${Math.floor(minutes / 60)} hr ${minutes % 60} min`;
     } else {
-      buf.append(minutes);
-      buf.append(" min ");
-      buf.append(60 - second);
-      buf.append(" sec");
+      return `${minutes} min ${60 - this.second} sec`;
     }
-    return buf.toString();
-  }
-
-  static timeOfday(int hour, int min, String ampm) {
-    StringBuffer buf = new StringBuffer(10);
-    buf.append(hour);
-    buf.append(min < 10 ? ":0" : ":");
-    buf.append(min);
-    if (ampm.length() > 0) {
-      buf.append(" ");
-      buf.append(ampm);
-    }
-    return buf.toString();
-  }
-
-  static timeOfday(int hour, int min) {
-    return timeOfday(hour, min, "");
-  }
-
-  static fullTime(int minutes) {
-    int hour = minutes / 60;
-    String ampm = (hour > 11 && hour < 24) ? "pm" : "am";
-    if (hour > 12) hour -= 12;
-    if (hour > 12) hour -= 12;
-    return timeOfday(hour, minutes % 60, ampm);
-  }
-
-  static partTime(int minutes) {
-    String[] out = new String[2];
-    int hour = minutes / 60;
-    String ampm = (hour > 11 && hour < 24) ? "pm" : "am";
-    if (hour > 12) hour -= 12;
-    if (hour > 12) hour -= 12;
-    out[0] = timeOfday(hour, minutes % 60, "");
-    out[1] = ampm;
-    return out;
-  }
-
-  timeOfday(boolean withAmPm) {
-    return GoodTimes.timeOfday(hour(), minute(), (withAmPm) ? ampm() : "");
-  }
-
-  ampm() {
-    return (calendar.get(Calendar.AM_PM) == Calendar.AM) ? "am" : "pm";
-  }
-
-  hr24() {
-   return  get(Calendar.HOUR_OF_DAY);
-  }
-
-  hour() {
-    int hr =  get(Calendar.HOUR);
-    return (hr < 1) ? hr + 12: hr;
-  }
-
-  minute() {
-    return get(Calendar.MINUTE);
-  }
-
-  second() {
-    return get(Calendar.SECOND);
-  }
-
-  dotw() {
-    return calendar.get(Calendar.DAY_OF_WEEK);
-  }
-
-  currentMinutes() {
-    return hr24() * 60 + minute();
   }
 
 }

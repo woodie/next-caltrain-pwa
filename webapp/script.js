@@ -1,14 +1,11 @@
 let prefs = new Preferences(caltrainServiceData.southStops);
 let sched = new CaltrainService();
-
-var appState = {
-  fullScreen: false,
-  offset: 8,
-  kaios: false,
-};
+let fullScreen = false;
+let kaios = false;
+let offset = -1;
 
 var fullScreenView = function () {
-  fs = appState.fullScreen
+  fs = fullScreen
   document.getElementById('trip4').style['display'] = fs ? 'flex' : 'none';
   document.getElementById('trip5').style['display'] = fs ? 'flex' : 'none';
   document.getElementById('title').style['display'] = fs ? 'flex' : 'none';
@@ -17,61 +14,42 @@ var fullScreenView = function () {
 };
 
 var loadSchedule = function () {
-  // Set the time
-  let timeNow = new Date();
-  let hr = timeNow.getHours();
-  let min = timeNow.getMinutes();
-  if (min < 10) { min = "0" + min; }
-  let ampm = "am";
-  if( hr > 12 ) { hr -= 12; ampm = "pm"; } // hr + ":" + min + ampm ;
-  document.getElementById('timeNow').innerHTML = `${hr}:${min}${ampm}`;
+  let goodTime = new GoodTimes();
+  document.getElementById('timeNow').innerHTML = goodTime.fullTime();
   // Set the stations
   let tripLabels = prefs.tripLabels();
   document.getElementById('origin').innerHTML = tripLabels[0];
   document.getElementById('destin').innerHTML = tripLabels[1];
   // Load the schdule (CaltrainService WEEKDAY: 8)
   let routes = sched.routes(prefs.origin, prefs.destin, WEEKDAY, prefs.swapped);
+  if (offset === -1) offset = 0;
   for (let i=0; i < 6; i++) {
     let element = document.getElementById(`trip${i}`)
-    if (!routes[i]) {
-      element.innerHTML = '';
+    let n = (i >= routes.length - 1) ? routes.length - 1 : i;
+    let data = routes[offset + n];
+    if (routes.length <= i) {
+      element.innerHTML = '<div class="train-time">&nbsp;</div>';
+      document.getElementById('message').innerHTML = '';
       continue;
     }
-    let minsNow = Math.floor(hr / 60) + min;
-    let minsSet = routes[i][1];
-    let inThePast = minsSet < minsNow;
-    if (i === 0) {
-      document.getElementById('message').innerHTML = countdown(minsNow, minsSet);
+    if (1 === 0) {
+      document.getElementById('message').innerHTML = goodTime.countdown(data[1]);
     }
-    let data = routes[appState.offset + i];
-    // Should be moved into GoodTimes class
-    let originStr = originMer = destinStr = destinMer = null;
-    let om = Math.floor(data[1] % 60);
-    let dm = Math.floor(data[2] % 60);
-    if (data[1] > 720) {
-      originStr = `${Math.floor((data[1] - 720) / 60)}:${om < 10 ? 0 : ''}${om}`;
-      originMer = 'pm';
-    } else {
-      originStr = `${Math.floor(data[1] / 60)}:${om < 10 ? 0 : ''}${om}`;
-      originMer = 'am';
-    }
-    if (data[1] > 720) {
-      destinStr = `${Math.floor((data[2] - 720) / 60)}:${dm < 10 ? 0 : ''}${dm}`;
-      destinMer = 'pm';
-    } else {
-      destinStr = `${Math.floor(data[2] / 60)}:${dm < 10 ? 0 : ''}${dm}`;
-      destinMer = 'am';
-    }
-    // Populate each trip card.
+    let originTime = GoodTimes.partTime(data[1]);
+    let destinTime = GoodTimes.partTime(data[2]);
     let card = `<div class="train-number">#${data[0]}</div>
-        <div class="train-time">${originStr}<span class="meridiem">${originMer}</span></div>
-        <div class="train-time">${destinStr}<span class="meridiem">${destinMer}</span></div>`;
+        <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
+        <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
     element.innerHTML = card;
     let classes = ['trip-card'];
-    if (inThePast) classes.push('train-departed');
-    if (i === 0) {
+    if (n === 0) {
       classes.push('selection');
-      classes.push(inThePast ? 'selection-departed' : 'selection-arriving');
+      if (goodTime.inThePast(data[1])) {
+        classes.push('train-departed');
+        classes.push('selection-departed');
+      } else {
+        classes.push('selection-arriving');
+      }
     }
     element.className = classes.join(' ');
   }
@@ -90,21 +68,21 @@ var countdown = function(minsNow, minsSet) {
 
 var displayMessage = function (message) {
   document.getElementById('message').innerHTML = message;
-  if (message === 'up' && appState.offset > 0) {
-    appState.offset = appState.offset - 1;
-  } else if (message === 'down' && appState.offset < 17) {
-    appState.offset = appState.offset + 1;
+  if (message === 'up' && offset > 0) {
+    offset = offset - 1;
+  } else if (message === 'down' && offset < 17) {
+    offset = offset + 1;
   }
 };
 
 var attachListeners = function () {
-  if (navigator.userAgent.includes('KAIOS')) appState.kaios = true;
+  if (navigator.userAgent.includes('KAIOS')) kaios = true;
   document.onfullscreenchange = function (event) {
-    appState.fullScreen = appState.fullScreen ? false : true;
+    fullScreen = fullScreen ? false : true;
     fullScreenView();
   };
   document.body.addEventListener("mousemove", function (e) {
-    if (appState.kaios == false) return;
+    if (kaios == false) return;
     if (e.movementY > 0) {
       displayMessage("down");
     } else if (e.movementY < 0) {
@@ -139,14 +117,19 @@ var attachListeners = function () {
     } else if (code == 56) { // 8
       displayMessage('down'); // page down
     } else if (code == 52) { // 4
+      offset = -1;
       prefs.bumpStations(true, false);
     } else if (code == 54) { // 6
+      offset = -1;
       prefs.bumpStations(true, true);
     } else if (code == 55) { // 7
+      offset = -1;
       prefs.bumpStations(false, false);
     } else if (code == 57) { // 9
+      offset = -1;
       prefs.bumpStations(false, true);
     } else if (code == 48) { // 0
+      offset = -1;
       prefs.swapStations();
     } else if (code >= 48 && code <= 57) {
       displayMessage('#' + (code - 48));
@@ -169,7 +152,7 @@ var attachListeners = function () {
 
 var openFullScreen = function () {
   try {
-    if (!appState.fullScreen) document.documentElement.requestFullscreen();
+    if (!fullScreen) document.documentElement.requestFullscreen();
   } catch(error) {
   }
 };
