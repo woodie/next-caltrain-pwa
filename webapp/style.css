@@ -64,8 +64,15 @@ body {
 }
 
 #message {
-  color: #0F0; /* green; */
   margin-bottom: 2px;
+}
+
+.message-arriving {
+  color: #0F0;
+}
+
+.message-swapped {
+  color: #0Af;
 }
 
 /*
@@ -92,6 +99,9 @@ body {
   color: #0AF;
 }
 
+.selection-none {
+  border: 2px solid #000;
+}
 .selection-swapped {
   border: 2px solid #0Af;
 }

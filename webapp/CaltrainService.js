@@ -94,10 +94,21 @@ class CaltrainService {
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
 
+  static nextIndex(routes, minutes) {
+    let index = 0;
+    for (let route of routes) {
+      if (route[1] > minutes) {
+        return index;
+      }
+      index++;
+    }
+    return index;
+  }
+
  /**
   * Convert day-of-the-week into a schedule
   * @param dotw the Calendar day-of-the-week
-  * @param swap invert schedule selection logic
+  * @param swap show other schedule that today's
   * @return the schedule
   */
   static schedule(dotw, swap) {

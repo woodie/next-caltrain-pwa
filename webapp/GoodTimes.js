@@ -4,9 +4,10 @@
 class GoodTimes{
 
   constructor() {
-    this.today = new Date();
-    this.minutes = Math.floor(this.today.getHours() / 60) + this.today.getMinutes();
-    this.seconds = 60 - this.today.getSeconds();
+    let now = new Date();
+    this.minutes = now.getHours() * 60 + now.getMinutes();
+    this.seconds = now.getSeconds();
+    this.dotw = now.getDay();
   }
 
   static partTime(minutes) {
@@ -35,15 +36,21 @@ class GoodTimes{
   }
 
   fullTime() { 
-    GoodTimes.fullTime(this.minute);
+    return GoodTimes.fullTime(this.minutes);
   }
 
-  dayOfTheWeek() {
-    return this.today.getDay();
+  schedule() {
+    if (this.dotw === 0) {
+      return SUNDAY;
+    } else if (this.dotw === 6) {
+      return SATURDAY;
+    } else {
+    return WEEKDAY;
+    }
   }
 
-  dateString() {
-    return this.today.toString().split(' ').slice(1, 4).join(' ');
+  static dateString(miliseconds) {
+    return new Date(miliseconds).toString().split(' ').slice(1, 4).join(' ');
   }
 
   inThePast(target) {
@@ -55,7 +62,7 @@ class GoodTimes{
     if (minutes > 59) {
       return `${Math.floor(minutes / 60)} hr ${minutes % 60} min`;
     } else {
-      return `${minutes} min ${60 - this.second} sec`;
+      return `${minutes} min ${60 - this.seconds} sec`;
     }
   }
 

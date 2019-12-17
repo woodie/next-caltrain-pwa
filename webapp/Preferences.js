@@ -2,7 +2,7 @@ class Preferences {
 
   constructor(stations) {
     this.stations = stations;
-    this.swapped = new Date().getHours() >= 12;
+    this.flipped = new Date().getHours() >= 12;
     if (localStorage.getItem('stopAM') === null) localStorage.setItem('stopAM', 16);
     if (localStorage.getItem('stopPM') === null) localStorage.setItem('stopPM', 0);
     this.stopAM = localStorage.getItem("stopAM");
@@ -14,13 +14,13 @@ class Preferences {
     localStorage.setItem('stopPM', this.stopPM);
   }
 
-  swapStations() {
-    this.swapped = this.swapped ? false : true;
+  flipStations() {
+    this.flipped = this.flipped ? false : true;
   }
 
   tripLabels() {
-    this.origin = this.stations[this.swapped ? this.stopPM : this.stopAM];
-    this.destin = this.stations[this.swapped ? this.stopAM : this.stopPM];
+    this.origin = this.stations[this.flipped ? this.stopPM : this.stopAM];
+    this.destin = this.stations[this.flipped ? this.stopAM : this.stopPM];
     if (this.origin.length >= this.destin.length) {
       return [this.origin, `to ${this.destin}`];
     } else {
@@ -30,7 +30,7 @@ class Preferences {
 
   bumpStations(origin, increment) {
     let max = this.stations.length - 1;
-    if (this.swapped) origin = !origin;
+    if (this.flipped) origin = !origin;
     if (origin && !increment) {
       this.stopAM = (this.stopAM === max) ? 0 : ++this.stopAM;
     } else if (origin && increment) {
