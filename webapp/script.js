@@ -23,8 +23,7 @@ var loadSchedule = function () {
   document.getElementById('origin').innerHTML = tripLabels[0];
   document.getElementById('destin').innerHTML = tripLabels[1];
   // Load the schdule
-  let routes = sched.routes(prefs.origin, prefs.destin, WEEKDAY, swapped);
-  console.log(">>>> ", offset)
+  let routes = sched.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
   if (offset === null) {
     offset = CaltrainService.nextIndex(routes, goodTime.minutes);
   } else if (offset > routes.length - 1) {
@@ -61,10 +60,11 @@ var loadSchedule = function () {
         if (swapped) {
           document.getElementById('message').className = 'message-swapped';
           classes.push('selection-swapped');
+          message = goodTime.swapped();
         } else {
           document.getElementById('message').className = 'message-arriving';
-          message = goodTime.countdown(route[1]);
           classes.push('selection-arriving');
+          message = goodTime.countdown(route[1]);
         }
       }
     } else {
@@ -90,10 +90,10 @@ var attachListeners = function () {
     } else if (code == 8) { // hangup
       prefs.saveStops();
       return;
-    } else if (code == 163) { // #
+    } else if (code == 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;
       offset = null;
-    } else if (code == 170) { // *
+    } else if (code == 170 || code === 37) { // * or <-
       return;
     } else if (code == 53) { // 5 page up
       offset--;

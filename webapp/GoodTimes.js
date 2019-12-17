@@ -49,6 +49,10 @@ class GoodTimes{
     }
   }
 
+  swapped() {
+    return (this.dotw === 0 || this.dotw === 6) ? 'Weekday Schedule' : 'Weekend Schedule';
+  }
+
   static dateString(miliseconds) {
     return new Date(miliseconds).toString().split(' ').slice(1, 4).join(' ');
   }
