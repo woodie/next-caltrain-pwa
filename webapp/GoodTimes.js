@@ -11,16 +11,14 @@ class GoodTimes{
   }
 
   static partTime(minutes) {
-    let mer = 'am';
     let hrs = Math.floor(minutes / 60);
     let min = minutes % 60;
     if (min < 10) { min = '0' + min; }
+    let mer = (hrs > 11 && hrs < 23) ? 'pm' : 'am';
     if (hrs > 12) {
       hrs -= 12;
       if (hrs > 12) {
         hrs -= 12;
-      } else {
-        mer = 'pm';
       }
     }
     if (hrs < 1) { hrs = 12; }
