@@ -5,10 +5,10 @@ class Preferences {
     this.flipped = new Date().getHours() >= 12;
     let savedAM = localStorage.getItem('stopAM');
     let savedPM = localStorage.getItem('stopPM');
-    if !(Number.isInteger(savedAM) && savedAM > -1 && savedAM < stations.length) {
+    if (!(Number.isInteger(savedAM) && savedAM > -1 && savedAM < stations.length)) {
       localStorage.setItem('stopAM', 16);
     }
-    if !(Number.isInteger(savedPM) && savedPM > -1 && savedPM < stations.length) {
+    if (!(Number.isInteger(savedPM) && savedPM > -1 && savedPM < stations.length)) {
       localStorage.setItem('stopPM', 0);
     }
     this.stopAM = localStorage.getItem("stopAM");
