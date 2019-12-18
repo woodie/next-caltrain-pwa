@@ -88,12 +88,12 @@ var attachListeners = function () {
     if (code == 0 || code == 13) { // select
       return;
     } else if (code == 8) { // hangup
-      prefs.saveStops();
       return;
     } else if (code == 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;
       offset = null;
     } else if (code == 170 || code === 37) { // * or <-
+      prefs.saveStops();
       return;
     } else if (code == 53) { // 5 page up
       offset--;
