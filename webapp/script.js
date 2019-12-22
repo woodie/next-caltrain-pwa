@@ -11,13 +11,13 @@ var startApp = function () {
   if (navigator.userAgent.includes('KAIOS')) kaios = true;
   attachListeners();
   setTheTime();
-  loadSchedule();
 };
 
 var setTheTime = function () {
   let ourTime = new GoodTimes();
   document.getElementById('theTime').innerHTML = ourTime.fullTime();
   setTimeout(setTheTime, (60 - ourTime.seconds) * 1000);
+  loadSchedule();
 };
 
 var setCountdown = function (minutes) {
@@ -77,8 +77,8 @@ var loadSchedule = function () {
     if (i > routes.length - 1) {
       element.innerHTML = '<div class="train-time">&nbsp;</div>';
       if (i === 0) {
+        document.getElementById('blurb').className = 'message-swapped blink';
         document.getElementById('blurb').innerHTML = 'NO TRAINS';
-        document.getElementById('blurb').className = 'message-swapped';
         element.className = 'selection-none';
       }
       continue;
@@ -92,14 +92,19 @@ var loadSchedule = function () {
     element.innerHTML = card;
     if (i === 0) {
       classes.push('selection');
-      if (goodTime.inThePast(minutes)) {
-        classes.push('train-departed');
-        classes.push('selection-departed');
+      if (swapped) {
+        document.getElementById('blurb').className = 'message-swapped';
+        classes.push('selection-swapped');
+        message = goodTime.swapped();
+        if (goodTime.inThePast(minutes)) { classes.push('train-departed'); }
       } else {
-        if (swapped) {
-          document.getElementById('blurb').className = 'message-swapped';
-          classes.push('selection-swapped');
-          message = goodTime.swapped();
+        if (goodTime.inThePast(minutes)) {
+          classes.push('train-departed');
+          classes.push('selection-departed');
+        } else if (goodTime.departing(minutes)) {
+          document.getElementById('blurb').className = 'message-departing blink';
+          message = 'DEPARTING';
+          classes.push('selection-departing');
         } else {
           document.getElementById('blurb').className = 'message-arriving';
           classes.push('selection-arriving');

@@ -59,6 +59,10 @@ class GoodTimes{
     return (target - this.minutes < 0);
   }
 
+  departing(target) {
+    return (target === this.minutes);
+  }
+
   countdown(target) {
     let minutes = target - this.minutes;
     if (minutes > 59) {
