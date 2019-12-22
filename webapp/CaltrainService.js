@@ -90,7 +90,7 @@ class CaltrainService {
     let direction = CaltrainService.direction(departStop, arriveStop);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-    let skip = (dotw === SUNDAY) ? CaltrainService.saturdayTripIds : [];
+    let skip = (dotw === SUNDAY) ? saturdayTripIds : [];
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
 
@@ -128,7 +128,7 @@ class CaltrainService {
   * @return a two dementional array or ints
   */
   static merge(departTimes, arriveTimes, skip) {
-    for (x of skip) {
+    for (let x of skip) {
       departTimes.delete(x);
     }
     let arr = [];

@@ -17,16 +17,16 @@
   </head>
   <body>
 
-  <div id="contents">
-    <div id="hints"><span>press any key to continue</span></div>
+  <div id="main">
+    <div id="hints"><span>Press 25 to continue.</span></div>
     <div id="title" style="display: none;">
       <div id="appName">Next Caltrain</div>
-      <div id="timeNow">- - -</div>
+      <div id="theTime">- - -</div>
     </div>
     <div id="stations"><span id="origin">Origin to</span><br>
                        <span id="destin">Destination</span></div>
     <div id="schedule">
-      <div id="message"></div>
+      <div id="blurb"></div>
       <div id="trip0" class="trip-card"></div>
       <div id="trip1" class="trip-card"></div>
       <div id="trip2" class="trip-card"></div>
@@ -37,10 +37,7 @@
   </div>
 
   <script>
-  (function() {
-    attachListeners();
-    loadSchedule();
-  })();
+  (function(){ startApp(); })();
   </script>
   </body>
 </html>
