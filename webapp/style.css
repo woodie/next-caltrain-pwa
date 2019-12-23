@@ -45,7 +45,7 @@ body {
   background-color: black;
   margin: auto 0;
   width: 240px;
-  min-height: 228px
+  min-height: 320px
 }
 
 .btn {
@@ -80,36 +80,32 @@ body {
   color: #0F0;
 }
 
-.message-swapped {
-  color: #0Af;
-}
-
 .message-departing {
-  color: #FF0; /* yellow */
+  color: #FF0;
 }
 
-.train-departed {
-  color: #0AF; /* blue */
+.message-departed {
+  color: #0AF;
 }
 
 .selection-none {
-  border: 2px solid #000; /* black */
+  border: 2px solid #000;
 }
 
 .selection-swapped {
-  border: 2px solid #0AF; /* blue */
+  border: 2px solid #0AF;
 }
 
 .selection-departing {
-  border: 2px solid #FF0; /* yellow */
+  border: 2px solid #FF0;
 }
 
 .selection-departed {
-  border: 2px solid #666; /* grey */
+  border: 2px solid #666;
 }
 
 .selection-arriving {
-  border: 2px solid #0F0; /* green */
+  border: 2px solid #0F0;
 }
 
 .selection {
@@ -151,7 +147,7 @@ body {
   white-space: nowrap;
   font-size: 12pt;
   padding: 0 3px;
-  padding-left: 25px;
+  padding-left: 10px;
   padding-top: 65px;
   padding-bottom: 30px;
 }
@@ -166,10 +162,12 @@ body {
 }
 
 #description {
+  font-size: 12pt;
 }
 
 .station-stop {
   display: flex;
+  align-items: baseline;
 }
 
 .station-time {
@@ -178,8 +176,22 @@ body {
 .station-name {
 }
 
-.spacer {
-  padding: 4px 6px;
+.station-dot {
+  font-size: 30pt;
+}
+
+.station-spacer {
+  font-size: 18pt;
+  padding: 0 6px;
+  line-height: 16px;
+}
+
+.target {
+  color: white;
+}
+
+.filler {
+  color: black;
 }
 
 /* @group Blink */

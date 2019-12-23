@@ -61,11 +61,19 @@ var toggleDetailsView = function () {
     document.getElementById('description').innerHTML = trip.description();
     let goodTime = new GoodTimes();
     let lines = [];
-    for (stop of trip.times) {
-      let style = (goodTime.inThePast(stop[1])) ? 'train-departed' : '';
+    for (let i=0; i < trip.times.length; i++) {
+      stop = trip.times[i];
+      let spacer = (i === trip.times.length - 1) ? '' : '<br/>|';
+      let fullTime = GoodTimes.fullTime(stop[1]);
+      let filler = fullTime.length > 6 ? '' : '0';
+      let style = (goodTime.inThePast(stop[1])) ? 'message-departed' : 'message-arriving';
+      let target = (prefs.origin === stop[0] || prefs.destin === stop[0]) ? 'target' : '';
       lines.push(`<div class="station-stop">
-          <div class="station-time" style="${style}">${GoodTimes.fullTime(stop[1])}</div>
-          <div class="spacer">&ndash;</div><div class="station-name">${stop[0]}</div></div>`);
+          <div class="station-time"><span
+               class="filler">${filler}</span>${fullTime}</div>
+          <div class="station-spacer ${style}"><span
+               class="station-dot ${target}">&#9679;</span>${spacer}</div>
+          <div class="station-name">${stop[0]}</div></div>`);
     }
     document.getElementById('listing').innerHTML = lines.join("\n");
   }
@@ -98,7 +106,7 @@ var loadSchedule = function () {
     if (i > routes.length - 1) {
       element.innerHTML = '<div class="train-time">&nbsp;</div>';
       if (i === 0) {
-        document.getElementById('blurb').className = 'message-swapped blink';
+        document.getElementById('blurb').className = 'message-departed blink';
         document.getElementById('blurb').innerHTML = 'NO TRAINS';
         element.className = 'selection-none';
       }
@@ -115,13 +123,13 @@ var loadSchedule = function () {
       trainId = route[0];
       classes.push('selection');
       if (swapped) {
-        document.getElementById('blurb').className = 'message-swapped';
+        document.getElementById('blurb').className = 'message-departed';
         classes.push('selection-swapped');
         message = goodTime.swapped();
-        if (goodTime.inThePast(minutes)) { classes.push('train-departed'); }
+        if (goodTime.inThePast(minutes)) { classes.push('message-departed'); }
       } else {
         if (goodTime.inThePast(minutes)) {
-          classes.push('train-departed');
+          classes.push('message-departed');
           classes.push('selection-departed');
         } else if (goodTime.departing(minutes)) {
           document.getElementById('blurb').className = 'message-departing blink';
@@ -136,7 +144,7 @@ var loadSchedule = function () {
       }
     } else {
       if (goodTime.inThePast(minutes)) {
-        classes.push('train-departed');
+        classes.push('message-departed');
       }
     }
     element.className = classes.join(' ');
@@ -152,45 +160,45 @@ var attachListeners = function () {
   };
   document.addEventListener('keydown', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
-    if (code == 0 || code == 13) { // select
+    if (code === 0 || code === 13) { // select
       toggleDetailsView();
     } else if (details) { // details
       return; // ignore all other events
-    } else if (code == 8) { // hangup
+    } else if (code === 8) { // hangup
       // prepare to shutdown.
-    } else if (code == 163 || code === 39) { // # or ->
+    } else if (code === 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;
       offset = null;
-    } else if (code == 170 || code === 37) { // * or <-
+    } else if (code === 170 || code === 37) { // * or <-
       prefs.saveStops();
-    } else if (code == 50) { // 2
+    } else if (code === 50) { // 2
       return;
-    } else if (code == 53) { // 5 page up
+    } else if (code === 53) { // 5 page up
       if (fullScreen) {
         offset--;
       } else {
         openFullScreen();
       }
-    } else if (code == 56) { // 8 page down
+    } else if (code === 56) { // 8 page down
       offset++;
-    } else if (code == 52) { // 4
+    } else if (code === 52) { // 4
       offset = null;
       prefs.bumpStations(true, false);
-    } else if (code == 54) { // 6
+    } else if (code === 54) { // 6
       offset = null;
       prefs.bumpStations(true, true);
-    } else if (code == 55) { // 7
+    } else if (code === 55) { // 7
       offset = null;
       prefs.bumpStations(false, false);
-    } else if (code == 57) { // 9
+    } else if (code === 57) { // 9
       offset = null;
       prefs.bumpStations(false, true);
-    } else if (code == 48) { // 0
+    } else if (code === 48) { // 0
       offset = null;
       prefs.flipStations();
-    } else if (code == 38) { // up arrow
+    } else if (code === 38) { // up arrow
       offset--;
-    } else if (code == 40) { // down arrow
+    } else if (code === 40) { // down arrow
       offset++;
     } else {
       return;
