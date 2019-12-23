@@ -63,17 +63,17 @@ var toggleDetailsView = function () {
     let lines = [];
     for (let i=0; i < trip.times.length; i++) {
       stop = trip.times[i];
-      let spacer = (i === trip.times.length - 1) ? '' : '<br/>|';
+      let spacer = (i === 0) ? '' : '|';
       let fullTime = GoodTimes.fullTime(stop[1]);
       let filler = fullTime.length > 6 ? '' : '0';
       let style = (goodTime.inThePast(stop[1])) ? 'message-departed' : 'message-arriving';
       let target = (prefs.origin === stop[0] || prefs.destin === stop[0]) ? 'target' : '';
       lines.push(`<div class="station-stop">
-          <div class="station-time"><span
+          <div class="station-time"><br/><span
                class="filler">${filler}</span>${fullTime}</div>
-          <div class="station-spacer ${style}"><span
-               class="station-dot ${target}">&#9679;</span>${spacer}</div>
-          <div class="station-name">${stop[0]}</div></div>`);
+          <div class="station-spacer ${style}">${spacer}<br/><span
+               class="station-dot ${target}">&#9679;</span></div>
+          <div class="station-name"><br/>${stop[0]}</div></div>`);
     }
     document.getElementById('listing').innerHTML = lines.join("\n");
   }

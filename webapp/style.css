@@ -146,10 +146,7 @@ body {
 #listing {
   white-space: nowrap;
   font-size: 12pt;
-  padding: 0 3px;
-  padding-left: 10px;
-  padding-top: 65px;
-  padding-bottom: 30px;
+  padding: 50px 3px 30px 10px;
 }
 
 #header {
@@ -167,7 +164,7 @@ body {
 
 .station-stop {
   display: flex;
-  align-items: baseline;
+  line-height: 18px;
 }
 
 .station-time {
@@ -176,14 +173,14 @@ body {
 .station-name {
 }
 
-.station-dot {
-  font-size: 30pt;
-}
-
 .station-spacer {
+  line-height: 16px;
   font-size: 18pt;
   padding: 0 6px;
-  line-height: 16px;
+}
+
+.station-dot {
+  font-size: 30pt;
 }
 
 .target {
