@@ -160,7 +160,8 @@ body {
   position: fixed;
   background-color: black;
   width: 240px;
-  padding-bottom: 10px;
+  padding-top: 2px;
+  padding-bottom: 8px;
   top: 0;
 }
 
@@ -178,7 +179,7 @@ body {
 }
 
 .spacer {
-  padding: 2px 6px;
+  padding: 4px 6px;
 }
 
 /* @group Blink */

@@ -154,6 +154,8 @@ var attachListeners = function () {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code == 0 || code == 13) { // select
       toggleDetailsView();
+    } else if (details) { // details
+      return; // ignore all other events
     } else if (code == 8) { // hangup
       // prepare to shutdown.
     } else if (code == 163 || code === 39) { // # or ->
