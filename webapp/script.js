@@ -1,11 +1,12 @@
 let prefs = new Preferences(caltrainServiceData.southStops);
 let sched = new CaltrainService();
 let fullScreen = false;
+let details = false;
 let swapped = false;
 let kaios = false;
 let offset = null;
 let countdown = null;
-let minutes = 0;
+let trainId = null;
 
 var startApp = function () {
   if (navigator.userAgent.includes('KAIOS')) kaios = true;
@@ -50,8 +51,28 @@ var fullScreenView = function () {
   document.getElementById('main').style['height'] = fs ? '290px' : '228px';
 };
 
+var toggleDetailsView = function () {
+  details = details ? false : trainId != null;
+  document.getElementById('details').style['display'] = details ? 'flex' : 'none';
+  document.getElementById('main').style['display'] = details ? 'none' : 'flex';
+  if (details) {
+    let trip = new CaltrainTrip(trainId);
+    document.getElementById('label').innerHTML = trip.label();
+    document.getElementById('description').innerHTML = trip.description();
+    let goodTime = new GoodTimes();
+    let lines = [];
+    for (stop of trip.times) {
+      let style = (goodTime.inThePast(stop[1])) ? 'train-departed' : '';
+      lines.push(`<div class="station-stop">
+          <div class="station-time" style="${style}">${GoodTimes.fullTime(stop[1])}</div>
+          <div class="circle">&#11044;</div><div class="station-name">${stop[0]}</div></div>`);
+    }
+    document.getElementById('listing').innerHTML = lines.join("\n");
+  }
+}
+
 var loadSchedule = function () {
-  minutes = 0;
+  let minutes = 0;
   clearTimeout(countdown);
   let goodTime = new GoodTimes();
   let message = '&nbsp;';
@@ -86,11 +107,12 @@ var loadSchedule = function () {
     minutes = route[1];
     let originTime = GoodTimes.partTime(minutes);
     let destinTime = GoodTimes.partTime(route[2]);
-    let card = `<div class="train-number">#${route[0]}</div>
+    let card = `<div class="train-number">#${trainId}</div>
         <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
         <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
     element.innerHTML = card;
     if (i === 0) {
+      trainId = route[0];
       classes.push('selection');
       if (swapped) {
         document.getElementById('blurb').className = 'message-swapped';
@@ -131,9 +153,9 @@ var attachListeners = function () {
   document.addEventListener('keydown', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code == 0 || code == 13) { // select
-      document.getElementById('blurb').className = 'select';
+      toggleDetailsView();
     } else if (code == 8) { // hangup
-      document.getElementById('blurb').className = 'hangup';
+      // prepare to shutdown.
     } else if (code == 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;
       offset = null;

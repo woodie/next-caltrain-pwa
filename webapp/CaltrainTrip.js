@@ -68,10 +68,7 @@ class CaltrainTrip {
     if (this.schedule === WEEKDAY) {
       return "Weekday";
     } else {
-      for (let x = 0; x < CaltrainService.saturdayTripIds.length; x++) {
-        if (this.trip === CaltrainService.saturdayTripIds[x]) return "Saturday";
-      }
-      return "Weekend";
+      return (saturdayTripIds.indexOf(this.trip)) === -1 ? "Weekend" : "Saturday";
     }
   }
 

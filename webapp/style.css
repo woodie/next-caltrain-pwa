@@ -39,6 +39,15 @@ body {
   height: 228px; /* or 290px */
 }
 
+#details {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  margin: auto 0;
+  width: 240px;
+  min-height: 228px
+}
+
 .btn {
   border: thin solid cyan;
   display: inline-block;
@@ -127,7 +136,6 @@ body {
 .train-time {
   flex: 3;
   text-align: right;
-  cursor: crosshair;
   font-size: 20pt;
   padding-right: 3px;
   margin-top: -5px;
@@ -137,6 +145,29 @@ body {
 .meridiem {
   font-size: 11pt;
   padding-left: 1px;
+}
+
+#listing {
+  white-space: nowrap;
+  font-size: 12pt;
+  padding: 0 3px;
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.station-stop {
+  display: flex;
+}
+
+.station-time {
+  flix: 1;
+}
+
+.station-name {
+}
+
+.circle {
+  padding: 2px 6px;
 }
 
 /* @group Blink */
