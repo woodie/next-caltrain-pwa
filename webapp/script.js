@@ -16,7 +16,8 @@ var startApp = function () {
 
 var setTheTime = function () {
   let ourTime = new GoodTimes();
-  document.getElementById('theTime').innerHTML = ourTime.fullTime();
+  document.getElementById('mainTime').innerHTML = ourTime.fullTime();
+  document.getElementById('moreTime').innerHTML = ourTime.fullTime();
   setTimeout(setTheTime, (60 - ourTime.seconds) * 1000);
   loadSchedule();
 };
@@ -46,7 +47,7 @@ var fullScreenView = function () {
   fs = fullScreen
   document.getElementById('trip4').style['display'] = fs ? 'flex' : 'none';
   document.getElementById('trip5').style['display'] = fs ? 'flex' : 'none';
-  document.getElementById('title').style['display'] = fs ? 'flex' : 'none';
+  document.getElementById('title-main').style['display'] = fs ? 'flex' : 'none';
   document.getElementById('hints').style['display'] = fs ? 'none' : 'flex';
   document.getElementById('main').style['height'] = fs ? '290px' : '228px';
 };
