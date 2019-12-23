@@ -24,14 +24,14 @@ class CaltrainTrip {
     let strs = (this.direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     // determine size
     let getSize = 0;
-    for (let i = 1; i < mins.length; i++) {
+    for (let i = 0; i < mins.length; i++) {
       if (mins[i] !== -1) getSize++;
     }
     this.times = [];
     this.stops = [];
     // populate instance
     let setSize = 0;
-    for (let i = 1; i < mins.length; i++) {
+    for (let i = 0; i < mins.length; i++) {
       if (mins[i] === -1) continue;
       this.times[setSize] = mins[i];
       this.stops[setSize] = strs[i];

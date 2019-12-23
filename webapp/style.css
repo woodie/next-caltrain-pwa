@@ -151,8 +151,20 @@ body {
   white-space: nowrap;
   font-size: 12pt;
   padding: 0 3px;
-  padding-left: 15px;
-  padding-top: 10px;
+  padding-left: 25px;
+  padding-top: 65px;
+  padding-bottom: 30px;
+}
+
+#header {
+  position: fixed;
+  background-color: black;
+  width: 240px;
+  padding-bottom: 10px;
+  top: 0;
+}
+
+#description {
 }
 
 .station-stop {
@@ -160,13 +172,12 @@ body {
 }
 
 .station-time {
-  flix: 1;
 }
 
 .station-name {
 }
 
-.circle {
+.spacer {
   padding: 2px 6px;
 }
 

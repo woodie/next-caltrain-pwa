@@ -65,7 +65,7 @@ var toggleDetailsView = function () {
       let style = (goodTime.inThePast(stop[1])) ? 'train-departed' : '';
       lines.push(`<div class="station-stop">
           <div class="station-time" style="${style}">${GoodTimes.fullTime(stop[1])}</div>
-          <div class="circle">&#11044;</div><div class="station-name">${stop[0]}</div></div>`);
+          <div class="spacer">&ndash;</div><div class="station-name">${stop[0]}</div></div>`);
     }
     document.getElementById('listing').innerHTML = lines.join("\n");
   }
@@ -107,7 +107,7 @@ var loadSchedule = function () {
     minutes = route[1];
     let originTime = GoodTimes.partTime(minutes);
     let destinTime = GoodTimes.partTime(route[2]);
-    let card = `<div class="train-number">#${trainId}</div>
+    let card = `<div class="train-number">#${route[0]}</div>
         <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
         <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
     element.innerHTML = card;
