@@ -10,6 +10,7 @@ let trainId = null;
 
 var startApp = function () {
   if (navigator.userAgent.includes('KAIOS')) kaios = true;
+  document.getElementById('keypad').style['display'] = kaios ? 'none' : 'flex';
   attachListeners();
   setTheTime();
 };
@@ -18,6 +19,7 @@ var setTheTime = function () {
   let ourTime = new GoodTimes();
   document.getElementById('mainTime').innerHTML = ourTime.fullTime();
   document.getElementById('moreTime').innerHTML = ourTime.fullTime();
+  document.title = "Next Caltrain: " + ourTime.fullTime();
   setTimeout(setTheTime, (60 - ourTime.seconds) * 1000);
   loadSchedule();
 };
@@ -31,8 +33,8 @@ var setCountdown = function (minutes) {
 };
 
 var openFullScreen = function () {
-  if (kaios == true) {
-    if (fullScreen == false) {
+  if (kaios === true) {
+    if (fullScreen === false) {
       try {
         document.documentElement.requestFullscreen();
       } catch(error) {}
@@ -159,14 +161,44 @@ var attachListeners = function () {
     fullScreen = fullScreen ? false : true;
     fullScreenView();
   };
+  document.body.addEventListener("mousemove", function (e) {
+    if (kaios) {
+      if (e.movementY < 0) { // up
+        processEvent(53);
+      } else if (e.movementY > 0) { // down
+        processEvent(56);
+      // } else if (e.movementX > 0) { // right
+      // } else if (e.movementX < 0) { // left
+      }
+    }
+  });
+  document.addEventListener("click", function (e) {
+    if (kaios) {
+      processEvent(13);
+    }
+  });
   document.addEventListener('keydown', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
-    if (code === 0 || code === 13) { // select
+    if (code === 8 || code === 13) { // hangup & select
+      e.preventDefault();
+    }
+    processEvent(code);
+  });
+};
+
+var processEvent = function (code) {
+  if (!fullScreen && code > 51) {
+    openFullScreen();
+    return;
+  }
+  if (details) {
+    if (code === 8) { // hangup
       toggleDetailsView();
-    } else if (details) { // details
-      return; // ignore all other events
-    } else if (code === 8) { // hangup
-      // prepare to shutdown.
+    }
+  } else {
+    if (code === 1 || code === 13) { // select
+      toggleDetailsView();
+      return;
     } else if (code === 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;
       offset = null;
@@ -175,11 +207,7 @@ var attachListeners = function () {
     } else if (code === 50) { // 2
       return;
     } else if (code === 53) { // 5 page up
-      if (fullScreen) {
-        offset--;
-      } else {
-        openFullScreen();
-      }
+      offset--;
     } else if (code === 56) { // 8 page down
       offset++;
     } else if (code === 52) { // 4
@@ -205,5 +233,5 @@ var attachListeners = function () {
       return;
     }
     loadSchedule();
-  });
+  }
 };

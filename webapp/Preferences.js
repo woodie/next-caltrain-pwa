@@ -3,16 +3,16 @@ class Preferences {
   constructor(stations) {
     this.stations = stations;
     this.flipped = new Date().getHours() >= 12;
-    let savedAM = localStorage.getItem('stopAM');
-    let savedPM = localStorage.getItem('stopPM');
-    if (!(Number.isInteger(savedAM) && savedAM > -1 && savedAM < stations.length)) {
+    let savedAM = parseInt(localStorage.getItem('stopAM'));
+    let savedPM = parseInt(localStorage.getItem('stopPM'));
+    if (savedAM < 0 || savedAM >= stations.length) {
       localStorage.setItem('stopAM', 16);
     }
-    if (!(Number.isInteger(savedPM) && savedPM > -1 && savedPM < stations.length)) {
+    if (savedPM < 0 || savedPM >= stations.length) {
       localStorage.setItem('stopPM', 0);
     }
-    this.stopAM = localStorage.getItem("stopAM");
-    this.stopPM = localStorage.getItem("stopPM");
+    this.stopAM = parseInt(localStorage.getItem("stopAM"));
+    this.stopPM = parseInt(localStorage.getItem("stopPM"));
   }
 
   saveStops() {
