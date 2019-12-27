@@ -19,7 +19,6 @@ var setTheTime = function () {
   let ourTime = new GoodTimes();
   document.getElementById('mainTime').innerHTML = ourTime.fullTime();
   document.getElementById('moreTime').innerHTML = ourTime.fullTime();
-  document.title = "Next Caltrain: " + ourTime.fullTime();
   setTimeout(setTheTime, (60 - ourTime.seconds) * 1000);
   loadSchedule();
 };

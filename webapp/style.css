@@ -186,20 +186,21 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: bottom;
-  margin-right: 5px;
+  margin-right: 3px;
 }
 
 .keycol > button {
+  border-radius: 8px;
   color: white;
   background-color: black;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   font-size: 14pt;
-  width: 76px;
+  width: 78px;
   height: 30px;
 }
 
 .keycol > .arrow {
-  height: 20px;
+  height: 22px;
 }
 
 .keycol > .answer {
@@ -211,8 +212,41 @@ body {
 }
 
 .keycol > .phone {
-  height: 36px;
-  font-size: 22pt;
+  height: 38px;
+  font-size: 12pt;
+}
+
+.rounded {
+  border: 3px solid white;
+  margin: auto;
+  width: 34px;
+  height: 12px;
+}
+
+.upper-left {
+  border-radius: 8px 0 0 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.upper-right {
+  border-radius: 0 8px 0 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+.lower-right {
+  border-radius: 0 0 8px 0;
+  border-left: none;
+  border-top: none;
+  border-color: red;
+}
+
+.lower-left {
+  border-radius: 0 0 0 8px;
+  border-right: none;
+  border-top: none;
+  border-color: green;
 }
 
 /* @group Blink */
