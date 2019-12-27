@@ -200,11 +200,12 @@ body {
 }
 
 .keycol > .ok {
-  height: 35px;
+  height: 33px;
 }
 
 .keycol > .arrow {
-  height: 21px;
+  font-size: 8pt;
+  height: 22px;
 }
 
 .keycol > .answer {
