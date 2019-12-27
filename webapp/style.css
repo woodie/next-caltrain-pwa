@@ -185,7 +185,7 @@ body {
 .keycol {
   display: flex;
   flex-direction: column;
-  justify-content: bottom;
+  justify-content: flex-end;
   margin-right: 3px;
 }
 
@@ -199,8 +199,12 @@ body {
   height: 30px;
 }
 
+.keycol > .ok {
+  height: 35px;
+}
+
 .keycol > .arrow {
-  height: 22px;
+  height: 21px;
 }
 
 .keycol > .answer {
