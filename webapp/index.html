@@ -53,24 +53,29 @@
   </div>
 
   <div id="keypad" style="display: none;">
-    <div class="keyrow">
-      <button onclick="processEvent(0);" style="color:green; font-weight:bold;">&mdash;</button>
-      <button onclick="processEvent(13);">OK</button>
-      <button onclick="processEvent(8);" style="color:red; font-weight:bold;">&mdash;</button>
-    </div>
-    <div class="keyrow">
+    <div class="keycol">
+      <button onclick="processEvent(0);" class="phone">&mdash;</button>
+      <button onclick="processEvent(0);" class="phone answer">&mdash;</button>
+      <button onclick="processEvent(49);">1</button>
       <button onclick="processEvent(52);">4</button>
-      <button onclick="processEvent(53);">5</button>
-      <button onclick="processEvent(54);">6</button>
-    </div>
-    <div class="keyrow">
       <button onclick="processEvent(55);">7</button>
-      <button onclick="processEvent(56);">8</button>
-      <button onclick="processEvent(57);">9</button>
-    </div>
-    <div class="keyrow">
       <button onclick="processEvent(37);">&#10033;</button>
+    </div>
+    <div class="keycol">
+      <button onclick="processEvent(38);" class="arrow"></button>
+      <button onclick="processEvent(13);">OK</button>
+      <button onclick="processEvent(40);" class="arrow"></button>
+      <button onclick="processEvent(49);">2</button>
+      <button onclick="processEvent(53);">5</button>
+      <button onclick="processEvent(56);">8</button>
       <button onclick="processEvent(48);">0</button>
+    </div>
+    <div class="keycol">
+      <button onclick="processEvent(0);" class="phone">&mdash;</button>
+      <button onclick="processEvent(8);" class="phone hangup">&mdash;</button>
+      <button onclick="processEvent(50);">3</button>
+      <button onclick="processEvent(54);">6</button>
+      <button onclick="processEvent(57);">9</button>
       <button onclick="processEvent(39);">#</button>
     </div>
  </div>
