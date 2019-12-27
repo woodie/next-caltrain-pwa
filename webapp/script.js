@@ -189,6 +189,10 @@ var processEvent = function (code) {
   if (!fullScreen && code > 51) {
     openFullScreen();
     return;
+  } else if (code === -1 && fullScreen) {
+    console.log("here");
+    fullScreen = false;
+    fullScreenView();
   }
   if (details) {
     if (code === 8) { // hangup
