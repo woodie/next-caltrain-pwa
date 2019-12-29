@@ -1,7 +1,5 @@
 var caltrainServiceData = {
 
-  scheduleDate: 1574467211000,
-
   northStops: [
       "Gilroy","San Martin","Morgan Hill","Blossom Hill","Capitol","Tamien","San Jose Diridon","College Park","Santa Clara","Lawrence","Sunnyvale","Mountain View","San Antonio","California Ave","Palo Alto","Menlo Park","Atherton","Redwood City","San Carlos","Belmont","Hillsdale","Hayward Park","San Mateo","Burlingame","Broadway","Millbrae","San Bruno","So San Francisco","Bayshore","22nd Street","San Francisco"],
 
@@ -135,5 +133,7 @@ var caltrainServiceData = {
       440: [1297,1301,1308,1314,1320,1324,1328,1331,1335,1338,1342,1346,1349,1354,1359,1362,1366,1370,1374,1379,1384,1388,1394,,1402,,,,,,],
       442: [1370,1374,1381,1387,1392,1396,1401,1404,1408,1411,1415,1419,1422,1427,1432,1435,1439,1443,1447,1452,1457,1461,1467,,1475,,,,,,],
       444: [1445,1450,1455,1461,1465,1469,1473,1475,1481,1484,1488,1492,1495,1501,1505,1508,1511,1515,1519,1523,1528,1532,1537,,1545,,,,,,]},
+
+  scheduleDate: 1574467211000
 
 }

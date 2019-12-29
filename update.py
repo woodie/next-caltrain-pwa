@@ -99,7 +99,6 @@ def write_schedule_data(times, stops):
     stat = os.stat('CT-GTFS/stop_times.txt')
     creation = 0
     creation = long(stat.st_mtime * 1000)
-    f.write("\n  scheduleDate: %d,\n" % creation)
     for direction in ['north', 'south']:
       f.write("\n  %sStops: [" % (direction))
       f.write('\n      "')
@@ -117,6 +116,7 @@ def write_schedule_data(times, stops):
           f.write(']')
           comma = ','
         f.write('},\n')
+    f.write("\n  scheduleDate: %d\n" % creation)
     f.write('\n}\n')
 
 if __name__ == "__main__":
