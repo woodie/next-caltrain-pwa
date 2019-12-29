@@ -12,11 +12,15 @@ body {
 #splashScreen {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   color: black;
-  background-color: #CCC;
+  background-color: white;
   width: 240px;
   height: 228px;
+}
+
+#intro {
+  background-color: #CCC;
 }
 
 #mainScreen {
@@ -46,10 +50,10 @@ body {
   margin-right: 3pt;
 }
 
-#hint {
+.hint {
   justify-content: center;
   font-size: 10pt;
-  padding: 1px;
+  padding-bottom: 9px;
 }
 
 .title {
