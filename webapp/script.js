@@ -53,6 +53,7 @@ var fullScreenView = function () {
   document.getElementById('splashScreen').style['display'] = fullScreen ? 'none' : 'flex';
   document.getElementById('mainScreen').style['display'] = fullScreen ? 'flex' : 'none';
   document.getElementById('tripScreen').style['display'] = 'none';
+  tripScreen = false;
 };
 
 var toggleTripScreen = function () {
@@ -192,11 +193,7 @@ var attachListeners = function () {
 };
 
 var processEvent = function (code) {
-  if (!fullScreen) {
-    if (code === 1 || code === 13) { // select
-      openFullScreen();
-    }
-  } else if (code === -1) { // simulate exit
+  if (code === -1) { // simulate exit
     fullScreen = false;
     fullScreenView();
   } else if (tripScreen) {
@@ -205,7 +202,11 @@ var processEvent = function (code) {
     }
   } else {
     if (code === 1 || code === 13) { // select
-      toggleTripScreen();
+      if (!fullScreen) {
+        openFullScreen();
+      } else {
+        toggleTripScreen();
+      }
       return;
     } else if (code === 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;
