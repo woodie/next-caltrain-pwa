@@ -2,3 +2,4 @@ CT-GTFS
 .DS_Store
 *.swp
 downloads
+node_modules

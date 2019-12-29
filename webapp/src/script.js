@@ -14,7 +14,7 @@ let tripScreen = false;
 //let helpScreen = false;
 
 var startApp = function () {
-  if (navigator.userAgent.includes('KAIOS')) kaios = true;
+  if (navigator.userAgent.indexOf('KAIOS') !== -1) kaios = true;
   document.getElementById('keypad').style['display'] = kaios ? 'none' : 'flex';
   attachListeners();
   setTheTime();
