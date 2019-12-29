@@ -1,12 +1,17 @@
 let prefs = new Preferences(caltrainServiceData.southStops);
-let sched = new CaltrainService();
+let schedule = new CaltrainService();
 let fullScreen = false;
-let details = false;
 let swapped = false;
 let kaios = false;
-let offset = null;
 let countdown = null;
 let trainId = null;
+let offset = null;
+
+let splashScreen = true;
+let mainScreen = false;
+let tripScreen = false;
+//let userScreen = false;
+//let helpScreen = false;
 
 var startApp = function () {
   if (navigator.userAgent.includes('KAIOS')) kaios = true;
@@ -45,19 +50,16 @@ var openFullScreen = function () {
 };
 
 var fullScreenView = function () {
-  fs = fullScreen
-  document.getElementById('trip4').style['display'] = fs ? 'flex' : 'none';
-  document.getElementById('trip5').style['display'] = fs ? 'flex' : 'none';
-  document.getElementById('title-main').style['display'] = fs ? 'flex' : 'none';
-  document.getElementById('hints').style['display'] = fs ? 'none' : 'flex';
-  document.getElementById('main').style['height'] = fs ? '290px' : '228px';
+  document.getElementById('splashScreen').style['display'] = fullScreen ? 'none' : 'flex';
+  document.getElementById('mainScreen').style['display'] = fullScreen ? 'flex' : 'none';
+  document.getElementById('tripScreen').style['display'] = 'none';
 };
 
-var toggleDetailsView = function () {
-  details = details ? false : trainId != null;
-  document.getElementById('details').style['display'] = details ? 'flex' : 'none';
-  document.getElementById('main').style['display'] = details ? 'none' : 'flex';
-  if (details) {
+var toggleTripScreen = function () {
+  tripScreen = tripScreen ? false : trainId != null;
+  document.getElementById('tripScreen').style['display'] = tripScreen ? 'flex' : 'none';
+  document.getElementById('mainScreen').style['display'] = tripScreen ? 'none' : 'flex';
+  if (tripScreen) {
     let trip = new CaltrainTrip(trainId);
     document.getElementById('label').innerHTML = trip.label();
     document.getElementById('description').innerHTML = trip.description();
@@ -90,8 +92,10 @@ var loadSchedule = function () {
   let tripLabels = prefs.tripLabels();
   document.getElementById('origin').innerHTML = tripLabels[0];
   document.getElementById('destin').innerHTML = tripLabels[1];
+  document.getElementById('origin-splash').innerHTML = tripLabels[0];
+  document.getElementById('destin-splash').innerHTML = tripLabels[1];
   // Load the schdule
-  let routes = sched.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
+  let routes = schedule.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
   if (offset === null) {
     minutes = goodTime.minutes;
     offset = CaltrainService.nextIndex(routes, minutes);
@@ -109,7 +113,7 @@ var loadSchedule = function () {
       element.innerHTML = '<div class="train-time">&nbsp;</div>';
       if (i === 0) {
         document.getElementById('blurb').className = 'message-departed blink';
-        document.getElementById('blurb').innerHTML = 'NO TRAINS';
+        message = 'NO TRAINS';
         element.className = 'selection-none';
       }
       continue;
@@ -144,14 +148,16 @@ var loadSchedule = function () {
           if (minutes > 0) { setCountdown(minutes); }
         }
       }
+      document.getElementById('trip').innerHTML = card;
     } else {
       if (goodTime.inThePast(minutes)) {
         classes.push('message-departed');
       }
     }
     element.className = classes.join(' ');
-    document.getElementById('blurb').innerHTML = message;
   }
+  document.getElementById('blurb').innerHTML = message;
+  document.getElementById('blurb-splash').innerHTML = message;
 };
 
 var attachListeners = function () {
@@ -186,21 +192,20 @@ var attachListeners = function () {
 };
 
 var processEvent = function (code) {
-  if (!fullScreen && code > 51) {
-    openFullScreen();
-    return;
-  } else if (code === -1 && fullScreen) {
-    console.log("here");
+  if (!fullScreen) {
+    if (code === 1 || code === 13) { // select
+      openFullScreen();
+    }
+  } else if (code === -1) { // simulate exit
     fullScreen = false;
     fullScreenView();
-  }
-  if (details) {
+  } else if (tripScreen) {
     if (code === 8) { // hangup
-      toggleDetailsView();
+      toggleTripScreen();
     }
   } else {
     if (code === 1 || code === 13) { // select
-      toggleDetailsView();
+      toggleTripScreen();
       return;
     } else if (code === 163 || code === 39) { // # or ->
       swapped = swapped ? false : true;

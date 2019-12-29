@@ -17,13 +17,26 @@
   </head>
   <body>
 
-  <div id="main">
-    <div id="hints"><span>Use 5 and 8 keys to navigate.</span></div>
-    <div id="title-main" class="title" style="display: none;">
+  <div id="splashScreen">
+    <div id="hint">Press <b>OK</b> for the full schedule,<br/>
+                   and <b>&#10033;</b> for options and settings.</div>
+    <div>
+      <span id="origin-splash">Origin to</span><br/>
+      <span id="destin-splash">Destination</span>
+    </div>
+    <div id="schedule">
+      <div id="blurb-splash"></div>
+      <div id="trip" class="trip-card selection selection-none"></div>
+    </div>
+    <div id="hint">Hold <b>BACK</b> for 3 seconds to exit.</div>
+  </div>
+
+  <div id="mainScreen" style="display: none;">
+    <div id="title-main" class="title">
       <div>Next Caltrain</div>
       <div id="mainTime">- - -</div>
     </div>
-    <div id="stations">
+    <div>
       <span id="origin">Origin to</span><br>
       <span id="destin">Destination</span>
     </div>
@@ -33,12 +46,12 @@
       <div id="trip1" class="trip-card"></div>
       <div id="trip2" class="trip-card"></div>
       <div id="trip3" class="trip-card"></div>
-      <div id="trip4" class="trip-card" style="display: none;"></div>
-      <div id="trip5" class="trip-card" style="display: none;"></div>
+      <div id="trip4" class="trip-card"></div>
+      <div id="trip5" class="trip-card"></div>
     </div>
   </div>
 
-  <div id="details" style="display: none;">
+  <div id="tripScreen" style="display: none;">
     <div id="header">
       <div id="title-more" class="title">
         <div>Next Caltrain</div>

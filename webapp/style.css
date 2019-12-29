@@ -9,17 +9,27 @@ body {
   font-size: 15pt;
 }
 
-#main {
+#splashScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: black;
+  background-color: #CCC;
+  width: 240px;
+  height: 228px;
+}
+
+#mainScreen {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: black;
   margin: auto 0;
   width: 240px;
-  height: 228px; /* or 290px */
+  height: 290px;
 }
 
-#details {
+#tripScreen {
   display: flex;
   flex-direction: column;
   padding-top: -2px;
@@ -36,10 +46,9 @@ body {
   margin-right: 3pt;
 }
 
-#hints{
+#hint {
   justify-content: center;
   font-size: 10pt;
-  color: cyan;
   padding: 1px;
 }
 
@@ -97,10 +106,19 @@ body {
   margin-bottom: 1px;
 }
 
+#blurb-splash {
+  font-weight: bold;
+}
+
 .trip-card {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+}
+
+#trip {
+  display: flex;
+  margin: 0 4px;
 }
 
 .train-number {
