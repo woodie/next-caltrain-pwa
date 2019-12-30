@@ -6,9 +6,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var prefs = new Preferences(caltrainServiceData.southStops);
 var schedule = new CaltrainService();
-var fullScreen = false;
 var swapped = false;
-var kaios = false;
+var kaios1 = false;
+var kaios2 = false;
 var countdown = null;
 var trainId = null;
 var offset = null;
@@ -25,8 +25,9 @@ var NextCaltrain = function () {
   _createClass(NextCaltrain, null, [{
     key: 'startApp',
     value: function startApp() {
-      if (navigator.userAgent.indexOf('KAIOS') !== -1) kaios = true;
-      document.getElementById('keypad').style['display'] = kaios ? 'none' : 'flex';
+      if (navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
+      if (navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
+      document.getElementById('keypad').style['display'] = kaios1 || kaios2 ? 'none' : 'flex';
       NextCaltrain.attachListeners();
       NextCaltrain.setTheTime();
     }
@@ -55,22 +56,17 @@ var NextCaltrain = function () {
   }, {
     key: 'openFullScreen',
     value: function openFullScreen() {
-      if (kaios === true) {
-        if (fullScreen === false) {
-          try {
-            document.documentElement.requestFullscreen();
-          } catch (error) {}
-        }
+      if (kaios2 === true) {
+        document.documentElement.requestFullscreen();
       } else {
-        fullScreen = true;
-        NextCaltrain.fullScreenView();
+        NextCaltrain.fullScreenView(true);
       }
     }
   }, {
     key: 'fullScreenView',
-    value: function fullScreenView() {
-      document.getElementById('splashScreen').style['display'] = fullScreen ? 'none' : 'flex';
-      document.getElementById('mainScreen').style['display'] = fullScreen ? 'flex' : 'none';
+    value: function fullScreenView(fs) {
+      document.getElementById('splashScreen').style['display'] = fs ? 'none' : 'flex';
+      document.getElementById('mainScreen').style['display'] = fs ? 'flex' : 'none';
       document.getElementById('tripScreen').style['display'] = 'none';
       tripScreen = false;
     }
@@ -78,9 +74,14 @@ var NextCaltrain = function () {
     key: 'toggleTripScreen',
     value: function toggleTripScreen() {
       tripScreen = tripScreen ? false : trainId != null;
-      document.getElementById('tripScreen').style['display'] = tripScreen ? 'flex' : 'none';
-      document.getElementById('mainScreen').style['display'] = tripScreen ? 'none' : 'flex';
-      if (tripScreen) {
+      if (!tripScreen) {
+        document.getElementById('tripScreen').style['display'] = 'none';
+        document.getElementById('splashScreen').style['display'] = kaios1 ? 'flex' : 'none';
+        document.getElementById('mainScreen').style['display'] = kaios1 ? 'none' : 'flex';
+      } else {
+        document.getElementById('tripScreen').style['display'] = 'flex';
+        document.getElementById('splashScreen').style['display'] = 'none';
+        document.getElementById('mainScreen').style['display'] = 'none';
         var trip = new CaltrainTrip(trainId);
         document.getElementById('label').innerHTML = trip.label();
         document.getElementById('description').innerHTML = trip.description();
@@ -189,11 +190,11 @@ var NextCaltrain = function () {
     key: 'attachListeners',
     value: function attachListeners() {
       document.onfullscreenchange = function (event) {
-        fullScreen = fullScreen ? false : true;
-        NextCaltrain.fullScreenView();
+        var invert = document.getElementById('splashScreen').style['display'] === 'flex';
+        NextCaltrain.fullScreenView(invert);
       };
       document.body.addEventListener("mousemove", function (e) {
-        if (kaios) {
+        if (kaios2) {
           if (e.movementY < 0) {
             NextCaltrain.press(53);
           } else if (e.movementY > 0) {
@@ -202,14 +203,15 @@ var NextCaltrain = function () {
         }
       });
       document.addEventListener("click", function (e) {
-        if (kaios) {
+        if (kaios1 || kaios2) {
           NextCaltrain.press(13);
         }
       });
       document.addEventListener('keydown', function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
-        if (code === 8 || code === 13) {
-          e.preventDefault();
+        if (code === 8 || code == 95 || code === 13) {
+          if (kaios1) e.stopPropagation();
+          if (kaios2) e.preventDefault();
         }
         NextCaltrain.press(code);
       });
@@ -218,15 +220,14 @@ var NextCaltrain = function () {
     key: 'press',
     value: function press(code) {
       if (code === -1) {
-        fullScreen = false;
-        NextCaltrain.fullScreenView();
+        NextCaltrain.fullScreenView(false);
       } else if (tripScreen) {
         if (code === 8) {
           NextCaltrain.toggleTripScreen();
         }
       } else {
-        if (code === 1 || code === 13) {
-          if (!fullScreen) {
+        if (code === 13) {
+          if (kaios2 && document.getElementById('splashScreen').style['display'] === 'flex') {
             NextCaltrain.openFullScreen();
           } else {
             NextCaltrain.toggleTripScreen();
