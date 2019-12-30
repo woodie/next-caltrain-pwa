@@ -188,8 +188,7 @@ class NextCaltrain {
     document.addEventListener('keydown', function (e) {
       var code = e.keyCode ? e.keyCode : e.which;
       if (code === 8 || code == 95 || code === 13) { // back, hangup & select
-        if (kaios1) e.stopPropagation();
-        if (kaios2) e.preventDefault();
+        e.preventDefault();
       }
       NextCaltrain.press(code);
     });
