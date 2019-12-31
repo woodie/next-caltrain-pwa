@@ -9,21 +9,85 @@ body {
   font-size: 15pt;
 }
 
-#splashScreen {
+#splash-screen {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  display: flex;
+  width: 240px;
+  max-height: 320px;
+}
+
+#native-infobar {
+  text-align: left;
+  font-size: 10pt;
+  padding: 6px 0 0 9px;
+  background-color: DarkSlateGrey;
+  height: 22px;
+}
+
+#native-titlebar {
+  text-align: left;
+  font-size: 12pt;
+  padding: 6px 0 0 9px;
+  background-color: #CCC;
+  color: black;
+  height: 35px;
+}
+
+#native-toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  line-height: 30px;
+  font-size: 10pt;
+  padding: 0 8px;
+  color: white;
+  height: 30px;
+}
+
+#native-toolbar > .action {
+  font-weight: bold;
+}
+
+#splash-content {
+  position: relative; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   width: 240px;
   height: 228px;
 }
 
-#intro {
-  background-color: #CCC;
+#circle {
+  top: 8px;
+  background-color: black;
+  border-radius: 190px;
+  margin: 0 15px;
+  border: 5px solid #0F0;
+  position: absolute;
+  width: 200px;
+  height: 200px;
 }
 
-#mainScreen {
+#overview {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 0;
+  width: 240px;
+  height: 228px;
+}
+
+#fade {
+  background-image: linear-gradient(#CCC, black);
+  height: 100px;
+}
+
+#main-screen {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -33,7 +97,7 @@ body {
   height: 290px;
 }
 
-#tripScreen {
+#trip-screen {
   display: flex;
   flex-direction: column;
   padding-top: -2px;
@@ -112,6 +176,7 @@ body {
 
 #blurb-splash {
   font-weight: bold;
+  font-size: 22pt;
 }
 
 .trip-card {
@@ -122,7 +187,24 @@ body {
 
 #trip {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   margin: 0 4px;
+  align-items: baseline;
+  line-height: 25px;
+}
+
+.train-splash {
+  font-size: 14pt;
+  padding-right: 6px;
+}
+
+.time-splash {
+  font-size: 22pt;
+}
+
+.meridiem-splash {
+  font-size: 14pt;
 }
 
 .train-number {
