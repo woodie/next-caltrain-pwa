@@ -162,6 +162,7 @@ class NextCaltrain {
             <span class="time-splash">${originTime[0]}</span>
             <span class="meridiem-splash">${originTime[1]}</span>`;
         document.getElementById('trip').innerHTML = tripTime;
+        document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
       } else {
         if (goodTime.inThePast(minutes)) {
           classes.push('message-departed');
