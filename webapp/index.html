@@ -17,22 +17,32 @@
   </head>
   <body>
 
-  <div id="splashScreen" style="display: flex;">
-    <div id="intro" class="hint">Press <b>OK</b> for the full schedule,<br/>
-                    and <b>&#10033;</b> to save selected stations.</div>
-                    <!-- for options and settings. -->
-    <div>
-      <span id="origin-splash">Origin to</span><br/>
-      <span id="destin-splash">Destination</span>
+  <div id="splash-screen" style="display: flex;">
+    <div id="native-infobar" style="display: none;">AT&amp;T</div>
+    <div id="native-titlebar" style="display: none;">Next Caltrain</div>
+    <div id="splash-content">
+      <div id="fade"></div>
+      <div id="circle"></div>
+      <div id="overview">
+        <div>
+          <span id="origin-splash">Origin to</span><br/>
+          <span id="destin-splash">Destination</span>
+        </div>
+        <div id="schedule">
+          <span id="blurb-splash"></span>
+          <div id="trip"></div>
+          <span id="trip-type">Baby Bullet</span>
+        </div>
+      </div>
     </div>
-    <div id="schedule">
-      <div id="blurb-splash"></div>
-      <div id="trip" class="trip-card selection selection-none"></div>
+    <div id="native-toolbar" style="display: none;">
+      <span>Search</span>
+      <span class="action">SELECT</span>
+      <span>Options</span>
     </div>
-    <div class="hint">Hold <b>BACK</b> for 3 seconds to exit.</div>
   </div>
 
-  <div id="mainScreen" style="display: none;">
+  <div id="main-screen" style="display: none;">
     <div id="title-main" class="title">
       <div>Next Caltrain</div>
       <div id="mainTime">- - -</div>
@@ -52,7 +62,7 @@
     </div>
   </div>
 
-  <div id="tripScreen" style="display: none;">
+  <div id="trip-screen" style="display: none;">
     <div id="header">
       <div id="title-more" class="title">
         <div>Next Caltrain</div>
