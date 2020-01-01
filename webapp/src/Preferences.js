@@ -27,7 +27,7 @@ class Preferences {
   tripLabels() {
     this.origin = this.stations[this.flipped ? this.stopPM : this.stopAM];
     this.destin = this.stations[this.flipped ? this.stopAM : this.stopPM];
-    if (this.origin.length >= this.destin.length) {
+    if (this.origin.length + 3 >= this.destin.length) {
       return [this.origin, `to ${this.destin}`];
     } else {
       return [`${this.origin} to`, this.destin];
