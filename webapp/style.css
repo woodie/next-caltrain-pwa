@@ -62,11 +62,12 @@ body {
 }
 
 #circle {
+  border-width: 5px;
+  border-style: solid;
   top: 8px;
   background-color: black;
   border-radius: 190px;
   margin: 0 15px;
-  border: 5px solid #0F0;
   position: absolute;
   width: 200px;
   height: 200px;
@@ -80,6 +81,7 @@ body {
   top: 0;
   width: 240px;
   height: 228px;
+  padding-top: 10px;
 }
 
 #fade {
@@ -148,27 +150,29 @@ body {
   color: #0AF;
 }
 
-.selection-none {
-  border: 2px solid #000;
+div > .selection-none {
+  border-color: #000;
 }
 
-.selection-swapped {
-  border: 2px solid #0AF;
+div > .selection-swapped {
+  border-color: #0AF;
 }
 
-.selection-departing {
-  border: 2px solid #FF0;
+div > .selection-departing {
+  border-color: #FF0;
 }
 
-.selection-departed {
-  border: 2px solid #666;
+div > .selection-departed {
+  border-color: #666;
 }
 
-.selection-arriving {
-  border: 2px solid #0F0;
+div > .selection-arriving {
+  border-color: #0F0;
 }
 
 .selection {
+  border-width: 2px;
+  border-style: solid;
   border-radius: 5px;
   border-width: 1px;
   margin-bottom: 1px;
@@ -176,7 +180,7 @@ body {
 
 #blurb-splash {
   font-weight: bold;
-  font-size: 22pt;
+  font-size: 21pt;
 }
 
 .trip-card {

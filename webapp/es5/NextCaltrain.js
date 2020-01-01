@@ -111,12 +111,17 @@ var NextCaltrain = function () {
       }
     }
   }, {
+    key: 'populateBlurb',
+    value: function populateBlurb(message, textClass) {
+      document.getElementById('blurb').innerHTML = message;
+      document.getElementById('blurb').className = textClass;
+      document.getElementById('blurb-splash').innerHTML = message.replace(' Schedule', '');
+      document.getElementById('blurb-splash').className = textClass;
+    }
+  }, {
     key: 'loadSchedule',
     value: function loadSchedule() {
-      var minutes = 0;
       clearTimeout(countdown);
-      var goodTime = new GoodTimes();
-      var message = '&nbsp;';
 
       var tripLabels = prefs.tripLabels();
       document.getElementById('origin').innerHTML = tripLabels[0];
@@ -124,7 +129,9 @@ var NextCaltrain = function () {
       document.getElementById('origin-splash').innerHTML = tripLabels[0];
       document.getElementById('destin-splash').innerHTML = tripLabels[1];
 
+      var goodTime = new GoodTimes();
       var routes = schedule.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
+      var minutes = 0;
       if (offset === null) {
         minutes = goodTime.minutes;
         offset = CaltrainService.nextIndex(routes, minutes);
@@ -133,18 +140,20 @@ var NextCaltrain = function () {
       } else if (offset < 0) {
         offset = routes.length - 1;
       }
+
       for (var i = 0; i < 6; i++) {
-        var classes = ['trip-card'];
-        var element = document.getElementById(`trip${i}`);
+        var tripCardElement = document.getElementById(`trip${i}`);
         var n = offset + i > routes.length - 1 ? offset + i - routes.length : offset + i;
         var route = routes[n];
         if (i > routes.length - 1) {
-          element.innerHTML = '<div class="train-time">&nbsp;</div>';
           if (i === 0) {
-            document.getElementById('blurb').className = 'message-departed blink';
-            message = 'NO TRAINS';
-            element.className = 'selection-none';
+            NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink');
+            document.getElementById('circle').className = 'selection-departed';
+            document.getElementById('trip0').className = 'selection-none';
+            document.getElementById('trip').innerHTML = '<span class="time-splash">&nbsp;</span>';
+            document.getElementById('trip-type').innerHTML = '&nbsp;';
           }
+          tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
           continue;
         }
         minutes = route[1];
@@ -153,48 +162,51 @@ var NextCaltrain = function () {
         var card = `<div class="train-number">#${route[0]}</div>
           <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
           <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
-        element.innerHTML = card;
+        tripCardElement.innerHTML = card;
         if (i === 0) {
-          trainId = route[0];
-          classes.push('selection');
-          if (swapped) {
-            document.getElementById('blurb').className = 'message-departed';
-            classes.push('selection-swapped');
-            message = goodTime.swapped();
-            if (goodTime.inThePast(minutes)) {
-              classes.push('message-departed');
-            }
-          } else {
-            if (goodTime.inThePast(minutes)) {
-              classes.push('message-departed');
-              classes.push('selection-departed');
-            } else if (goodTime.departing(minutes)) {
-              document.getElementById('blurb').className = 'message-departing blink';
-              message = 'DEPARTING';
-              classes.push('selection-departing');
-            } else {
-              document.getElementById('blurb').className = 'message-arriving';
-              classes.push('selection-arriving');
-              message = goodTime.countdown(minutes);
-              if (minutes > 0) {
-                NextCaltrain.setCountdown(minutes);
-              }
-            }
-          }
           var tripTime = `<span class="train-splash">#${route[0]}</span>
             <span class="time-splash">${originTime[0]}</span>
             <span class="meridiem-splash">${originTime[1]}</span>`;
           document.getElementById('trip').innerHTML = tripTime;
+          trainId = route[0];
+          var message = void 0,
+              textClass = void 0,
+              tripClass = void 0,
+              wrapClass = void 0;
+          if (swapped) {
+            message = goodTime.swapped();
+            textClass = 'message-departed';
+            tripClass = goodTime.inThePast(minutes) ? 'message-departed' : '';
+            wrapClass = 'selection-swapped';
+          } else if (goodTime.inThePast(minutes)) {
+            message = '&nbsp;';
+            tripClass = 'message-departed';
+            wrapClass = 'selection-departed';
+          } else if (goodTime.departing(minutes)) {
+            message = 'DEPARTING';
+            textClass = 'message-departing blink';
+            wrapClass = 'selection-departing';
+          } else {
+            message = goodTime.countdown(minutes);
+            textClass = 'message-arriving';
+            wrapClass = 'selection-arriving';
+            if (minutes > 0) {
+              NextCaltrain.setCountdown(minutes);
+            }
+          }
+          document.getElementById('circle').className = wrapClass;
+          document.getElementById('trip').className = tripClass;
           document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
+          tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
+          NextCaltrain.populateBlurb(message, textClass);
         } else {
           if (goodTime.inThePast(minutes)) {
-            classes.push('message-departed');
+            tripCardElement.className = 'trip-card message-departed';
+          } else {
+            tripCardElement.className = 'trip-card';
           }
         }
-        element.className = classes.join(' ');
       }
-      document.getElementById('blurb').innerHTML = message;
-      document.getElementById('blurb-splash').innerHTML = message.replace(' Schedule', '');
     }
   }, {
     key: 'attachListeners',
