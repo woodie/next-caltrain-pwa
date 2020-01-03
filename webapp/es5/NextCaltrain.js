@@ -60,6 +60,19 @@ var NextCaltrain = function () {
       }, refresh);
     }
   }, {
+    key: 'showMenu',
+    value: function showMenu() {
+      var menu = document.getElementById('popup-menu');
+      menu.focus();
+    }
+  }, {
+    key: 'showPrefs',
+    value: function showPrefs(sp) {
+      NextCaltrain.fullScreenView(false);
+      document.getElementById('splash-content').style['display'] = sp ? 'none' : 'flex';
+      document.getElementById('prefs-content').style['display'] = sp ? 'flex' : 'none';
+    }
+  }, {
     key: 'openFullScreen',
     value: function openFullScreen() {
       if (kaios2 === true) {
@@ -241,6 +254,11 @@ var NextCaltrain = function () {
     value: function press(code) {
       if (code === -1) {
         NextCaltrain.fullScreenView(false);
+      } else if (code === -2) {
+        prefs.saveStops();
+      } else if (code === -3) {
+        var dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
+        alert(`NextCaltrain\n(c) 2019 John Woodell\n\nSchedule effective: ${dateString}`);
       } else if (tripScreen) {
         if (code === 8) {
           NextCaltrain.toggleTripScreen();
@@ -257,7 +275,7 @@ var NextCaltrain = function () {
           swapped = swapped ? false : true;
           offset = null;
         } else if (code === 170 || code === 37) {
-          prefs.saveStops();
+          NextCaltrain.showMenu(true);
         } else if (code === 50) {
           return;
         } else if (code === 53) {

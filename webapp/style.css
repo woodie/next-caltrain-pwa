@@ -85,8 +85,47 @@ body {
 }
 
 #fade {
+  text-align: left;
   background-image: linear-gradient(#CCC, black);
   height: 100px;
+}
+
+#main-hints {
+  margin-left: 4px;
+  font-size: 10pt;
+  color: black;
+}
+
+select {
+  background-color: #CCC;
+  border: none;
+}
+
+#popup-menu {
+  z-index: 9;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 4px;
+}
+
+.btn {
+  display: inline-block;
+  text-align: center;
+  color: white;
+  background-color: #444;
+  font-size: 9pt;
+  padding: 3px;
+  height: 10px;
+  min-width: 10px;
+  line-height: 10px;
+}
+
+.station-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 #main-screen {
@@ -107,13 +146,6 @@ body {
   margin: auto 0;
   width: 240px;
   min-height: 320px
-}
-
-.btn {
-  border: thin solid cyan;
-  display: inline-block;
-  width: 1.5em;
-  margin-right: 3pt;
 }
 
 .hint {
@@ -179,8 +211,7 @@ div > .selection-arriving {
 }
 
 #blurb-splash {
-  font-weight: bold;
-  font-size: 21pt;
+  font-size: 20pt;
 }
 
 .trip-card {
@@ -332,7 +363,7 @@ div > .selection-arriving {
 .rounded {
   border: 3px solid white;
   margin: auto;
-  width: 34px;
+  width: 40px;
   height: 13px;
 }
 

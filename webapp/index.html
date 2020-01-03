@@ -17,11 +17,25 @@
   </head>
   <body>
 
+  <select id="popup-menu" onChange="NextCaltrain.press(parseInt(this.value)); this.selectedIndex = 0;">
+    <option value="" selected></option>
+    <option value="-3">About NextCaltrain</option>
+    <option value="53">[ 5 ] &nbsp; UP</option>
+    <option value="56">[ 8 ] &nbsp; DOWN</option>
+    <option value="52">[ 4 ] &nbsp; PREV origin</option>
+    <option value="54">[ 6 ] &nbsp; NEXT origin</option>
+    <option value="55">[ 7 ] &nbsp; PREV destination</option>
+    <option value="57">[ 9 ] &nbsp; NEXT destination</option>
+    <option value="48">[ 0 ] &nbsp; FLIP stations</option>
+    <option value="39">[ # ] &nbsp; SWOP schedules</option>
+    <option value="-2">Save current station</option>
+  </select>
+
   <div id="splash-screen" style="display: flex;">
-    <div id="native-infobar" style="display: none;">AT&amp;T</div>
+    <div id="native-infobar" style="display: none;">&nbsp;</div>
     <div id="native-titlebar" style="display: none;">Next Caltrain</div>
     <div id="splash-content">
-      <div id="fade"></div>
+      <div id="fade"><div id="main-hints"><span class="btn">&#10033;</span> Menu</div></div>
       <div id="circle"></div>
       <div id="overview">
         <div>
