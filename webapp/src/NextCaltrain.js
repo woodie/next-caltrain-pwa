@@ -3,34 +3,71 @@ let schedule = new CaltrainService();
 let swapped = false; // WEEKDAY/WEEKEND
 let kaios1 = false;
 let kaios2 = false;
-let others = false;
+let kaios = false;
 let countdown = null;
 let trainId = null;
 let offset = null;
 
-let splashScreen = true;
-let mainScreen = false;
+const OK = 13;
+const BACK = 95;
+const HANGUP = 8;
+const UP = 53;
+const DOWN = 56
+
 let tripScreen = false;
-//let userScreen = false;
-//let helpScreen = false;
+const screens = 'hero grid trip about commands'.split(' ');
+let previousScreen = screens[0];
+
+const hints = [
+    ['Use [5] and [8] keys to move<br/>the seletion up and down.', [5,8],
+     'Use these keys to navigate<br/>when cursor is hidden.'],
+    ['Use [4] and [6] keys to<br/>change origin station.', [4,6,7,9],
+     'Use [7] and [9] keys to<br/>change destination station.'],
+    ['Use [0] to flip origin<br/>and destination stations.', [0,'#'],
+     'Use [#] to swap weekday<br/>and weekend schedules.'],
+    ['Use [2] to hide the cursor,<br/>then 5 and 8 to navigate.', [2,'*'],
+     'Use [*] to acess the menu<br/>for help and settings.']];
+let hintIndex = -1;
 
 class NextCaltrain {
 
   static startApp() {
     if (navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
     if (navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
-    others = (kaios1 || kaios2) ? false : true;
-    document.getElementById('keypad').style['display'] = others ? 'flex' : 'none';
-    document.getElementById('native-infobar').style['display'] = others ? 'block' : 'none';
-    document.getElementById('native-titlebar').style['display'] = others ? 'block' : 'none';
-    document.getElementById('native-toolbar').style['display'] = others ? 'flex' : 'none';
+    kaios = (kaios1 || kaios2)
+    if (!kaios) document.getElementById('keypad').style['display'] = 'flex';
+    // setup the app state
+    const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
+    document.getElementById('date-string').innerHTML = dateString;
     NextCaltrain.attachListeners();
     NextCaltrain.setTheTime();
+    NextCaltrain.formatHints();
+  }
+
+  static formatHints() {
+    for (let i = 0; i < hints.length; i++) {
+      for (let n = 0; n < 2; n++) {
+        hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, "<span class='btn'>").replace(/\]/g, "</span>");
+      }
+    }
+  }
+
+  static bumpKeypadHint() {
+    hintIndex++;
+    if (hintIndex >= hints.length) hintIndex = 0;
+    document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
+    document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
+    let bg = ['black', 'gray'];
+    for (let i = 0; i < 12; i++) {
+      let key = (i < 10) ? i : ['*','#'][i % 2];
+      let clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
+      document.getElementById(`k${key}`).style['background-color'] = clr;
+    }
   }
 
   static setTheTime() {
     let ourTime = new GoodTimes();
-    document.getElementById('mainTime').innerHTML = ourTime.fullTime();
+    document.getElementById('gridTime').innerHTML = ourTime.fullTime();
     document.getElementById('moreTime').innerHTML = ourTime.fullTime();
     setTimeout( function () { NextCaltrain.setTheTime() }, (60 - ourTime.seconds) * 1000);
     NextCaltrain.loadSchedule();
@@ -39,25 +76,16 @@ class NextCaltrain {
   static setCountdown(minutes) {
     let downTime = new GoodTimes();
     let blurb = downTime.countdown(minutes);
+    if (blurb.startsWith('-')) blurb = '';
     document.getElementById('blurb').innerHTML = blurb;
-    document.getElementById('blurb-splash').innerHTML = blurb;
+    document.getElementById('blurb-hero').innerHTML = blurb;
+    if (blurb === '') return;
     let refresh = blurb.endsWith('sec') ? 1000 : (60 - downTime.seconds) * 1000;
     countdown = setTimeout( function () { NextCaltrain.setCountdown(minutes); }, refresh);
   }
 
-  static showMenu() {
-    let menu = document.getElementById('popup-menu');
-    menu.focus();
-  }
-
-  static showPrefs(sp) {
-    NextCaltrain.fullScreenView(false);
-    document.getElementById('splash-content').style['display'] = sp ? 'none' : 'flex';
-    document.getElementById('prefs-content').style['display'] = sp ? 'flex' : 'none';
-  }
-
   static openFullScreen() {
-    if (kaios2 === true) {
+    if (kaios2 === true) { // and function exists (TODO)
       document.documentElement.requestFullscreen();
     } else {
       NextCaltrain.fullScreenView(true);
@@ -65,22 +93,16 @@ class NextCaltrain {
   }
 
   static fullScreenView(fs) {
-    document.getElementById('splash-screen').style['display'] = fs ? 'none' : 'flex';
-    document.getElementById('main-screen').style['display'] = fs ? 'flex' : 'none';
-    document.getElementById('trip-screen').style['display'] = 'none';
-    tripScreen = false;
+    NextCaltrain.displayScreen(fs ? 'grid' : 'hero');
+    tripScreen = false; // cleanup (TODO)
   }
 
   static toggleTripScreen() {
     tripScreen = tripScreen ? false : trainId != null;
     if (!tripScreen) {
-      document.getElementById('trip-screen').style['display'] = 'none';
-      document.getElementById('splash-screen').style['display'] = kaios1 ? 'flex' : 'none';
-      document.getElementById('main-screen').style['display'] = kaios1 ? 'none' : 'flex';
+      NextCaltrain.displayScreen('grid')
     } else {
-      document.getElementById('trip-screen').style['display'] = 'flex';
-      document.getElementById('splash-screen').style['display'] = 'none';
-      document.getElementById('main-screen').style['display'] = 'none';
+      NextCaltrain.displayScreen('trip')
       let trip = new CaltrainTrip(trainId);
       document.getElementById('label').innerHTML = trip.label();
       document.getElementById('description').innerHTML = trip.description();
@@ -107,8 +129,8 @@ class NextCaltrain {
   static populateBlurb(message, textClass) {
     document.getElementById('blurb').innerHTML = message;
     document.getElementById('blurb').className = textClass;
-    document.getElementById('blurb-splash').innerHTML = message.replace(' Schedule', '');
-    document.getElementById('blurb-splash').className = textClass;
+    document.getElementById('blurb-hero').innerHTML = message.replace(' Schedule', '');
+    document.getElementById('blurb-hero').className = textClass;
   }
 
   static loadSchedule() {
@@ -117,8 +139,8 @@ class NextCaltrain {
     let tripLabels = prefs.tripLabels();
     document.getElementById('origin').innerHTML = tripLabels[0];
     document.getElementById('destin').innerHTML = tripLabels[1];
-    document.getElementById('origin-splash').innerHTML = tripLabels[0];
-    document.getElementById('destin-splash').innerHTML = tripLabels[1];
+    document.getElementById('origin-hero').innerHTML = tripLabels[0];
+    document.getElementById('destin-hero').innerHTML = tripLabels[1];
     // Load the schdule
     let goodTime = new GoodTimes();
     let routes = schedule.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
@@ -131,7 +153,7 @@ class NextCaltrain {
     } else if (offset < 0) {
       offset = routes.length - 1;
     }
-    // Populate the main view
+    // Populate the grid view
     for (let i=0; i < 6; i++) {
       let tripCardElement = document.getElementById(`trip${i}`)
       let n = (offset + i > routes.length - 1) ? offset + i - routes.length : offset + i;
@@ -141,7 +163,7 @@ class NextCaltrain {
           NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink');
           document.getElementById('circle').className = 'selection-departed';
           document.getElementById('trip0').className = 'selection-none';
-          document.getElementById('trip').innerHTML = '<span class="time-splash">&nbsp;</span>';
+          document.getElementById('trip').innerHTML = '<span class="time-hero">&nbsp;</span>';
           document.getElementById('trip-type').innerHTML = '&nbsp;';
         }
         tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
@@ -155,9 +177,9 @@ class NextCaltrain {
           <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
       tripCardElement.innerHTML = card;
       if (i === 0) {
-        let tripTime = `<span class="train-splash">#${route[0]}</span>
-            <span class="time-splash">${originTime[0]}</span>
-            <span class="meridiem-splash">${originTime[1]}</span>`;
+        let tripTime = `<span class="train-hero">#${route[0]}</span>
+            <span class="time-hero">${originTime[0]}</span>
+            <span class="meridiem-hero">${originTime[1]}</span>`;
         document.getElementById('trip').innerHTML = tripTime;
         trainId = route[0];
         let message, textClass, tripClass, wrapClass;
@@ -195,29 +217,48 @@ class NextCaltrain {
     }
   }
 
+  static displayScreen(target) {
+    for (let i = 0; i < screens.length; i++) {
+      let display = (target === screens[i]) ? 'flex' : 'none';
+      document.getElementById(`${screens[i]}-screen`).style['display'] = display;
+    }
+  }
+
+  static currentScreen() {
+    for (let i = 0; i < screens.length; i++) {
+      if (document.getElementById(`${screens[i]}-screen`).style['display'] === 'flex') return screens[i];
+    }
+    return screens[0];
+  }
+
   static attachListeners() {
+    // resize & scroll
     document.onfullscreenchange = function (event) {
-      let invert = (document.getElementById('splash-screen').style['display'] === 'flex');
+      let invert = (document.getElementById('hero-screen').style['display'] === 'flex');
       NextCaltrain.fullScreenView(invert);
     };
     document.body.addEventListener("mousemove", function (e) {
-      if (kaios2) {
-        if (e.movementY < 0) { // up
-          NextCaltrain.press(53);
-        } else if (e.movementY > 0) { // down
-          NextCaltrain.press(56);
+      if (kaios) {
+        if (e.movementY < 0) {
+          NextCaltrain.press(UP);
+        } else if (e.movementY > 0) {
+          NextCaltrain.press(DOWN);
         // } else if (e.movementX > 0) { // right
         // } else if (e.movementX < 0) { // left
         }
       }
     });
     document.addEventListener("click", function (e) {
-      if (!others) NextCaltrain.press(13);
+      if (kaios) NextCaltrain.press(OK);
     });
     document.addEventListener('keydown', function (e) {
       var code = e.keyCode ? e.keyCode : e.which;
-      // Allow code:95 (BACK on KaiOS/1)
-      if ((tripScreen && code === 8) || code === 13) {
+      if (code === HANGUP && NextCaltrain.currentScreen() !== 'hero') {
+        // catch and convert HANGUP to BACK except on hero screen
+        e.preventDefault();
+        code = BACK;
+      } else if (code === OK) {
+        // catch OK to stifle fullscreen exit.
         e.preventDefault();
       }
       NextCaltrain.press(code);
@@ -225,20 +266,40 @@ class NextCaltrain {
   }
 
   static press(code) {
-    if (code === -1) { // simulate exit
+    if (code === 'x') { // on fake keypad
       NextCaltrain.fullScreenView(false);
-    } else if (code === -2) {
+    } else if (code === 'save') {
       prefs.saveStops();
-    } else if (code === -3) {
-      let dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
-      alert(`NextCaltrain\n(c) 2020 John Woodell\n\nSchedule effective: ${dateString}`);
+      NextCaltrain.displayScreen(previousScreen);
+    } else if (code === 'about') {
+      previousScreen = NextCaltrain.currentScreen();
+      NextCaltrain.displayScreen('about')
+    } else if (code === 'commands') {
+      previousScreen = NextCaltrain.currentScreen();
+      NextCaltrain.bumpKeypadHint();
+      NextCaltrain.displayScreen('commands')
+    } else if (NextCaltrain.currentScreen() === 'menu') {
+      console.log('what now?');
+    } else if (NextCaltrain.currentScreen() === 'about') {
+      if (code == OK || code == BACK) {
+        NextCaltrain.displayScreen(previousScreen);
+      }
+      return;
+    } else if (NextCaltrain.currentScreen() === 'commands') {
+      if (code == OK) {
+        NextCaltrain.bumpKeypadHint();
+      } else if (code == BACK) {
+        hintIndex = -1;
+        NextCaltrain.displayScreen(previousScreen);
+      }
+      return;
     } else if (tripScreen) {
-      if (code === 8) { // back/hangup
+      if (code === BACK) { // back/hangup
         NextCaltrain.toggleTripScreen();
       }
     } else {
-      if (code === 13) { // select
-        if (kaios2 && document.getElementById('splash-screen').style['display'] === 'flex') {
+      if (code === OK) { // select
+        if (kaios2 && document.getElementById('hero-screen').style['display'] === 'flex') {
           NextCaltrain.openFullScreen();
         } else {
           NextCaltrain.toggleTripScreen();
@@ -248,12 +309,13 @@ class NextCaltrain {
         swapped = swapped ? false : true;
         offset = null;
       } else if (code === 170 || code === 37) { // * or <-
-        NextCaltrain.showMenu(true);
+        document.getElementById('popup-menu').selectedIndex = 0;
+        document.getElementById('popup-menu').focus();
       } else if (code === 50) { // 2
         return;
-      } else if (code === 53) { // 5 page up
+      } else if (code === UP) {
       offset--;
-      } else if (code === 56) { // 8 page down
+      } else if (code === DOWN) {
         offset++;
       } else if (code === 52) { // 4
         offset = null;

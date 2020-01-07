@@ -17,49 +17,68 @@
   </head>
   <body>
 
-  <select id="popup-menu" onChange="NextCaltrain.press(parseInt(this.value)); this.selectedIndex = 0;">
-    <option value="" selected></option>
-    <option value="-3">About NextCaltrain</option>
-    <option value="53">[ 5 ] &nbsp; UP</option>
-    <option value="56">[ 8 ] &nbsp; DOWN</option>
-    <option value="52">[ 4 ] &nbsp; PREV origin</option>
-    <option value="54">[ 6 ] &nbsp; NEXT origin</option>
-    <option value="55">[ 7 ] &nbsp; PREV destination</option>
-    <option value="57">[ 9 ] &nbsp; NEXT destination</option>
-    <option value="48">[ 0 ] &nbsp; FLIP stations</option>
-    <option value="39">[ # ] &nbsp; SWOP schedules</option>
-    <option value="-2">Save current station</option>
+  <div id="about-screen" style="display: none;">
+    <div><img id="about-image" src="icons/favicon-128x128.png"></div>
+    <div><span id="app-name">Next Caltrain</span><br/>
+         for KaiOS phones</div>
+    <div>&copy; 2020 John Woodell</div>
+    <div>Schedule effective:</br>
+         <span id="date-string"></span></div>
+  </div>
+
+  <div id="commands-screen" style="display: none;">
+    <div id="hint-above" class="hint"></div>
+    <div id="mini-keypad">
+      <div class="keycol">
+        <div id="k1" disabled>1</div>
+        <div id="k4" disabled>4</div>
+        <div id="k7" disabled>7</div>
+        <div id="k*" disabled>&#10033;</div>
+      </div>
+      <div class="keycol">
+        <div id="k2" disabled>2</div>
+        <div id="k5" disabled>5</div>
+        <div id="k8" disabled>8</div>
+        <div id="k0" disabled>0</div>
+      </div>
+      <div class="keycol">
+        <div id="k3" disabled>3</div>
+        <div id="k6" disabled>6</div>
+        <div id="k9" disabled>9</div>
+        <div id="k#" disabled>#</div>
+      </div>
+    </div>
+    <div id="hint-below" class="hint"></div>
+  </div>
+
+  <select id="popup-menu" onblur="NextCaltrain.press(this.value);">
+    <option value="about">About</option>
+    <option value="commands">Keypad commands</option>
+    <option value="save">Save stations</option>
   </select>
 
-  <div id="splash-screen" style="display: flex;">
-    <div id="native-infobar" style="display: none;">&nbsp;</div>
-    <div id="native-titlebar" style="display: none;">Next Caltrain</div>
-    <div id="splash-content">
+  <div id="hero-screen" style="display: flex;">
+    <div id="hero-content">
       <div id="fade"><div id="main-hints"><span class="btn">&#10033;</span> Menu</div></div>
       <div id="circle"></div>
       <div id="overview">
         <div>
-          <span id="origin-splash">Origin to</span><br/>
-          <span id="destin-splash">Destination</span>
+          <span id="origin-hero">Origin to</span><br/>
+          <span id="destin-hero">Destination</span>
         </div>
         <div id="schedule">
-          <span id="blurb-splash"></span>
+          <span id="blurb-hero"></span>
           <div id="trip"></div>
           <span id="trip-type"></span>
         </div>
       </div>
     </div>
-    <div id="native-toolbar" style="display: none;">
-      <span>Search</span>
-      <span class="action">SELECT</span>
-      <span>Options</span>
-    </div>
   </div>
 
-  <div id="main-screen" style="display: none;">
+  <div id="grid-screen" style="display: none;">
     <div id="title-main" class="title">
       <div>Next Caltrain</div>
-      <div id="mainTime">- - -</div>
+      <div id="gridTime">- - -</div>
     </div>
     <div>
       <span id="origin">Origin to</span><br>
@@ -92,7 +111,7 @@
 
   <div id="keypad" style="display: none;">
     <div class="keycol">
-      <button onclick="NextCaltrain.press(-1);" class="phone"><div class="rounded upper-left"></div></button>
+      <button onclick="NextCaltrain.press('x');" class="phone"><div class="rounded upper-left"></div></button>
       <button onclick="NextCaltrain.press(0);" class="phone"><div class="rounded lower-left"></div></button>
       <button onclick="NextCaltrain.press(49);">1</button>
       <button onclick="NextCaltrain.press(52);">4</button>
@@ -110,7 +129,7 @@
     </div>
     <div class="keycol">
       <button onclick="NextCaltrain.press(0);" class="phone"><div class="rounded upper-right"></div></button>
-      <button onclick="NextCaltrain.press(8);" class="phone"><div class="rounded lower-right"></div></button>
+      <button onclick="NextCaltrain.press(95);" class="phone"><div class="rounded lower-right"></div></button>
       <button onclick="NextCaltrain.press(50);">3</button>
       <button onclick="NextCaltrain.press(54);">6</button>
       <button onclick="NextCaltrain.press(57);">9</button>
