@@ -100,16 +100,13 @@ body {
 select {
   border: none;
   background-color: #CCC;
-  text-overflow: '';
-  -moz-appearance: none;
-  appearance: none;
 }
 
 #popup-menu {
-  z-index: 9;
+  z-index: 2;
   position: absolute;
   top: 0;
-  right: 0;
+  right: calc(100vw / 2 - 50px);
   width: 6px;
   height: 6px;
 }

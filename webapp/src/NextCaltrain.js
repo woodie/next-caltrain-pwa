@@ -269,7 +269,9 @@ class NextCaltrain {
     if (code === 'x') { // on fake keypad
       NextCaltrain.fullScreenView(false);
     } else if (code === 'save') {
-      prefs.saveStops();
+      if (confirm(`Save ${prefs.origin} and ${prefs.destin} and default stations?`)) {
+        prefs.saveStops();
+      }
       NextCaltrain.displayScreen(previousScreen);
     } else if (code === 'about') {
       previousScreen = NextCaltrain.currentScreen();
@@ -309,7 +311,7 @@ class NextCaltrain {
         swapped = swapped ? false : true;
         offset = null;
       } else if (code === 170 || code === 37) { // * or <-
-        document.getElementById('popup-menu').selectedIndex = 0;
+        document.getElementById('popup-menu').selectedIndex = 2;
         document.getElementById('popup-menu').focus();
       } else if (code === 50) { // 2
         return;
