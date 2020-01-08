@@ -24,7 +24,7 @@ var tripScreen = false;
 var screens = 'hero grid trip about commands'.split(' ');
 var previousScreen = screens[0];
 
-var hints = [['Use [5] and [8] keys to move<br/>the seletion up and down.', [5, 8], 'Use these keys to navigate<br/>when cursor is hidden.'], ['Use [4] and [6] keys to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] keys to<br/>change destination station.'], ['Use [0] to flip origin<br/>and destination stations.', [0, '#'], 'Use [#] to swap weekday<br/>and weekend schedules.'], ['Use [2] to hide the cursor,<br/>then 5 and 8 to navigate.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
+var hints = [['With no touchscreen, use<br/>the keypad to navigate.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'Up and down buttons may not<br/>work when cursor is hidden.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap weekday<br/>and weekend schedules.'], ['Use [2] to hide the cursor,<br/>then nagivate with 5 and 8.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
 var hintIndex = -1;
 
 var NextCaltrain = function () {
@@ -240,6 +240,7 @@ var NextCaltrain = function () {
   }, {
     key: 'displayScreen',
     value: function displayScreen(target) {
+      document.getElementById('popup-menu').style['display'] = target === 'hero' ? 'block' : 'none';
       for (var i = 0; i < screens.length; i++) {
         var display = target === screens[i] ? 'flex' : 'none';
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
@@ -289,9 +290,8 @@ var NextCaltrain = function () {
       if (code === 'x') {
         NextCaltrain.fullScreenView(false);
       } else if (code === 'save') {
-        if (confirm(`Save ${prefs.origin} and ${prefs.destin} and default stations?`)) {
-          prefs.saveStops();
-        }
+        var confirmation = ['Save', prefs.origin, 'as', swapped ? 'morning' : 'evening', 'and', prefs.destin, 'as', swapped ? 'evening' : 'morning', 'default stations?'].join(' ');
+        if (confirm(confirmation)) prefs.saveStops();
         NextCaltrain.displayScreen(previousScreen);
       } else if (code === 'about') {
         previousScreen = NextCaltrain.currentScreen();

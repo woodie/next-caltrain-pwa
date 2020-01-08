@@ -106,7 +106,7 @@ select {
   z-index: 2;
   position: absolute;
   top: 0;
-  right: calc(100vw / 2 - 50px);
+  right: 0;
   width: 6px;
   height: 6px;
 }
@@ -114,13 +114,21 @@ select {
 .btn {
   display: inline-block;
   text-align: center;
-  color: white;
-  background-color: #444;
   font-size: 9pt;
   padding: 3px;
   height: 10px;
   min-width: 10px;
   line-height: 10px;
+  border: thin solid brown;
+  border-radius: 3px;
+  color: black;
+  background-color: yellow;
+}
+
+#main-hints > .btn {
+  border: none;
+  color: white;
+  background-color: #444;
 }
 
 .station-row {
