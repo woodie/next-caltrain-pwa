@@ -15,7 +15,7 @@ const UP = 53;
 const DOWN = 56
 
 let tripScreen = false;
-const screens = 'hero grid trip about commands'.split(' ');
+const screens = 'hero grid trip about commands menu'.split(' ');
 let previousScreen = screens[0];
 
 const hints = [
@@ -272,25 +272,19 @@ class NextCaltrain {
     if (code === 'x') { // on fake keypad
       NextCaltrain.fullScreenView(false);
     } else if (code === 'save') {
-      let confirmation = ['Save', prefs.origin, 'as',
-          (swapped ? 'morning' : 'evening'), 'and', prefs.destin, 'as',
-          (swapped ? 'evening' : 'morning'), 'default stations?'].join(' ');
+      let confirmation = ['Save', (prefs.flipped ? prefs.destin : prefs.origin), 'as morning and', 
+          (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
       if (confirm(confirmation)) prefs.saveStops();
       NextCaltrain.displayScreen(previousScreen);
     } else if (code === 'about') {
-      previousScreen = NextCaltrain.currentScreen();
       NextCaltrain.displayScreen('about')
     } else if (code === 'commands') {
-      previousScreen = NextCaltrain.currentScreen();
       NextCaltrain.bumpKeypadHint();
       NextCaltrain.displayScreen('commands')
-    } else if (NextCaltrain.currentScreen() === 'menu') {
-      console.log('what now?');
     } else if (NextCaltrain.currentScreen() === 'about') {
       if (code == OK || code == BACK) {
         NextCaltrain.displayScreen(previousScreen);
       }
-      return;
     } else if (NextCaltrain.currentScreen() === 'commands') {
       if (code == OK) {
         NextCaltrain.bumpKeypadHint();
@@ -298,7 +292,10 @@ class NextCaltrain {
         hintIndex = -1;
         NextCaltrain.displayScreen(previousScreen);
       }
-      return;
+    } else if (NextCaltrain.currentScreen() === 'menu') {
+      if (code == BACK) {
+        NextCaltrain.displayScreen(previousScreen);
+      }
     } else if (tripScreen) {
       if (code === BACK) { // back/hangup
         NextCaltrain.toggleTripScreen();
@@ -315,8 +312,13 @@ class NextCaltrain {
         swapped = swapped ? false : true;
         offset = null;
       } else if (code === 170 || code === 37) { // * or <-
-        document.getElementById('popup-menu').selectedIndex = 2;
-        document.getElementById('popup-menu').focus();
+        previousScreen = NextCaltrain.currentScreen();
+        if (kaios) {
+          document.getElementById('popup-menu').selectedIndex = 2;
+          document.getElementById('popup-menu').focus();
+        } else {
+          NextCaltrain.displayScreen('menu')
+        }
       } else if (code === 50) { // 2
         return;
       } else if (code === UP) {

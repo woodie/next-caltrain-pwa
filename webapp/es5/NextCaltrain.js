@@ -21,7 +21,7 @@ var UP = 53;
 var DOWN = 56;
 
 var tripScreen = false;
-var screens = 'hero grid trip about commands'.split(' ');
+var screens = 'hero grid trip about commands menu'.split(' ');
 var previousScreen = screens[0];
 
 var hints = [['With no touchscreen, use<br/>the keypad to navigate.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'Up and down buttons may not<br/>work when cursor is hidden.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap weekday<br/>and weekend schedules.'], ['Use [2] to hide the cursor,<br/>then nagivate with 5 and 8.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
@@ -290,23 +290,18 @@ var NextCaltrain = function () {
       if (code === 'x') {
         NextCaltrain.fullScreenView(false);
       } else if (code === 'save') {
-        var confirmation = ['Save', prefs.origin, 'as', swapped ? 'morning' : 'evening', 'and', prefs.destin, 'as', swapped ? 'evening' : 'morning', 'default stations?'].join(' ');
+        var confirmation = ['Save', prefs.flipped ? prefs.destin : prefs.origin, 'as morning and', prefs.flipped ? prefs.origin : prefs.destin, 'as evening default stations?'].join(' ');
         if (confirm(confirmation)) prefs.saveStops();
         NextCaltrain.displayScreen(previousScreen);
       } else if (code === 'about') {
-        previousScreen = NextCaltrain.currentScreen();
         NextCaltrain.displayScreen('about');
       } else if (code === 'commands') {
-        previousScreen = NextCaltrain.currentScreen();
         NextCaltrain.bumpKeypadHint();
         NextCaltrain.displayScreen('commands');
-      } else if (NextCaltrain.currentScreen() === 'menu') {
-        console.log('what now?');
       } else if (NextCaltrain.currentScreen() === 'about') {
         if (code == OK || code == BACK) {
           NextCaltrain.displayScreen(previousScreen);
         }
-        return;
       } else if (NextCaltrain.currentScreen() === 'commands') {
         if (code == OK) {
           NextCaltrain.bumpKeypadHint();
@@ -314,7 +309,10 @@ var NextCaltrain = function () {
           hintIndex = -1;
           NextCaltrain.displayScreen(previousScreen);
         }
-        return;
+      } else if (NextCaltrain.currentScreen() === 'menu') {
+        if (code == BACK) {
+          NextCaltrain.displayScreen(previousScreen);
+        }
       } else if (tripScreen) {
         if (code === BACK) {
           NextCaltrain.toggleTripScreen();
@@ -331,8 +329,13 @@ var NextCaltrain = function () {
           swapped = swapped ? false : true;
           offset = null;
         } else if (code === 170 || code === 37) {
-          document.getElementById('popup-menu').selectedIndex = 2;
-          document.getElementById('popup-menu').focus();
+          previousScreen = NextCaltrain.currentScreen();
+          if (kaios) {
+            document.getElementById('popup-menu').selectedIndex = 2;
+            document.getElementById('popup-menu').focus();
+          } else {
+            NextCaltrain.displayScreen('menu');
+          }
         } else if (code === 50) {
           return;
         } else if (code === UP) {

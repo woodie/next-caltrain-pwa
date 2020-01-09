@@ -107,8 +107,35 @@ select {
   position: absolute;
   top: 0;
   right: 0;
-  width: 6px;
-  height: 6px;
+  width: 9px;
+  height: 9px;
+}
+
+#menu-screen {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: black;
+  background-color: darkgray;
+  width: 240px;
+  height: 228px;
+}
+
+#menu-screen > button:disabled {
+  background-color: #CCC;
+  text-align: center;
+  font-size: 12pt;
+  height: 40px;
+}
+
+#menu-screen > button {
+  background-color: white;
+  text-align: left;
+  font-size: 14pt;
+  padding: 0 14px;
+  border-top: none;
+  height: 45px;
 }
 
 .btn {
