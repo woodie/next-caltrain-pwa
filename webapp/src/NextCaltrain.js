@@ -14,7 +14,6 @@ const HANGUP = 8;
 const UP = 53;
 const DOWN = 56
 
-let popupVisible = false;
 let tripScreen = false;
 const screens = 'hero grid trip about commands'.split(' ');
 let previousScreen = screens[0];
@@ -37,7 +36,7 @@ class NextCaltrain {
   static startApp() {
     if (navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
     if (navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
-    kaios = (kaios1 || kaios2)
+    kaios = (kaios1 || kaios2);
     if (!kaios) document.getElementById('keypad').style['display'] = 'flex';
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
@@ -222,15 +221,14 @@ class NextCaltrain {
 
   static popupMenu(action) {
     let popupElement = document.getElementById('popup-menu');
-    if (action === true) {
-      popupVisible = true;
-      popupElement.selectedIndex = 0;
+    if (action === 'show') {
       popupElement.style['display'] = 'block';
+      popupElement.selectedIndex = 3;
       popupElement.focus();
-    } else {
-      popupVisible = false;
+    } else if (action === 'hide') {
       popupElement.style['display'] = 'none';
-      if (action !== false) NextCaltrain.press(popupElement.value);
+    } else {
+      NextCaltrain.press(action);
     }
   }
 
@@ -250,7 +248,7 @@ class NextCaltrain {
 
   static attachListeners() {
     // resize & scroll
-    document.onfullscreenchange = function (event) {
+    document.onfullscreenchange = function (e) {
       let invert = (document.getElementById('hero-screen').style['display'] === 'flex');
       NextCaltrain.fullScreenView(invert);
     };
@@ -310,11 +308,9 @@ class NextCaltrain {
       if (code == BACK) {
         NextCaltrain.displayScreen(previousScreen);
       }
-    } else if (popupVisible) {
-      if (code === OK) {
-        NextCaltrain.popupMenu(null);
-      } else if (code === BACK || code == HANGUP) {
-        NextCaltrain.popupMenu(false);
+    } else if (document.getElementById('popup-menu').style['display'] === 'block') {
+      if (code === OK || code === BACK || code == HANGUP) {
+        NextCaltrain.popupMenu('hide');
       }
     } else if (tripScreen) {
       if (code === BACK) { // back/hangup
@@ -332,7 +328,7 @@ class NextCaltrain {
         swapped = swapped ? false : true;
         offset = null;
       } else if (code === 170 || code === 37) { // * or <-
-        NextCaltrain.popupMenu(true);
+        NextCaltrain.popupMenu('show');
       } else if (code === 50) { // 2
         return;
       } else if (code === UP) {

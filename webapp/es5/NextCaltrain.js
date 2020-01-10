@@ -20,7 +20,6 @@ var HANGUP = 8;
 var UP = 53;
 var DOWN = 56;
 
-var popupVisible = false;
 var tripScreen = false;
 var screens = 'hero grid trip about commands'.split(' ');
 var previousScreen = screens[0];
@@ -242,15 +241,14 @@ var NextCaltrain = function () {
     key: 'popupMenu',
     value: function popupMenu(action) {
       var popupElement = document.getElementById('popup-menu');
-      if (action === true) {
-        popupVisible = true;
-        popupElement.selectedIndex = 0;
+      if (action === 'show') {
         popupElement.style['display'] = 'block';
+        popupElement.selectedIndex = 3;
         popupElement.focus();
-      } else {
-        popupVisible = false;
+      } else if (action === 'hide') {
         popupElement.style['display'] = 'none';
-        if (action !== false) NextCaltrain.press(popupElement.value);
+      } else {
+        NextCaltrain.press(action);
       }
     }
   }, {
@@ -272,7 +270,7 @@ var NextCaltrain = function () {
   }, {
     key: 'attachListeners',
     value: function attachListeners() {
-      document.onfullscreenchange = function (event) {
+      document.onfullscreenchange = function (e) {
         var invert = document.getElementById('hero-screen').style['display'] === 'flex';
         NextCaltrain.fullScreenView(invert);
       };
@@ -328,11 +326,9 @@ var NextCaltrain = function () {
         if (code == BACK) {
           NextCaltrain.displayScreen(previousScreen);
         }
-      } else if (popupVisible) {
-        if (code === OK) {
-          NextCaltrain.popupMenu(null);
-        } else if (code === BACK || code == HANGUP) {
-          NextCaltrain.popupMenu(false);
+      } else if (document.getElementById('popup-menu').style['display'] === 'block') {
+        if (code === OK || code === BACK || code == HANGUP) {
+          NextCaltrain.popupMenu('hide');
         }
       } else if (tripScreen) {
         if (code === BACK) {
@@ -350,7 +346,7 @@ var NextCaltrain = function () {
           swapped = swapped ? false : true;
           offset = null;
         } else if (code === 170 || code === 37) {
-          NextCaltrain.popupMenu(true);
+          NextCaltrain.popupMenu('show');
         } else if (code === 50) {
           return;
         } else if (code === UP) {

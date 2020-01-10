@@ -19,8 +19,7 @@
 
   <div id="about-screen" style="display: none;">
     <div><img id="about-image" src="icons/favicon-128x128.png"></div>
-    <div><span id="app-name">Next Caltrain</span><br/>
-         for KaiOS phones</div>
+    <div><span id="app-name">Next Caltrain</span><br/>for KaiOS phones</div>
     <div>&copy; 2020 John Woodell</div>
     <div>Schedule effective:</br>
          <span id="date-string"></span></div>
@@ -55,10 +54,13 @@
     <div id="hero-content">
       <div id="fade"><div id="main-hints">
         <span class="btn">&#10033;</span> Menu</div></div>
-        <select id="popup-menu" size="3" style="display: none;">
-          <option value ="about">About</option>
+        <select id="popup-menu" style="display: none ;"
+                onblur="NextCaltrain.popupMenu('hide')"
+                onchange="NextCaltrain.popupMenu(this.value)">
+          <option value="about">About</option>
           <option value="commands">Keypad commands</option>
           <option value="prefs">Save stations</option>
+          <option value="hide" selected>&lt;&nbsp; Back</option>
         </select>
       </div>
       <div id="circle"></div>
