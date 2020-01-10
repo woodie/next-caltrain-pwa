@@ -20,8 +20,9 @@ var HANGUP = 8;
 var UP = 53;
 var DOWN = 56;
 
+var popupVisible = false;
 var tripScreen = false;
-var screens = 'hero grid trip about commands menu'.split(' ');
+var screens = 'hero grid trip about commands'.split(' ');
 var previousScreen = screens[0];
 
 var hints = [['With no touchscreen, use<br/>the keypad to navigate.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'Up and down buttons may not<br/>work when cursor is hidden.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap weekday<br/>and weekend schedules.'], ['Use [2] to hide the cursor,<br/>then nagivate with 5 and 8.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
@@ -238,9 +239,23 @@ var NextCaltrain = function () {
       }
     }
   }, {
+    key: 'popupMenu',
+    value: function popupMenu(action) {
+      var popupElement = document.getElementById('popup-menu');
+      if (action === true) {
+        popupVisible = true;
+        popupElement.selectedIndex = 0;
+        popupElement.style['display'] = 'block';
+        popupElement.focus();
+      } else {
+        popupVisible = false;
+        popupElement.style['display'] = 'none';
+        if (action !== false) NextCaltrain.press(popupElement.value);
+      }
+    }
+  }, {
     key: 'displayScreen',
     value: function displayScreen(target) {
-      document.getElementById('popup-menu').style['display'] = target === 'hero' ? 'block' : 'none';
       for (var i = 0; i < screens.length; i++) {
         var display = target === screens[i] ? 'flex' : 'none';
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
@@ -289,7 +304,7 @@ var NextCaltrain = function () {
     value: function press(code) {
       if (code === 'x') {
         NextCaltrain.fullScreenView(false);
-      } else if (code === 'save') {
+      } else if (code === 'prefs') {
         var confirmation = ['Save', prefs.flipped ? prefs.destin : prefs.origin, 'as morning and', prefs.flipped ? prefs.origin : prefs.destin, 'as evening default stations?'].join(' ');
         if (confirm(confirmation)) prefs.saveStops();
         NextCaltrain.displayScreen(previousScreen);
@@ -313,6 +328,12 @@ var NextCaltrain = function () {
         if (code == BACK) {
           NextCaltrain.displayScreen(previousScreen);
         }
+      } else if (popupVisible) {
+        if (code === OK) {
+          NextCaltrain.popupMenu(null);
+        } else if (code === BACK || code == HANGUP) {
+          NextCaltrain.popupMenu(false);
+        }
       } else if (tripScreen) {
         if (code === BACK) {
           NextCaltrain.toggleTripScreen();
@@ -329,13 +350,7 @@ var NextCaltrain = function () {
           swapped = swapped ? false : true;
           offset = null;
         } else if (code === 170 || code === 37) {
-          previousScreen = NextCaltrain.currentScreen();
-          if (kaios) {
-            document.getElementById('popup-menu').selectedIndex = 2;
-            document.getElementById('popup-menu').focus();
-          } else {
-            NextCaltrain.displayScreen('menu');
-          }
+          NextCaltrain.popupMenu(true);
         } else if (code === 50) {
           return;
         } else if (code === UP) {

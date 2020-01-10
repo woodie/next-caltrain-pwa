@@ -51,22 +51,16 @@
     <div id="hint-below" class="hint"></div>
   </div>
 
-  <div id="menu-screen" style="display: none;">
-    <button disabled>Select</button>
-    <button onclick="NextCaltrain.press('about')">About</button>
-    <button onclick="NextCaltrain.press('commands')">Keypad commands</button>
-    <button onclick="NextCaltrain.press('save')">Save stations</button>
-  </div>
-
-  <select id="popup-menu" onblur="NextCaltrain.press(this.value);">
-    <option value ="about">About</option>
-    <option value="commands">Keypad commands</option>
-    <option value="save">Save stations</option>
-  </select>
-
   <div id="hero-screen" style="display: flex;">
     <div id="hero-content">
-      <div id="fade"><div id="main-hints"><span class="btn">&#10033;</span> Menu</div></div>
+      <div id="fade"><div id="main-hints">
+        <span class="btn">&#10033;</span> Menu</div></div>
+        <select id="popup-menu" size="3" style="display: none;">
+          <option value ="about">About</option>
+          <option value="commands">Keypad commands</option>
+          <option value="prefs">Save stations</option>
+        </select>
+      </div>
       <div id="circle"></div>
       <div id="overview">
         <div>

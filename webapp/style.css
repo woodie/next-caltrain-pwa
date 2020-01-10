@@ -97,45 +97,21 @@ body {
   color: black;
 }
 
-select {
+#popup-menu {
+  width: 240px;
+}
+
+#popup-menu > option {
+  font-size: 14pt;
+  padding: 10pt 14px;
   border: none;
-  background-color: #CCC;
 }
 
 #popup-menu {
   z-index: 2;
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
-  width: 9px;
-  height: 9px;
-}
-
-#menu-screen {
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: black;
-  background-color: darkgray;
-  width: 240px;
-  height: 228px;
-}
-
-#menu-screen > button:disabled {
-  background-color: #CCC;
-  text-align: center;
-  font-size: 12pt;
-  height: 40px;
-}
-
-#menu-screen > button {
-  background-color: white;
-  text-align: left;
-  font-size: 14pt;
-  padding: 0 14px;
-  border-top: none;
-  height: 45px;
 }
 
 .btn {
