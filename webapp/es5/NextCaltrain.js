@@ -17,6 +17,7 @@ var offset = null;
 var OK = 13;
 var BACK = 95;
 var HANGUP = 8;
+var ESC = 27;
 var UP = 53;
 var DOWN = 56;
 
@@ -24,7 +25,7 @@ var tripScreen = false;
 var screens = 'hero grid trip about commands'.split(' ');
 var previousScreen = screens[0];
 
-var hints = [['With no touchscreen, use<br/>the keypad to navigate.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'Up and down buttons may not<br/>work when cursor is hidden.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap weekday<br/>and weekend schedules.'], ['Use [2] to hide the cursor,<br/>then nagivate with 5 and 8.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
+var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Use [2] to hide the cursor,<br/>and nagivate with 5 and 8.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
 var hintIndex = -1;
 
 var NextCaltrain = function () {
@@ -73,8 +74,7 @@ var NextCaltrain = function () {
     key: 'setTheTime',
     value: function setTheTime() {
       var ourTime = new GoodTimes();
-      document.getElementById('gridTime').innerHTML = ourTime.fullTime();
-      document.getElementById('moreTime').innerHTML = ourTime.fullTime();
+      document.getElementById('mainTime').innerHTML = ourTime.fullTime();
       setTimeout(function () {
         NextCaltrain.setTheTime();
       }, (60 - ourTime.seconds) * 1000);
@@ -258,6 +258,8 @@ var NextCaltrain = function () {
         var display = target === screens[i] ? 'flex' : 'none';
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
       }
+      var tbvis = ['grid', 'trop'].indexOf(target === -1) && !kaios1;
+      document.getElementById('titlebar').style['display'] = tbvis ? 'block' : 'none';
     }
   }, {
     key: 'currentScreen',
@@ -274,6 +276,7 @@ var NextCaltrain = function () {
         var invert = document.getElementById('hero-screen').style['display'] === 'flex';
         NextCaltrain.fullScreenView(invert);
       };
+
       document.body.addEventListener("mousemove", function (e) {
         if (kaios) {
           if (e.movementY < 0) {
@@ -283,9 +286,13 @@ var NextCaltrain = function () {
           }
         }
       });
+
       document.addEventListener("click", function (e) {
-        if (kaios) NextCaltrain.press(OK);
+        if (kaios) {
+          NextCaltrain.press(OK);
+        }
       });
+
       document.addEventListener('keydown', function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
         if (code === HANGUP && NextCaltrain.currentScreen() !== 'hero') {
@@ -293,6 +300,10 @@ var NextCaltrain = function () {
           code = BACK;
         } else if (code === OK) {
           e.preventDefault();
+        } else if (code === 38) {
+          code = UP;
+        } else if (code === 40) {
+          code = DOWN;
         }
         NextCaltrain.press(code);
       });
@@ -300,7 +311,7 @@ var NextCaltrain = function () {
   }, {
     key: 'press',
     value: function press(code) {
-      if (code === 'x') {
+      if (code === ESC) {
         NextCaltrain.fullScreenView(false);
       } else if (code === 'prefs') {
         var confirmation = ['Save', prefs.flipped ? prefs.destin : prefs.origin, 'as morning and', prefs.flipped ? prefs.origin : prefs.destin, 'as evening default stations?'].join(' ');
@@ -322,10 +333,6 @@ var NextCaltrain = function () {
           hintIndex = -1;
           NextCaltrain.displayScreen(previousScreen);
         }
-      } else if (NextCaltrain.currentScreen() === 'menu') {
-        if (code == BACK) {
-          NextCaltrain.displayScreen(previousScreen);
-        }
       } else if (document.getElementById('popup-menu').style['display'] === 'block') {
         if (code === OK || code === BACK || code == HANGUP) {
           NextCaltrain.popupMenu('hide');
@@ -335,6 +342,7 @@ var NextCaltrain = function () {
           NextCaltrain.toggleTripScreen();
         }
       } else {
+
         if (code === OK) {
           if (kaios2 && document.getElementById('hero-screen').style['display'] === 'flex') {
             NextCaltrain.openFullScreen();
@@ -368,10 +376,6 @@ var NextCaltrain = function () {
         } else if (code === 48) {
           offset = null;
           prefs.flipStations();
-        } else if (code === 38) {
-          offset--;
-        } else if (code === 40) {
-          offset++;
         } else {
           return;
         }

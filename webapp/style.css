@@ -7,6 +7,7 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-size: 15pt;
+  /* cursor: none !important; */
 }
 
 #hero-screen {
@@ -91,12 +92,6 @@ body {
   height: 100px;
 }
 
-#main-hints {
-  margin-left: 4px;
-  font-size: 10pt;
-  color: black;
-}
-
 #popup-menu {
   z-index: 2;
 }
@@ -115,10 +110,23 @@ body {
   background-color: yellow;
 }
 
-#main-hints > .btn {
+#main-hints > div > .btn {
+  font-size: 11pt;
+  line-height: 11px;
   border: none;
   color: white;
   background-color: #444;
+}
+
+#main-hints {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 4px;
+  line-height: 19px;
+  font-size: 12pt;
+  color: black;
 }
 
 .station-row {
@@ -154,10 +162,12 @@ body {
   white-space: nowrap;
 }
 
-.title {
+#titlebar {
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
   font-size: 12pt;
   padding: 0 3px;
 }

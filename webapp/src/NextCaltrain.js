@@ -11,6 +11,7 @@ let offset = null;
 const OK = 13;
 const BACK = 95;
 const HANGUP = 8;
+const ESC = 27;
 const UP = 53;
 const DOWN = 56
 
@@ -19,15 +20,15 @@ const screens = 'hero grid trip about commands'.split(' ');
 let previousScreen = screens[0];
 
 const hints = [
-    ['With no touchscreen, use<br/>the keypad to navigate.', [],
+    ['Use the keypad to navigate<br/>as there is no touchscreen.', [],
      'Press [OK] to continue and<br/>[BACK] to return to the app.'],
     ['Use [5] and [8] to move<br/>the seletion up and down.', [5,8],
-     'Up and down buttons may not<br/>work when cursor is hidden.'],
+     'The [UP] and [DOWN] buttons<br/>may not work as expected.'],
     ['Use [4] and [6] to<br/>change origin station.', [4,6,7,9],
      'Use [7] and [9] to<br/>change destination station.'],
     ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
-     'Use [#] to swap weekday<br/>and weekend schedules.'],
-    ['Use [2] to hide the cursor,<br/>then nagivate with 5 and 8.', [2,'*'],
+     'Use [#] to swap between<br/>weekday/weekend schedules.'],
+    ['Use [2] to hide the cursor,<br/>and nagivate with 5 and 8.', [2,'*'],
      'Use [*] to acess the menu<br/>for help and settings.']];
 let hintIndex = -1;
 
@@ -69,8 +70,7 @@ class NextCaltrain {
 
   static setTheTime() {
     let ourTime = new GoodTimes();
-    document.getElementById('gridTime').innerHTML = ourTime.fullTime();
-    document.getElementById('moreTime').innerHTML = ourTime.fullTime();
+    document.getElementById('mainTime').innerHTML = ourTime.fullTime();
     setTimeout( function () { NextCaltrain.setTheTime() }, (60 - ourTime.seconds) * 1000);
     NextCaltrain.loadSchedule();
   }
@@ -237,6 +237,8 @@ class NextCaltrain {
       let display = (target === screens[i]) ? 'flex' : 'none';
       document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
+    let tbvis = (['grid', 'trip'].indexOf(target === -1) && !kaios1);
+    document.getElementById('titlebar').style['display'] = tbvis ? 'flex' : 'none'
   }
 
   static currentScreen() {
@@ -247,77 +249,93 @@ class NextCaltrain {
   }
 
   static attachListeners() {
-    // resize & scroll
+    // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
       let invert = (document.getElementById('hero-screen').style['display'] === 'flex');
       NextCaltrain.fullScreenView(invert);
     };
+    // Catch and convert cursor movements to UP/DOWN events (n/a on kaios1).
     document.body.addEventListener("mousemove", function (e) {
       if (kaios) {
         if (e.movementY < 0) {
           NextCaltrain.press(UP);
         } else if (e.movementY > 0) {
           NextCaltrain.press(DOWN);
-        // } else if (e.movementX > 0) { // right
-        // } else if (e.movementX < 0) { // left
         }
       }
     });
+    // Catch and convert cursor click to OK event.
     document.addEventListener("click", function (e) {
-      if (kaios) NextCaltrain.press(OK);
+      if (kaios) {
+        NextCaltrain.press(OK);
+      }
     });
+    // Catch keydown events.
     document.addEventListener('keydown', function (e) {
       var code = e.keyCode ? e.keyCode : e.which;
       if (code === HANGUP && NextCaltrain.currentScreen() !== 'hero') {
-        // catch and convert HANGUP to BACK except on hero screen
+        // Catch and convert HANGUP to BACK except on hero screen.
         e.preventDefault();
         code = BACK;
       } else if (code === OK) {
-        // catch OK to stifle fullscreen exit.
+        // Catch OK to stifle fullscreen exit.
         e.preventDefault();
+      } else if (code === 38) {
+        // Catch and convert UP arrow
+        code = UP;
+      } else if (code === 40) {
+        // Catch and convert DOWN arrow
+        code = DOWN;
       }
       NextCaltrain.press(code);
     });
   }
 
   static press(code) {
-    if (code === 'x') { // on fake keypad
+    if (code === ESC) {
+      // Simulate EXIT from fullscreen mode.
       NextCaltrain.fullScreenView(false);
     } else if (code === 'prefs') {
+      // DIsplay the 'Save stations' confirmation.
       let confirmation = ['Save', (prefs.flipped ? prefs.destin : prefs.origin), 'as morning and', 
           (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
       if (confirm(confirmation)) prefs.saveStops();
       NextCaltrain.displayScreen(previousScreen);
     } else if (code === 'about') {
+      // Display the 'About' screen. 
       NextCaltrain.displayScreen('about')
     } else if (code === 'commands') {
+      // Display the 'Keypad commands' screen. 
       NextCaltrain.bumpKeypadHint();
       NextCaltrain.displayScreen('commands')
+
     } else if (NextCaltrain.currentScreen() === 'about') {
+      // Handle events on the 'About' screen.
       if (code == OK || code == BACK) {
         NextCaltrain.displayScreen(previousScreen);
       }
     } else if (NextCaltrain.currentScreen() === 'commands') {
+      // Handle events on the 'Keypad commands' screen.
       if (code == OK) {
         NextCaltrain.bumpKeypadHint();
       } else if (code == BACK) {
         hintIndex = -1;
         NextCaltrain.displayScreen(previousScreen);
       }
-    } else if (NextCaltrain.currentScreen() === 'menu') {
-      if (code == BACK) {
-        NextCaltrain.displayScreen(previousScreen);
-      }
     } else if (document.getElementById('popup-menu').style['display'] === 'block') {
+      // Handle and catch events intended for the popup menu.
       if (code === OK || code === BACK || code == HANGUP) {
         NextCaltrain.popupMenu('hide');
       }
     } else if (tripScreen) {
-      if (code === BACK) { // back/hangup
+      // Handle events for the trip screen.
+      if (code === BACK) {
         NextCaltrain.toggleTripScreen();
       }
     } else {
-      if (code === OK) { // select
+      // Handle events for the hero and grid screens.
+
+      if (code === OK) {
         if (kaios2 && document.getElementById('hero-screen').style['display'] === 'flex') {
           NextCaltrain.openFullScreen();
         } else {
@@ -332,7 +350,7 @@ class NextCaltrain {
       } else if (code === 50) { // 2
         return;
       } else if (code === UP) {
-      offset--;
+        offset--;
       } else if (code === DOWN) {
         offset++;
       } else if (code === 52) { // 4
@@ -350,10 +368,6 @@ class NextCaltrain {
       } else if (code === 48) { // 0
         offset = null;
         prefs.flipStations();
-      } else if (code === 38) { // up arrow
-        offset--;
-      } else if (code === 40) { // down arrow
-        offset++;
       } else {
         return;
       }
