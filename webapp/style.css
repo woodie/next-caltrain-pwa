@@ -162,7 +162,7 @@ body {
   white-space: nowrap;
 }
 
-#swapper {
+#wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -176,7 +176,7 @@ body {
   background-color: #333;
   color: white;
   font-size: 12pt;
-  padding: 1 3px;
+  padding: 1px 3px;
 }
 
 #schedule {

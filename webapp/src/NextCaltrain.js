@@ -4,6 +4,7 @@ let swapped = false; // WEEKDAY/WEEKEND
 let kaios1 = false;
 let kaios2 = false;
 let kaios = false;
+let fsmode = false;
 let countdown = null;
 let trainId = null;
 let offset = null;
@@ -230,19 +231,25 @@ class NextCaltrain {
       let display = (target === screens[i]) ? 'flex' : 'none';
       document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
+    // Use fsmode to keep track of document.fullscreen
     if (target === 'grid' || target === 'trip') {
-      if (kaios2 && !document.fullscreen) document.documentElement.requestFullscreen();
-      if (!kaios1) document.getElementById('minibar').style['display'] = 'flex';
+      if (kaios2 && !fsmode) document.documentElement.requestFullscreen();
+      if (!kaios1) {
+        document.getElementById('minibar').style['display'] = 'flex';
+        document.getElementById('wrapper').style['display'] = 'flex';
+      }
     } else {
-      if (kaios2 && document.fullscreen) document.exitFullscreen();
+      if (kaios2 && fsmode) document.exitFullscreen();
       document.getElementById('minibar').style['display'] = 'none';
+      document.getElementById('wrapper').style['display'] = 'none';
     }
   }
 
   static attachListeners() {
     // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
-      if (document.fullscreen) {
+      fsmode = fsmode ? false : true;
+      if (fsmode) {
         NextCaltrain.displayScreen('grid');
       } else {
         NextCaltrain.displayScreen('hero');
@@ -267,10 +274,13 @@ class NextCaltrain {
     // Catch keydown events.
     document.addEventListener('keydown', function (e) {
       var code = e.keyCode ? e.keyCode : e.which;
-      if (code === HANGUP && NextCaltrain.currentScreen() !== 'hero') {
-        // Catch and convert HANGUP to BACK except on hero screen.
-        e.preventDefault();
+      if (code === HANGUP) {
+        // Catch and convert HANGUP to BACK
         code = BACK;
+        if (NextCaltrain.currentScreen() !== 'hero') {
+          // Support native EXIT on hero screen.
+          e.preventDefault();
+        }
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
         e.preventDefault();

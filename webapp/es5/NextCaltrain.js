@@ -10,6 +10,7 @@ var swapped = false;
 var kaios1 = false;
 var kaios2 = false;
 var kaios = false;
+var fsmode = false;
 var countdown = null;
 var trainId = null;
 var offset = null;
@@ -250,19 +251,25 @@ var NextCaltrain = function () {
         var display = target === screens[i] ? 'flex' : 'none';
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
       }
+
       if (target === 'grid' || target === 'trip') {
-        if (kaios2 && !document.fullscreen) document.documentElement.requestFullscreen();
-        if (!kaios1) document.getElementById('minibar').style['display'] = 'flex';
+        if (kaios2 && !fsmode) document.documentElement.requestFullscreen();
+        if (!kaios1) {
+          document.getElementById('minibar').style['display'] = 'flex';
+          document.getElementById('wrapper').style['display'] = 'flex';
+        }
       } else {
-        if (kaios2 && document.fullscreen) document.exitFullscreen();
+        if (kaios2 && fsmode) document.exitFullscreen();
         document.getElementById('minibar').style['display'] = 'none';
+        document.getElementById('wrapper').style['display'] = 'none';
       }
     }
   }, {
     key: 'attachListeners',
     value: function attachListeners() {
       document.onfullscreenchange = function (e) {
-        if (document.fullscreen) {
+        fsmode = fsmode ? false : true;
+        if (fsmode) {
           NextCaltrain.displayScreen('grid');
         } else {
           NextCaltrain.displayScreen('hero');
@@ -287,9 +294,11 @@ var NextCaltrain = function () {
 
       document.addEventListener('keydown', function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
-        if (code === HANGUP && NextCaltrain.currentScreen() !== 'hero') {
-          e.preventDefault();
+        if (code === HANGUP) {
           code = BACK;
+          if (NextCaltrain.currentScreen() !== 'hero') {
+            e.preventDefault();
+          }
         } else if (code === OK) {
           e.preventDefault();
         } else if (code === 38) {
