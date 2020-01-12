@@ -42,9 +42,8 @@ var NextCaltrain = function () {
       if (!kaios) {
         document.getElementById('keypad').style['display'] = 'flex';
       } else if (kaios1) {
-        document.getElementById('trip4').style['display'] = 'none';
-        document.getElementById('trip5').style['display'] = 'none';
-        document.getElementById('grid-screen').style['height'] = '228px';
+        document.getElementById('grid-screen').className = 'part-screen';
+        document.getElementById('trip-screen').className = 'part-screen';
       }
 
       var dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
@@ -80,7 +79,8 @@ var NextCaltrain = function () {
     key: 'setTheTime',
     value: function setTheTime() {
       var ourTime = new GoodTimes();
-      document.getElementById('mainTime').innerHTML = ourTime.fullTime();
+      document.getElementById('grid-time').innerHTML = ourTime.fullTime();
+      document.getElementById('trip-time').innerHTML = ourTime.fullTime();
       setTimeout(function () {
         NextCaltrain.setTheTime();
       }, (60 - ourTime.seconds) * 1000);
@@ -254,14 +254,8 @@ var NextCaltrain = function () {
 
       if (target === 'grid' || target === 'trip') {
         if (kaios2 && !fsmode) document.documentElement.requestFullscreen();
-        if (!kaios1) {
-          document.getElementById('minibar').style['display'] = 'flex';
-          document.getElementById('wrapper').style['display'] = 'flex';
-        }
       } else {
         if (kaios2 && fsmode) document.exitFullscreen();
-        document.getElementById('minibar').style['display'] = 'none';
-        document.getElementById('wrapper').style['display'] = 'none';
       }
     }
   }, {

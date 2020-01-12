@@ -92,6 +92,11 @@ body {
   height: 100px;
 }
 
+.fillbar {
+  background-image: linear-gradient(#CCC, black);
+  height: 30px;
+}
+
 #popup-menu {
   z-index: 2;
 }
@@ -142,7 +147,7 @@ body {
   background-color: black;
   margin: auto 0;
   width: 240px;
-  height: 290px;
+  max-height: 290px;
 }
 
 #trip-screen {
@@ -168,7 +173,7 @@ body {
   justify-content: flex-start;
 }
 
-#minibar {
+.minibar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -288,13 +293,23 @@ div > .selection-arriving {
   padding: 82px 3px 40px 20px;
 }
 
-#header {
+#grid-header { width: 240px; } 
+
+#grid-screen.part-screen { height: 228px; }
+#grid-screen.full-screen { height: 290px; }
+#grid-screen.part-screen > #grid-header > .minibar { display: none; }
+#grid-screen.full-screen > #grid-header > .fillbar { display: none; }
+#trip-screen.part-screen > #trip-header > .minibar { display: none; }
+#trip-screen.full-screen > #trip-header > .fillbar { display: none; }
+
+.part-screen > #schedule > #trip4 { display: none; }
+.part-screen > #schedule > #trip5 { display: none; }
+
+#trip-header {
   position: fixed;
   background-color: black;
   width: 240px;
-  padding-top: 2px;
   padding-bottom: 8px;
-  top: 0;
 }
 
 #trip-info {

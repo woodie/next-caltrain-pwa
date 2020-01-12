@@ -82,39 +82,44 @@
     </div>
   </div>
 
-  <div id="wrapper">
-    <div id="minibar" style="display: none;">
-      <div>Next Caltrain</div>
-      <div id="mainTime">- - -</div>
-    </div>
-
-    <div id="grid-screen" style="display: none;">
+  <div id="grid-screen" class="full-screen" style="display: none;">
+    <div id="grid-header">
+      <div class="fillbar"></div>
+      <div class="minibar">
+        <div>Next Caltrain</div>
+        <div id="grid-time">- - -</div>
+      </div>
       <div>
         <span id="origin-grid">Origin to</span><br>
         <span id="destin-grid">Destination</span>
       </div>
-      <div id="schedule">
-        <div id="blurb"></div>
-        <div id="trip0" class="trip-card"></div>
-        <div id="trip1" class="trip-card"></div>
-        <div id="trip2" class="trip-card"></div>
-        <div id="trip3" class="trip-card"></div>
-        <div id="trip4" class="trip-card"></div>
-        <div id="trip5" class="trip-card"></div>
-      </div>
     </div>
-
-    <div id="trip-screen" style="display: none;">
-      <div id="header">
-        <div id="trip-info">
-          <span id="label"></span><br>
-          <span id="description"></span>
-        </div>
-      </div>
-      <div id="listing"></div>
+    <div id="schedule">
+      <div id="blurb"></div>
+      <div id="trip0" class="trip-card"></div>
+      <div id="trip1" class="trip-card"></div>
+      <div id="trip2" class="trip-card"></div>
+      <div id="trip3" class="trip-card"></div>
+      <div id="trip4" class="trip-card"></div>
+      <div id="trip5" class="trip-card"></div>
     </div>
-
   </div>
+
+  <div id="trip-screen" class="full-screen" style="display: none;">
+    <div id="trip-header">
+      <div class="fillbar"></div>
+      <div class="minibar">
+        <div>Next Caltrain</div>
+        <div id="trip-time">- - -</div>
+      </div>
+      <div id="trip-info">
+        <span id="label"></span><br>
+        <span id="description"></span>
+      </div>
+    </div>
+    <div id="listing"></div>
+  </div>
+
 
   <!-- a fake keypad for non-KaiOS devices -->
   <div id="keypad" style="display: none;">
