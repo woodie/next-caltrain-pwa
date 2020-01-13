@@ -152,6 +152,7 @@ body {
   background-color: black;
   width: 240px;
   padding-top: -2px;
+  min-height: 290px;
 }
 
 .hint {
