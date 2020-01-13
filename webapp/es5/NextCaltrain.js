@@ -10,7 +10,6 @@ var swapped = false;
 var kaios1 = false;
 var kaios2 = false;
 var kaios = false;
-var fsmode = false;
 var countdown = null;
 var trainId = null;
 var offset = null;
@@ -250,10 +249,10 @@ var NextCaltrain = function () {
     key: 'displayScreen',
     value: function displayScreen(target) {
       if (target === 'grid' || target === 'trip') {
-        if (kaios2 && !fsmode) document.documentElement.requestFullscreen();
+        if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
         if (kaios1) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
       } else {
-        if (kaios2 && fsmode) document.exitFullscreen();
+        if (kaios2 && document.fullscreenElement) document.exitFullscreen();
         if (kaios1) document.title = 'Next Caltrain';
       }
       for (var i = 0; i < screens.length; i++) {
@@ -265,8 +264,7 @@ var NextCaltrain = function () {
     key: 'attachListeners',
     value: function attachListeners() {
       document.onfullscreenchange = function (e) {
-        fsmode = fsmode ? false : true;
-        if (fsmode) {
+        if (document.fullscreenElement) {
           NextCaltrain.displayScreen('grid');
         } else {
           NextCaltrain.displayScreen('hero');

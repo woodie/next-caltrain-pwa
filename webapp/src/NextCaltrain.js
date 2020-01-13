@@ -4,7 +4,6 @@ let swapped = false; // WEEKDAY/WEEKEND
 let kaios1 = false;
 let kaios2 = false;
 let kaios = false;
-let fsmode = false;
 let countdown = null;
 let trainId = null;
 let offset = null;
@@ -231,12 +230,11 @@ class NextCaltrain {
   }
 
   static displayScreen(target) {
-    // Use fsmode to keep track of document.fullscreen
     if (target === 'grid' || target === 'trip') {
-      if (kaios2 && !fsmode) document.documentElement.requestFullscreen();
+      if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
       if (kaios1) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
     } else {
-      if (kaios2 && fsmode) document.exitFullscreen();
+      if (kaios2 && document.fullscreenElement) document.exitFullscreen();
     if (kaios1) document.title = 'Next Caltrain';
     }
     for (let i = 0; i < screens.length; i++) {
@@ -248,8 +246,7 @@ class NextCaltrain {
   static attachListeners() {
     // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
-      fsmode = fsmode ? false : true;
-      if (fsmode) {
+      if (document.fullscreenElement) {
         NextCaltrain.displayScreen('grid');
       } else {
         NextCaltrain.displayScreen('hero');
