@@ -254,7 +254,7 @@ var NextCaltrain = function () {
         if (kaios1) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
       } else {
         if (kaios2 && fsmode) document.exitFullscreen();
-        if (kaios1) document.title = 'Next Caltrain Q';
+        if (kaios1) document.title = 'Next Caltrain';
       }
       for (var i = 0; i < screens.length; i++) {
         var display = target === screens[i] ? 'flex' : 'none';
