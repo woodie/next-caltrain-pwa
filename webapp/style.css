@@ -7,7 +7,6 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   font-size: 15pt;
-  /* cursor: none !important; */
 }
 
 #hero-screen {
@@ -16,7 +15,7 @@ body {
   flex-direction: column;
   display: flex;
   width: 240px;
-  max-height: 290px;
+  height: 228px;
 }
 
 #about-screen {
@@ -24,7 +23,6 @@ body {
   justify-content: space-around;
   flex-direction: column;
   min-width: 240px;
-  max-height: 290px;
   font-size: 16px;
   background-color: white;
   color: black;
@@ -45,7 +43,6 @@ body {
   justify-content: space-around;
   flex-direction: column;
   min-width: 240px;
-  max-height: 290px;
   font-size: 16px;
   background-color: white;
   color: black;
@@ -53,7 +50,7 @@ body {
 }
 
 #hero-content {
-  position: relative; 
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -93,8 +90,8 @@ body {
 }
 
 .fillbar {
-  background-image: linear-gradient(#CCC, black);
-  height: 30px;
+  background-image: linear-gradient(#666, black);
+  height: 15px;
 }
 
 #popup-menu {
@@ -145,19 +142,16 @@ body {
   flex-direction: column;
   justify-content: space-between;
   background-color: black;
-  margin: auto 0;
   width: 240px;
-  max-height: 290px;
+  padding-top: -2px;
 }
 
 #trip-screen {
   display: flex;
   flex-direction: column;
-  padding-top: -2px;
   background-color: black;
-  margin: auto 0;
   width: 240px;
-  min-height: 290px
+  padding-top: -2px;
 }
 
 .hint {
@@ -177,52 +171,24 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-family: sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   background-color: #333;
   color: white;
-  font-size: 12pt;
-  padding: 1px 3px;
+  font-size: 10pt;
+  padding: 2px 5px 0 5px;
+  height: 24px;
 }
 
-#schedule {
-  width: 100%;
-}
-
-#message {
-  margin-bottom: 2px;
-}
-
-.message-arriving {
-  color: #0F0;
-}
-
-.message-departing {
-  color: #FF0;
-}
-
-.message-departed {
-  color: #0AF;
-}
-
-div > .selection-none {
-  border-color: #000;
-}
-
-div > .selection-swapped {
-  border-color: #0AF;
-}
-
-div > .selection-departing {
-  border-color: #FF0;
-}
-
-div > .selection-departed {
-  border-color: #666;
-}
-
-div > .selection-arriving {
-  border-color: #0F0;
-}
+#schedule { width: 100%; }
+#message { margin-bottom: 2px; }
+.message-arriving { color: #0F0; }
+.message-departing { color: #FF0; }
+.message-departed { color: #0AF; }
+div > .selection-none { border-color: #000; }
+div > .selection-swapped { border-color: #0AF; }
+div > .selection-departing { border-color: #FF0; }
+div > .selection-departed { border-color: #666; }
+div > .selection-arriving { border-color: #0F0; }
 
 .selection {
   border-width: 2px;
@@ -233,7 +199,7 @@ div > .selection-arriving {
 }
 
 #blurb-hero {
-  font-size: 20pt;
+  font-size: 18pt;
 }
 
 .trip-card {
@@ -257,7 +223,7 @@ div > .selection-arriving {
 }
 
 .time-hero {
-  font-size: 22pt;
+  font-size: 20pt;
 }
 
 .meridiem-hero {
@@ -293,17 +259,21 @@ div > .selection-arriving {
   padding: 82px 3px 40px 20px;
 }
 
-#grid-header { width: 240px; } 
-
 #grid-screen.part-screen { height: 228px; }
 #grid-screen.full-screen { height: 290px; }
+#grid-screen.part-screen > #schedule > #trip4 { display: none; }
+#grid-screen.part-screen > #schedule > #trip5 { display: none; }
 #grid-screen.part-screen > #grid-header > .minibar { display: none; }
 #grid-screen.full-screen > #grid-header > .fillbar { display: none; }
 #trip-screen.part-screen > #trip-header > .minibar { display: none; }
 #trip-screen.full-screen > #trip-header > .fillbar { display: none; }
 
-.part-screen > #schedule > #trip4 { display: none; }
-.part-screen > #schedule > #trip5 { display: none; }
+#grid-header {
+  display: flex;
+  background-color: black;
+  flex-direction: column;
+  width: 240px;
+}
 
 #trip-header {
   position: fixed;

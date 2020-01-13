@@ -20,6 +20,11 @@ var GoodTimes = function () {
       return GoodTimes.partTime(this.minutes);
     }
   }, {
+    key: 'niceTime',
+    value: function niceTime() {
+      return GoodTimes.partTime(this.minutes).join(' ').toUpperCase();
+    }
+  }, {
     key: 'fullTime',
     value: function fullTime() {
       return GoodTimes.fullTime(this.minutes);
@@ -54,10 +59,12 @@ var GoodTimes = function () {
     key: 'countdown',
     value: function countdown(target) {
       var minutes = target - this.minutes;
-      if (minutes > 59) {
-        return `${Math.floor(minutes / 60)} hr ${minutes % 60} min`;
+      if (minutes < 0) {
+        return '';
+      } else if (minutes > 59) {
+        return `in ${Math.floor(minutes / 60)} hr ${minutes % 60} min`;
       } else {
-        return `${minutes} min ${60 - this.seconds} sec`;
+        return `in ${minutes} min ${60 - this.seconds} sec`;
       }
     }
   }], [{
@@ -68,7 +75,7 @@ var GoodTimes = function () {
       if (min < 10) {
         min = '0' + min;
       }
-      var mer = hrs > 11 && hrs < 23 ? 'pm' : 'am';
+      var mer = hrs > 11 && hrs < 24 ? 'pm' : 'am';
       if (hrs > 12) {
         hrs -= 12;
         if (hrs > 12) {

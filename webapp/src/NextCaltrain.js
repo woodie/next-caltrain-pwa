@@ -40,6 +40,8 @@ class NextCaltrain {
     kaios = (kaios1 || kaios2);
     if (!kaios) {
       document.getElementById('keypad').style['display'] = 'flex';
+      // document.getElementById('grid-screen').className = 'part-screen'; // debug
+      // document.getElementById('trip-screen').className = 'part-screen'; // debug
     } else if (kaios1) {
       document.getElementById('grid-screen').className = 'part-screen';
       document.getElementById('trip-screen').className = 'part-screen';
@@ -75,8 +77,8 @@ class NextCaltrain {
 
   static setTheTime() {
     let ourTime = new GoodTimes();
-    document.getElementById('grid-time').innerHTML = ourTime.fullTime();
-    document.getElementById('trip-time').innerHTML = ourTime.fullTime();
+    document.getElementById('grid-time').innerHTML = ourTime.niceTime();
+    document.getElementById('trip-time').innerHTML = ourTime.niceTime();
     setTimeout( function () { NextCaltrain.setTheTime() }, (60 - ourTime.seconds) * 1000);
     NextCaltrain.loadSchedule();
   }
@@ -84,12 +86,12 @@ class NextCaltrain {
   static setCountdown(minutes) {
     let downTime = new GoodTimes();
     let blurb = downTime.countdown(minutes);
-    if (blurb.startsWith('-')) blurb = '';
     document.getElementById('blurb').innerHTML = blurb;
     document.getElementById('blurb-hero').innerHTML = blurb;
-    if (blurb === '') return;
-    let refresh = blurb.endsWith('sec') ? 1000 : (60 - downTime.seconds) * 1000;
-    countdown = setTimeout( function () { NextCaltrain.setCountdown(minutes); }, refresh);
+    if (blurb !== '') {
+      let refresh = blurb.endsWith('sec') ? 1000 : (60 - downTime.seconds) * 1000;
+      countdown = setTimeout( function () { NextCaltrain.setCountdown(minutes); }, refresh);
+    }
   }
 
   static populateBlurb(message, textClass) {
@@ -154,6 +156,7 @@ class NextCaltrain {
           document.getElementById('trip0').className = 'selection-none';
           document.getElementById('trip').innerHTML = '<span class="time-hero">&nbsp;</span>';
           document.getElementById('trip-type').innerHTML = '&nbsp;';
+          document.getElementById('grid-type').innerHTML = 'Next Caltrain';
         }
         tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
         continue; // clear previous values.
@@ -194,6 +197,7 @@ class NextCaltrain {
         document.getElementById('circle').className = wrapClass;
         document.getElementById('trip').className = tripClass;
         document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
+        document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
         tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
         NextCaltrain.populateBlurb(message, textClass);
       } else {
@@ -227,15 +231,17 @@ class NextCaltrain {
   }
 
   static displayScreen(target) {
-    for (let i = 0; i < screens.length; i++) {
-      let display = (target === screens[i]) ? 'flex' : 'none';
-      document.getElementById(`${screens[i]}-screen`).style['display'] = display;
-    }
     // Use fsmode to keep track of document.fullscreen
     if (target === 'grid' || target === 'trip') {
       if (kaios2 && !fsmode) document.documentElement.requestFullscreen();
+      if (kaios1) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
     } else {
       if (kaios2 && fsmode) document.exitFullscreen();
+    if (kaios1) document.title = 'Next Caltrain';
+    }
+    for (let i = 0; i < screens.length; i++) {
+      let display = (target === screens[i]) ? 'flex' : 'none';
+      document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
   }
 

@@ -14,7 +14,7 @@ class GoodTimes{
     let hrs = Math.floor(minutes / 60);
     let min = minutes % 60;
     if (min < 10) { min = '0' + min; }
-    let mer = (hrs > 11 && hrs < 23) ? 'pm' : 'am';
+    let mer = (hrs > 11 && hrs < 24) ? 'pm' : 'am';
     if (hrs > 12) {
       hrs -= 12;
       if (hrs > 12) {
@@ -23,17 +23,21 @@ class GoodTimes{
     }
     if (hrs < 1) { hrs = 12; }
     return [`${hrs}:${min}`, mer];
-  } 
+  }
 
   partTime() {
     return GoodTimes.partTime(this.minutes);
+  }
+
+  niceTime() {
+    return GoodTimes.partTime(this.minutes).join(' ').toUpperCase();
   }
 
   static fullTime(minutes) {
     return GoodTimes.partTime(minutes).join('');
   }
 
-  fullTime() { 
+  fullTime() {
     return GoodTimes.fullTime(this.minutes);
   }
 
@@ -65,10 +69,12 @@ class GoodTimes{
 
   countdown(target) {
     let minutes = target - this.minutes;
-    if (minutes > 59) {
-      return `${Math.floor(minutes / 60)} hr ${minutes % 60} min`;
+    if (minutes < 0) {
+      return '';
+    } else if (minutes > 59) {
+      return `in ${Math.floor(minutes / 60)} hr ${minutes % 60} min`;
     } else {
-      return `${minutes} min ${60 - this.seconds} sec`;
+      return `in ${minutes} min ${60 - this.seconds} sec`;
     }
   }
 
