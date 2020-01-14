@@ -171,10 +171,11 @@ body {
   flex-direction: row;
   justify-content: space-between;
   font-family: 'Noto Sans', sans-serif;
+  letter-spacing: 0.3px;
   background-color: black;
   color: white;
   font-size: 10.5pt;
-  padding: 3px 6px 0 6px;
+  padding: 3px 5px 0 5px;
   height: 24px;
 }
 
