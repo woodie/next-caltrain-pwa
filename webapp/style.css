@@ -178,10 +178,13 @@ body {
   height: 24px;
 }
 
+#schedule {
+  padding-bottom: 3px;
+}
+
 #grid-ampm { font-size: 9pt; }
 #trip-ampm { font-size: 9pt; }
 
-#schedule { width: 100%; }
 #message { margin-bottom: 2px; }
 .message-arriving { color: #0F0; }
 .message-departing { color: #FF0; }
