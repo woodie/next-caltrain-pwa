@@ -90,8 +90,8 @@ body {
 }
 
 .fillbar {
-  background-image: linear-gradient(#666, black);
-  height: 15px;
+  background-image: linear-gradient(#888, black);
+  height: 23px;
 }
 
 #popup-menu {
@@ -143,7 +143,6 @@ body {
   justify-content: space-between;
   background-color: black;
   width: 240px;
-  padding-top: -2px;
 }
 
 #trip-screen {
@@ -151,7 +150,6 @@ body {
   flex-direction: column;
   background-color: black;
   width: 240px;
-  padding-top: -2px;
   min-height: 290px;
 }
 
@@ -173,12 +171,15 @@ body {
   flex-direction: row;
   justify-content: space-between;
   font-family: 'Noto Sans', sans-serif;
-  background-color: #333;
+  background-color: black;
   color: white;
   font-size: 10.5pt;
-  padding: 4px 5px 0 5px;
+  padding: 3px 6px 0 6px;
   height: 24px;
 }
+
+#grid-ampm { font-size: 9pt; }
+#trip-ampm { font-size: 9pt; }
 
 #schedule { width: 100%; }
 #message { margin-bottom: 2px; }
@@ -237,7 +238,7 @@ div > .selection-arriving { border-color: #0F0; }
   font-size: 12pt;
   padding-left: 3px;
   padding-right: 3px;
-  margin-bottom: -2px;
+  margin-top: -2px;
 }
 
 .train-time {

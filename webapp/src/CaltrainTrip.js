@@ -53,7 +53,7 @@ class CaltrainTrip {
   }
 
   label() {
-    return `#${this.trip} ${this.directionString()}`;
+    return `${this.directionString()} #${this.trip}`;
   }
 
   description() {

@@ -29,10 +29,6 @@ class GoodTimes{
     return GoodTimes.partTime(this.minutes);
   }
 
-  niceTime() {
-    return GoodTimes.partTime(this.minutes).join(' ').toUpperCase();
-  }
-
   static fullTime(minutes) {
     return GoodTimes.partTime(minutes).join('');
   }

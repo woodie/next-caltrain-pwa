@@ -40,7 +40,7 @@ var CaltrainTrip = function () {
   }, {
     key: "label",
     value: function label() {
-      return `#${this.trip} ${this.directionString()}`;
+      return `${this.directionString()} #${this.trip}`;
     }
   }, {
     key: "description",

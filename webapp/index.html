@@ -85,11 +85,12 @@
   </div>
 
   <div id="grid-screen" class="full-screen" style="display: none;">
-    <div id="grid-header">
-      <div class="fillbar"></div>
+    <div id="grid-header"><!-- 71 -->
+      <div class="fillbar"></div><!-- 15 -->
       <div class="minibar">
         <div id="grid-type">Next Caltrain</div>
-        <div id="grid-time">- - -</div>
+        <div><span id="grid-time"></span>
+             <span id="grid-ampm"></span></div>
       </div>
       <div>
         <span id="origin-grid">Origin to</span><br>
@@ -112,7 +113,8 @@
       <div class="fillbar"></div>
       <div class="minibar">
         <div>Next Caltrain</div>
-        <div id="trip-time">- - -</div>
+        <div><span id="trip-time"></span>
+             <span id="trip-ampm"></span></div>
       </div>
       <div id="trip-info">
         <span id="label"></span><br>

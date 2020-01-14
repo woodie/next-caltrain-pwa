@@ -20,11 +20,6 @@ var GoodTimes = function () {
       return GoodTimes.partTime(this.minutes);
     }
   }, {
-    key: 'niceTime',
-    value: function niceTime() {
-      return GoodTimes.partTime(this.minutes).join(' ').toUpperCase();
-    }
-  }, {
     key: 'fullTime',
     value: function fullTime() {
       return GoodTimes.fullTime(this.minutes);
