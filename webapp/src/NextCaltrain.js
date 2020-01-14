@@ -74,6 +74,7 @@ class NextCaltrain {
   }
 
   static setTitlebar() {
+    if (!trainId) return;
     document.title = `Service: ${CaltrainTrip.type(trainId)}`;
   }
 

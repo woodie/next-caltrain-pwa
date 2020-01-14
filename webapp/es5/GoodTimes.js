@@ -53,7 +53,7 @@ var GoodTimes = function () {
   }, {
     key: 'countdown',
     value: function countdown(target) {
-      var minutes = target - this.minutes;
+      var minutes = target - this.minutes - 1;
       if (minutes < 0) {
         return '';
       } else if (minutes > 59) {

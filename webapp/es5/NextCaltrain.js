@@ -78,6 +78,7 @@ var NextCaltrain = function () {
   }, {
     key: 'setTitlebar',
     value: function setTitlebar() {
+      if (!trainId) return;
       document.title = `Service: ${CaltrainTrip.type(trainId)}`;
     }
   }, {
