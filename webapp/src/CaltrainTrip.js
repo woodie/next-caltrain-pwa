@@ -22,20 +22,13 @@ class CaltrainTrip {
   setService() {
     let mins = CaltrainService.tripStops(this.trip, this.direction, this.schedule);
     let strs = (this.direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
-    // determine size
-    let getSize = 0;
-    for (let i = 0; i < mins.length; i++) {
-      if (mins[i] !== -1) getSize++;
-    }
     this.times = [];
     this.stops = [];
     // populate instance
-    let setSize = 0;
     for (let i = 0; i < mins.length; i++) {
-      if (mins[i] === -1) continue;
-      this.times[setSize] = mins[i];
-      this.stops[setSize] = strs[i];
-      setSize++;
+      if (mins[i] == undefined) continue;
+      this.times.push(mins[i]);
+      this.stops.push(strs[i]);
     }
   }
 

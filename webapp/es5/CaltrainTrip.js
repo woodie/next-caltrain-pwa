@@ -21,20 +21,13 @@ var CaltrainTrip = function () {
     value: function setService() {
       var mins = CaltrainService.tripStops(this.trip, this.direction, this.schedule);
       var strs = this.direction === NORTH ? caltrainServiceData.northStops : caltrainServiceData.southStops;
-
-      var getSize = 0;
-      for (var i = 0; i < mins.length; i++) {
-        if (mins[i] !== -1) getSize++;
-      }
       this.times = [];
       this.stops = [];
 
-      var setSize = 0;
-      for (var _i = 0; _i < mins.length; _i++) {
-        if (mins[_i] === -1) continue;
-        this.times[setSize] = mins[_i];
-        this.stops[setSize] = strs[_i];
-        setSize++;
+      for (var i = 0; i < mins.length; i++) {
+        if (mins[i] == undefined) continue;
+        this.times.push(mins[i]);
+        this.stops.push(strs[i]);
       }
     }
   }, {
