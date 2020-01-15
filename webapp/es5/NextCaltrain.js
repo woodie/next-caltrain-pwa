@@ -35,12 +35,13 @@ var NextCaltrain = function () {
   _createClass(NextCaltrain, null, [{
     key: 'startApp',
     value: function startApp() {
-      if (document.location.search === '?kaios1') kaios1 = true;
-      if (navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
-      if (navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
+      if (document.location.search === '?kaios1' || navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
+      if (document.location.search === '?kaios2' || navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
       kaios = kaios1 || kaios2;
       if (!kaios) {
         document.getElementById('keypad').style['display'] = 'flex';
+      } else if (kaios2) {
+        document.getElementById('hero-screen').className = 'downtime';
       } else if (kaios1) {
         document.getElementById('grid-screen').className = 'part-screen';
         document.getElementById('trip-screen').className = 'part-screen';

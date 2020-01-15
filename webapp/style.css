@@ -1,7 +1,7 @@
 body {
   display: flex;
   justify-content: center;
-  background-color: gray;
+  background-color: #CCC;
   color: white;
   margin: 0px;
   text-align: center;
@@ -16,6 +16,16 @@ body {
   display: flex;
   width: 240px;
   height: 228px;
+}
+
+#hero-screen.downtime {
+  position: absolute;
+  bottom: 0;
+  left:0;
+}
+
+#fs-toggle:not(:fullscreen) {
+  background-color: #afa;
 }
 
 #about-screen {
