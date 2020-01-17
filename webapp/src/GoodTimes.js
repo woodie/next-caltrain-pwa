@@ -5,6 +5,7 @@ class GoodTimes{
 
   constructor() {
     let now = new Date();
+    //let now = new Date('2020-10-15T08:10:10');
     this.minutes = now.getHours() * 60 + now.getMinutes();
     this.seconds = now.getSeconds();
     this.dotw = now.getDay();

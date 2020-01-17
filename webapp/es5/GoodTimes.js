@@ -9,6 +9,7 @@ var GoodTimes = function () {
     _classCallCheck(this, GoodTimes);
 
     var now = new Date();
+
     this.minutes = now.getHours() * 60 + now.getMinutes();
     this.seconds = now.getSeconds();
     this.dotw = now.getDay();

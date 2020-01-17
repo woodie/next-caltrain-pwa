@@ -6,7 +6,7 @@ import subprocess
 from bs4 import BeautifulSoup
 
 def main():
-  fetch_schedule_data()
+  #fetch_schedule_data()
   parse_schedule_data('weekday','north')
   parse_schedule_data('weekday','south')
   parse_schedule_data('weekend','north')

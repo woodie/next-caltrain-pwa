@@ -1,48 +1,43 @@
 # Next Caltrain PWA
 
-This is a Caltrain Schedule for modern Alcatel flip phones.
-The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which
-incorporates a modern Firefox browser with geo location capabilities.
-The `SMARTFLIP` supports full-screen mode but the `GO FLIP` does not,
-so this scredule will function in both modes.
+This Caltrain schedule is a progressive web app (PWA) designed for KaiOS phones without a touchscreen.
+The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a modern Firefox browser.
 
 | Supported Phones  | Model | OS          | Browser    | Javascript | Full-Screen |
 | ----------------- | ------|------------ | ---------- | ---------- | ----------- |
 | Alcatel SMARTFLIP | 4052R | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
 | Alcatel GO FLIP   | 4044O | KaiOS 1.0   | Firefox 37 | ES 2015    | No          |
 
-## Project Goals
+## Project History and Goals
 
-Once we have a full-featured web app with stored station preferences,
-we can look into publishing as an app in the KaiOS store. For now,
-this app will simply function as a destination URL in the browser.
+This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
+that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
+We may also consider publishing an an app to the KaiOS store.
 
 ## Project Status
 
-This is currently a UI prototype, but it will be trivial to port features from
-[our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
-that runs on J2ME phones.
+This app is fully functional, but there is room for improvement.
+- Each day should extend two hours into the next morning.
+- Trips that require a transfer stop should be supported. 
+
 
 ## Keypad Actions (proposed)
 
-Events from the `directional keys` (up, down, left, right) are  only accessible on `SMARTFLIP`,
-so `GO FLIP` can only use `[5]` (page up) and `[8]` (page down) keys to select a trip.
-The `OK` key can also be used for select on the `SMARTFLIP`.
+The directional keys may not work so use `[5]` and `[8]` to move the selection up and down.
 
-    [1] - Zoom in (browser feature)
-    [2] - Lock Cursor (n/a in full-screen mode)
-    [3] - Zoom out (browser feature)
-    [5] - Page up
-    [8] - Page down
-    [4] - Set origin station South
-    [6] - Set origin station North
-    [7] - Set destination station South
-    [9] - Set destination station North
-    [*] - Option menu
-    [0] - Swap departure and arrival stations
-    [#] - Swap current and weekend/weekday schedules
-    [answer] - Select
-    [hangup] - Exit
+    [OK] - SELECT
+    [back] - BACK (on GO FLIP)
+    [hangup] - BACK/EXIT
+    [5][8] - Move the seletion up and down.
+    [4][6] - Change origin station.
+    [7][9] - Change destination station.
+    [0] - Flip the direction of the selected stations.
+    [#] - Swap between weekday/weekend schedules.
+    [2] - To hide the cursor (and nagivate with 5 and 8).
+    [*] - Acess the menu for help and settings.
 
-<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/part-screen.png">
-<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/full-screen.png">
+<img width="20%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png">
+<img width="20%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png">
+<img width="20%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png">
+<br/>
+<img width="62%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png">
