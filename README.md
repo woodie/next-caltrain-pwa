@@ -10,7 +10,7 @@ The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a
 
 ## Project History and Goals
 
-This project started as a port of our [our other project](https://github.com/woodie/next-caltrain-pwa)
+This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
 We may also consider publishing an an app to the KaiOS store.
 
@@ -38,6 +38,6 @@ The directional keys may not work so use `[5]` and `[8]` to move the selection u
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
 
-<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png" valign="top">
-<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png" valign="top">
-<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png" valign="top">
+<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png" valign="top"><img
+     width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png" valign="top"><img
+     width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png" valign="top">
