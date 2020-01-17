@@ -10,16 +10,16 @@ The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a
 
 ## Project History and Goals
 
-This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
+This project started as a port of our [our other project](https://github.com/woodie/next-caltrain-pwa)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
 We may also consider publishing an an app to the KaiOS store.
 
 ## Project Status
 
-This app is fully functional, but there is room for improvement.
+This app is fully functional, but there is room for improvement:
 - Each day should extend two hours into the next morning.
 - Trips that require a transfer stop should be supported. 
-
+- Users should be warned to avoid the function keys.
 
 ## Keypad Actions (proposed)
 
@@ -36,8 +36,8 @@ The directional keys may not work so use `[5]` and `[8]` to move the selection u
     [2] - To hide the cursor (and nagivate with 5 and 8).
     [*] - Acess the menu for help and settings.
 
-<img width="20%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png">
-<img width="20%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png">
-<img width="20%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png">
-<br/>
-<img width="62%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png">
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
+
+<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png" valign="top">
+<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png" valign="top">
+<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png" valign="top">
