@@ -16,7 +16,6 @@ const UP = 53;
 const DOWN = 56
 
 const screens = 'hero grid trip about commands'.split(' ');
-let previousScreen = screens[0];
 
 const hints = [
     ['Use the keypad to navigate<br/>as there is no touchscreen.', [],
@@ -27,8 +26,10 @@ const hints = [
      'Use [7] and [9] to<br/>change destination station.'],
     ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
      'Use [#] to swap between<br/>weekday/weekend schedules.'],
-    ['Use [2] to hide the cursor,<br/>and nagivate with 5 and 8.', [2,'*'],
-     'Use [*] to acess the menu<br/>for help and settings.']];
+//  ['Use [2] to hide the cursor,<br/>and nagivate with 5 and 8.', [2,'*'],
+//   'Use [*] to acess the menu<br/>for help and settings.']];
+    ['The cursor arrow is visible<br/>but not used by the app.', null,
+     'Move it to the right, then<br/>use [5] and [8] to navigate.']];
 let hintIndex = -1;
 
 class NextCaltrain {
@@ -41,8 +42,7 @@ class NextCaltrain {
     kaios = (kaios1 || kaios2);
     if (!kaios) {
       document.getElementById('keypad').style['display'] = 'flex';
-    } else if (kaios2) {
-      document.getElementById('hero-screen').className = 'downtime';
+      document.getElementById('hero-filler').style['display'] = 'flex';
     } else if (kaios1) {
       document.getElementById('grid-screen').className = 'part-screen';
       document.getElementById('trip-screen').className = 'part-screen';
@@ -68,11 +68,16 @@ class NextCaltrain {
     if (hintIndex >= hints.length) hintIndex = 0;
     document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
     document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
-    let bg = ['black', 'gray'];
-    for (let i = 0; i < 12; i++) {
-      let key = (i < 10) ? i : ['*','#'][i % 2];
-      let clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
-      document.getElementById(`k${key}`).style['background-color'] = clr;
+    if (hints[hintIndex][1] === null) {
+      document.getElementById('mini-keypad').style['visibility'] = 'hidden';
+    } else {
+      document.getElementById('mini-keypad').style['visibility'] = 'visible';
+      let bg = ['black', 'gray'];
+      for (let i = 0; i < 12; i++) {
+        let key = (i < 10) ? i : ['*','#'][i % 2];
+        let clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
+        document.getElementById(`k${key}`).style['background-color'] = clr;
+      }
     }
   }
 
@@ -88,6 +93,8 @@ class NextCaltrain {
     document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
     document.getElementById('trip-time').innerHTML = partTime[0];
     document.getElementById('trip-ampm').innerHTML = partTime[1].toUpperCase();
+    document.getElementById('hero-time').innerHTML = partTime[0];
+    document.getElementById('hero-ampm').innerHTML = partTime[1].toUpperCase();
     setTimeout( function () { NextCaltrain.setTheTime() }, (60 - ourTime.seconds) * 1000);
     NextCaltrain.loadSchedule();
   }
@@ -242,7 +249,7 @@ class NextCaltrain {
 
   static displayScreen(target) {
     if (kaios1) document.title = 'Next Caltrain';
-    if (target === 'grid' || target === 'trip') {
+    if (target === 'hero' || target === 'grid' || target === 'trip') {
       if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
     } else {
       if (kaios2 && document.fullscreenElement) document.exitFullscreen();
@@ -260,8 +267,9 @@ class NextCaltrain {
     // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
       if (document.fullscreenElement) {
-        NextCaltrain.displayScreen('grid');
+        document.getElementById('hero-filler').style['display'] = 'flex';
       } else {
+        document.getElementById('hero-filler').style['display'] = 'none';
         NextCaltrain.displayScreen('hero');
       }
     };
@@ -290,6 +298,8 @@ class NextCaltrain {
         if (NextCaltrain.currentScreen() !== 'hero') {
           // Support native EXIT on hero screen.
           e.preventDefault();
+        } else {
+          return;
         }
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
@@ -314,7 +324,6 @@ class NextCaltrain {
       let confirmation = ['Save', (prefs.flipped ? prefs.destin : prefs.origin), 'as morning and',
           (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
       if (confirm(confirmation)) prefs.saveStops();
-      NextCaltrain.displayScreen(previousScreen);
     } else if (code === 'about') {
       // Display the 'About' screen.
       NextCaltrain.displayScreen('about')
@@ -325,7 +334,7 @@ class NextCaltrain {
     } else if (NextCaltrain.currentScreen() === 'about') {
       // Handle events on the 'About' screen.
       if (code == OK || code == BACK) {
-        NextCaltrain.displayScreen(previousScreen);
+        NextCaltrain.displayScreen('hero');
       }
     } else if (NextCaltrain.currentScreen() === 'commands') {
       // Handle events on the 'Keypad commands' screen.
@@ -333,7 +342,7 @@ class NextCaltrain {
         NextCaltrain.bumpKeypadHint();
       } else if (code == BACK) {
         hintIndex = -1;
-        NextCaltrain.displayScreen(previousScreen);
+        NextCaltrain.displayScreen('hero');
       }
     } else if (document.getElementById('popup-menu').style['display'] === 'block') {
       // Handle and catch events intended for the popup menu.
@@ -355,6 +364,7 @@ class NextCaltrain {
       } else if (code === OK) {
         NextCaltrain.displayScreen('grid')
       } else if (code === 170 || code === 37) { // * or <-
+        if (kaios2 && document.fullscreenElement) document.exitFullscreen();
         NextCaltrain.popupMenu('show');
       } else if (code === 163 || code === 39) { // # or ->
         swapped = swapped ? false : true;

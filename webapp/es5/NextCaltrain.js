@@ -22,9 +22,8 @@ var UP = 53;
 var DOWN = 56;
 
 var screens = 'hero grid trip about commands'.split(' ');
-var previousScreen = screens[0];
 
-var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Use [2] to hide the cursor,<br/>and nagivate with 5 and 8.', [2, '*'], 'Use [*] to acess the menu<br/>for help and settings.']];
+var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['The cursor arrow is visible<br/>but not used by the app.', null, 'Move it to the right, then<br/>use [5] and [8] to navigate.']];
 var hintIndex = -1;
 
 var NextCaltrain = function () {
@@ -40,8 +39,7 @@ var NextCaltrain = function () {
       kaios = kaios1 || kaios2;
       if (!kaios) {
         document.getElementById('keypad').style['display'] = 'flex';
-      } else if (kaios2) {
-        document.getElementById('hero-screen').className = 'downtime';
+        document.getElementById('hero-filler').style['display'] = 'flex';
       } else if (kaios1) {
         document.getElementById('grid-screen').className = 'part-screen';
         document.getElementById('trip-screen').className = 'part-screen';
@@ -69,11 +67,16 @@ var NextCaltrain = function () {
       if (hintIndex >= hints.length) hintIndex = 0;
       document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
       document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
-      var bg = ['black', 'gray'];
-      for (var i = 0; i < 12; i++) {
-        var key = i < 10 ? i : ['*', '#'][i % 2];
-        var clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
-        document.getElementById(`k${key}`).style['background-color'] = clr;
+      if (hints[hintIndex][1] === null) {
+        document.getElementById('mini-keypad').style['visibility'] = 'hidden';
+      } else {
+        document.getElementById('mini-keypad').style['visibility'] = 'visible';
+        var bg = ['black', 'gray'];
+        for (var i = 0; i < 12; i++) {
+          var key = i < 10 ? i : ['*', '#'][i % 2];
+          var clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
+          document.getElementById(`k${key}`).style['background-color'] = clr;
+        }
       }
     }
   }, {
@@ -91,6 +94,8 @@ var NextCaltrain = function () {
       document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
       document.getElementById('trip-time').innerHTML = partTime[0];
       document.getElementById('trip-ampm').innerHTML = partTime[1].toUpperCase();
+      document.getElementById('hero-time').innerHTML = partTime[0];
+      document.getElementById('hero-ampm').innerHTML = partTime[1].toUpperCase();
       setTimeout(function () {
         NextCaltrain.setTheTime();
       }, (60 - ourTime.seconds) * 1000);
@@ -261,7 +266,7 @@ var NextCaltrain = function () {
     key: 'displayScreen',
     value: function displayScreen(target) {
       if (kaios1) document.title = 'Next Caltrain';
-      if (target === 'grid' || target === 'trip') {
+      if (target === 'hero' || target === 'grid' || target === 'trip') {
         if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
       } else {
         if (kaios2 && document.fullscreenElement) document.exitFullscreen();
@@ -279,8 +284,9 @@ var NextCaltrain = function () {
     value: function attachListeners() {
       document.onfullscreenchange = function (e) {
         if (document.fullscreenElement) {
-          NextCaltrain.displayScreen('grid');
+          document.getElementById('hero-filler').style['display'] = 'flex';
         } else {
+          document.getElementById('hero-filler').style['display'] = 'none';
           NextCaltrain.displayScreen('hero');
         }
       };
@@ -307,6 +313,8 @@ var NextCaltrain = function () {
           code = BACK;
           if (NextCaltrain.currentScreen() !== 'hero') {
             e.preventDefault();
+          } else {
+            return;
           }
         } else if (code === OK) {
           e.preventDefault();
@@ -326,7 +334,6 @@ var NextCaltrain = function () {
       } else if (code === 'prefs') {
         var confirmation = ['Save', prefs.flipped ? prefs.destin : prefs.origin, 'as morning and', prefs.flipped ? prefs.origin : prefs.destin, 'as evening default stations?'].join(' ');
         if (confirm(confirmation)) prefs.saveStops();
-        NextCaltrain.displayScreen(previousScreen);
       } else if (code === 'about') {
         NextCaltrain.displayScreen('about');
       } else if (code === 'commands') {
@@ -334,14 +341,14 @@ var NextCaltrain = function () {
         NextCaltrain.displayScreen('commands');
       } else if (NextCaltrain.currentScreen() === 'about') {
         if (code == OK || code == BACK) {
-          NextCaltrain.displayScreen(previousScreen);
+          NextCaltrain.displayScreen('hero');
         }
       } else if (NextCaltrain.currentScreen() === 'commands') {
         if (code == OK) {
           NextCaltrain.bumpKeypadHint();
         } else if (code == BACK) {
           hintIndex = -1;
-          NextCaltrain.displayScreen(previousScreen);
+          NextCaltrain.displayScreen('hero');
         }
       } else if (document.getElementById('popup-menu').style['display'] === 'block') {
         if (code === OK || code === BACK) {
@@ -360,6 +367,7 @@ var NextCaltrain = function () {
         } else if (code === OK) {
           NextCaltrain.displayScreen('grid');
         } else if (code === 170 || code === 37) {
+          if (kaios2 && document.fullscreenElement) document.exitFullscreen();
           NextCaltrain.popupMenu('show');
         } else if (code === 163 || code === 39) {
           swapped = swapped ? false : true;

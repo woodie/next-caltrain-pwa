@@ -14,18 +14,35 @@ body {
   justify-content: flex-start;
   flex-direction: column;
   display: flex;
+}
+
+#hero-filler {
+  display: flex;
+  flex-direction: column;
+}
+
+#fake-titlebar {
+  height: 35px;
+  background-color: #CCC;
+  /* in case we add text */
+  color: #333;
+  display: flex;
+  align-items: baseline;
+  line-height: 40px;
+  padding-left: 22px;
+  font-size: 14pt;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+#hero-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  background-color: black;
   width: 240px;
   height: 228px;
-}
-
-#hero-screen.downtime {
-  position: absolute;
-  bottom: 0;
-  left:0;
-}
-
-#fs-toggle:not(:fullscreen) {
-  background-color: #afa;
 }
 
 #about-screen {
@@ -56,17 +73,6 @@ body {
   font-size: 16px;
   background-color: white;
   color: black;
-  height: 228px;
-}
-
-#hero-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: white;
-  background-color: black;
-  width: 240px;
   height: 228px;
 }
 
@@ -195,6 +201,7 @@ body {
 
 #grid-ampm { font-size: 9pt; }
 #trip-ampm { font-size: 9pt; }
+#hero-ampm { font-size: 9pt; }
 
 #message { margin-bottom: 2px; }
 .message-arriving { color: #0F0; }
