@@ -17,7 +17,6 @@ We may also consider publishing an an app to the KaiOS store.
 ## Project Status
 
 This app is fully functional, but there is room for improvement:
-- Each day should extend two hours into the next morning.
 - Trips that require a transfer stop should be supported. 
 - Users should be warned to avoid the function keys.
 

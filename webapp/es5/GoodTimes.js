@@ -9,10 +9,10 @@ var GoodTimes = function () {
     _classCallCheck(this, GoodTimes);
 
     var now = new Date();
-
-    this.minutes = now.getHours() * 60 + now.getMinutes();
-    this.seconds = now.getSeconds();
-    this.dotw = now.getDay();
+    var run = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+    this.minutes = (run.getHours() + 2) * 60 + run.getMinutes();
+    this.seconds = run.getSeconds();
+    this.dotw = run.getDay();
   }
 
   _createClass(GoodTimes, [{

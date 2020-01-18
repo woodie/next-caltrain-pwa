@@ -4,11 +4,12 @@
 class GoodTimes{
 
   constructor() {
-    let now = new Date();
     //let now = new Date('2020-10-15T08:10:10');
-    this.minutes = now.getHours() * 60 + now.getMinutes();
-    this.seconds = now.getSeconds();
-    this.dotw = now.getDay();
+    let now = new Date(); // run day goes until 2am
+    let run = new Date(now.getTime() - (2 * 60 * 60 * 1000));
+    this.minutes = (run.getHours() + 2) * 60 + run.getMinutes();
+    this.seconds = run.getSeconds();
+    this.dotw = run.getDay();
   }
 
   static partTime(minutes) {
