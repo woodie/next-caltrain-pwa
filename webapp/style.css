@@ -1,7 +1,7 @@
 body {
   display: flex;
   justify-content: center;
-  background-color: #CCC;
+  background-color: #AAA;
   color: white;
   margin: 0px;
   text-align: center;
@@ -24,14 +24,14 @@ body {
 #fake-titlebar {
   height: 35px;
   background-color: #CCC;
-  /* in case we add text */
   color: #333;
   display: flex;
-  align-items: baseline;
-  line-height: 40px;
-  padding-left: 22px;
+  line-height: 33px;
   font-size: 14pt;
   font-family: 'Noto Sans', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 240px;
 }
 
 #hero-content {

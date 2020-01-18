@@ -21,6 +21,8 @@ This app is fully functional, but there is room for improvement:
 - Trips that require a transfer stop should be supported. 
 - Users should be warned to avoid the function keys.
 
+From your KaiOS phone, visit: http://next-caltrain-pwa.appspot.com/
+
 ## Keypad Actions (proposed)
 
 The directional keys may not work so use `[5]` and `[8]` to move the selection up and down.
@@ -38,6 +40,9 @@ The directional keys may not work so use `[5]` and `[8]` to move the selection u
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
 
-<img width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png" valign="top"> <img
-     width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png" valign="top"> <img
-     width="33%" src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png" valign="top">
+<img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png"
+     valign="top"> &nbsp; <img
+     src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png"
+     valign="top"> &nbsp; <img
+     src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png"
+     valign="top">
