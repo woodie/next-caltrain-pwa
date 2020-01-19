@@ -23,7 +23,8 @@ var DOWN = 56;
 
 var screens = 'hero grid trip about commands'.split(' ');
 
-var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['The cursor arrow is visible<br/>but not used by the app.', null, 'Move it to the right, then<br/>use [5] and [8] to navigate.']];
+var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Move cursor to the right,<br/>use [5] or [8] to navigate.<br/>' + 'Note: Cursor arrow is visible<br/>but not used by this app.<br/>', null, `Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>` + 'Note: Function keys do not<br/>directly control this app.']];
+
 var hintIndex = -1;
 
 var NextCaltrain = function () {
@@ -57,6 +58,7 @@ var NextCaltrain = function () {
       for (var i = 0; i < hints.length; i++) {
         for (var n = 0; n < 2; n++) {
           hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, "<span class='btn'>").replace(/\]/g, "</span>");
+          if (kaios1) hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
         }
       }
     }
@@ -68,9 +70,9 @@ var NextCaltrain = function () {
       document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
       document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
       if (hints[hintIndex][1] === null) {
-        document.getElementById('mini-keypad').style['visibility'] = 'hidden';
+        document.getElementById('mini-keypad').style['display'] = 'none';
       } else {
-        document.getElementById('mini-keypad').style['visibility'] = 'visible';
+        document.getElementById('mini-keypad').style['display'] = 'flex';
         var bg = ['black', 'gray'];
         for (var i = 0; i < 12; i++) {
           var key = i < 10 ? i : ['*', '#'][i % 2];
@@ -81,9 +83,8 @@ var NextCaltrain = function () {
     }
   }, {
     key: 'setTitlebar',
-    value: function setTitlebar() {
-      if (!trainId) return;
-      document.title = `Service: ${CaltrainTrip.type(trainId)}`;
+    value: function setTitlebar(message) {
+      document.title = message;
     }
   }, {
     key: 'setTheTime',
@@ -228,7 +229,9 @@ var NextCaltrain = function () {
           document.getElementById('trip').className = tripClass;
           document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
           document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
-          if (kaios1 && NextCaltrain.currentScreen() === 'grid') NextCaltrain.setTitlebar();
+          if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
+            if (trainId) NextCaltrain.setTitlebar(`Service: ${CaltrainTrip.type(trainId)}`);
+          }
           tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
           NextCaltrain.populateBlurb(message, textClass);
         } else {
@@ -330,17 +333,21 @@ var NextCaltrain = function () {
     key: 'press',
     value: function press(code) {
       if (code === ESC) {
+        NextCaltrain.setTitlebar('Next Caltrain');
         NextCaltrain.displayScreen('hero');
       } else if (code === 'prefs') {
         var confirmation = ['Save', prefs.flipped ? prefs.destin : prefs.origin, 'as morning and', prefs.flipped ? prefs.origin : prefs.destin, 'as evening default stations?'].join(' ');
         if (confirm(confirmation)) prefs.saveStops();
       } else if (code === 'about') {
+        NextCaltrain.setTitlebar('About Next Caltrain');
         NextCaltrain.displayScreen('about');
       } else if (code === 'commands') {
+        NextCaltrain.setTitlebar('Keyboard commands');
         NextCaltrain.bumpKeypadHint();
         NextCaltrain.displayScreen('commands');
       } else if (NextCaltrain.currentScreen() === 'about') {
         if (code == OK || code == BACK) {
+          NextCaltrain.setTitlebar('Next Caltrain');
           NextCaltrain.displayScreen('hero');
         }
       } else if (NextCaltrain.currentScreen() === 'commands') {
@@ -348,6 +355,7 @@ var NextCaltrain = function () {
           NextCaltrain.bumpKeypadHint();
         } else if (code == BACK) {
           hintIndex = -1;
+          NextCaltrain.setTitlebar('Next Caltrain');
           NextCaltrain.displayScreen('hero');
         }
       } else if (document.getElementById('popup-menu').style['display'] === 'block') {
@@ -363,6 +371,7 @@ var NextCaltrain = function () {
         NextCaltrain.displayScreen('trip');
       } else {
         if (code === BACK) {
+          NextCaltrain.setTitlebar('Next Caltrain');
           NextCaltrain.displayScreen('hero');
         } else if (code === OK) {
           NextCaltrain.displayScreen('grid');

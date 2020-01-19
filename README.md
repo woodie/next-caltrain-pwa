@@ -16,9 +16,8 @@ We may also consider publishing an an app to the KaiOS store.
 
 ## Project Status
 
-This app is fully functional, but there is room for improvement:
-- Trips that require a transfer stop should be supported. 
-- Users should be warned to avoid the function keys.
+This app is fully functional, but there is room for improvement.
+Trips that require a transfer stop should be supported.
 
 From your KaiOS phone, visit: http://next-caltrain-pwa.appspot.com/
 
