@@ -16,6 +16,7 @@ const UP = 53;
 const DOWN = 56
 
 const screens = 'hero grid trip about commands'.split(' ');
+const titles = {'about':'About Next Caltrain', 'commands':'Keyboard commands'};
 
 const hints = [
     ['Use the keypad to navigate<br/>as there is no touchscreen.', [],
@@ -83,10 +84,6 @@ class NextCaltrain {
         document.getElementById(`k${key}`).style['background-color'] = clr;
       }
     }
-  }
-
-  static setTitlebar(message) {
-    document.title = message;
   }
 
   static setTheTime() {
@@ -218,7 +215,7 @@ class NextCaltrain {
         document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
         document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
         if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
-          if (trainId) NextCaltrain.setTitlebar(`Service: ${CaltrainTrip.type(trainId)}`);
+          if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
         }
         tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
         NextCaltrain.populateBlurb(message, textClass);
@@ -253,7 +250,7 @@ class NextCaltrain {
   }
 
   static displayScreen(target) {
-    if (kaios1) document.title = 'Next Caltrain';
+    document.title = (target in titles) ? titles[target] : 'Next Caltrain';
     if (target === 'hero' || target === 'grid' || target === 'trip') {
       if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
     } else {
@@ -323,7 +320,6 @@ class NextCaltrain {
   static press(code) {
     if (code === ESC) {
       // Simulate EXIT from fullscreen mode.
-      NextCaltrain.setTitlebar('Next Caltrain');
       NextCaltrain.displayScreen('hero')
     } else if (code === 'prefs') {
       // DIsplay the 'Save stations' confirmation.
@@ -332,17 +328,14 @@ class NextCaltrain {
       if (confirm(confirmation)) prefs.saveStops();
     } else if (code === 'about') {
       // Display the 'About' screen.
-      NextCaltrain.setTitlebar('About Next Caltrain');
       NextCaltrain.displayScreen('about')
     } else if (code === 'commands') {
       // Display the 'Keypad commands' screen.
-      NextCaltrain.setTitlebar('Keyboard commands');
       NextCaltrain.bumpKeypadHint();
       NextCaltrain.displayScreen('commands')
     } else if (NextCaltrain.currentScreen() === 'about') {
       // Handle events on the 'About' screen.
       if (code == OK || code == BACK) {
-        NextCaltrain.setTitlebar('Next Caltrain');
         NextCaltrain.displayScreen('hero');
       }
     } else if (NextCaltrain.currentScreen() === 'commands') {
@@ -351,7 +344,6 @@ class NextCaltrain {
         NextCaltrain.bumpKeypadHint();
       } else if (code == BACK) {
         hintIndex = -1;
-        NextCaltrain.setTitlebar('Next Caltrain');
         NextCaltrain.displayScreen('hero');
       }
     } else if (document.getElementById('popup-menu').style['display'] === 'block') {
@@ -370,7 +362,6 @@ class NextCaltrain {
     } else {
       // Handle events for the hero and grid screens.
       if (code === BACK) {
-        NextCaltrain.setTitlebar('Next Caltrain');
         NextCaltrain.displayScreen('hero')
       } else if (code === OK) {
         NextCaltrain.displayScreen('grid')
