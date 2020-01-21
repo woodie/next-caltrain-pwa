@@ -1,3 +1,16 @@
+const special_service = {
+    '2019-07-04': 'sun', // Independence Day
+    '2019-09-02': 'sun', // Labor Day
+    '2019-11-28': 'sun', // Thanksgiving Day
+    '2019-11-29': 'mod', // Day after Thanksgiving
+    '2019-12-25': 'sun', // Christmas Day
+    '2019-12-31': 'sun', // New Year's Eve
+    '2020-01-01': 'sun', // New Year's Day
+    '2020-01-20': 'mod', // Martin Luther King Jr Day
+    '2020-02-17': 'mod', // Presidents Day
+    '2020-05-25': 'sun', // Memorial Day
+};
+
 /**
  * A utility to simplify working with the date and time.
  */

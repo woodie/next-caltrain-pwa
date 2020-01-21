@@ -9,8 +9,7 @@ from collections import OrderedDict
 xstr = lambda s: s or ''
 
 def main():
-  fetch_schedule_data()
-  #trips = parse_trip_data()
+  #fetch_schedule_data()
   stops = parse_station_data()
   times = parse_schedule_data(stops)
   write_schedule_data(times, stops)
@@ -27,22 +26,6 @@ def fetch_schedule_data():
   os.chdir('CT-GTFS')
   subprocess.call(['unzip', '-o', '../downloads/CT-GTFS.zip'])
   os.chdir(basedir)
-
-def parse_trip_data():
-  _trips = {}
-  with open('CT-GTFS/trips.txt', 'rb') as tripsFile:
-    tripsReader = csv.reader(tripsFile)
-    header = next(tripsReader, None)
-    trip_id_x = header.index('trip_id')
-    try:
-      trip_name_x = header.index('trip_short_name')
-    except:
-      trip_name_x = trip_id_x
-    for row in tripsReader:
-      trip_id = row[trip_id_x]
-      trip_name = row[trip_name_x]
-      _trips[trip_id] = trip_name
-  return _trips
 
 def parse_station_data():
   _stops = {'north':[], 'south':[], 'labels':{}}
@@ -67,7 +50,8 @@ def parse_station_data():
 
 def parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
-            'weekend':{'north':OrderedDict(), 'south':OrderedDict()}}
+            'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
+           'modified':{'north':OrderedDict(), 'south':OrderedDict()}}
   with open('CT-GTFS/stop_times.txt', 'rb') as timesFile:
     timesReader = csv.reader(timesFile)
     header = next(timesReader, None)
@@ -107,7 +91,7 @@ def write_schedule_data(times, stops):
         labels.append(stops['labels'][stop_id])
       f.write('","'.join(labels))
       f.write('"],\n')
-      for schedule in ['weekday', 'weekend']:
+      for schedule in ['weekday', 'weekend', 'modified']:
         comma = ''
         f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:

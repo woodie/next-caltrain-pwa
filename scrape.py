@@ -31,7 +31,7 @@ def parse_schedule_data(schedule, direction):
     soup = BeautifulSoup(f, 'html.parser')
   if (schedule == 'modified'):
     tbl_list = soup.select("table.schedule")
-    tbl = tbl_list[0] if (direction == 'northbound') else tbl_list[1]
+    tbl = tbl_list[0] if (direction == 'north') else tbl_list[1]
   else:
     tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
   header = ['']
@@ -64,6 +64,8 @@ def parse_schedule_data(schedule, direction):
 def _parse_stop(text):
   text = text.replace('Departs ', '').replace('Arrives ', '')
   text = text.replace("So. San", "So San")
+  text = text.replace("South SF", "So San Francisco")
+  text = text.replace("Mt View", "Mountain View")
   text = text.replace("SJ D", "San Jose D")
   return text.replace(u'\xa0', u' ')
 

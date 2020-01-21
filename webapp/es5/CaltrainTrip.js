@@ -57,16 +57,23 @@ var CaltrainTrip = function () {
   }], [{
     key: "type",
     value: function type(trip) {
-      if (trip > 800) {
+      if (trip > 900) {
+        return "Unknown";
+      } else if (trip > 800) {
         return "Baby Bullet";
+      } else if (trip > 500) {
+        return "Limited";
       } else if (trip > 400) {
         return "Local";
       } else if (trip > 300) {
         return "Baby Bullet";
       } else if (trip > 200) {
         return "Limited";
+      } else if (trip > 100) {
+        return "Local";
+      } else {
+        return "Unknown";
       }
-      return "Local";
     }
   }]);
 

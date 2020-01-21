@@ -4,6 +4,18 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var special_service = {
+  '2019-07-04': 'sun',
+  '2019-09-02': 'sun',
+  '2019-11-28': 'sun',
+  '2019-11-29': 'mod',
+  '2019-12-25': 'sun',
+  '2019-12-31': 'sun',
+  '2020-01-01': 'sun',
+  '2020-01-20': 'mod',
+  '2020-02-17': 'mod',
+  '2020-05-25': 'sun' };
+
 var GoodTimes = function () {
   function GoodTimes() {
     _classCallCheck(this, GoodTimes);

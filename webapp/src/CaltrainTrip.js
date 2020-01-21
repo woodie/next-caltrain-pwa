@@ -33,16 +33,23 @@ class CaltrainTrip {
   }
 
   static type(trip) {
-    if (trip > 800) {
+    if (trip > 900) {
+    return "Unknown";
+    } else if (trip > 800) { // Weekend & Modified
       return "Baby Bullet";
-    } else if (trip > 400) {
-      return "Local";
-    } else if (trip > 300) {
-      return "Baby Bullet";
-    } else if (trip > 200) {
+    } else if (trip > 500) { // Modified
       return "Limited";
+    } else if (trip > 400) { // Weekend & Modified
+      return "Local";
+    } else if (trip > 300) { // Weekday
+      return "Baby Bullet";
+    } else if (trip > 200) { // Weekday
+      return "Limited";
+    } else if (trip > 100) { // Weekday
+      return "Local";
+    } else {
+      return "Unknown";
     }
-    return "Local";
   }
 
   label() {
