@@ -13,6 +13,7 @@ var kaios = false;
 var countdown = null;
 var trainId = null;
 var offset = null;
+var dotw = 0;
 
 var OK = 13;
 var BACK = 95;
@@ -87,6 +88,7 @@ var NextCaltrain = function () {
     value: function setTheTime() {
       var ourTime = new GoodTimes();
       var partTime = ourTime.partTime();
+      dotw = ourTime.dotw;
       document.getElementById('grid-time').innerHTML = partTime[0];
       document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
       document.getElementById('trip-time').innerHTML = partTime[0];
@@ -123,7 +125,7 @@ var NextCaltrain = function () {
   }, {
     key: 'loadTrip',
     value: function loadTrip(train) {
-      var trip = new CaltrainTrip(train);
+      var trip = new CaltrainTrip(train, dotw);
       document.getElementById('label').innerHTML = trip.label();
       document.getElementById('description').innerHTML = trip.description();
       var goodTime = new GoodTimes();
@@ -223,10 +225,10 @@ var NextCaltrain = function () {
           }
           document.getElementById('circle').className = wrapClass;
           document.getElementById('trip').className = tripClass;
-          document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
-          document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
+          document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId, dotw);
+          document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
           if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
-            if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
+            if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
           }
           tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
           NextCaltrain.populateBlurb(message, textClass);

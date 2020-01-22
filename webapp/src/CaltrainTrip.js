@@ -1,4 +1,4 @@
-// SOUTH:0, NORTH:1, WEEKEND:0, WEEKDAY:8
+// SOUTH:0, NORTH:1, SUNDAY:0, SATURDAY:6, WEEKEND:7, WEEKDAY:8, MODIFIED:9
 
 class CaltrainTrip {
 
@@ -7,12 +7,12 @@ class CaltrainTrip {
   * @param trip the trip ID
   * @return a list of service stops.
   */
-  constructor(trip) {
+  constructor(trip, dotw) {
     this.trip = trip;
     this.stops = [];
     this.times = [];
     this.direction = (trip % 2 === SOUTH) ? SOUTH : NORTH;
-    this.schedule = (trip < 400) ? WEEKDAY: WEEKEND;
+    this.schedule = (trip < 400) ? WEEKDAY: (dotw) === MODIFIED ? MODIFIED : WEEKEND;
     this.setService();
   }
 
@@ -65,7 +65,9 @@ class CaltrainTrip {
   }
 
   scheduleString() {
-    if (this.schedule === WEEKDAY) {
+    if (this.schedule === MODIFIED) {
+      return "Modified";
+    } else if (this.schedule === WEEKDAY) {
       return "Weekday";
     } else {
       return (saturdayTripIds.indexOf(this.trip)) === -1 ? "Weekend" : "Saturday";

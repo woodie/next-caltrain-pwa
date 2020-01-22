@@ -5,14 +5,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var CaltrainTrip = function () {
-  function CaltrainTrip(trip) {
+  function CaltrainTrip(trip, dotw) {
     _classCallCheck(this, CaltrainTrip);
 
     this.trip = trip;
     this.stops = [];
     this.times = [];
     this.direction = trip % 2 === SOUTH ? SOUTH : NORTH;
-    this.schedule = trip < 400 ? WEEKDAY : WEEKEND;
+    this.schedule = trip < 400 ? WEEKDAY : dotw === MODIFIED ? MODIFIED : WEEKEND;
     this.setService();
   }
 
@@ -48,7 +48,9 @@ var CaltrainTrip = function () {
   }, {
     key: "scheduleString",
     value: function scheduleString() {
-      if (this.schedule === WEEKDAY) {
+      if (this.schedule === MODIFIED) {
+        return "Modified";
+      } else if (this.schedule === WEEKDAY) {
         return "Weekday";
       } else {
         return saturdayTripIds.indexOf(this.trip) === -1 ? "Weekend" : "Saturday";

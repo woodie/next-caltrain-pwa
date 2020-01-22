@@ -18,6 +18,7 @@ class GoodTimes{
 
   constructor() {
     //let now = new Date('2020-10-15T08:10:10');
+    //let now = new Date('2020-02-17T08:10:10');
     let now = new Date(); // run day goes until 2am
     let run = new Date(now.getTime() - (2 * 60 * 60 * 1000));
     let str = run.toJSON().slice(0, 10);

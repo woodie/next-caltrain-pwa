@@ -7,6 +7,7 @@ let kaios = false;
 let countdown = null;
 let trainId = null;
 let offset = null;
+let dotw = 0;
 
 const OK = 13;
 const BACK = 95;
@@ -89,6 +90,7 @@ class NextCaltrain {
   static setTheTime() {
     let ourTime = new GoodTimes();
     let partTime = ourTime.partTime();
+    dotw = ourTime.dotw;
     document.getElementById('grid-time').innerHTML = partTime[0];
     document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
     document.getElementById('trip-time').innerHTML = partTime[0];
@@ -118,7 +120,7 @@ class NextCaltrain {
   }
 
   static loadTrip(train) {
-    let trip = new CaltrainTrip(train);
+    let trip = new CaltrainTrip(train, dotw);
     document.getElementById('label').innerHTML = trip.label();
     document.getElementById('description').innerHTML = trip.description();
     let goodTime = new GoodTimes();
@@ -212,10 +214,10 @@ class NextCaltrain {
         }
         document.getElementById('circle').className = wrapClass;
         document.getElementById('trip').className = tripClass;
-        document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
-        document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
+        document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId, dotw);
+        document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
         if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
-          if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
+          if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
         }
         tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
         NextCaltrain.populateBlurb(message, textClass);
