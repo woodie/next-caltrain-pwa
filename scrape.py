@@ -6,7 +6,7 @@ import subprocess
 from bs4 import BeautifulSoup
 
 def main():
-  #fetch_schedule_data()
+  fetch_schedule_data()
   parse_schedule_data('weekday','north')
   parse_schedule_data('weekday','south')
   parse_schedule_data('weekend','north')
@@ -67,6 +67,7 @@ def _parse_stop(text):
   text = text.replace("South SF", "So San Francisco")
   text = text.replace("Mt View", "Mountain View")
   text = text.replace("SJ D", "San Jose D")
+  text = text.replace("Capital", "Capitol")
   return text.replace(u'\xa0', u' ')
 
 def _parse_time(text):

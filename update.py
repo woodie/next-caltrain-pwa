@@ -9,7 +9,7 @@ from collections import OrderedDict
 xstr = lambda s: s or ''
 
 def main():
-  #fetch_schedule_data()
+  fetch_schedule_data()
   stops = parse_station_data()
   times = parse_schedule_data(stops)
   write_schedule_data(times, stops)
@@ -52,6 +52,32 @@ def parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
             'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
            'modified':{'north':OrderedDict(), 'south':OrderedDict()}}
+  for direction in ['north', 'south']:
+    filename = 'data/modified_%s.csv' % direction
+    schedule = 'modified'
+    try:
+      with open(filename, 'rb') as modFile:
+        labels = []
+        for stop_id in stops[direction]:
+          labels.append(stops['labels'][stop_id])
+        modReader = csv.reader(modFile)
+        header = next(modReader, None)
+        for train in header[1:]:
+          _times[schedule][direction][train] = [None] * len(stops[direction])
+        for row in modReader:
+          station = row[0]
+          if station == 'Shuttle Bus':
+            continue
+          station_x = labels.index(station)
+          for i in range(1, len(header)):
+            if row[i] == '':
+              continue
+            trip_id = header[i]
+            parts = row[i].split(':')
+            departure = int(parts[0]) * 60 + int(parts[1])
+            _times[schedule][direction][trip_id][station_x] = str(departure)
+    finally:
+      modFile.close()
   with open('CT-GTFS/stop_times.txt', 'rb') as timesFile:
     timesReader = csv.reader(timesFile)
     header = next(timesReader, None)
