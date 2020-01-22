@@ -1,8 +1,8 @@
 const SOUTH = 0;
 const NORTH = 1;
-const WEEKEND = 0;
-const SUNDAY = 1;
-const SATURDAY = 7;
+const SUNDAY = 0;
+const SATURDAY = 6;
+const WEEKEND = 7;
 const WEEKDAY = 8;
 const MODIFIED = 9;
 const TRAIN = 0;
@@ -168,8 +168,10 @@ class CaltrainService {
   */
   static select(direction, schedule) {
     if (direction === NORTH) {
+      if (schedule === MODIFIED) return caltrainServiceData.northModified;
       return (schedule === WEEKDAY) ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
     } else {
+      if (schedule === MODIFIED) return caltrainServiceData.southModified;
       return (schedule === WEEKDAY) ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
     }
   }

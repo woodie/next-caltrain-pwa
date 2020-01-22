@@ -5,16 +5,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var special_service = {
-  '2019-07-04': 'sun',
-  '2019-09-02': 'sun',
-  '2019-11-28': 'sun',
-  '2019-11-29': 'mod',
-  '2019-12-25': 'sun',
-  '2019-12-31': 'sun',
-  '2020-01-01': 'sun',
-  '2020-01-20': 'mod',
-  '2020-02-17': 'mod',
-  '2020-05-25': 'sun' };
+  '2020-01-20': MODIFIED,
+  '2020-02-17': MODIFIED,
+  '2020-05-25': SUNDAY };
 
 var GoodTimes = function () {
   function GoodTimes() {
@@ -22,9 +15,10 @@ var GoodTimes = function () {
 
     var now = new Date();
     var run = new Date(now.getTime() - 2 * 60 * 60 * 1000);
+    var str = run.toJSON().slice(0, 10);
     this.minutes = (run.getHours() + 2) * 60 + run.getMinutes();
     this.seconds = run.getSeconds();
-    this.dotw = run.getDay();
+    this.dotw = special_service[str] ? special_service[str] : run.getDay();
   }
 
   _createClass(GoodTimes, [{
@@ -40,9 +34,11 @@ var GoodTimes = function () {
   }, {
     key: 'schedule',
     value: function schedule() {
-      if (this.dotw === 0) {
+      if (this.dotw === MODIFIED) {
+        return MODIFIED;
+      } else if (this.dotw === SUNDAY) {
         return SUNDAY;
-      } else if (this.dotw === 6) {
+      } else if (this.dotw === SATURDAY) {
         return SATURDAY;
       } else {
         return WEEKDAY;

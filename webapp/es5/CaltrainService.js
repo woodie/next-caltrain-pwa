@@ -6,9 +6,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var SOUTH = 0;
 var NORTH = 1;
-var WEEKEND = 0;
-var SUNDAY = 1;
-var SATURDAY = 7;
+var SUNDAY = 0;
+var SATURDAY = 6;
+var WEEKEND = 7;
 var WEEKDAY = 8;
 var MODIFIED = 9;
 var TRAIN = 0;
@@ -210,8 +210,10 @@ var CaltrainService = function () {
     key: "select",
     value: function select(direction, schedule) {
       if (direction === NORTH) {
+        if (schedule === MODIFIED) return caltrainServiceData.northModified;
         return schedule === WEEKDAY ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
       } else {
+        if (schedule === MODIFIED) return caltrainServiceData.southModified;
         return schedule === WEEKDAY ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
       }
     }
