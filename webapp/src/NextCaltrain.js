@@ -28,12 +28,10 @@ const hints = [
      'Use [7] and [9] to<br/>change destination station.'],
     ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
      'Use [#] to swap between<br/>weekday/weekend schedules.'],
-//  ['Use [2] to hide the cursor,<br/>and nagivate with 5 and 8.', [2,'*'],
-//   'Use [*] to acess the menu<br/>for help and settings.']];
     ['Move cursor to the right,<br/>use [5] or [8] to navigate.<br/>' +
-     'Note: Cursor arrow is visible<br/>but not used by this app.<br/>', null,
+     'Note: Cursor arrow is visible<br/>but not used by this app.', null,
      `Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>` +
-     'Note: Function keys do not<br/>directly control this app.']];
+     'Note: Function keys are not<br>used directly by this app.']];
 
 let hintIndex = -1;
 
@@ -64,7 +62,7 @@ class NextCaltrain {
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, "<span class='btn'>").replace(/\]/g, "</span>");
-        if (kaios1) hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
+        if (kaios1) hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
       }
     }
   }
@@ -169,6 +167,7 @@ class NextCaltrain {
       let route = routes[n];
       if (i > routes.length - 1) {
         if (i === 0) {
+          trainId = null;
           NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink');
           document.getElementById('circle').className = 'selection-departed';
           document.getElementById('trip0').className = 'selection-none';

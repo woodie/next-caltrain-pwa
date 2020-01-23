@@ -25,7 +25,7 @@ var DOWN = 56;
 var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keyboard commands' };
 
-var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Move cursor to the right,<br/>use [5] or [8] to navigate.<br/>' + 'Note: Cursor arrow is visible<br/>but not used by this app.<br/>', null, `Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>` + 'Note: Function keys do not<br/>directly control this app.']];
+var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Move cursor to the right,<br/>use [5] or [8] to navigate.<br/>' + 'Note: Cursor arrow is visible<br/>but not used by this app.', null, `Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>` + 'Note: Function keys are not<br>used directly by this app.']];
 
 var hintIndex = -1;
 
@@ -60,7 +60,7 @@ var NextCaltrain = function () {
       for (var i = 0; i < hints.length; i++) {
         for (var n = 0; n < 2; n++) {
           hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, "<span class='btn'>").replace(/\]/g, "</span>");
-          if (kaios1) hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
+          if (kaios1) hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
         }
       }
     }
@@ -175,6 +175,7 @@ var NextCaltrain = function () {
         var route = routes[n];
         if (i > routes.length - 1) {
           if (i === 0) {
+            trainId = null;
             NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink');
             document.getElementById('circle').className = 'selection-departed';
             document.getElementById('trip0').className = 'selection-none';
