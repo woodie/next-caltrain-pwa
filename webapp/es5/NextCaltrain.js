@@ -25,7 +25,7 @@ var DOWN = 56;
 var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keyboard commands' };
 
-var hints = [['Use the keypad to navigate<br/>as there is no touchscreen.', [], 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Move cursor to the right,<br/>use [5] or [8] to navigate.<br/>' + 'Note: Cursor arrow is visible<br/>but not used by this app.', null, `Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>` + 'Note: Function keys are not<br>used directly by this app.']];
+var hints = [['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' + 'Just move it out of the way<br/>to the right of the screen.', null, 'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' + 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' + 'This will let you launch the<br/>app quickly in the future.', null, 'We hope this app works as<br/>expected on your phone.<br/>' + 'Please send feedback to<br/><a href="mailto:next-caltrain@netpress.com">next-caltrain@netpress.com</a>.']];
 
 var hintIndex = -1;
 
@@ -75,11 +75,10 @@ var NextCaltrain = function () {
         document.getElementById('mini-keypad').style['display'] = 'none';
       } else {
         document.getElementById('mini-keypad').style['display'] = 'flex';
-        var bg = ['black', 'gray'];
         for (var i = 0; i < 12; i++) {
           var key = i < 10 ? i : ['*', '#'][i % 2];
-          var clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
-          document.getElementById(`k${key}`).style['background-color'] = clr;
+          var cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
+          document.getElementById(`k${key}`).className = cls;
         }
       }
     }

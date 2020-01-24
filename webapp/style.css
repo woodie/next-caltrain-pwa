@@ -67,7 +67,7 @@ body {
 
 #commands-screen {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-direction: column;
   min-width: 240px;
   font-size: 16px;
@@ -123,9 +123,11 @@ body {
   min-width: 10px;
   line-height: 10px;
   border: thin solid brown;
+  border-top: none;
+  border-left: none;
   border-radius: 3px;
   color: black;
-  background-color: yellow;
+  background-color: wheat;
 }
 
 #main-hints > div > .btn {
@@ -170,9 +172,8 @@ body {
 }
 
 .hint {
-  justify-content: center;
   font-size: 12pt;
-  padding-bottom: 2px;
+  padding: 8px 0;
   white-space: nowrap;
 }
 
@@ -346,14 +347,14 @@ div > .selection-arriving { border-color: #0F0; }
 }
 
 #mini-keypad > .keycol > div {
+  line-height: 20px;
   font-size: 12pt;
-  width: 46px;
-  height: 24px;
+  width: 40px;
+  height: 20px;
 }
 
 #keypad {
   padding-top: 5px;
-  background-color: grey;
   display: flex;
   flex-direction: row;
   position: fixed;
@@ -368,9 +369,20 @@ div > .selection-arriving { border-color: #0F0; }
   margin-right: 3px;
 }
 
+.keycol > div.default {
+  background-color: #789ac7;
+}
+
+.keycol > div.selected {
+  background-color: darkBlue;
+}
+
 .keycol > div {
   border-radius: 8px;
   color: white;
+  border: thin solid purple;
+  border-top: none;
+  border-left: none;
   background-color: black;
   margin-bottom: 3px;
   font-size: 14pt;

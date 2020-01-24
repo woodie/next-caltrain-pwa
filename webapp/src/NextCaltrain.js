@@ -20,7 +20,9 @@ const screens = 'hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keyboard commands'};
 
 const hints = [
-    ['Use the keypad to navigate<br/>as there is no touchscreen.', [],
+    ['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' +
+     'Just move it out of the way<br/>to the right of the screen.', null,
+     'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' +
      'Press [OK] to continue and<br/>[BACK] to return to the app.'],
     ['Use [5] and [8] to move<br/>the seletion up and down.', [5,8],
      'The [UP] and [DOWN] buttons<br/>may not work as expected.'],
@@ -28,10 +30,10 @@ const hints = [
      'Use [7] and [9] to<br/>change destination station.'],
     ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
      'Use [#] to swap between<br/>weekday/weekend schedules.'],
-    ['Move cursor to the right,<br/>use [5] or [8] to navigate.<br/>' +
-     'Note: Cursor arrow is visible<br/>but not used by this app.', null,
-     `Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>` +
-     'Note: Function keys are not<br>used directly by this app.']];
+    ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' +
+     'This will let you launch the<br/>app quickly in the future.', null,
+     'We hope this app works as<br/>expected on your phone.<br/>' +
+     'Please send feedback to<br/><a href="mailto:next-caltrain@netpress.com">next-caltrain@netpress.com</a>.']];
 
 let hintIndex = -1;
 
@@ -76,11 +78,10 @@ class NextCaltrain {
       document.getElementById('mini-keypad').style['display'] = 'none';
     } else {
       document.getElementById('mini-keypad').style['display'] = 'flex';
-      let bg = ['black', 'gray'];
       for (let i = 0; i < 12; i++) {
         let key = (i < 10) ? i : ['*','#'][i % 2];
-        let clr = hints[hintIndex][1].indexOf(key) == -1 ? bg[1] : bg[0];
-        document.getElementById(`k${key}`).style['background-color'] = clr;
+        let cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
+        document.getElementById(`k${key}`).className = cls;
       }
     }
   }
