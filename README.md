@@ -44,3 +44,11 @@ The directional keys may not work so use `[5]` and `[8]` to move the selection u
      valign="top"> &nbsp; <img
      src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png"
      valign="top">
+
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/about.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png)
+
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help2.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help3.png)
