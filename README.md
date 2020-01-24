@@ -12,29 +12,24 @@ The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a
 
 This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
-We may also consider publishing an an app to the KaiOS store.
+We may also consider publishing an app to the KaiOS store.
 
 ## Project Status
 
 This app is fully functional, but there is room for improvement.
-Trips that require a transfer stop should be supported.
+Trips that require a transfer stop should be fully supported.
 
 From your KaiOS phone, visit: http://next-caltrain-pwa.appspot.com/
 
-## Keypad Actions (proposed)
+## Keyboard commands
 
-The directional keys may not work so use `[5]` and `[8]` to move the selection up and down.
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help2.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help3.png)
 
-    [OK] - SELECT
-    [back] - BACK (on GO FLIP)
-    [hangup] - BACK/EXIT
-    [5][8] - Move the seletion up and down.
-    [4][6] - Change origin station.
-    [7][9] - Change destination station.
-    [0] - Flip the direction of the selected stations.
-    [#] - Swap between weekday/weekend schedules.
-    [2] - To hide the cursor (and nagivate with 5 and 8).
-    [*] - Acess the menu for help and settings.
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/about.png)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
 
@@ -44,11 +39,3 @@ The directional keys may not work so use `[5]` and `[8]` to move the selection u
      valign="top"> &nbsp; <img
      src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png"
      valign="top">
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/about.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png)
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help2.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help3.png)
