@@ -8,7 +8,7 @@ The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a
 | Alcatel SMARTFLIP | 4052R | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
 | Alcatel GO FLIP   | 4044O | KaiOS 1.0   | Firefox 37 | ES 2015    | No          |
 
-## Project History and Goals
+## History and Goals
 
 This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
@@ -16,10 +16,9 @@ We may also consider publishing an app to the KaiOS store.
 
 ## Project Status
 
-This app is fully functional, but there is room for improvement.
-Trips that require a transfer stop should be fully supported.
-
-From your KaiOS phone, visit: http://next-caltrain-pwa.appspot.com/
+This app is fully functional, with support for Weekday, Saturday, Sunday and Modified Schedules.
+Trips that require a transfer stop should be supported. From your KaiOS phone, visit:
+http://next-caltrain-pwa.appspot.com
 
 ## Keyboard commands
 

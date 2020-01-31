@@ -1,12 +1,17 @@
 :root {
-  --btn-default-color: #789ac7;
+  --app-background-color: #AAA;
+  --btn-default-color: #789AC7;
   --btn-selected-color: darkBlue;
+  --msg-arriving-color: #0F0;
+  --msg-departing-color: #FF0;
+  --msg-departed-color: #0AF;
+  --msg-selected-color: #666;
 }
 
 body {
   display: flex;
   justify-content: center;
-  background-color: #AAA;
+  background-color: var(--app-background-color);
   color: white;
   margin: 0px;
   text-align: center;
@@ -210,14 +215,14 @@ body {
 #hero-ampm { font-size: 9pt; }
 
 #message { margin-bottom: 2px; }
-.message-arriving { color: #0F0; }
-.message-departing { color: #FF0; }
-.message-departed { color: #0AF; }
-div > .selection-none { border-color: #000; }
-div > .selection-swapped { border-color: #0AF; }
-div > .selection-departing { border-color: #FF0; }
-div > .selection-departed { border-color: #666; }
-div > .selection-arriving { border-color: #0F0; }
+.message-arriving { color: var(--msg-arriving-color); }
+.message-departing { color: var(--msg-departing-color); }
+.message-departed { color: var(--msg-departed-color); }
+div > .selection-none { border-color: black; }
+div > .selection-departing { border-color: var(--msg-departing-color); }
+div > .selection-arriving { border-color: var(--msg-arriving-color); }
+div > .selection-swapped { border-color: var(--msg-departed-color); }
+div > .selection-departed { border-color: var(--msg-selected-color);  }
 
 .selection {
   border-width: 2px;
@@ -359,7 +364,7 @@ div > .selection-arriving { border-color: #0F0; }
 }
 
 #keypad {
-  background-color: #AAA;
+  background-color: var(--app-background-color);
   padding-top: 5px;
   display: flex;
   flex-direction: row;
