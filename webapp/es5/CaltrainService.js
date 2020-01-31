@@ -1,48 +1,34 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var SOUTH = 0;
-var NORTH = 1;
-var SUNDAY = 0;
-var SATURDAY = 6;
-var WEEKEND = 7;
-var WEEKDAY = 8;
-var MODIFIED = 9;
-var TRAIN = 0;
-var DEPART = 1;
-var ARRIVE = 2;
-var DIRECTION = 0;
-var SCHEDULE = 1;
-var TRIP_IDX = 2;
 var saturdayTripIds = [421, 443, 442, 444];
 var CaltrainService = function () {
   function CaltrainService() {
     _classCallCheck(this, CaltrainService);
 
-    this.northStops = CaltrainService.mapStops(NORTH);
-    this.southStops = CaltrainService.mapStops(SOUTH);
+    this.northStops = CaltrainService.mapStops('North');
+    this.southStops = CaltrainService.mapStops('South');
   }
 
   _createClass(CaltrainService, [{
-    key: "stopMap",
+    key: 'stopMap',
     value: function stopMap(direction) {
-      return direction === NORTH ? this.northStops : this.southStops;
+      return direction === 'North' ? this.northStops : this.southStops;
     }
   }, {
-    key: "routes",
-    value: function routes(departStop, arriveStop, dotw, swap) {
-      var schedule = CaltrainService.schedule(dotw, swap);
+    key: 'routes',
+    value: function routes(departStop, arriveStop, schedule) {
       var direction = CaltrainService.direction(departStop, arriveStop);
       var departTimes = this.times(departStop, direction, schedule);
       var arriveTimes = this.times(arriveStop, direction, schedule);
-      var skip = dotw === SUNDAY ? saturdayTripIds : [];
+      var skip = schedule === 'Sunday' ? saturdayTripIds : [];
       return CaltrainService.merge(departTimes, arriveTimes, skip);
     }
   }, {
-    key: "times",
+    key: 'times',
     value: function times(stop, direction, schedule) {
       var source = CaltrainService.select(direction, schedule);
       var index = this.stopMap(direction).get(stop);
@@ -75,19 +61,19 @@ var CaltrainService = function () {
       return times;
     }
   }], [{
-    key: "mapStops",
+    key: 'mapStops',
     value: function mapStops(direction) {
       var out = new Map();
-      var stops = direction === NORTH ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+      var stops = direction === 'North' ? caltrainServiceData.northStops : caltrainServiceData.southStops;
       for (var i = 0; i < stops.length; i++) {
         out.set(stops[i], i);
       }
       return out;
     }
   }, {
-    key: "tripStops",
+    key: 'tripStops',
     value: function tripStops(train, direction, schedule) {
-      var stops = direction === NORTH ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+      var stops = direction === 'North' ? caltrainServiceData.northStops : caltrainServiceData.southStops;
       var times = CaltrainService.select(direction, schedule)[train];
       var out = [];
       for (var i = 0; i < times.length; i++) {
@@ -96,14 +82,14 @@ var CaltrainService = function () {
       return out;
     }
   }, {
-    key: "direction",
+    key: 'direction',
     value: function direction(departStop, arriveStop) {
       var depart = caltrainServiceData.southStops.indexOf(departStop);
       var arrive = caltrainServiceData.southStops.indexOf(arriveStop);
-      return depart < arrive ? SOUTH : NORTH;
+      return depart < arrive ? 'South' : 'North';
     }
   }, {
-    key: "nextIndex",
+    key: 'nextIndex',
     value: function nextIndex(routes, minutes) {
       var index = 0;
       var _iteratorNormalCompletion2 = true;
@@ -137,16 +123,7 @@ var CaltrainService = function () {
       return index;
     }
   }, {
-    key: "schedule",
-    value: function schedule(dotw, swap) {
-      if (swap) {
-        return dotw === SATURDAY || dotw === SUNDAY ? WEEKDAY : SATURDAY;
-      } else {
-        return dotw === SATURDAY || dotw === SUNDAY ? dotw : WEEKDAY;
-      }
-    }
-  }, {
-    key: "merge",
+    key: 'merge',
     value: function merge(departTimes, arriveTimes, skip) {
       var _iteratorNormalCompletion3 = true;
       var _didIteratorError3 = false;
@@ -207,14 +184,14 @@ var CaltrainService = function () {
       return sorted;
     }
   }, {
-    key: "select",
+    key: 'select',
     value: function select(direction, schedule) {
-      if (direction === NORTH) {
-        if (schedule === MODIFIED) return caltrainServiceData.northModified;
-        return schedule === WEEKDAY ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
+      if (schedule === 'Modified') {
+        return direction === 'North' ? caltrainServiceData.northModified : caltrainServiceData.southModified;
+      } else if (schedule === 'Weekday') {
+        return direction === 'North' ? caltrainServiceData.northWeekday : caltrainServiceData.southWeekday;
       } else {
-        if (schedule === MODIFIED) return caltrainServiceData.southModified;
-        return schedule === WEEKDAY ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
+        return direction === 'North' ? caltrainServiceData.northWeekend : caltrainServiceData.southWeekend;
       }
     }
   }]);

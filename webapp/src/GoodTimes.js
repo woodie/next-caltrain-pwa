@@ -1,30 +1,17 @@
-const special_service = {
-  //'2019-07-04': SUNDAY,   // Independence Day
-  //'2019-09-02': SUNDAY,   // Labor Day
-  //'2019-11-28': SUNDAY,   // Thanksgiving Day
-  //'2019-11-29': MODIFIED, // Day after Thanksgiving
-  //'2019-12-25': SUNDAY,   // Christmas Day
-  //'2019-12-31': SUNDAY,   // New Year's Eve
-  //'2020-01-01': SUNDAY,   // New Year's Day
-    '2020-01-20': MODIFIED, // Martin Luther King Jr Day
-    '2020-02-17': MODIFIED, // Presidents Day
-    '2020-05-25': SUNDAY,   // Memorial Day
-};
-
 /**
  * A utility to simplify working with the date and time.
  */
 class GoodTimes{
 
   constructor() {
-    //let now = new Date('2020-10-15T08:10:10');
-    //let now = new Date('2020-02-17T08:10:10');
+    //let now = new Date('2020-10-15T08:10:10'); // force weekday
+    //let now = new Date('2020-02-17T08:10:10'); // force modified
     let now = new Date(); // run day goes until 2am
     let run = new Date(now.getTime() - (2 * 60 * 60 * 1000));
-    let str = run.toJSON().slice(0, 10);
+    this.date = run.toJSON().slice(0, 10);
     this.minutes = (run.getHours() + 2) * 60 + run.getMinutes();
     this.seconds = run.getSeconds();
-    this.dotw = (special_service[str]) ? special_service[str] : run.getDay();
+    this.dotw = run.getDay();
   }
 
   static partTime(minutes) {
@@ -52,22 +39,6 @@ class GoodTimes{
 
   fullTime() {
     return GoodTimes.fullTime(this.minutes);
-  }
-
-  schedule() {
-    if (this.dotw === MODIFIED) {
-      return MODIFIED;
-    } else if (this.dotw === SUNDAY) {
-      return SUNDAY;
-    } else if (this.dotw === SATURDAY) {
-      return SATURDAY;
-    } else {
-    return WEEKDAY;
-    }
-  }
-
-  swapped() {
-    return (this.dotw === 0 || this.dotw === 6) ? 'Weekday Schedule' : 'Weekend Schedule';
   }
 
   static dateString(miliseconds) {

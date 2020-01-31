@@ -1,13 +1,13 @@
 let prefs = new Preferences(caltrainServiceData.southStops);
-let schedule = new CaltrainService();
-let swapped = false; // WEEKDAY/WEEKEND
+let service = new CaltrainService();
 let kaios1 = false;
 let kaios2 = false;
 let kaios = false;
+let schedule = null;
 let countdown = null;
 let trainId = null;
 let offset = null;
-let dotw = 0;
+let goodTime = null;
 
 const OK = 13;
 const BACK = 95;
@@ -18,6 +18,7 @@ const DOWN = 56
 
 const screens = 'hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keyboard commands'};
+const email = 'next-caltrain@netpress.com';
 
 const hints = [
     ['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' +
@@ -29,11 +30,11 @@ const hints = [
     ['Use [4] and [6] to<br/>change origin station.', [4,6,7,9],
      'Use [7] and [9] to<br/>change destination station.'],
     ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
-     'Use [#] to swap between<br/>weekday/weekend schedules.'],
+     'Use [#] to cycle between<br/>available schedules.'],
     ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' +
      'This will let you launch the<br/>app quickly in the future.', null,
      'We hope this app works as<br/>expected on your phone.<br/>' +
-     'Please send feedback to<br/><a href="mailto:next-caltrain@netpress.com">next-caltrain@netpress.com</a>.']];
+     `Please send feedback to<br/><a href="mailto:${email}">${email}</a>.`]];
 
 let hintIndex = -1;
 
@@ -89,7 +90,7 @@ class NextCaltrain {
   static setTheTime() {
     let ourTime = new GoodTimes();
     let partTime = ourTime.partTime();
-    dotw = ourTime.dotw;
+    schedule = new CaltrainSchedule(ourTime);
     document.getElementById('grid-time').innerHTML = partTime[0];
     document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
     document.getElementById('trip-time').innerHTML = partTime[0];
@@ -119,10 +120,10 @@ class NextCaltrain {
   }
 
   static loadTrip(train) {
-    let trip = new CaltrainTrip(train, dotw);
+    goodTime = new GoodTimes();
+    let trip = new CaltrainTrip(train, schedule.label());
     document.getElementById('label').innerHTML = trip.label();
     document.getElementById('description').innerHTML = trip.description();
-    let goodTime = new GoodTimes();
     let lines = [];
     for (let i=0; i < trip.times.length; i++) {
       stop = trip.times[i];
@@ -142,6 +143,7 @@ class NextCaltrain {
   }
 
   static loadSchedule() {
+    goodTime = new GoodTimes();
     clearTimeout(countdown);
     // Set the stations
     let tripLabels = prefs.tripLabels();
@@ -150,8 +152,7 @@ class NextCaltrain {
     document.getElementById('origin-hero').innerHTML = tripLabels[0];
     document.getElementById('destin-hero').innerHTML = tripLabels[1];
     // Load the schdule
-    let goodTime = new GoodTimes();
-    let routes = schedule.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
+    let routes = service.routes(prefs.origin, prefs.destin, schedule.label());
     let minutes = 0;
     if (offset === null) {
       minutes = goodTime.minutes;
@@ -193,13 +194,14 @@ class NextCaltrain {
         document.getElementById('trip').innerHTML = tripTime;
         trainId = route[0];
         let message, textClass, tripClass, wrapClass;
-        if (swapped) {
-          message = goodTime.swapped();
+        if (schedule.swapped()) {
+          message = schedule.label() + ' Schedule';
           textClass = 'message-departed';
           tripClass = (goodTime.inThePast(minutes)) ? 'message-departed' : '';
-          wrapClass = 'selection-swapped';
+          wrapClass = 'selection-departed';
         } else if (goodTime.inThePast(minutes)) {
-          message = '&nbsp;';
+          message = schedule.label() + ' Schedule';
+          textClass = 'message-departed';
           tripClass = 'message-departed';
           wrapClass = 'selection-departed';
         } else if (goodTime.departing(minutes)) {
@@ -214,10 +216,10 @@ class NextCaltrain {
         }
         document.getElementById('circle').className = wrapClass;
         document.getElementById('trip').className = tripClass;
-        document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId, dotw);
-        document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
+        document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
+        document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
         if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
-          if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
+          if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
         }
         tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
         NextCaltrain.populateBlurb(message, textClass);
@@ -368,10 +370,12 @@ class NextCaltrain {
       } else if (code === OK) {
         NextCaltrain.displayScreen('grid')
       } else if (code === 170 || code === 37) { // * or <-
-        if (kaios2 && document.fullscreenElement) document.exitFullscreen();
-        NextCaltrain.popupMenu('show');
+        if (NextCaltrain.currentScreen() === 'hero') {
+          if (kaios2 && document.fullscreenElement) document.exitFullscreen();
+          NextCaltrain.popupMenu('show');
+        }
       } else if (code === 163 || code === 39) { // # or ->
-        swapped = swapped ? false : true;
+        schedule.next();
         offset = null;
       } else if (code === UP) {
         offset--;

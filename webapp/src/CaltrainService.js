@@ -1,16 +1,3 @@
-const SOUTH = 0;
-const NORTH = 1;
-const SUNDAY = 0;
-const SATURDAY = 6;
-const WEEKEND = 7;
-const WEEKDAY = 8;
-const MODIFIED = 9;
-const TRAIN = 0;
-const DEPART = 1;
-const ARRIVE = 2;
-const DIRECTION = 0;
-const SCHEDULE = 1;
-const TRIP_IDX = 2;
 const saturdayTripIds = [421,443,442,444]; // Saturday Only
 
 /**
@@ -20,8 +7,8 @@ const saturdayTripIds = [421,443,442,444]; // Saturday Only
 class CaltrainService {
 
   constructor() {
-    this.northStops = CaltrainService.mapStops(NORTH);
-    this.southStops = CaltrainService.mapStops(SOUTH);
+    this.northStops = CaltrainService.mapStops('North');
+    this.southStops = CaltrainService.mapStops('South');
   }
 
  /**
@@ -31,7 +18,7 @@ class CaltrainService {
   */
   static mapStops(direction) {
     let out = new Map();
-    let stops = (direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+    let stops = (direction === 'North') ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     for (let i = 0; i < stops.length; i++) {
       out.set(stops[i], i);
     }
@@ -41,12 +28,13 @@ class CaltrainService {
  /**
   * Station name maps to index of column with stop times
   * @param train is train number.
-  * @param direction is NORTH or SOUTH.
-  * @param schedule is WEEKDAY or WEEKEND.
+  * @param direction is North or South.
+  * @param schedule is Weekday, Saturday, Sunday or Modified
+/
   * @return array of Station stop times.
   */
   static tripStops(train, direction, schedule) {
-    let stops = (direction === NORTH) ? caltrainServiceData.northStops : caltrainServiceData.southStops;
+    let stops = (direction === 'North') ? caltrainServiceData.northStops : caltrainServiceData.southStops;
     let times = CaltrainService.select(direction, schedule)[train];
     let out = [];
     for (let i = 0; i < times.length; i++) {
@@ -57,23 +45,23 @@ class CaltrainService {
 
  /**
   * Map the stops for provided direction
-  * @param direction is NORTH or SOUTH
+  * @param direction is North or South
   * @return stop name string mapping to schedule columns.
   */
   stopMap(direction) {
-    return (direction === NORTH) ? this.northStops : this.southStops;
+    return (direction === 'North') ? this.northStops : this.southStops;
   }
 
  /**
   * Determine the direction given two stops
   * @param departStop the departing stop name string
   * @param arriveStop the arriving stop name string
-  * @return the direction of this trip: NORTH or SOUTH
+  * @return the direction of this trip: North or South
   */
   static direction(departStop, arriveStop) {
     let depart = caltrainServiceData.southStops.indexOf(departStop);
     let arrive = caltrainServiceData.southStops.indexOf(arriveStop);
-    return (depart < arrive) ? SOUTH : NORTH;
+    return (depart < arrive) ? 'South' : 'North';
   }
 
  /**
@@ -81,16 +69,14 @@ class CaltrainService {
   * @param trains the train IDs
   * @param departStop the departing stop name string
   * @param arriveStop the arriving stop name string
-  * @param dotw a Calendar day-of-the-week
-  * @param swap the schedule for today or not
+  * @param schedule is Weekday, Saturday, Sunday or Modified
   * @return a two dementional array or ints
   */
-  routes(departStop, arriveStop, dotw, swap) {
-    let schedule = CaltrainService.schedule(dotw, swap);
+  routes(departStop, arriveStop, schedule) {
     let direction = CaltrainService.direction(departStop, arriveStop);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-    let skip = (dotw === SUNDAY) ? saturdayTripIds : [];
+    let skip = (schedule === 'Sunday') ? saturdayTripIds : [];
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
 
@@ -103,20 +89,6 @@ class CaltrainService {
       index++;
     }
     return index;
-  }
-
- /**
-  * Convert day-of-the-week into a schedule
-  * @param dotw the Calendar day-of-the-week
-  * @param swap show other schedule that today's
-  * @return the schedule
-  */
-  static schedule(dotw, swap) {
-    if (swap) {
-      return ((dotw === SATURDAY) || (dotw === SUNDAY)) ? WEEKDAY : SATURDAY;
-    } else {
-      return ((dotw === SATURDAY) || (dotw === SUNDAY)) ? dotw : WEEKDAY;
-    }
   }
 
  /**
@@ -146,8 +118,8 @@ class CaltrainService {
  /**
   * For direction and day-of-the-week: train times
   * @param stop the Stop name
-  * @param direction is NORTH or SOUTH
-  * @param schedule is WEEKDAY, SATURDAY or SUNDAY
+  * @param direction is North or South
+  * @param schedule is Weekday, Saturday, Sunday or Modified
   * @return Map of stopID times
   */
   times(stop, direction, schedule) {
@@ -162,17 +134,17 @@ class CaltrainService {
 
  /**
   * Select a schedule for direction and day-of-the-week.
-  * @param direction is NORTH or SOUTH
-  * @param schedule is WEEKDAY, SATURDAY or SUNDAY
+  * @param direction is North or South
+  * @param schedule is Weekday, Saturday, Sunday or Modified
   * @return a two dementional array or ints
   */
   static select(direction, schedule) {
-    if (direction === NORTH) {
-      if (schedule === MODIFIED) return caltrainServiceData.northModified;
-      return (schedule === WEEKDAY) ? caltrainServiceData.northWeekday : caltrainServiceData.northWeekend;
+    if (schedule === 'Modified') {
+      return (direction === 'North') ? caltrainServiceData.northModified : caltrainServiceData.southModified;
+    } else if (schedule === 'Weekday') {
+      return (direction === 'North') ? caltrainServiceData.northWeekday : caltrainServiceData.southWeekday;
     } else {
-      if (schedule === MODIFIED) return caltrainServiceData.southModified;
-      return (schedule === WEEKDAY) ? caltrainServiceData.southWeekday : caltrainServiceData.southWeekend;
+      return (direction === 'North') ? caltrainServiceData.northWeekend : caltrainServiceData.southWeekend;
     }
   }
 

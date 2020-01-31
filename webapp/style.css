@@ -1,3 +1,8 @@
+:root {
+  --btn-default-color: #789ac7;
+  --btn-selected-color: darkBlue;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -354,6 +359,7 @@ div > .selection-arriving { border-color: #0F0; }
 }
 
 #keypad {
+  background-color: #AAA;
   padding-top: 5px;
   display: flex;
   flex-direction: row;
@@ -370,11 +376,11 @@ div > .selection-arriving { border-color: #0F0; }
 }
 
 .keycol > div.default {
-  background-color: #789ac7;
+  background-color: var(--btn-default-color);
 }
 
 .keycol > div.selected {
-  background-color: darkBlue;
+  background-color: var(--btn-selected-color);
 }
 
 .keycol > div {

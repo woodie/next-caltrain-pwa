@@ -5,15 +5,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var prefs = new Preferences(caltrainServiceData.southStops);
-var schedule = new CaltrainService();
-var swapped = false;
+var service = new CaltrainService();
 var kaios1 = false;
 var kaios2 = false;
 var kaios = false;
+var schedule = null;
 var countdown = null;
 var trainId = null;
 var offset = null;
-var dotw = 0;
+var goodTime = null;
 
 var OK = 13;
 var BACK = 95;
@@ -24,8 +24,9 @@ var DOWN = 56;
 
 var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keyboard commands' };
+var email = 'next-caltrain@netpress.com';
 
-var hints = [['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' + 'Just move it out of the way<br/>to the right of the screen.', null, 'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' + 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to swap between<br/>weekday/weekend schedules.'], ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' + 'This will let you launch the<br/>app quickly in the future.', null, 'We hope this app works as<br/>expected on your phone.<br/>' + 'Please send feedback to<br/><a href="mailto:next-caltrain@netpress.com">next-caltrain@netpress.com</a>.']];
+var hints = [['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' + 'Just move it out of the way<br/>to the right of the screen.', null, 'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' + 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to cycle between<br/>available schedules.'], ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' + 'This will let you launch the<br/>app quickly in the future.', null, 'We hope this app works as<br/>expected on your phone.<br/>' + `Please send feedback to<br/><a href="mailto:${email}">${email}</a>.`]];
 
 var hintIndex = -1;
 
@@ -87,7 +88,7 @@ var NextCaltrain = function () {
     value: function setTheTime() {
       var ourTime = new GoodTimes();
       var partTime = ourTime.partTime();
-      dotw = ourTime.dotw;
+      schedule = new CaltrainSchedule(ourTime);
       document.getElementById('grid-time').innerHTML = partTime[0];
       document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
       document.getElementById('trip-time').innerHTML = partTime[0];
@@ -124,10 +125,10 @@ var NextCaltrain = function () {
   }, {
     key: 'loadTrip',
     value: function loadTrip(train) {
-      var trip = new CaltrainTrip(train, dotw);
+      goodTime = new GoodTimes();
+      var trip = new CaltrainTrip(train, schedule.label());
       document.getElementById('label').innerHTML = trip.label();
       document.getElementById('description').innerHTML = trip.description();
-      var goodTime = new GoodTimes();
       var lines = [];
       for (var i = 0; i < trip.times.length; i++) {
         stop = trip.times[i];
@@ -148,6 +149,7 @@ var NextCaltrain = function () {
   }, {
     key: 'loadSchedule',
     value: function loadSchedule() {
+      goodTime = new GoodTimes();
       clearTimeout(countdown);
 
       var tripLabels = prefs.tripLabels();
@@ -156,8 +158,7 @@ var NextCaltrain = function () {
       document.getElementById('origin-hero').innerHTML = tripLabels[0];
       document.getElementById('destin-hero').innerHTML = tripLabels[1];
 
-      var goodTime = new GoodTimes();
-      var routes = schedule.routes(prefs.origin, prefs.destin, goodTime.schedule(), swapped);
+      var routes = service.routes(prefs.origin, prefs.destin, schedule.label());
       var minutes = 0;
       if (offset === null) {
         minutes = goodTime.minutes;
@@ -202,13 +203,14 @@ var NextCaltrain = function () {
               textClass = void 0,
               tripClass = void 0,
               wrapClass = void 0;
-          if (swapped) {
-            message = goodTime.swapped();
+          if (schedule.swapped()) {
+            message = schedule.label() + ' Schedule';
             textClass = 'message-departed';
             tripClass = goodTime.inThePast(minutes) ? 'message-departed' : '';
-            wrapClass = 'selection-swapped';
+            wrapClass = 'selection-departed';
           } else if (goodTime.inThePast(minutes)) {
-            message = '&nbsp;';
+            message = schedule.label() + ' Schedule';
+            textClass = 'message-departed';
             tripClass = 'message-departed';
             wrapClass = 'selection-departed';
           } else if (goodTime.departing(minutes)) {
@@ -225,10 +227,10 @@ var NextCaltrain = function () {
           }
           document.getElementById('circle').className = wrapClass;
           document.getElementById('trip').className = tripClass;
-          document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId, dotw);
-          document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
+          document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
+          document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
           if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
-            if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId, dotw)}`;
+            if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
           }
           tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
           NextCaltrain.populateBlurb(message, textClass);
@@ -368,10 +370,12 @@ var NextCaltrain = function () {
         } else if (code === OK) {
           NextCaltrain.displayScreen('grid');
         } else if (code === 170 || code === 37) {
-          if (kaios2 && document.fullscreenElement) document.exitFullscreen();
-          NextCaltrain.popupMenu('show');
+          if (NextCaltrain.currentScreen() === 'hero') {
+            if (kaios2 && document.fullscreenElement) document.exitFullscreen();
+            NextCaltrain.popupMenu('show');
+          }
         } else if (code === 163 || code === 39) {
-          swapped = swapped ? false : true;
+          schedule.next();
           offset = null;
         } else if (code === UP) {
           offset--;
