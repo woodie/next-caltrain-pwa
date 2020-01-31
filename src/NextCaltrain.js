@@ -14,26 +14,26 @@ const BACK = 95;
 const HANGUP = 8;
 const ESC = 27;
 const UP = 53;
-const DOWN = 56
+const DOWN = 56;
 
 const screens = 'hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keyboard commands'};
 const email = 'next-caltrain@netpress.com';
 
 const hints = [
-    ['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' +
+  ['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' +
      'Just move it out of the way<br/>to the right of the screen.', null,
-     'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' +
+  'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' +
      'Press [OK] to continue and<br/>[BACK] to return to the app.'],
-    ['Use [5] and [8] to move<br/>the seletion up and down.', [5,8],
-     'The [UP] and [DOWN] buttons<br/>may not work as expected.'],
-    ['Use [4] and [6] to<br/>change origin station.', [4,6,7,9],
-     'Use [7] and [9] to<br/>change destination station.'],
-    ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
-     'Use [#] to cycle between<br/>available schedules.'],
-    ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' +
+  ['Use [5] and [8] to move<br/>the seletion up and down.', [5,8],
+    'The [UP] and [DOWN] buttons<br/>may not work as expected.'],
+  ['Use [4] and [6] to<br/>change origin station.', [4,6,7,9],
+    'Use [7] and [9] to<br/>change destination station.'],
+  ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
+    'Use [#] to cycle between<br/>available schedules.'],
+  ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' +
      'This will let you launch the<br/>app quickly in the future.', null,
-     'We hope this app works as<br/>expected on your phone.<br/>' +
+  'We hope this app works as<br/>expected on your phone.<br/>' +
      `Please send feedback to<br/><a href="mailto:${email}">${email}</a>.`]];
 
 let hintIndex = -1;
@@ -64,7 +64,7 @@ class NextCaltrain {
   static formatHints() {
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
-        hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, "<span class='btn'>").replace(/\]/g, "</span>");
+        hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
         if (kaios1) hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
       }
     }
@@ -97,7 +97,7 @@ class NextCaltrain {
     document.getElementById('trip-ampm').innerHTML = partTime[1].toUpperCase();
     document.getElementById('hero-time').innerHTML = partTime[0];
     document.getElementById('hero-ampm').innerHTML = partTime[1].toUpperCase();
-    setTimeout( function () { NextCaltrain.setTheTime() }, (60 - ourTime.seconds) * 1000);
+    setTimeout( function () { NextCaltrain.setTheTime(); }, (60 - ourTime.seconds) * 1000);
     NextCaltrain.loadSchedule();
   }
 
@@ -139,7 +139,7 @@ class NextCaltrain {
                class="station-dot ${target}">&#9679;</span></div>
           <div class="station-name"><br/>${stop[0]}</div></div>`);
     }
-    document.getElementById('listing').innerHTML = lines.join("\n");
+    document.getElementById('listing').innerHTML = lines.join('\n');
   }
 
   static loadSchedule() {
@@ -164,7 +164,7 @@ class NextCaltrain {
     }
     // Populate the grid view
     for (let i=0; i < 6; i++) {
-      let tripCardElement = document.getElementById(`trip${i}`)
+      let tripCardElement = document.getElementById(`trip${i}`);
       let n = (offset + i > routes.length - 1) ? offset + i - routes.length : offset + i;
       let route = routes[n];
       if (i > routes.length - 1) {
@@ -280,7 +280,7 @@ class NextCaltrain {
       }
     };
     // Catch and convert cursor movements to UP/DOWN events (n/a on kaios1).
-    document.body.addEventListener("mousemove", function (e) {
+    document.body.addEventListener('mousemove', function (e) {
       if (kaios2) {
         if (e.movementY < 0) {
           NextCaltrain.press(UP);
@@ -290,7 +290,7 @@ class NextCaltrain {
       }
     });
     // Catch and convert cursor click to OK event.
-    document.addEventListener("click", function (e) {
+    document.addEventListener('click', function (e) {
       if (kaios) {
         NextCaltrain.press(OK);
       }
@@ -324,19 +324,19 @@ class NextCaltrain {
   static press(code) {
     if (code === ESC) {
       // Simulate EXIT from fullscreen mode.
-      NextCaltrain.displayScreen('hero')
+      NextCaltrain.displayScreen('hero');
     } else if (code === 'prefs') {
       // DIsplay the 'Save stations' confirmation.
       let confirmation = ['Save', (prefs.flipped ? prefs.destin : prefs.origin), 'as morning and',
-          (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
+        (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
       if (confirm(confirmation)) prefs.saveStops();
     } else if (code === 'about') {
       // Display the 'About' screen.
-      NextCaltrain.displayScreen('about')
+      NextCaltrain.displayScreen('about');
     } else if (code === 'commands') {
       // Display the 'Keypad commands' screen.
       NextCaltrain.bumpKeypadHint();
-      NextCaltrain.displayScreen('commands')
+      NextCaltrain.displayScreen('commands');
     } else if (NextCaltrain.currentScreen() === 'about') {
       // Handle events on the 'About' screen.
       if (code == OK || code == BACK) {
@@ -358,17 +358,17 @@ class NextCaltrain {
     } else if (NextCaltrain.currentScreen() === 'trip') {
       // Handle events for the trip screen.
       if (code === OK || code === BACK) {
-        NextCaltrain.displayScreen('grid')
+        NextCaltrain.displayScreen('grid');
       }
     } else if (code === OK && NextCaltrain.currentScreen() === 'grid' && trainId !== null) {
       NextCaltrain.loadTrip(trainId);
-      NextCaltrain.displayScreen('trip')
+      NextCaltrain.displayScreen('trip');
     } else {
       // Handle events for the hero and grid screens.
       if (code === BACK) {
-        NextCaltrain.displayScreen('hero')
+        NextCaltrain.displayScreen('hero');
       } else if (code === OK) {
-        NextCaltrain.displayScreen('grid')
+        NextCaltrain.displayScreen('grid');
       } else if (code === 170 || code === 37) { // * or <-
         if (NextCaltrain.currentScreen() === 'hero') {
           if (kaios2 && document.fullscreenElement) document.exitFullscreen();

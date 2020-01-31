@@ -11,7 +11,7 @@ class CaltrainService {
     this.southStops = CaltrainService.mapStops('South');
   }
 
- /**
+  /**
   * Station name maps to index of column with stop times
   * @param direction the northbound and southbound schedules
   * @return Map of Station Name keys
@@ -25,7 +25,7 @@ class CaltrainService {
     return out;
   }
 
- /**
+  /**
   * Station name maps to index of column with stop times
   * @param train is train number.
   * @param direction is North or South.
@@ -43,7 +43,7 @@ class CaltrainService {
     return out;
   }
 
- /**
+  /**
   * Map the stops for provided direction
   * @param direction is North or South
   * @return stop name string mapping to schedule columns.
@@ -52,7 +52,7 @@ class CaltrainService {
     return (direction === 'North') ? this.northStops : this.southStops;
   }
 
- /**
+  /**
   * Determine the direction given two stops
   * @param departStop the departing stop name string
   * @param arriveStop the arriving stop name string
@@ -64,7 +64,7 @@ class CaltrainService {
     return (depart < arrive) ? 'South' : 'North';
   }
 
- /**
+  /**
   * Return the schedule routes
   * @param trains the train IDs
   * @param departStop the departing stop name string
@@ -91,7 +91,7 @@ class CaltrainService {
     return index;
   }
 
- /**
+  /**
   * Merge two stop into a subset of the schedule
   * @param trains the train IDs
   * @param departStop the departing stop name string
@@ -115,7 +115,7 @@ class CaltrainService {
     return sorted;
   }
 
- /**
+  /**
   * For direction and day-of-the-week: train times
   * @param stop the Stop name
   * @param direction is North or South
@@ -132,7 +132,7 @@ class CaltrainService {
     return times;
   }
 
- /**
+  /**
   * Select a schedule for direction and day-of-the-week.
   * @param direction is North or South
   * @param schedule is Weekday, Saturday, Sunday or Modified

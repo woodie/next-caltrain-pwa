@@ -1,6 +1,6 @@
 class CaltrainTrip {
 
- /**
+  /**
   * A train with times for each station stop.
   * @param trip the trip ID
   * @param schedule string
@@ -15,7 +15,7 @@ class CaltrainTrip {
     this.setService();
   }
 
- /**
+  /**
   * Set the time and station name for a trip ID.
   */
   setService() {
@@ -33,21 +33,21 @@ class CaltrainTrip {
 
   static type(trip) {
     if (trip > 900) {
-    return "Unknown";
+      return 'Unknown';
     } else if (trip > 800) { // Weekend & Modified
-      return "Baby Bullet";
+      return 'Baby Bullet';
     } else if (trip > 500) { // Modified
-      return "Limited";
+      return 'Limited';
     } else if (trip > 400) { // Weekend & Modified
-      return "Local";
+      return 'Local';
     } else if (trip > 300) { // Weekday
-      return "Baby Bullet";
+      return 'Baby Bullet';
     } else if (trip > 200) { // Weekday
-      return "Limited";
+      return 'Limited';
     } else if (trip > 100) { // Weekday
-      return "Local";
+      return 'Local';
     } else {
-      return "Unknown";
+      return 'Unknown';
     }
   }
 
