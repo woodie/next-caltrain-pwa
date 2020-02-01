@@ -111,23 +111,23 @@ def write_schedule_data(times, stops):
     creation = long(stat.st_mtime * 1000)
     for direction in ['north', 'south']:
       f.write("\n  %sStops: [" % (direction))
-      f.write('\n      "')
+      f.write("\n    '")
       labels = []
       for stop_id in stops[direction]:
         labels.append(stops['labels'][stop_id])
-      f.write('","'.join(labels))
-      f.write('"],\n')
+      f.write("','".join(labels))
+      f.write("'],\n")
       for schedule in ['weekday', 'weekend', 'modified']:
         comma = ''
         f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:
-          f.write('%s\n      %s: [' % (comma, str(trip_id)))
+          f.write('%s\n    %s: [' % (comma, str(trip_id)))
           f.write(','.join(map(xstr, times[schedule][direction][trip_id])))
           f.write(']')
           comma = ','
         f.write('},\n')
     f.write("\n  scheduleDate: %d\n" % creation)
-    f.write('\n}\n')
+    f.write('\n};\n')
 
 if __name__ == "__main__":
     main()
