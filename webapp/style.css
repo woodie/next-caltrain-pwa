@@ -183,12 +183,6 @@ body {
   white-space: nowrap;
 }
 
-#wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
 #minibar {
   display: flex;
   flex-direction: row;
@@ -202,10 +196,6 @@ body {
   line-height: 20pt;
   overflow: clip;
   height: 27px;
-}
-
-#schedule {
-  padding-bottom: 3px;
 }
 
 #ampm { font-size: 9pt; }

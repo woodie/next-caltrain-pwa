@@ -101,7 +101,7 @@ class NextCaltrain {
   static setCountdown(minutes) {
     let downTime = new GoodTimes();
     let blurb = downTime.countdown(minutes);
-    document.getElementById('blurb').innerHTML = blurb;
+    document.getElementById('blurb-grid').innerHTML = blurb;
     document.getElementById('blurb-hero').innerHTML = blurb;
     if (blurb !== '') {
       let refresh = blurb.endsWith('sec') ? 1000 : (60 - downTime.seconds) * 1000;
@@ -110,8 +110,8 @@ class NextCaltrain {
   }
 
   static populateBlurb(message, textClass) {
-    document.getElementById('blurb').innerHTML = message;
-    document.getElementById('blurb').className = textClass;
+    document.getElementById('blurb-grid').innerHTML = message;
+    document.getElementById('blurb-grid').className = textClass;
     document.getElementById('blurb-hero').innerHTML = message.replace(' Schedule', '');
     document.getElementById('blurb-hero').className = textClass;
   }

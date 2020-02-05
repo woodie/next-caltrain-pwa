@@ -102,7 +102,7 @@ var NextCaltrain = function () {
     value: function setCountdown(minutes) {
       var downTime = new GoodTimes();
       var blurb = downTime.countdown(minutes);
-      document.getElementById('blurb').innerHTML = blurb;
+      document.getElementById('blurb-grid').innerHTML = blurb;
       document.getElementById('blurb-hero').innerHTML = blurb;
       if (blurb !== '') {
         var refresh = blurb.endsWith('sec') ? 1000 : (60 - downTime.seconds) * 1000;
@@ -114,8 +114,8 @@ var NextCaltrain = function () {
   }, {
     key: 'populateBlurb',
     value: function populateBlurb(message, textClass) {
-      document.getElementById('blurb').innerHTML = message;
-      document.getElementById('blurb').className = textClass;
+      document.getElementById('blurb-grid').innerHTML = message;
+      document.getElementById('blurb-grid').className = textClass;
       document.getElementById('blurb-hero').innerHTML = message.replace(' Schedule', '');
       document.getElementById('blurb-hero').className = textClass;
     }
