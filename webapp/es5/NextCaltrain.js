@@ -44,6 +44,7 @@ var NextCaltrain = function () {
       if (!kaios) {
         document.getElementById('minibar').style['display'] = 'flex';
         document.getElementById('hero-filler').style['display'] = 'flex';
+        document.getElementById('softkey-menu').style['display'] = 'flex';
         document.getElementById('keypad').style['display'] = 'flex';
       } else if (kaios1) {
         document.getElementById('content').className = 'part-screen';

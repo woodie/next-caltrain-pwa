@@ -350,6 +350,28 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   height: 20px;
 }
 
+#softkey-menu {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Noto Sans', sans-serif;
+  line-height: 30px;
+  background-color: black;
+  color: white;
+  width: 240px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.softkey {
+  padding: 0 6px;
+  font-size: 10.5pt;
+}
+
+.select {
+  font-weight: bold;
+  font-size: 11.5pt;
+}
+
 #keypad {
   background-color: var(--app-background-color);
   padding-top: 5px;
