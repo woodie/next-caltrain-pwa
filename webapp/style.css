@@ -168,6 +168,7 @@ body {
   justify-content: space-between;
   background-color: black;
   width: 240px;
+  overflow: hidden;
 }
 
 #trip-screen {
@@ -194,8 +195,12 @@ body {
   font-size: 10.5pt;
   padding: 0 5px;
   line-height: 20pt;
-  overflow: clip;
+  overflow: hidden;
   height: 27px;
+}
+
+#schedule {
+  padding-bottom: 3px;
 }
 
 #ampm { font-size: 9pt; }
@@ -289,13 +294,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #content.full-screen > #grid-screen { height: 263px; }
 #content.part-screen > #trip-screen > #listing { height: 228px; }
 #content.full-screen > #trip-screen > #listing { height: 263px; }
-
-#grid-header {
-  display: flex;
-  background-color: black;
-  flex-direction: column;
-  width: 240px;
-}
 
 #trip-info {
   padding-top: 3px;
