@@ -47,6 +47,7 @@ class NextCaltrain {
       navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
     kaios = (kaios1 || kaios2);
     if (!kaios) {
+      document.getElementById('minibar').style['display'] = 'flex';
       document.getElementById('hero-filler').style['display'] = 'flex';
       document.getElementById('keypad').style['display'] = 'flex';
     } else if (kaios1) {
