@@ -33,37 +33,32 @@ var CaltrainTrip = function () {
   }, {
     key: 'label',
     value: function label() {
-      return `${this.directionString()} #${this.trip}`;
-    }
-  }, {
-    key: 'description',
-    value: function description() {
-      return `${this.schedule}: ${CaltrainTrip.type(this.trip)}`;
+      return `${this.directionString()} #${this.trip} ${CaltrainTrip.type(this.trip)}`;
     }
   }, {
     key: 'directionString',
     value: function directionString() {
-      return this.direction + 'bound';
+      return this.direction[0] + 'B';
     }
   }], [{
     key: 'type',
     value: function type(trip) {
       if (trip > 900) {
-        return "Unknown";
+        return 'Unknown';
       } else if (trip > 800) {
-        return "Baby Bullet";
+        return 'Baby Bullet';
       } else if (trip > 500) {
-        return "Limited";
+        return 'Limited';
       } else if (trip > 400) {
-        return "Local";
+        return 'Local';
       } else if (trip > 300) {
-        return "Baby Bullet";
+        return 'Baby Bullet';
       } else if (trip > 200) {
-        return "Limited";
+        return 'Limited';
       } else if (trip > 100) {
-        return "Local";
+        return 'Local';
       } else {
-        return "Unknown";
+        return 'Unknown';
       }
     }
   }]);

@@ -52,15 +52,11 @@ class CaltrainTrip {
   }
 
   label() {
-    return `${this.directionString()} #${this.trip}`;
-  }
-
-  description() {
-    return `${this.schedule}: ${CaltrainTrip.type(this.trip)}`;
+    return `${this.directionString()} #${this.trip} ${CaltrainTrip.type(this.trip)}`;
   }
 
   directionString() {
-    return this.direction + 'bound';
+    return this.direction[0] + 'B';
   }
 
 }

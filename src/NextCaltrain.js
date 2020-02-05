@@ -22,19 +22,19 @@ const email = 'next-caltrain@netpress.com';
 
 const hints = [
   ['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' +
-     'Just move it out of the way<br/>to the right of the screen.', null,
-  'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' +
-     'Press [OK] to continue and<br/>[BACK] to return to the app.'],
+   'Just move it out of the way<br/>to the right of the screen.', null,
+   'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' +
+   'Press [OK] to continue and<br/>[BACK] to return to the app.'],
   ['Use [5] and [8] to move<br/>the seletion up and down.', [5,8],
-    'The [UP] and [DOWN] buttons<br/>may not work as expected.'],
+   'The [UP] and [DOWN] buttons<br/>may not work as expected.'],
   ['Use [4] and [6] to<br/>change origin station.', [4,6,7,9],
-    'Use [7] and [9] to<br/>change destination station.'],
+   'Use [7] and [9] to<br/>change destination station.'],
   ['Use [0] to flip the direction<br/>of the selected stations.', [0,'#'],
-    'Use [#] to cycle between<br/>available schedules.'],
+   'Use [#] to cycle between<br/>available schedules.'],
   ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' +
-     'This will let you launch the<br/>app quickly in the future.', null,
-  'We hope this app works as<br/>expected on your phone.<br/>' +
-     `Please send feedback to<br/><a href="mailto:${email}">${email}</a>.`]];
+   'This will let you launch the<br/>app quickly in the future.', null,
+   'We hope this app works as<br/>expected on your phone.<br/>' +
+   `Please send feedback to<br/><a href="mailto:${email}">${email}</a>.`]];
 
 let hintIndex = -1;
 
@@ -47,11 +47,10 @@ class NextCaltrain {
       navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
     kaios = (kaios1 || kaios2);
     if (!kaios) {
-      document.getElementById('keypad').style['display'] = 'flex';
       document.getElementById('hero-filler').style['display'] = 'flex';
+      document.getElementById('keypad').style['display'] = 'flex';
     } else if (kaios1) {
-      document.getElementById('grid-screen').className = 'part-screen';
-      document.getElementById('trip-screen').className = 'part-screen';
+      document.getElementById('content').className = 'part-screen';
     }
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
@@ -91,12 +90,8 @@ class NextCaltrain {
     let ourTime = new GoodTimes();
     let partTime = ourTime.partTime();
     schedule = new CaltrainSchedule(ourTime);
-    document.getElementById('grid-time').innerHTML = partTime[0];
-    document.getElementById('grid-ampm').innerHTML = partTime[1].toUpperCase();
-    document.getElementById('trip-time').innerHTML = partTime[0];
-    document.getElementById('trip-ampm').innerHTML = partTime[1].toUpperCase();
-    document.getElementById('hero-time').innerHTML = partTime[0];
-    document.getElementById('hero-ampm').innerHTML = partTime[1].toUpperCase();
+    document.getElementById('time').innerHTML = partTime[0];
+    document.getElementById('ampm').innerHTML = partTime[1].toUpperCase();
     setTimeout( function () { NextCaltrain.setTheTime(); }, (60 - ourTime.seconds) * 1000);
     NextCaltrain.loadSchedule();
   }
@@ -122,8 +117,6 @@ class NextCaltrain {
   static loadTrip(train) {
     goodTime = new GoodTimes();
     let trip = new CaltrainTrip(train, schedule.label());
-    document.getElementById('label').innerHTML = trip.label();
-    document.getElementById('description').innerHTML = trip.description();
     let lines = [];
     for (let i=0; i < trip.times.length; i++) {
       stop = trip.times[i];
@@ -140,6 +133,8 @@ class NextCaltrain {
           <div class="station-name"><br/>${stop[0]}</div></div>`);
     }
     document.getElementById('listing').innerHTML = lines.join('\n');
+    document.getElementById('title').innerHTML = trip.label();
+    document.title = trip.label();
   }
 
   static loadSchedule() {
@@ -175,7 +170,7 @@ class NextCaltrain {
           document.getElementById('trip0').className = 'selection-none';
           document.getElementById('trip').innerHTML = '<span class="time-hero">&nbsp;</span>';
           document.getElementById('trip-type').innerHTML = '&nbsp;';
-          document.getElementById('grid-type').innerHTML = 'Next Caltrain';
+          document.getElementById('title').innerHTML = 'Next Caltrain';
         }
         tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
         continue; // clear previous values.
@@ -217,7 +212,9 @@ class NextCaltrain {
         document.getElementById('circle').className = wrapClass;
         document.getElementById('trip').className = tripClass;
         document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
-        document.getElementById('grid-type').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
+        if (NextCaltrain.currentScreen() === 'grid') {
+          document.getElementById('title').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
+        }
         if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
           if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
         }
@@ -254,11 +251,15 @@ class NextCaltrain {
   }
 
   static displayScreen(target) {
-    document.title = (target in titles) ? titles[target] : 'Next Caltrain';
     if (target === 'hero' || target === 'grid' || target === 'trip') {
       if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
     } else {
       if (kaios2 && document.fullscreenElement) document.exitFullscreen();
+    }
+    if (target === 'hero' && (document.fullscreenElement || !kaios)) {
+      document.getElementById('hero-filler').style['display'] = 'flex';
+    } else {
+      document.getElementById('hero-filler').style['display'] = 'none';
     }
     for (let i = 0; i < screens.length; i++) {
       let display = (target === screens[i]) ? 'flex' : 'none';
@@ -267,15 +268,17 @@ class NextCaltrain {
     if (target === 'grid' || target === 'trip' || target === 'hero') {
       NextCaltrain.loadSchedule();
     }
+    document.getElementById('title').innerHTML = 'Next Caltrain';
+    document.title = (target in titles) ? titles[target] : 'Next Caltrain';
   }
 
   static attachListeners() {
     // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
       if (document.fullscreenElement) {
-        document.getElementById('hero-filler').style['display'] = 'flex';
+        document.getElementById('minibar').style['display'] = 'flex';
       } else {
-        document.getElementById('hero-filler').style['display'] = 'none';
+        document.getElementById('minibar').style['display'] = 'none';
         NextCaltrain.displayScreen('hero');
       }
     };
@@ -361,8 +364,8 @@ class NextCaltrain {
         NextCaltrain.displayScreen('grid');
       }
     } else if (code === OK && NextCaltrain.currentScreen() === 'grid' && trainId !== null) {
-      NextCaltrain.loadTrip(trainId);
       NextCaltrain.displayScreen('trip');
+      NextCaltrain.loadTrip(trainId);
     } else {
       // Handle events for the hero and grid screens.
       if (code === BACK) {

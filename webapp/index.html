@@ -1,177 +1,147 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Next Caltrain</title>
-    <script src="./es5/caltrainServiceData.js"></script>
-    <script src="./es5/CaltrainService.js"></script>
-    <script src="./es5/CaltrainSchedule.js"></script>
-    <script src="./es5/CaltrainTrip.js"></script>
-    <script src="./es5/Preferences.js"></script>
-    <script src="./es5/GoodTimes.js"></script>
-    <script src="./es5/NextCaltrain.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-  </head>
-  <body>
+  <title>Next Caltrain</title>
+  <script src="./es5/caltrainServiceData.js" type="text/javascript"></script>
+  <script src="./es5/CaltrainService.js" type="text/javascript"></script>
+  <script src="./es5/CaltrainSchedule.js" type="text/javascript"></script>
+  <script src="./es5/CaltrainTrip.js" type="text/javascript"></script>
+  <script src="./es5/Preferences.js" type="text/javascript"></script>
+  <script src="./es5/GoodTimes.js" type="text/javascript"></script>
+  <script src="./es5/NextCaltrain.js" type="text/javascript"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;display=swap"
+        rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans&amp;display=swap"
+        rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+</head>
 
-  <div id="about-screen" style="display: none;">
-    <div><img id="about-image" src="icons/favicon-128x128.png"></div>
-    <div><span id="app-name">Next Caltrain</span><br/>for KaiOS phones</div>
-    <div>&copy; 2020 John Woodell</div>
-    <div>Schedule effective:</br>
-         <span id="date-string"></span></div>
-  </div>
+<body>
+  <div id="content" class="full-screen">
 
-  <div id="commands-screen" style="display: none;">
-    <div id="hint-above" class="hint"></div>
-    <div id="mini-keypad">
-      <div class="keycol">
-        <div id="k1">1</div>
-        <div id="k4">4</div>
-        <div id="k7">7</div>
-        <div id="k*">&#10033;</div>
-      </div>
-      <div class="keycol">
-        <div id="k2">2</div>
-        <div id="k5">5</div>
-        <div id="k8">8</div>
-        <div id="k0">0</div>
-      </div>
-      <div class="keycol">
-        <div id="k3">3</div>
-        <div id="k6">6</div>
-        <div id="k9">9</div>
-        <div id="k#">#</div>
-      </div>
+    <div id="minibar">
+      <div id="title">Next Caltrain</div>
+      <div><span id="time"></span> <span id="ampm"></span></div>
     </div>
-    <div id="hint-below" class="hint"></div>
-  </div>
 
-  <div id="hero-screen" style="display: flex;">
     <div id="hero-filler" style="display: none;">
-      <div class="minibar">
-        <div id="hero-type">Next Caltrain</div>
-        <div><span id="hero-time"></span>
-             <span id="hero-ampm"></span></div>
-      </div>
-      <div id="fake-titlebar">
-        <marquee direction="left" id="alert"></marquee>
-      </div>
+      <marquee direction="left" id="alert"></marquee>
     </div>
-    <div id="hero-content">
-      <div id="fade">
-        <div id="main-hints">
-          <div><span class="btn">&#10033;</span> Menu</div>
-          <div>&#9650; <span class="btn">5</span><br/>
-               &#9660; <span class="btn">8</span></div>
-        </div>
-      </div>
-      <select id="popup-menu" style="display: none;"
-              onblur="NextCaltrain.popupMenu('hide')"
-              onchange="NextCaltrain.popupMenu(this.value)">
-        <option value="about">About</option>
-        <option value="commands">Keypad commands</option>
-        <option value="prefs">Save stations</option>
-        <option value="hide" selected>&lt;&nbsp; Back</option>
-      </select>
-      <div id="circle"></div>
-      <div id="overview">
-        <div>
-          <span id="origin-hero">Origin to</span><br/>
-          <span id="destin-hero">Destination</span>
-        </div>
-        <div id="schedule">
-          <span id="blurb-hero"></span>
-          <div id="trip"></div>
-          <span id="trip-type"></span>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div id="grid-screen" class="full-screen" style="display: none;">
-    <div id="grid-header">
-      <div class="fillbar"></div>
-      <div class="minibar">
-        <div id="grid-type">Next Caltrain</div>
-        <div><span id="grid-time"></span>
-             <span id="grid-ampm"></span></div>
+    <div id="about-screen" style="display: none;">
+      <div><img id="about-image" src="icons/favicon-128x128.png"></div>
+      <div><span id="app-name">Next Caltrain</span><br>for KaiOS phones</div>
+      <div>&#169; 2020 John Woodell</div>
+      <div>Schedule effective:<br><span id="date-string"></span>
       </div>
+    </div>
+
+    <div id="commands-screen" style="display: none;">
+      <div id="hint-above" class="hint"></div>
+      <div id="mini-keypad">
+        <div class="keycol">
+          <div id="k1">1</div>
+          <div id="k4">4</div>
+          <div id="k7">7</div>
+          <div id="k*">&#10033;</div>
+        </div>
+        <div class="keycol">
+          <div id="k2">2</div>
+          <div id="k5">5</div>
+          <div id="k8">8</div>
+          <div id="k0">0</div>
+        </div>
+        <div class="keycol">
+          <div id="k3">3</div>
+          <div id="k6">6</div>
+          <div id="k9">9</div>
+          <div id="k#">#</div>
+        </div>
+      </div>
+      <div id="hint-below" class="hint"></div>
+    </div>
+
+    <div id="hero-screen" style="display: flex;">
+      <div id="hero-content">
+        <div id="fade">
+          <div id="main-hints">
+            <div><span class="btn">&#10033;</span>Menu</div>
+            <div>&#9650; <span class="btn">5</span><br>
+                 &#9660; <span class="btn">8</span></div>
+          </div>
+        </div><select id="popup-menu" style="display: none;" onblur="NextCaltrain.popupMenu('hide')" onchange=
+        "NextCaltrain.popupMenu(this.value)">
+          <option value="about"> About </option>
+          <option value="commands"> Keypad commands </option>
+          <option value="prefs"> Save stations </option>
+          <option value="hide" selected> &lt;&nbsp; Back </option>
+        </select>
+        <div id="circle"></div>
+        <div id="overview">
+          <div>
+            <span id="origin-hero">Origin to</span><br>
+            <span id="destin-hero">Destination</span>
+          </div>
+          <div id="schedule">
+            <span id="blurb-hero"></span>
+            <div id="trip"></div><span id="trip-type"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="grid-screen" class="full-screen" style="display: none;">
+      <div id="fillbar"></div>
       <div>
         <span id="origin-grid">Origin to</span><br>
         <span id="destin-grid">Destination</span>
       </div>
-    </div>
-    <div id="schedule">
-      <div id="blurb"></div>
-      <div id="trip0" class="trip-card"></div>
-      <div id="trip1" class="trip-card"></div>
-      <div id="trip2" class="trip-card"></div>
-      <div id="trip3" class="trip-card"></div>
-      <div id="trip4" class="trip-card"></div>
-      <div id="trip5" class="trip-card"></div>
-    </div>
-  </div>
-
-  <div id="trip-screen" class="full-screen" style="display: none;">
-    <div id="trip-header">
-      <div class="fillbar"></div>
-      <div class="minibar">
-        <div>Next Caltrain</div>
-        <div><span id="trip-time"></span>
-             <span id="trip-ampm"></span></div>
-      </div>
-      <div id="trip-info">
-        <span id="label"></span><br>
-        <span id="description"></span>
+      <div id="schedule">
+        <div id="blurb"></div>
+        <div id="trip0" class="trip-card"></div>
+        <div id="trip1" class="trip-card"></div>
+        <div id="trip2" class="trip-card"></div>
+        <div id="trip3" class="trip-card"></div>
+        <div id="trip4" class="trip-card"></div>
+        <div id="trip5" class="trip-card"></div>
       </div>
     </div>
-    <div id="listing"></div>
-  </div>
-
-
-  <!-- a fake keypad for non-KaiOS devices -->
-  <div id="keypad" style="display: none;">
-    <div class="keycol">
-      <button onclick="NextCaltrain.press(27)" class="phone"><div
-              class="rounded upper-left"></div></button>
-      <button onclick="NextCaltrain.press(0)" class="phone"><div
-              class="rounded lower-left"></div></button>
-      <button onclick="NextCaltrain.press(49)">1</button>
-      <button onclick="NextCaltrain.press(52)">4</button>
-      <button onclick="NextCaltrain.press(55)">7</button>
-      <button onclick="NextCaltrain.press(37)">&#10033;</button>
+    <div id="trip-screen" class="full-screen" style="display: none;">
+      <div id="listing"></div>
     </div>
-    <div class="keycol">
-      <button onclick="NextCaltrain.press(53)" class="arrow">&#9650;</button>
-      <button onclick="NextCaltrain.press(13)" class="ok">OK</button>
-      <button onclick="NextCaltrain.press(56)" class="arrow">&#9660;</button>
-      <button onclick="NextCaltrain.press(49)">2</button>
-      <button onclick="NextCaltrain.press(53)">5</button>
-      <button onclick="NextCaltrain.press(56)">8</button>
-      <button onclick="NextCaltrain.press(48)">0</button>
-    </div>
-    <div class="keycol">
-      <button onclick="NextCaltrain.press(0)" class="phone"><div
-              class="rounded upper-right"></div></button>
-      <button onclick="NextCaltrain.press(95)" class="phone"><div
-              class="rounded lower-right"></div></button>
-      <button onclick="NextCaltrain.press(50)">3</button>
-      <button onclick="NextCaltrain.press(54)">6</button>
-      <button onclick="NextCaltrain.press(57)">9</button>
-      <button onclick="NextCaltrain.press(39)">#</button>
-    </div>
- </div>
 
-  <script>
-  (function(){ NextCaltrain.startApp(); })();
+    <!-- a fake keypad for non-KaiOS devices -->
+    <div id="keypad" style="display: none;">
+      <div class="keycol">
+        <button onclick="NextCaltrain.press(27)" class="phone">
+        <div class="rounded upper-left"></div></button> <button onclick="NextCaltrain.press(0)" class="phone">
+        <div class="rounded lower-left"></div></button> <button onclick="NextCaltrain.press(49)">1</button>
+        <button onclick="NextCaltrain.press(52)">4</button> <button onclick="NextCaltrain.press(55)">7</button>
+        <button onclick="NextCaltrain.press(37)">&#10033;</button>
+      </div>
+      <div class="keycol">
+        <button onclick="NextCaltrain.press(53)" class="arrow">&#9650;</button> <button onclick=
+        "NextCaltrain.press(13)" class="ok">OK</button> <button onclick="NextCaltrain.press(56)" class=
+        "arrow">&#9660;</button> <button onclick="NextCaltrain.press(49)">2</button> <button onclick=
+        "NextCaltrain.press(53)">5</button> <button onclick="NextCaltrain.press(56)">8</button> <button onclick=
+        "NextCaltrain.press(48)">0</button>
+      </div>
+      <div class="keycol">
+        <button onclick="NextCaltrain.press(0)" class="phone">
+        <div class="rounded upper-right"></div></button> <button onclick="NextCaltrain.press(95)" class="phone">
+        <div class="rounded lower-right"></div></button> <button onclick="NextCaltrain.press(50)">3</button>
+        <button onclick="NextCaltrain.press(54)">6</button> <button onclick="NextCaltrain.press(57)">9</button>
+        <button onclick="NextCaltrain.press(39)">#</button>
+      </div>
+    </div>
+  </div><script type="text/javascript">
+(function(){ NextCaltrain.startApp(); })();
   </script>
-  </body>
+</body>
 </html>
-

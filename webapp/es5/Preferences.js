@@ -18,8 +18,8 @@ var Preferences = function () {
     if (Number.isNaN(savedAM) || savedPM < 0 || savedPM >= stations.length) {
       localStorage.setItem('stopPM', 0);
     }
-    this.stopAM = parseInt(localStorage.getItem("stopAM"));
-    this.stopPM = parseInt(localStorage.getItem("stopPM"));
+    this.stopAM = parseInt(localStorage.getItem('stopAM'));
+    this.stopPM = parseInt(localStorage.getItem('stopPM'));
   }
 
   _createClass(Preferences, [{
