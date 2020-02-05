@@ -179,6 +179,7 @@ var NextCaltrain = function () {
             document.getElementById('trip').innerHTML = '<span class="time-hero">&nbsp;</span>';
             document.getElementById('trip-type').innerHTML = '&nbsp;';
             document.getElementById('title').innerHTML = 'Next Caltrain';
+            document.title = 'Next Caltrain';
           }
           tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
           continue;
@@ -225,11 +226,9 @@ var NextCaltrain = function () {
           document.getElementById('circle').className = wrapClass;
           document.getElementById('trip').className = tripClass;
           document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
-          if (NextCaltrain.currentScreen() === 'grid') {
+          if (trainId && NextCaltrain.currentScreen() === 'grid') {
             document.getElementById('title').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
-          }
-          if (kaios1 && NextCaltrain.currentScreen() === 'grid') {
-            if (trainId) document.title = `Service: ${CaltrainTrip.type(trainId)}`;
+            document.title = `Service: ${CaltrainTrip.type(trainId)}`;
           }
           tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
           NextCaltrain.populateBlurb(message, textClass);
@@ -281,11 +280,11 @@ var NextCaltrain = function () {
         var display = target === screens[i] ? 'flex' : 'none';
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
       }
+      document.getElementById('title').innerHTML = 'Next Caltrain';
+      document.title = target in titles ? titles[target] : 'Next Caltrain';
       if (target === 'grid' || target === 'trip' || target === 'hero') {
         NextCaltrain.loadSchedule();
       }
-      document.getElementById('title').innerHTML = 'Next Caltrain';
-      document.title = target in titles ? titles[target] : 'Next Caltrain';
     }
   }, {
     key: 'attachListeners',

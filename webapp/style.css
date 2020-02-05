@@ -359,15 +359,25 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   color: white;
   width: 240px;
   height: 30px;
+  font-size: 10.5pt;
   overflow: hidden;
 }
 
-.softkey {
+#softkey-menu > div {
   padding: 0 6px;
-  font-size: 10.5pt;
+  width: 80px;
+}
+
+.softkey-left {
+  text-align: left;
+}
+
+.softkey-right {
+  text-align: right;
 }
 
 .select {
+  text-align: center;
   font-weight: bold;
   font-size: 11.5pt;
 }
