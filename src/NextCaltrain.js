@@ -47,11 +47,10 @@ class NextCaltrain {
       navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
     kaios = (kaios1 || kaios2);
     if (!kaios) {
-      document.getElementById('minibar').style['display'] = 'flex';
-      document.getElementById('hero-filler').style['display'] = 'flex';
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('keypad').style['display'] = 'flex';
-    } else if (kaios1) {
+      document.getElementById('content').className = 'full-screen';
+    } else {
       document.getElementById('content').className = 'part-screen';
     }
     // setup the app state
@@ -135,7 +134,7 @@ class NextCaltrain {
           <div class="station-name"><br/>${stop[0]}</div></div>`);
     }
     document.getElementById('listing').innerHTML = lines.join('\n');
-    document.getElementById('title').innerHTML = trip.label();
+    document.getElementById('trip-filler').innerHTML = trip.label();
     document.title = trip.label();
   }
 
@@ -252,24 +251,25 @@ class NextCaltrain {
   }
 
   static displayScreen(target) {
-    if (target === 'hero' || target === 'grid' || target === 'trip') {
-      if (kaios2 && !document.fullscreenElement) document.documentElement.requestFullscreen();
-    } else {
-      if (kaios2 && document.fullscreenElement) document.exitFullscreen();
-    }
-    if (target === 'hero' && (document.fullscreenElement || !kaios)) {
-      document.getElementById('hero-filler').style['display'] = 'flex';
-    } else {
-      document.getElementById('hero-filler').style['display'] = 'none';
-    }
+    // set the target screen
     for (let i = 0; i < screens.length; i++) {
       let display = (target === screens[i]) ? 'flex' : 'none';
       document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
+    // set the title
     document.getElementById('title').innerHTML = 'Next Caltrain';
     document.title = (target in titles) ? titles[target] : 'Next Caltrain';
-    if (target === 'grid' || target === 'trip' || target === 'hero') {
+    // load schedule (and override the title)
+    if (target === 'grid' || target === 'hero') {
       NextCaltrain.loadSchedule();
+    }
+    // Request full sreen when KaiOS/2
+    if (kaios2) {
+      if (target === 'grid' || target === 'trip') {
+        document.documentElement.requestFullscreen();
+      } else if (target !== 'hero') {
+        document.exitFullscreen();
+      }
     }
   }
 
@@ -277,9 +277,9 @@ class NextCaltrain {
     // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
       if (document.fullscreenElement) {
-        document.getElementById('minibar').style['display'] = 'flex';
+        document.getElementById('content').className = 'full-screen';
       } else {
-        document.getElementById('minibar').style['display'] = 'none';
+        document.getElementById('content').className = 'part-screen';
         NextCaltrain.displayScreen('hero');
       }
     };

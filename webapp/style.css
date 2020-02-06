@@ -26,6 +26,19 @@ body {
   display: flex;
 }
 
+#trip-filler {
+  display: flex;
+  justify-content: center;
+  height: 35px;
+  background-color: black;
+  color: white;
+  display: flex;
+  line-height: 33px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 240px;
+}
+
 #hero-filler {
   display: flex;
   flex-direction: column;
@@ -283,17 +296,22 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   font-size: 11pt;
   padding-left: 15px;
   overflow: scroll;
-  max-height: 263px;
+  height: 228px;
 }
 
+#content.full-screen > #minibar { display: flex; }
 #content.part-screen > #minibar { display: none; }
+#content.full-screen > #hero-screen > #hero-filler { display: flex; }
+#content.part-screen > #hero-screen > #hero-filler { display: none; }
 #content.full-screen > #grid-screen > #fillbar { display: none; }
 #content.part-screen > #grid-screen > #schedule > #trip4 { display: none; }
 #content.part-screen > #grid-screen > #schedule > #trip5 { display: none; }
 #content.part-screen > #grid-screen { height: 228px; }
 #content.full-screen > #grid-screen { height: 263px; }
-#content.part-screen > #trip-screen > #listing { height: 228px; }
-#content.full-screen > #trip-screen > #listing { height: 263px; }
+#content.part-screen > #trip-screen > #trip-filler {  display: none; }
+#content.full-screen > #trip-screen > #trip-filler {  display: flex; }
+/* #content.part-screen > #trip-screen > #listing { height: 228px; }
+   #content.full-screen > #trip-screen > #listing { height: 263px; } */
 
 #trip-info {
   padding-top: 3px;

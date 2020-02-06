@@ -23,15 +23,11 @@
 </head>
 
 <body>
-  <div id="content" class="full-screen">
+  <div id="content">
 
-    <div id="minibar" style="display: none;">
+    <div id="minibar">
       <div id="title">Next Caltrain</div>
       <div><span id="time"></span> <span id="ampm"></span></div>
-    </div>
-
-    <div id="hero-filler" style="display: none;">
-      <marquee direction="left" id="alert"></marquee>
     </div>
 
     <div id="about-screen" style="display: none;">
@@ -68,6 +64,9 @@
     </div>
 
     <div id="hero-screen" style="display: flex;">
+      <div id="hero-filler">
+        <marquee direction="left" id="alert"></marquee>
+      </div>
       <div id="hero-content">
         <div id="fade">
           <div id="main-hints">
@@ -112,7 +111,9 @@
         <div id="trip5" class="trip-card"></div>
       </div>
     </div>
+
     <div id="trip-screen" class="full-screen" style="display: none;">
+      <div id="trip-filler"></div>
       <div id="listing"></div>
     </div>
 
