@@ -310,8 +310,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #content.full-screen > #grid-screen { height: 263px; }
 #content.part-screen > #trip-screen > #trip-filler {  display: none; }
 #content.full-screen > #trip-screen > #trip-filler {  display: flex; }
-/* #content.part-screen > #trip-screen > #listing { height: 228px; }
-   #content.full-screen > #trip-screen > #listing { height: 263px; } */
 
 #trip-info {
   padding-top: 3px;
