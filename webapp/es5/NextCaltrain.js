@@ -50,6 +50,7 @@ var NextCaltrain = function () {
       }
 
       var dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
+      var listing = document.getElementById('listing');
       document.getElementById('date-string').innerHTML = dateString;
       NextCaltrain.attachListeners();
       NextCaltrain.setTheTime();
@@ -138,7 +139,7 @@ var NextCaltrain = function () {
                class="station-dot ${target}">&#9679;</span></div>
           <div class="station-name"><br/>${stop[0]}</div></div>`);
       }
-      document.getElementById('listing').innerHTML = lines.join('\n');
+      listing.innerHTML = lines.join('\n');
       document.getElementById('trip-filler').innerHTML = trip.label();
       document.title = trip.label();
     }
@@ -363,6 +364,10 @@ var NextCaltrain = function () {
       } else if (NextCaltrain.currentScreen() === 'trip') {
         if (code === OK || code === BACK) {
           NextCaltrain.displayScreen('grid');
+        } else if (code === UP) {
+          if (listing.scrollTop > 0) listing.scrollTo(0, listing.scrollTop - 48);
+        } else if (code === DOWN) {
+          if (listing.scrollTop < listing.scrollHeight - 228) listing.scrollTo(0, listing.scrollTop + 48);
         }
       } else if (code === OK && NextCaltrain.currentScreen() === 'grid' && trainId !== null) {
         NextCaltrain.displayScreen('trip');
