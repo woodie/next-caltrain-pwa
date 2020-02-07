@@ -134,7 +134,7 @@ var NextCaltrain = function () {
         var target = prefs.origin === stop[0] || prefs.destin === stop[0] ? 'target' : '';
         lines.push(`<div class="station-stop">
           <div class="station-time"><br/><span
-               class="filler">${filler}</span>${fullTime}</div>
+               class="hour-filler">${filler}</span>${fullTime}</div>
           <div class="station-spacer ${style}">${spacer}<br/><span
                class="station-dot ${target}">&#9679;</span></div>
           <div class="station-name"><br/>${stop[0]}</div></div>`);

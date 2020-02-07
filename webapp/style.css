@@ -26,6 +26,10 @@ body {
   display: flex;
 }
 
+.hour-filler {
+  color: black;
+}
+
 #trip-filler {
   display: flex;
   justify-content: center;
