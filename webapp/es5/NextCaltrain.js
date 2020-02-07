@@ -365,9 +365,9 @@ var NextCaltrain = function () {
         if (code === OK || code === BACK) {
           NextCaltrain.displayScreen('grid');
         } else if (code === UP) {
-          if (listing.scrollTop > 0) listing.scrollTo(0, listing.scrollTop - 48);
+          if (listing.scrollTop > 0) listing.scrollTo(0, listing.scrollTop - 72);
         } else if (code === DOWN) {
-          if (listing.scrollTop < listing.scrollHeight - 228) listing.scrollTo(0, listing.scrollTop + 48);
+          if (listing.scrollTop < listing.scrollHeight - 228) listing.scrollTo(0, listing.scrollTop + 72);
         }
       } else if (code === OK && NextCaltrain.currentScreen() === 'grid' && trainId !== null) {
         NextCaltrain.displayScreen('trip');
