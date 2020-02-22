@@ -5,9 +5,9 @@ const special = {
 //'2019-11-29': 3, // Day after Thanksgiving
 //'2019-12-25': 2, // Christmas Day
 //'2019-12-31': 2, // New Year's Eve
-  '2020-01-01': 2, // New Year's Day
-  '2020-01-20': 3, // Martin Luther King Jr Day
-  '2020-02-17': 3, // Presidents Day
+//'2020-01-01': 2, // New Year's Day
+//'2020-01-20': 3, // Martin Luther King Jr Day
+//'2020-02-17': 3, // Presidents Day
   '2020-05-25': 2, // Memorial Day
 };
 const scheduleOptions = [

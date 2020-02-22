@@ -5,9 +5,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var special = {
-  '2020-01-01': 2,
-  '2020-01-20': 3,
-  '2020-02-17': 3,
   '2020-05-25': 2 };
 var scheduleOptions = ['Weekday', 'Saturday', 'Sunday'];
 
