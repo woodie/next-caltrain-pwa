@@ -9,7 +9,7 @@ var special = {
   '2020-01-20': 3,
   '2020-02-17': 3,
   '2020-05-25': 2 };
-var scheduleOptions = ['Weekday', 'Saturday', 'Sunday', 'Modified'];
+var scheduleOptions = ['Weekday', 'Saturday', 'Sunday'];
 
 var CaltrainSchedule = function () {
   function CaltrainSchedule(goodTime) {

@@ -191,7 +191,7 @@ var CaltrainService = function () {
       } else if (schedule === 'Weekday') {
         return direction === 'North' ? caltrainServiceData.northWeekday : caltrainServiceData.southWeekday;
       } else {
-        return direction === 'North' ? caltrainServiceData.northWeekend : caltrainServiceData.southWeekend;
+        return direction === 'North' ? caltrainServiceData.northClosure : caltrainServiceData.southClosure;
       }
     }
   }]);

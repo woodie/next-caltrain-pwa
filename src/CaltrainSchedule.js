@@ -14,7 +14,7 @@ const scheduleOptions = [
   'Weekday', // 0
   'Saturday',// 1
   'Sunday',  // 2
-  'Modified' // 3
+//'Modified' // 3
 ];
 
 class CaltrainSchedule {
