@@ -51,10 +51,10 @@ def parse_station_data():
 def parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
             'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
-           'modified':{'north':OrderedDict(), 'south':OrderedDict()}}
+            'closure':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
-    filename = 'data/modified_%s.csv' % direction
-    schedule = 'modified'
+    filename = 'data/closure_%s.csv' % direction
+    schedule = 'closure'
     try:
       with open(filename, 'rb') as modFile:
         labels = []
@@ -66,7 +66,7 @@ def parse_schedule_data(stops):
           _times[schedule][direction][train] = [None] * len(stops[direction])
         for row in modReader:
           station = row[0]
-          if station == 'Shuttle Bus':
+          if station == 'Shuttle Bus' or station == 'SamTrans Bus Bridge':
             continue
           station_x = labels.index(station)
           for i in range(1, len(header)):
@@ -117,7 +117,7 @@ def write_schedule_data(times, stops):
         labels.append(stops['labels'][stop_id])
       f.write("','".join(labels))
       f.write("'],\n")
-      for schedule in ['weekday', 'weekend', 'modified']:
+      for schedule in ['weekday', 'weekend', 'closure']:
         comma = ''
         f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:
