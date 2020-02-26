@@ -15,6 +15,9 @@ const HANGUP = 8;
 const ESC = 27;
 const UP = 53;
 const DOWN = 56;
+const SPLAT = 170;
+const POUND = 163;
+const ZERO = 48;
 
 const screens = 'hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keyboard commands'};
@@ -314,6 +317,18 @@ class NextCaltrain {
         } else {
           return;
         }
+      } else if (e.key === 'SoftLeft') {
+        code = SPLAT;
+        if (!document.fullscreenElement) {
+          // Supress native SEARCH action.
+          e.preventDefault();
+        }
+      } else if (e.key === 'Call') {
+        code = ZERO;
+        if (!document.fullscreenElement) {
+          // Supress native SEARCH action.
+          e.preventDefault();
+        }
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
         e.preventDefault();
@@ -380,12 +395,12 @@ class NextCaltrain {
         NextCaltrain.displayScreen('hero');
       } else if (code === OK) {
         NextCaltrain.displayScreen('grid');
-      } else if (code === 170 || code === 37) { // * or <-
+      } else if (code === SPLAT || code === 37) { // * or <-
         if (NextCaltrain.currentScreen() === 'hero') {
           if (kaios2 && document.fullscreenElement) document.exitFullscreen();
           NextCaltrain.popupMenu('show');
         }
-      } else if (code === 163 || code === 39) { // # or ->
+      } else if (code === POUND || code === 39) { // # or ->
         schedule.next();
         offset = null;
       } else if (code === UP) {
@@ -404,7 +419,7 @@ class NextCaltrain {
       } else if (code === 57) { // 9
         offset = null;
         prefs.bumpStations(false, true);
-      } else if (code === 48) { // 0
+      } else if (code === ZERO) { // 0
         offset = null;
         prefs.flipStations();
       } else {
