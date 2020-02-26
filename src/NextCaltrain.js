@@ -109,6 +109,13 @@ class NextCaltrain {
     }
   }
 
+  static populateStops(labels) {
+    document.getElementById('origin-grid').innerHTML = labels[0];
+    document.getElementById('destin-grid').innerHTML = labels[1];
+    document.getElementById('origin-hero').innerHTML = labels[0];
+    document.getElementById('destin-hero').innerHTML = labels[1];
+  }
+
   static populateBlurb(message, textClass) {
     document.getElementById('blurb-grid').innerHTML = message;
     document.getElementById('blurb-grid').className = textClass;
@@ -142,13 +149,8 @@ class NextCaltrain {
   static loadSchedule() {
     goodTime = new GoodTimes();
     clearTimeout(countdown);
-    // Set the stations
-    let tripLabels = prefs.tripLabels();
-    document.getElementById('origin-grid').innerHTML = tripLabels[0];
-    document.getElementById('destin-grid').innerHTML = tripLabels[1];
-    document.getElementById('origin-hero').innerHTML = tripLabels[0];
-    document.getElementById('destin-hero').innerHTML = tripLabels[1];
-    // Load the schdule
+    NextCaltrain.populateStops(prefs.tripLabels());
+    // Load the schedule
     let routes = service.routes(prefs.origin, prefs.destin, schedule.label());
     let minutes = 0;
     if (offset === null) {

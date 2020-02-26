@@ -112,6 +112,14 @@ var NextCaltrain = function () {
       }
     }
   }, {
+    key: 'populateStops',
+    value: function populateStops(labels) {
+      document.getElementById('origin-grid').innerHTML = labels[0];
+      document.getElementById('destin-grid').innerHTML = labels[1];
+      document.getElementById('origin-hero').innerHTML = labels[0];
+      document.getElementById('destin-hero').innerHTML = labels[1];
+    }
+  }, {
     key: 'populateBlurb',
     value: function populateBlurb(message, textClass) {
       document.getElementById('blurb-grid').innerHTML = message;
@@ -148,12 +156,7 @@ var NextCaltrain = function () {
     value: function loadSchedule() {
       goodTime = new GoodTimes();
       clearTimeout(countdown);
-
-      var tripLabels = prefs.tripLabels();
-      document.getElementById('origin-grid').innerHTML = tripLabels[0];
-      document.getElementById('destin-grid').innerHTML = tripLabels[1];
-      document.getElementById('origin-hero').innerHTML = tripLabels[0];
-      document.getElementById('destin-hero').innerHTML = tripLabels[1];
+      NextCaltrain.populateStops(prefs.tripLabels());
 
       var routes = service.routes(prefs.origin, prefs.destin, schedule.label());
       var minutes = 0;
@@ -227,8 +230,8 @@ var NextCaltrain = function () {
           document.getElementById('trip').className = tripClass;
           document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
           if (trainId && NextCaltrain.currentScreen() === 'grid') {
-            document.getElementById('title').innerHTML = `${CaltrainTrip.type(trainId)} service`;
-            document.title = `${CaltrainTrip.type(trainId)} service`;
+            document.getElementById('title').innerHTML = `${CaltrainTrip.type(trainId)} Service`;
+            document.title = `${CaltrainTrip.type(trainId)} Service`;
           }
           tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
           NextCaltrain.populateBlurb(message, textClass);
