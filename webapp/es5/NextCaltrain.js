@@ -227,8 +227,8 @@ var NextCaltrain = function () {
           document.getElementById('trip').className = tripClass;
           document.getElementById('trip-type').innerHTML = CaltrainTrip.type(trainId);
           if (trainId && NextCaltrain.currentScreen() === 'grid') {
-            document.getElementById('title').innerHTML = `Service: ${CaltrainTrip.type(trainId)}`;
-            document.title = `Service: ${CaltrainTrip.type(trainId)}`;
+            document.getElementById('title').innerHTML = `${CaltrainTrip.type(trainId)} service`;
+            document.title = `${CaltrainTrip.type(trainId)} service`;
           }
           tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
           NextCaltrain.populateBlurb(message, textClass);
