@@ -154,22 +154,35 @@ body {
   background-color: wheat;
 }
 
-#main-hints > div > .btn {
-  font-size: 11pt;
-  line-height: 11px;
-  border: none;
-  color: white;
-  background-color: #444;
-}
-
-#main-hints {
-  font-family: sans-serif;
+#softkey-labels {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: thin;
+  font-size: 10.5pt;
+  line-height: 12px;
+  padding: 0 5pt;
+  position: relative;
+  bottom: 0;
+}
+
+#main-hints > div > .btn {
+  padding: 8px;
+  font-size: 16pt;
+  border: thin solid #666;
+  color: black;
+  background-color: #CCC;
+}
+
+#main-hints {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: sans-serif;
   margin: 0 4px;
-  line-height: 19px;
-  font-size: 12pt;
+  line-height: 18px;
+  font-size: 16pt;
   color: black;
 }
 

@@ -71,16 +71,16 @@
       <div id="hero-content">
         <div id="fade">
           <div id="main-hints">
-            <div><span class="btn">&#10033;</span>&nbsp;Menu</div>
-            <div>&#9650; <span class="btn">5</span><br>
-                 &#9660; <span class="btn">8</span></div>
+            <div><span class="btn">5</span> &#9650;</div>
+            <div>&#9660; <span class="btn">8</span></div>
           </div>
-        </div><select id="popup-menu" style="display: none;" onblur="NextCaltrain.popupMenu('hide')" onchange=
-        "NextCaltrain.popupMenu(this.value)">
+        </div><select id="popup-menu" style="display: none;"
+          onblur="NextCaltrain.popupMenu('hide')"
+          onchange="NextCaltrain.popupMenu(this.value)">
           <option value="about"> About </option>
           <option value="commands"> Keypad commands </option>
           <option value="prefs"> Save stations </option>
-          <option value="hide" selected> &lt;&nbsp; Back </option>
+          <option value="hide" selected></option>
         </select>
         <div id="circle"></div>
         <div id="overview">
@@ -92,6 +92,10 @@
             <span id="blurb-hero"></span>
             <div id="trip"></div><span id="trip-type"></span>
           </div>
+        </div>
+        <div id="softkey-labels">
+            <div>Menu</div>
+            <div>Main</div>
         </div>
       </div>
     </div>
