@@ -164,6 +164,7 @@ body {
   line-height: 12px;
   padding: 0 5pt;
   position: relative;
+  overflow: hidden;
   bottom: 0;
 }
 
