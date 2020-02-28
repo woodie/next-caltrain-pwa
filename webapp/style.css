@@ -160,7 +160,7 @@ body {
   justify-content: space-between;
   font-family: 'Noto Sans', sans-serif;
   font-weight: thin;
-  font-size: 10.5pt;
+  font-size: 11pt;
   line-height: 12px;
   padding: 0 5pt;
   position: relative;
@@ -378,10 +378,11 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   font-family: 'Noto Sans', sans-serif;
   line-height: 30px;
   background-color: black;
+  font-weight: thin;
   color: white;
   width: 240px;
   height: 30px;
-  font-size: 10.5pt;
+  font-size: 11pt;
   overflow: hidden;
 }
 
