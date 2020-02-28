@@ -1,4 +1,5 @@
 {
+  "short_name": "Next Caltrain",
   "name": "Next Caltrain",
   "description": "Caltrain Schedule for KaiOS phones.",
   "launch_path": "/index.html",
@@ -11,4 +12,8 @@
     "url": "http://netpress.com",
     "display": "fullscreen"
   }
+  "start_url": ".",
+  "display": "standalone",
+  "scope": "/",
+  "cursor": false
 }

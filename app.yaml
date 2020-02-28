@@ -15,3 +15,9 @@ handlers:
 - url: /(.+)
   static_files: webapp/\1
   upload: webapp/(.+)
+
+- url: /(.*\.(appcache|manifest))
+  mime_type: text/cache-manifest
+  static_files: static/\1
+  upload: static/(.*\.(appcache|manifest))
+  expiration: "0m"
