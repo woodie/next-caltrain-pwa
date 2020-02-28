@@ -331,14 +331,10 @@ var NextCaltrain = function () {
           }
         } else if (e.key === 'SoftLeft') {
           code = SPLAT;
-          if (!document.fullscreenElement) {
-            e.preventDefault();
-          }
+
+          e.preventDefault();
         } else if (e.key === 'Call') {
           code = ZERO;
-          if (!document.fullscreenElement) {
-            e.preventDefault();
-          }
         } else if (code === OK) {
           e.preventDefault();
         } else if (code === 38) {
@@ -377,6 +373,10 @@ var NextCaltrain = function () {
         if (code === OK || code === BACK) {
           NextCaltrain.popupMenu('hide');
         }
+      } else if (code === SPLAT || code === 37) {
+        if (kaios2 && document.fullscreenElement) document.exitFullscreen();
+        if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
+        NextCaltrain.popupMenu('show');
       } else if (NextCaltrain.currentScreen() === 'trip') {
         if (code === OK || code === BACK) {
           NextCaltrain.displayScreen('grid');
@@ -393,11 +393,6 @@ var NextCaltrain = function () {
           NextCaltrain.displayScreen('hero');
         } else if (code === OK) {
           NextCaltrain.displayScreen('grid');
-        } else if (code === SPLAT || code === 37) {
-          if (NextCaltrain.currentScreen() === 'hero') {
-            if (kaios2 && document.fullscreenElement) document.exitFullscreen();
-            NextCaltrain.popupMenu('show');
-          }
         } else if (code === POUND || code === 39) {
           schedule.next();
           offset = null;
