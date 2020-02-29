@@ -25,19 +25,19 @@ const email = 'next-caltrain@netpress.com';
 
 const hints = [
   ['Set your origin', [4,6],
-   'Use [4] and [6] to<br/>set your origin station.'],
+   'Use [4] and [6] keys to<br/>set your origin station.'],
   ['Set destination', [7,9],
-   'Use [7] and [9] to<br/>set destination station.'],
+   'Use [7] and [9] keys to<br/>set destination station.'],
   ['Select a train', [5,8],
-   'Use [5] and [8] to move<br/>the seletion up and down.'],
+   'Use [5] and [8] keys to<br/>move seletion up or down.'],
   ['Flip direction', ['c'],
-   'Flip the selected stations<br/>with the green [call] button.'],
+   'Press the [CALL] button to<br/>flip the selected stations'],
   ['Save stations', ['l'],
-   'Select "Save Stations"<br/>with the [Left] softkey.'],
+   'Press the [LEFT] softkey to<br/>select "Save Stations".'],
   ['Bookmark app', ['r'],
-   'Select "Pin to Apps Menu"<br/>with the [Right] softkey.'],
+   'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
   ['Change schedule', ['0'],
-   'Use [0] to cycle through<br/>available schedules.'],
+   'Press [0] to cycle through<br/>available schedules.'],
   ['Thanks for using<br/> Next Caltrain', null,
    `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.<br/>` +
    'Note: The cursor (arrow)<br/>is not used by this app,<br/>' +
