@@ -102,7 +102,7 @@ body {
 
 #hint-above {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 #circle {
@@ -140,7 +140,11 @@ body {
 }
 
 #popup-menu {
-  z-index: 2;
+  z-index: 9;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  bottom: 0;
 }
 
 .btn {

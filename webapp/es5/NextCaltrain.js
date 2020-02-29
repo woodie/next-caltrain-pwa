@@ -26,10 +26,10 @@ var POUND = 163;
 var ZERO = 48;
 
 var screens = 'hero grid trip about commands'.split(' ');
-var titles = { 'about': 'About Next Caltrain', 'commands': 'Keyboard commands' };
+var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Choose a train', [5, 8], 'Use [5] and [8] to move<br/>the seletion up and down.'], ['Select origin', [4, 6], 'Use [4] and [6] to<br/>change origin station.'], ['Select destination', [7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Choose a schedule', ['0'], 'Use [0] to cycle through<br/>available schedules.'], ['Flip station direction', ['c'], 'Flip the selected stations<br/>with the green [call] button.'], ['Save default stops', ['l'], 'Select "Save Stations"<br/>with the [Left] softkey.'], ['Bookmark the app', ['r'], 'Select "Pin to Apps Menu"<br/>with the [Right] softkey.'], ['Thanks for using<br/> Next Caltrain', null, 'The cursor (arrow/pointer)<br/>is not used by this app,<br/>' + 'so move it out of the way<br/>to the right of the screen.<br/>' + `Please send feedback to<br/><a href="mailto:${email}">${email}</a><br/>`]];
+var hints = [['Set your origin', [4, 6], 'Use [4] and [6] to<br/>set your origin station.'], ['Set destination', [7, 9], 'Use [7] and [9] to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] to move<br/>the seletion up and down.'], ['Change schedule', ['0'], 'Use [0] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Flip the selected stations<br/>with the green [call] button.'], ['Save stations', ['l'], 'Select "Save Stations"<br/>with the [Left] softkey.'], ['Bookmark app', ['r'], 'Select "Pin to Apps Menu"<br/>with the [Right] softkey.'], ['Thanks for using<br/> Next Caltrain', null, `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.<br/>` + 'Note: The cursor (arrow)<br/>is not used by this app,<br/>' + 'just move it to the right.<br/>']];
 
 var hintIndex = -1;
 
