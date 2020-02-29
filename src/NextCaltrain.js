@@ -30,14 +30,14 @@ const hints = [
    'Use [7] and [9] to<br/>set destination station.'],
   ['Select a train', [5,8],
    'Use [5] and [8] to move<br/>the seletion up and down.'],
-  ['Change schedule', ['0'],
-   'Use [0] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],
    'Flip the selected stations<br/>with the green [call] button.'],
   ['Save stations', ['l'],
    'Select "Save Stations"<br/>with the [Left] softkey.'],
   ['Bookmark app', ['r'],
    'Select "Pin to Apps Menu"<br/>with the [Right] softkey.'],
+  ['Change schedule', ['0'],
+   'Use [0] to cycle through<br/>available schedules.'],
   ['Thanks for using<br/> Next Caltrain', null,
    `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.<br/>` +
    'Note: The cursor (arrow)<br/>is not used by this app,<br/>' +
