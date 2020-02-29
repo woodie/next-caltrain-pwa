@@ -100,6 +100,11 @@ body {
   height: 228px;
 }
 
+#hint-above {
+  font-weight: bold;
+  font-size: 22px;
+}
+
 #circle {
   border-width: 5px;
   border-style: solid;
@@ -371,6 +376,13 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   width: 40px;
   height: 20px;
 }
+
+#mini-keypad > .keycol > div#kl { height: 15px; line-height: 13px; }
+#mini-keypad > .keycol > div#kr { height: 15px; line-height: 13px; }
+#mini-keypad > .keycol > div#kc { height: 15px; line-height: 13px; }
+#mini-keypad > .keycol > div#kh { height: 15px; line-height: 13px; }
+#mini-keypad > .keycol > div#ko { height: 34px; line-height: 34px; }
+
 
 #softkey-menu {
   display: flex;

@@ -29,7 +29,7 @@ var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keyboard commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['The cursor (arrow/pointer)<br/>is not used by this app.<br/>' + 'Just move it out of the way<br/>to the right of the screen.', null, 'Use the keypad to navigate<br/>as there is no touchscreen.<br/>' + 'Press [OK] to continue and<br/>[BACK] to return to the app.'], ['Use [5] and [8] to move<br/>the seletion up and down.', [5, 8], 'The [UP] and [DOWN] buttons<br/>may not work as expected.'], ['Use [4] and [6] to<br/>change origin station.', [4, 6, 7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Use [0] to flip the direction<br/>of the selected stations.', [0, '#'], 'Use [#] to cycle between<br/>available schedules.'], ['Select "Pin to Apps Menu"<br/>from the [Options] menu.<br/>' + 'This will let you launch the<br/>app quickly in the future.', null, 'We hope this app works as<br/>expected on your phone.<br/>' + `Please send feedback to<br/><a href="mailto:${email}">${email}</a>.`]];
+var hints = [['Choose a train', [5, 8], 'Use [5] and [8] to move<br/>the seletion up and down.'], ['Select origin', [4, 6], 'Use [4] and [6] to<br/>change origin station.'], ['Select destination', [7, 9], 'Use [7] and [9] to<br/>change destination station.'], ['Choose a schedule', ['0'], 'Use [0] to cycle through<br/>available schedules.'], ['Flip station direction', ['c'], 'Flip the selected stations<br/>with the green [call] button.'], ['Save default stops', ['l'], 'Select "Save Stations"<br/>with the [Left] softkey.'], ['Bookmark the app', ['r'], 'Select "Pin to Apps Menu"<br/>with the [Right] softkey.'], ['Thanks for using<br/> Next Caltrain', null, 'The cursor (arrow/pointer)<br/>is not used by this app,<br/>' + 'so move it out of the way<br/>to the right of the screen.<br/>' + `Please send feedback to<br/><a href="mailto:${email}">${email}</a><br/>`]];
 
 var hintIndex = -1;
 
@@ -80,8 +80,8 @@ var NextCaltrain = function () {
         document.getElementById('mini-keypad').style['display'] = 'none';
       } else {
         document.getElementById('mini-keypad').style['display'] = 'flex';
-        for (var i = 0; i < 12; i++) {
-          var key = i < 10 ? i : ['*', '#'][i % 2];
+        for (var i = 4; i < 18; i++) {
+          var key = i < 10 ? i : ['l', 'r', 'c', 'o', 'h', '*', '0', '#'][i - 10];
           var cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
           document.getElementById(`k${key}`).className = cls;
         }
@@ -330,11 +330,11 @@ var NextCaltrain = function () {
             return;
           }
         } else if (e.key === 'SoftLeft') {
-          code = SPLAT;
+          code = 'menu';
 
           e.preventDefault();
         } else if (e.key === 'Call') {
-          code = ZERO;
+          code = 'flip';
         } else if (code === OK) {
           e.preventDefault();
         } else if (code === 38) {
@@ -373,7 +373,7 @@ var NextCaltrain = function () {
         if (code === OK || code === BACK) {
           NextCaltrain.popupMenu('hide');
         }
-      } else if (code === SPLAT || code === 37) {
+      } else if (code === 'menu' || code === 37) {
         if (kaios2 && document.fullscreenElement) document.exitFullscreen();
         if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
         NextCaltrain.popupMenu('show');
@@ -393,7 +393,7 @@ var NextCaltrain = function () {
           NextCaltrain.displayScreen('hero');
         } else if (code === OK) {
           NextCaltrain.displayScreen('grid');
-        } else if (code === POUND || code === 39) {
+        } else if (code === ZERO || code === 39) {
           schedule.next();
           offset = null;
         } else if (code === UP) {
@@ -412,7 +412,7 @@ var NextCaltrain = function () {
         } else if (code === 57) {
           offset = null;
           prefs.bumpStations(false, true);
-        } else if (code === ZERO) {
+        } else if (code === 'flip') {
           offset = null;
           prefs.flipStations();
         } else {
