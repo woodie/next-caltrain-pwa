@@ -38,10 +38,9 @@ const hints = [
    'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
   ['Change schedule', ['0'],
    'Press [0] to cycle through<br/>available schedules.'],
-  ['Thanks for using<br/> Next Caltrain', null,
-   `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.<br/>` +
-   'Note: The cursor (arrow)<br/>is not used by this app,<br/>' +
-   'just move it to the right.<br/>']];
+  ['Thanks for using<br/> Next Caltrain',
+   `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`,
+   'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
 
 let hintIndex = -1;
 
@@ -83,15 +82,18 @@ class NextCaltrain {
     if (hintIndex >= hints.length) hintIndex = 0;
     document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
     document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
-    if (hints[hintIndex][1] === null) {
-      document.getElementById('mini-keypad').style['display'] = 'none';
-    } else {
+    if (Array.isArray(hints[hintIndex][1])) {
       document.getElementById('mini-keypad').style['display'] = 'flex';
+      document.getElementById('hint-center').style['display'] = 'none';
       for (let i = 4; i < 18; i++) {
         let key = (i < 10) ? i : ['l','r','c','o','h','*','0','#'][i - 10];
         let cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
         document.getElementById(`k${key}`).className = cls;
       }
+    } else {
+      document.getElementById('mini-keypad').style['display'] = 'none';
+      document.getElementById('hint-center').style['display'] = 'block';
+      document.getElementById('hint-center').innerHTML = hints[hintIndex][1];
     }
   }
 

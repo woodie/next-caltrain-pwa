@@ -29,7 +29,7 @@ var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [4, 6], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [7, 9], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', ['0'], 'Press [0] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', null, `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.<br/>` + 'Note: The cursor (arrow)<br/>is not used by this app,<br/>' + 'just move it to the right.<br/>']];
+var hints = [['Set your origin', [4, 6], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [7, 9], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', ['0'], 'Press [0] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`, 'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
 
 var hintIndex = -1;
 
@@ -76,15 +76,18 @@ var NextCaltrain = function () {
       if (hintIndex >= hints.length) hintIndex = 0;
       document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
       document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
-      if (hints[hintIndex][1] === null) {
-        document.getElementById('mini-keypad').style['display'] = 'none';
-      } else {
+      if (Array.isArray(hints[hintIndex][1])) {
         document.getElementById('mini-keypad').style['display'] = 'flex';
+        document.getElementById('hint-center').style['display'] = 'none';
         for (var i = 4; i < 18; i++) {
           var key = i < 10 ? i : ['l', 'r', 'c', 'o', 'h', '*', '0', '#'][i - 10];
           var cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
           document.getElementById(`k${key}`).className = cls;
         }
+      } else {
+        document.getElementById('mini-keypad').style['display'] = 'none';
+        document.getElementById('hint-center').style['display'] = 'block';
+        document.getElementById('hint-center').innerHTML = hints[hintIndex][1];
       }
     }
   }, {

@@ -20,7 +20,7 @@ This app is fully functional, with support for Weekday, Saturday, Sunday and Mod
 Trips that require a transfer stop should be supported. From your KaiOS phone, visit:
 http://next-caltrain-pwa.appspot.com
 
-## Keyboard commands
+## Keypad Commands
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png)
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png)
@@ -36,9 +36,6 @@ http://next-caltrain-pwa.appspot.com
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
 
-<img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png"
-     valign="top"> &nbsp; <img
-     src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png"
-     valign="top"> &nbsp; <img
-     src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png"
-     valign="top">
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png)

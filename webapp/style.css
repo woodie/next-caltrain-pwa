@@ -426,8 +426,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   padding-top: 5px;
   display: flex;
   flex-direction: row;
-  position: fixed;
-  bottom: 0;
   width: 240px;
 }
 
