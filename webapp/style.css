@@ -118,6 +118,10 @@ body {
   font-size: 24px;
 }
 
+#hint-center {
+  padding: 5px;
+}
+
 #circle {
   border-width: 5px;
   border-style: solid;
