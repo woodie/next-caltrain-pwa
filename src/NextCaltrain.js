@@ -55,6 +55,8 @@ class NextCaltrain {
     if (!kaios) {
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('keypad').style['display'] = 'flex';
+      document.getElementById('about-filler').style['display'] = 'flex';
+      document.getElementById('commands-filler').style['display'] = 'flex';
       document.getElementById('content').className = 'full-screen';
     } else {
       document.getElementById('content').className = 'part-screen';

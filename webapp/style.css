@@ -23,7 +23,6 @@ body {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  display: flex;
 }
 
 .hour-filler {
@@ -45,17 +44,19 @@ body {
 
 #hero-filler {
   display: flex;
-  flex-direction: column;
-  height: 35px;
+}
+
+.fake-titlebar {
+  color: black;
   background-color: #CCC;
-  color: #333;
-  display: flex;
-  line-height: 33px;
-  font-size: 14pt;
+  height: 35px;
+  font-size: 13pt;
+  font-weight: lighter;
+  padding-left: 14px;
   font-family: 'Noto Sans', sans-serif;
+  line-height: 33px;
   white-space: nowrap;
   overflow: hidden;
-  width: 240px;
 }
 
 #hero-content {
@@ -70,6 +71,12 @@ body {
 }
 
 #about-screen {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+#about-content {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
@@ -90,6 +97,12 @@ body {
 }
 
 #commands-screen {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+#commands-content {
   display: flex;
   justify-content: center;
   flex-direction: column;

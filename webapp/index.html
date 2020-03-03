@@ -32,45 +32,53 @@
     </div>
 
     <div id="about-screen" style="display: none;">
-      <div><img id="about-image" src="icons/favicon-128x128.png"></div>
-      <div><span id="app-name">Next Caltrain</span><br>for KaiOS phones</div>
-      <div>&#169; 2020 John Woodell</div>
-      <div>Schedule effective:<br><span id="date-string"></span>
+      <div id="about-filler" class="fake-titlebar" style="display: none;">
+        About Next Caltrain
+      </div>
+      <div id="about-content">
+        <div><img id="about-image" src="icons/favicon-128x128.png"></div>
+        <div><span id="app-name">Next Caltrain</span><br>for KaiOS phones</div>
+        <div>&#169; 2020 John Woodell</div>
+        <div>Schedule effective:<br><span id="date-string"></span>
+        </div>
       </div>
     </div>
 
     <div id="commands-screen" style="display: none;">
-      <div id="hint-above" class="hint"></div>
-      <div id="hint-center" class="hint" style="display: none;"></div>
-      <div id="mini-keypad">
-        <div class="keycol">
-          <div id="kl">—</div>
-          <div id="kc">—</div>
-          <div id="k4">4</div>
-          <div id="k7">7</div>
-          <div id="k*">&#10033;</div>
-        </div>
-        <div class="keycol">
-          <div id="ko">OK</div>
-          <div id="k5">5</div>
-          <div id="k8">8</div>
-          <div id="k0">0</div>
-        </div>
-        <div class="keycol">
-          <div id="kr">—</div>
-          <div id="kh">—</div>
-          <div id="k6">6</div>
-          <div id="k9">9</div>
-          <div id="k#">#</div>
-        </div>
+      <div id="commands-filler" class="fake-titlebar" style="display: none;">
+        Keypad Commands
       </div>
-      <div id="hint-below" class="hint"></div>
+      <div id="commands-content">
+        <div id="hint-above" class="hint"></div>
+        <div id="hint-center" class="hint" style="display: none;"></div>
+        <div id="mini-keypad">
+          <div class="keycol">
+            <div id="kl">—</div>
+            <div id="kc">—</div>
+            <div id="k4">4</div>
+            <div id="k7">7</div>
+            <div id="k*">&#10033;</div>
+          </div>
+          <div class="keycol">
+            <div id="ko">OK</div>
+            <div id="k5">5</div>
+            <div id="k8">8</div>
+            <div id="k0">0</div>
+          </div>
+          <div class="keycol">
+            <div id="kr">—</div>
+            <div id="kh">—</div>
+            <div id="k6">6</div>
+            <div id="k9">9</div>
+            <div id="k#">#</div>
+          </div>
+        </div>
+        <div id="hint-below" class="hint"></div>
+      </div>
     </div>
 
     <div id="hero-screen" style="display: flex;">
-      <div id="hero-filler">
-        <marquee direction="left" id="alert"></marquee>
-      </div>
+      <div id="hero-filler" class="fake-titlebar"></div>
       <div id="hero-content">
         <div id="fade">
           <div id="main-hints">
