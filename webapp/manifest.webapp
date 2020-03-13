@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "name": "Next Caltrain",
+  "description": "Caltrain Schedule for KaiOS phones.",
+  "type": "web",
+  "launch_path": "/index.html",
+  "icons": {
+    "56": "/icons/ic_NextCaltrain_56.png",
+    "112": "/icons/ic_NextCaltrain_112.png"
+  },
+  "developer": {
+    "name": "John Woodell",
+    "url": "http://netpress.com"
+  },
+  "locales": {
+    "en-US": {
+      "name": "Next Caltrain",
+      "subtitle": "Mobile Train Schedule",
+      "description": "Caltrain Schedule for KaiOS phones."
+    }
+  },
+  "fullscreen": "true",
+  "cursor": false,
+  "default_locale": "en-US"
+}
