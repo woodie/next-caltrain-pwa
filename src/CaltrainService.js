@@ -142,7 +142,8 @@ class CaltrainService {
     if (schedule === 'Modified') {
       return (direction === 'North') ? caltrainServiceData.northModified : caltrainServiceData.southModified;
     } else if (schedule === 'Weekday') {
-      return (direction === 'North') ? caltrainServiceData.northWeekday : caltrainServiceData.southWeekday;
+    //return (direction === 'North') ? caltrainServiceData.northWeekday : caltrainServiceData.southWeekday;
+      return (direction === 'North') ? caltrainServiceData.northReduced : caltrainServiceData.southReduced;
     } else {
     //return (direction === 'North') ? caltrainServiceData.northWeekend : caltrainServiceData.southWeekend;
       return (direction === 'North') ? caltrainServiceData.northClosure : caltrainServiceData.southClosure;

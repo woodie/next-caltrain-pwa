@@ -9,7 +9,7 @@ from collections import OrderedDict
 xstr = lambda s: s or ''
 
 def main():
-  fetch_schedule_data()
+  #fetch_schedule_data()
   stops = parse_station_data()
   times = parse_schedule_data(stops)
   write_schedule_data(times, stops)
@@ -51,11 +51,12 @@ def parse_station_data():
 def parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
             'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
-            'closure':{'north':OrderedDict(), 'south':OrderedDict()}}
+            'closure':{'north':OrderedDict(), 'south':OrderedDict()},
+            'reduced':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
-    filename = 'data/closure_%s.csv' % direction
-    schedule = 'closure'
-    try:
+    # try
+    for schedule in ['closure', 'reduced']:
+      filename = 'data/%s_%s.csv' % (schedule, direction)
       with open(filename, 'rb') as modFile:
         labels = []
         for stop_id in stops[direction]:
@@ -63,6 +64,8 @@ def parse_schedule_data(stops):
         modReader = csv.reader(modFile)
         header = next(modReader, None)
         for train in header[1:]:
+          if len(train) < 3: # ignore missing trains on reduced schedule
+            continue
           _times[schedule][direction][train] = [None] * len(stops[direction])
         for row in modReader:
           station = row[0]
@@ -76,8 +79,8 @@ def parse_schedule_data(stops):
             parts = row[i].split(':')
             departure = int(parts[0]) * 60 + int(parts[1])
             _times[schedule][direction][trip_id][station_x] = str(departure)
-    finally:
-      modFile.close()
+    #finally:
+    modFile.close()
   with open('CT-GTFS/stop_times.txt', 'rb') as timesFile:
     timesReader = csv.reader(timesFile)
     header = next(timesReader, None)
@@ -117,7 +120,7 @@ def write_schedule_data(times, stops):
         labels.append(stops['labels'][stop_id])
       f.write("','".join(labels))
       f.write("'],\n")
-      for schedule in ['weekday', 'weekend', 'closure']:
+      for schedule in ['weekday', 'weekend', 'closure', 'reduced']:
         comma = ''
         f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:
