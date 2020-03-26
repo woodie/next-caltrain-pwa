@@ -21,15 +21,13 @@ var HANGUP = 8;
 var ESC = 27;
 var UP = 53;
 var DOWN = 56;
-var SPLAT = 170;
-var POUND = 163;
-var ZERO = 48;
+
 
 var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [4, 6], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [7, 9], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', ['0'], 'Press [0] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`, 'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
+var hints = [['Set your origin', [4, 6], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [7, 9], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`, 'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
 
 var hintIndex = -1;
 
@@ -81,8 +79,8 @@ var NextCaltrain = function () {
       if (Array.isArray(hints[hintIndex][1])) {
         document.getElementById('mini-keypad').style['display'] = 'flex';
         document.getElementById('hint-center').style['display'] = 'none';
-        for (var i = 4; i < 18; i++) {
-          var key = i < 10 ? i : ['l', 'r', 'c', 'o', 'h', '*', '0', '#'][i - 10];
+        for (var i = 1; i < 15; i++) {
+          var key = i < 10 ? i : ['l', 'r', 'c', 'o', 'h'][i - 10];
           var cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
           document.getElementById(`k${key}`).className = cls;
         }
@@ -340,6 +338,10 @@ var NextCaltrain = function () {
           e.preventDefault();
         } else if (e.key === 'Call') {
           code = 'flip';
+        } else if (e.key === '2') {
+          code = 'cycle';
+
+          e.preventDefault();
         } else if (code === OK) {
           e.preventDefault();
         } else if (code === 38) {
@@ -398,9 +400,6 @@ var NextCaltrain = function () {
           NextCaltrain.displayScreen('hero');
         } else if (code === OK) {
           NextCaltrain.displayScreen('grid');
-        } else if (code === ZERO || code === 39) {
-          schedule.next();
-          offset = null;
         } else if (code === UP) {
           offset--;
         } else if (code === DOWN) {
@@ -420,6 +419,9 @@ var NextCaltrain = function () {
         } else if (code === 'flip') {
           offset = null;
           prefs.flipStations();
+        } else if (code === 'cycle') {
+          schedule.next();
+          offset = null;
         } else {
           return;
         }

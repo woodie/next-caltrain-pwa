@@ -15,9 +15,9 @@ const HANGUP = 8;
 const ESC = 27;
 const UP = 53;
 const DOWN = 56;
-const SPLAT = 170;
-const POUND = 163;
-const ZERO = 48;
+// const SPLAT = 170;
+// const POUND = 163;
+// const ZERO = 48;
 
 const screens = 'hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
@@ -36,8 +36,8 @@ const hints = [
    'Press the [LEFT] softkey to<br/>select "Save Stations".'],
   ['Bookmark app', ['r'],
    'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
-  ['Change schedule', ['0'],
-   'Press [0] to cycle through<br/>available schedules.'],
+  ['Change schedule', [2],
+   'Press [2] to cycle through<br/>available schedules.'],
   ['Thanks for using<br/> Next Caltrain',
    `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`,
    'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
@@ -87,8 +87,8 @@ class NextCaltrain {
     if (Array.isArray(hints[hintIndex][1])) {
       document.getElementById('mini-keypad').style['display'] = 'flex';
       document.getElementById('hint-center').style['display'] = 'none';
-      for (let i = 4; i < 18; i++) {
-        let key = (i < 10) ? i : ['l','r','c','o','h','*','0','#'][i - 10];
+      for (let i = 1; i < 15; i++) {
+        let key = (i < 10) ? i : ['l','r','c','o','h'][i - 10];
         let cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
         document.getElementById(`k${key}`).className = cls;
       }
@@ -331,6 +331,10 @@ class NextCaltrain {
         e.preventDefault();
       } else if (e.key === 'Call') {
         code = 'flip';
+      } else if (e.key === '2') {
+        code = 'cycle';
+        // Catch 2 to stifle screen lock.
+        e.preventDefault();
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
         e.preventDefault();
@@ -350,7 +354,7 @@ class NextCaltrain {
       // Simulate EXIT from fullscreen mode.
       NextCaltrain.displayScreen('hero');
     } else if (code === 'prefs') {
-      // DIsplay the 'Save stations' confirmation.
+      // Display the 'Save stations' confirmation.
       let confirmation = ['Save', (prefs.flipped ? prefs.destin : prefs.origin), 'as morning and',
         (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
       if (confirm(confirmation)) prefs.saveStops();
@@ -401,9 +405,6 @@ class NextCaltrain {
         NextCaltrain.displayScreen('hero');
       } else if (code === OK) {
         NextCaltrain.displayScreen('grid');
-      } else if (code === ZERO || code === 39) { // # or ->
-        schedule.next();
-        offset = null;
       } else if (code === UP) {
         offset--;
       } else if (code === DOWN) {
@@ -423,6 +424,10 @@ class NextCaltrain {
       } else if (code === 'flip') {
         offset = null;
         prefs.flipStations();
+      } else if (code === 'cycle') {
+        // clearTimeout(countdown);
+        schedule.next();
+        offset = null;
       } else {
         return;
       }

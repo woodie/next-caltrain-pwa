@@ -5,10 +5,12 @@ The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a
 
 | Targeted Phones   | Model | OS          | Browser    | Javascript | Full-Screen |
 | ----------------- | ------|------------ | ---------- | ---------- | ----------- |
-| Alcatel GO FLIP   | 4044O | KaiOS 1.0   | Firefox 37 | ES 2015    | No          |
-| Alcatel SMARTFLIP | 4052R | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
 | Nokia 2720 Flip   | 2720  | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
-| Nokia 8110        | 8110  | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
+| Alcatel SMARTFLIP | 4052R | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
+| Nokia 8110        | 8110  | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Yes         |
+| Alcatel GO FLIP   | 4044O | KaiOS 1.0   | Firefox 37 | ES 2015    | No          |
+
+Note: KaiOS 3.0 phones will use Firefox 78 with ES 2018 support.
 
 ## History and Goals
 
