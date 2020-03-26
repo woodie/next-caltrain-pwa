@@ -3,14 +3,15 @@
 This Caltrain schedule is a progressive web app (PWA) designed for KaiOS phones without a touchscreen.
 The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a modern Firefox browser.
 
-| Targeted Phones   | Model | OS          | Browser    | Javascript | Full-Screen |
-| ----------------- | ------|------------ | ---------- | ---------- | ----------- |
-| Nokia 2720 Flip   | 2720  | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
-| Alcatel SMARTFLIP | 4052R | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Yes         |
-| Nokia 8110        | 8110  | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Yes         |
-| Alcatel GO FLIP   | 4044O | KaiOS 1.0   | Firefox 37 | ES 2015    | No          |
+| Targeted Phones   | OS          | Browser    | Javascript | System chip    |
+| ----------------- | ----------- | ---------- | ---------- | -------------- |
+| Alcatel Go FLIP 3 | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 |
+| Nokia 2720 Flip   | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 205 |
+| Alcatel SMARTFLIP | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 |
+| Nokia 8110 4G     | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Snapdragon 205 |
+| Alcatel GO FLIP   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 |
 
-Note: KaiOS 3.0 phones will use Firefox 78 with ES 2018 support.
+**Note: KaiOS 3.0 phones will be on Firefox 78 with ES 2018 support.**
 
 ## History and Goals
 
