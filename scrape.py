@@ -6,7 +6,7 @@ import subprocess
 from bs4 import BeautifulSoup
 
 def main():
-  #fetch_schedule_data()
+  fetch_schedule_data()
   parse_schedule_data('weekday','north')
   parse_schedule_data('weekday','south')
   #parse_schedule_data('weekend','north')
@@ -23,7 +23,8 @@ def fetch_schedule_data():
   #weekend_url = 'http://www.caltrain.com/schedules/weekend-timetable.html'
   #modified_url = 'http://www.caltrain.com/schedules/holidayservice/Modified_Schedule.html'
   closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
-  reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_17__2020.html'
+  #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_17__2020.html'
+  reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_30__2020.html'
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')
