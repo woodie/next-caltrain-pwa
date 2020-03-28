@@ -189,7 +189,7 @@ var CaltrainService = function () {
       if (schedule === 'Modified') {
         return direction === 'North' ? caltrainServiceData.northModified : caltrainServiceData.southModified;
       } else if (schedule === 'Weekday') {
-        return direction === 'North' ? caltrainServiceData.northReduced : caltrainServiceData.southReduced;
+        return direction === 'North' ? caltrainServiceData.northWeekday : caltrainServiceData.southWeekday;
       } else {
         return direction === 'North' ? caltrainServiceData.northClosure : caltrainServiceData.southClosure;
       }

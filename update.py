@@ -55,7 +55,7 @@ def parse_schedule_data(stops):
             'reduced':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
     # try
-    for schedule in ['closure', 'reduced']:
+    for schedule in ['closure', 'reduced', 'weekday']:
       filename = 'data/%s_%s.csv' % (schedule, direction)
       with open(filename, 'rb') as modFile:
         labels = []
@@ -99,6 +99,8 @@ def parse_schedule_data(stops):
       departure = str(hour * 60 + minute)
       direction = 'north' if (stop_id % 2 == 1) else 'south'
       schedule = 'weekday' if (trip_id < 400) else 'weekend'
+      if schedule == 'weekday':
+        continue # until GTFS is back
       if (trip_id < 800 and trip_id > 500):
         continue # skip special times
       if (trip_id not in _times[schedule][direction]):
