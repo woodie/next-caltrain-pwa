@@ -47,8 +47,8 @@ def parse_schedule_data(schedule, direction):
     valid = tr.select('th')
     if len(valid) > 9:
       for th in  tr.select('th'):
-        train_id = th.text.replace("*","")
-        if len(train_id) < 4:
+        train_id = th.text.replace("*","").replace("br",'')
+        if len(train_id) > 2 and len(train_id) < 4:
           header.append(train_id)
   rows = []
   for tr in tbl.select('tr'):
