@@ -51,11 +51,10 @@ def parse_station_data():
 def parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
             'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
-            'closure':{'north':OrderedDict(), 'south':OrderedDict()},
-            'reduced':{'north':OrderedDict(), 'south':OrderedDict()}}
+            'closure':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
     # try
-    for schedule in ['closure', 'reduced', 'weekday']:
+    for schedule in ['closure', 'weekday']:
       filename = 'data/%s_%s.csv' % (schedule, direction)
       with open(filename, 'rb') as modFile:
         labels = []
@@ -89,6 +88,7 @@ def parse_schedule_data(stops):
     departure_x = header.index('departure_time')
     sortedLines = sorted(timesReader, key=lambda row: int(row[departure_x].replace(':','')))
     for row in sortedLines:
+      continue # until GTFS is back
       try:
         trip_id = int(row[trip_id_x])
       except:
@@ -99,8 +99,6 @@ def parse_schedule_data(stops):
       departure = str(hour * 60 + minute)
       direction = 'north' if (stop_id % 2 == 1) else 'south'
       schedule = 'weekday' if (trip_id < 400) else 'weekend'
-      if schedule == 'weekday':
-        continue # until GTFS is back
       if (trip_id < 800 and trip_id > 500):
         continue # skip special times
       if (trip_id not in _times[schedule][direction]):
@@ -122,7 +120,7 @@ def write_schedule_data(times, stops):
         labels.append(stops['labels'][stop_id])
       f.write("','".join(labels))
       f.write("'],\n")
-      for schedule in ['weekday', 'weekend', 'closure', 'reduced']:
+      for schedule in ['weekday', 'weekend', 'closure']:
         comma = ''
         f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:

@@ -15,8 +15,8 @@ def main():
   #parse_schedule_data('modified','south')
   parse_schedule_data('closure','north')
   parse_schedule_data('closure','south')
-  parse_schedule_data('reduced','north')
-  parse_schedule_data('reduced','south')
+  #parse_schedule_data('reduced','north')
+  #parse_schedule_data('reduced','south')
 
 def fetch_schedule_data():
   weekday_url = 'http://www.caltrain.com/schedules/weekdaytimetable.html'
@@ -24,7 +24,7 @@ def fetch_schedule_data():
   #modified_url = 'http://www.caltrain.com/schedules/holidayservice/Modified_Schedule.html'
   closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
   #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_17__2020.html'
-  reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_30__2020.html'
+  #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_30__2020.html'
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')
