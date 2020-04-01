@@ -50,11 +50,10 @@ def parse_station_data():
 
 def parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
-            'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
-            'closure':{'north':OrderedDict(), 'south':OrderedDict()}}
+            'weekend':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
     # try
-    for schedule in ['closure', 'weekday']:
+    for schedule in ['weekday', 'weekend']:
       filename = 'data/%s_%s.csv' % (schedule, direction)
       with open(filename, 'rb') as modFile:
         labels = []
@@ -120,7 +119,7 @@ def write_schedule_data(times, stops):
         labels.append(stops['labels'][stop_id])
       f.write("','".join(labels))
       f.write("'],\n")
-      for schedule in ['weekday', 'weekend', 'closure']:
+      for schedule in ['weekday', 'weekend']:
         comma = ''
         f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
         for trip_id in times[schedule][direction]:
