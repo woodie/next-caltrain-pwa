@@ -180,20 +180,6 @@ body {
   background-color: wheat;
 }
 
-#softkey-labels {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-family: 'Noto Sans', sans-serif;
-  font-weight: thin;
-  font-size: 11pt;
-  line-height: 12px;
-  padding: 0 5pt;
-  position: relative;
-  overflow: hidden;
-  bottom: 0;
-}
-
 #main-hints > div > .btn {
   padding: 8px;
   font-size: 16pt;
