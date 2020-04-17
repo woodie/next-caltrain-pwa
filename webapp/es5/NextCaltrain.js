@@ -338,6 +338,8 @@ var NextCaltrain = function () {
           e.preventDefault();
         } else if (e.key === 'Call') {
           code = 'flip';
+        } else if (e.key === '1' | e.key === '3') {
+          e.preventDefault();
         } else if (e.key === '2') {
           code = 'cycle';
 

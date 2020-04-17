@@ -331,6 +331,9 @@ class NextCaltrain {
         e.preventDefault();
       } else if (e.key === 'Call') {
         code = 'flip';
+      } else if (e.key === '1' | e.key === '3') {
+        // Catch 1,3 to stifle zoom in/out.
+        e.preventDefault();
       } else if (e.key === '2') {
         code = 'cycle';
         // Catch 2 to stifle screen lock.
