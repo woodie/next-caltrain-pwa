@@ -58,6 +58,9 @@ var NextCaltrain = function () {
       NextCaltrain.attachListeners();
       NextCaltrain.setTheTime();
       NextCaltrain.formatHints();
+      if (!kaios && 'serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/pwa-examples/js13kpwa/sw.js');
+      };
     }
   }, {
     key: 'formatHints',
