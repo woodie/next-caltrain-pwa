@@ -27,7 +27,7 @@ var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [4, 6], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [7, 9], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`, 'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
+var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`, 'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
 
 var hintIndex = -1;
 
@@ -409,16 +409,16 @@ var NextCaltrain = function () {
           offset--;
         } else if (code === DOWN) {
           offset++;
-        } else if (code === 52) {
+        } else if (code === 49) {
           offset = null;
           prefs.bumpStations(true, false);
-        } else if (code === 54) {
+        } else if (code === 51) {
           offset = null;
           prefs.bumpStations(true, true);
-        } else if (code === 55) {
+        } else if (code === 52) {
           offset = null;
           prefs.bumpStations(false, false);
-        } else if (code === 57) {
+        } else if (code === 54) {
           offset = null;
           prefs.bumpStations(false, true);
         } else if (code === 'flip') {

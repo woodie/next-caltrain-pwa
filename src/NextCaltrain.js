@@ -24,9 +24,9 @@ const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
 const email = 'next-caltrain@netpress.com';
 
 const hints = [
-  ['Set your origin', [4,6],
+  ['Set your origin', [1,3],
    'Use [4] and [6] keys to<br/>set your origin station.'],
-  ['Set destination', [7,9],
+  ['Set destination', [4,6],
    'Use [7] and [9] keys to<br/>set destination station.'],
   ['Select a train', [5,8],
    'Use [5] and [8] keys to<br/>move seletion up or down.'],
@@ -415,18 +415,20 @@ class NextCaltrain {
         offset--;
       } else if (code === DOWN) {
         offset++;
-      } else if (code === 52) { // 4
+      } else if (code === 49) { // 1
         offset = null;
         prefs.bumpStations(true, false);
-      } else if (code === 54) { // 6
+      } else if (code === 51) { // 3
         offset = null;
         prefs.bumpStations(true, true);
-      } else if (code === 55) { // 7
+      } else if (code === 52) { // 4
         offset = null;
         prefs.bumpStations(false, false);
-      } else if (code === 57) { // 9
+      } else if (code === 54) { // 6
         offset = null;
         prefs.bumpStations(false, true);
+   // } else if (code === 55) { // 7
+   // } else if (code === 57) { // 9
       } else if (code === 'flip') {
         offset = null;
         prefs.flipStations();
