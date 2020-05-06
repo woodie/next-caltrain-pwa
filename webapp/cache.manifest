@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# v1.0.0
+
+CACHE:
+style.css
+icons/ic_NextCaltrain_112.png
+index.html
+es5/CaltrainSchedule.js
+es5/CaltrainService.js
+es5/CaltrainTrip.js
+es5/GoodTimes.js
+es5/NextCaltrain.js
+es5/Preferences.js
+es5/caltrainServiceData.js
+
+NETWORK:
+*

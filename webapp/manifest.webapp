@@ -1,25 +1,33 @@
 {
   "version": "1.0.0",
-  "short_name": "Next Caltrain",
-  "name": "Next Caltrain: Schedule, trip planner",
-  "description": "Caltrain Schedule for KaiOS phones.",
-  "icons": [
-    {
-      "src": "/icons/android-chrome-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/icons/android-chrome-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": "/?source=pwa",
-  "background_color": "#000000",
-  "categories": ["utilities", "commuting", "transportation"],
-  "display": "fullscreen",
+  "name": "Next Caltrain",
+  "description": "Caltrain opporates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a Caltrain schedule for KaiOS phones.",
+  "display": "Next Caltrain",
+  "loading_progress_bar": true,
+  "launch_path": "/index.html?app",
+  "categories": ["utilities"],
+  "appcache_path": "/cache.manifest",
+  "cursor": false,
+  "ime_default_softkey_bar": true,
+  "fullscreen": "true",
   "orientation": "portrait",
-  "scope": "/",
-  "theme_color": "#FF0000"
+  "icons": {
+    "56": "/icons/ic_NextCaltrain_56.png",
+    "112": "/icons/ic_NextCaltrain_112.png"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "developer": {
+    "name": "John Woodell",
+    "url": "http://www.netpress.com"
+  },
+  "locales": {
+    "en-US": {
+      "name": "Next Caltrain",
+      "subtitle": "Schedule for Caltrain in Northern California.",
+      "description": "Caltrain opporates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a Caltrain schedule for KaiOS phones."
+    }
+  },
+  "default_locale": "en-US"
 }

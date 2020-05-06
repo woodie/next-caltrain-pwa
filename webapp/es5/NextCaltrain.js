@@ -6,6 +6,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var prefs = new Preferences(caltrainServiceData.southStops);
 var service = new CaltrainService();
+var app = false;
 var kaios1 = false;
 var kaios2 = false;
 var kaios = false;
@@ -39,15 +40,15 @@ var NextCaltrain = function () {
   _createClass(NextCaltrain, null, [{
     key: 'startApp',
     value: function startApp() {
-      if (document.location.search === '?kaios1' || navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
-      if (document.location.search === '?kaios2' || navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
+      if (document.location.search === '?app') app = true;else if (document.location.search === '?kaios1' || navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;else if (document.location.search === '?kaios2' || navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
       kaios = kaios1 || kaios2;
-      if (!kaios) {
+      if (app || !kaios) {
+        document.getElementById('main-hints').style['display'] = 'none';
         document.getElementById('softkey-menu').style['display'] = 'flex';
-        document.getElementById('keypad').style['display'] = 'flex';
         document.getElementById('about-filler').style['display'] = 'flex';
         document.getElementById('commands-filler').style['display'] = 'flex';
         document.getElementById('content').className = 'full-screen';
+        if (!app) document.getElementById('keypad').style['display'] = 'flex';
       } else {
         document.getElementById('content').className = 'part-screen';
       }
@@ -58,9 +59,6 @@ var NextCaltrain = function () {
       NextCaltrain.attachListeners();
       NextCaltrain.setTheTime();
       NextCaltrain.formatHints();
-      if (!kaios && 'serviceWorker' in navigator) {
-        navigator.serviceWorker.register('es5/sw.js');
-      };
     }
   }, {
     key: 'formatHints',
