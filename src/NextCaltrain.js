@@ -26,12 +26,12 @@ const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
 const email = 'next-caltrain@netpress.com';
 
 let hints = [
-  ['Select a train', [5,8],
-   'Use [5] and [8] keys to<br/>move seletion up or down.'],
   ['Set your origin', [1,3],
    'Use [4] and [6] keys to<br/>set your origin station.'],
   ['Set destination', [4,6],
    'Use [7] and [9] keys to<br/>set destination station.'],
+  ['Select a train', [5,8],
+   'Use [5] and [8] keys to<br/>move seletion up or down.'],
   ['Change schedule', [2],
    'Press [2] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],
@@ -56,12 +56,16 @@ class NextCaltrain {
       navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
     kaios = (kaios1 || kaios2);
     if (app || !kaios) {
+      if (app) {
+        NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
+      } else {
+        document.getElementById('keypad').style['display'] = 'flex';
+      }
       document.getElementById('main-hints').style['display'] = 'none';
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('about-filler').style['display'] = 'flex';
       document.getElementById('commands-filler').style['display'] = 'flex';
       document.getElementById('content').className = 'full-screen';
-      if (!app) document.getElementById('keypad').style['display'] = 'flex';
     } else {
       document.getElementById('content').className = 'part-screen';
     }
@@ -75,7 +79,7 @@ class NextCaltrain {
   }
 
   static formatHints() {
-    if (app) hints = hints.slice(1, 6);
+    if (app) hints = hints.slice(0, 6);
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
@@ -86,7 +90,13 @@ class NextCaltrain {
 
   static bumpKeypadHint() {
     hintIndex++;
-    if (hintIndex >= hints.length) hintIndex = 0;
+    if (hintIndex >= hints.length) {
+      hintIndex = -1;
+      NextCaltrain.displayScreen('hero');
+      return
+    } else if (hintIndex == hints.length - 1 && app) {
+      NextCaltrain.populateSoftkeyMenu('', 'OK', '');
+    }
     document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
     document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
     if (Array.isArray(hints[hintIndex][1])) {
@@ -137,6 +147,12 @@ class NextCaltrain {
     document.getElementById('blurb-grid').className = textClass;
     document.getElementById('blurb-hero').innerHTML = message.replace(' Schedule', '');
     document.getElementById('blurb-hero').className = textClass;
+  }
+
+  static populateSoftkeyMenu(left, center, right) {
+    document.getElementById('softkey-left').innerHTML = left;
+    document.getElementById('softkey-center').innerHTML = center;
+    document.getElementById('softkey-right').innerHTML = right;
   }
 
   static loadTrip(train) {
@@ -275,6 +291,20 @@ class NextCaltrain {
       let display = (target === screens[i]) ? 'flex' : 'none';
       document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
+    // set softkey menu
+    if (app) {
+      if (target === 'hero') {
+        NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
+      } else if (target === 'grid') {
+        NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', 'Back');
+      } else if (target === 'trip') {
+        NextCaltrain.populateSoftkeyMenu('Menu', '', 'Back');
+      } else if (target === 'about') {
+        NextCaltrain.populateSoftkeyMenu('', 'OK', '');
+      } else if (target === 'commands') {
+        NextCaltrain.populateSoftkeyMenu('', 'NEXT', 'Back');
+      }
+    }
     // set the title
     document.getElementById('title').innerHTML = 'Next Caltrain';
     document.title = (target in titles) ? titles[target] : 'Next Caltrain';
@@ -282,7 +312,7 @@ class NextCaltrain {
     if (target === 'grid' || target === 'hero') {
       NextCaltrain.loadSchedule();
     }
-    // Request full sreen when KaiOS/2
+    // request full sreen when KaiOS/2
     if (kaios2) {
       if (target === 'grid' || target === 'trip') {
         document.documentElement.requestFullscreen();
@@ -334,9 +364,12 @@ class NextCaltrain {
         code = 'menu';
         // Supress native SEARCH action.
         e.preventDefault();
+      } else if (e.key === 'SoftRight' && app) {
+        code = BACK;
+        // Maintain OPTIONS menu unless app
       } else if (e.key === 'Call') {
         code = 'flip';
-      } else if (e.key === '1' | e.key === '3') {
+      } else if (e.key === '1' || e.key === '3') {
         // Catch 1,3 to stifle zoom in/out.
         e.preventDefault();
       } else if (e.key === '2') {

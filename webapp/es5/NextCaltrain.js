@@ -29,7 +29,7 @@ var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
+var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 var hintIndex = -1;
 
@@ -44,12 +44,16 @@ var NextCaltrain = function () {
       if (document.location.search === '?app') app = true;else if (document.location.search === '?kaios1' || navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;else if (document.location.search === '?kaios2' || navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
       kaios = kaios1 || kaios2;
       if (app || !kaios) {
+        if (app) {
+          NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
+        } else {
+          document.getElementById('keypad').style['display'] = 'flex';
+        }
         document.getElementById('main-hints').style['display'] = 'none';
         document.getElementById('softkey-menu').style['display'] = 'flex';
         document.getElementById('about-filler').style['display'] = 'flex';
         document.getElementById('commands-filler').style['display'] = 'flex';
         document.getElementById('content').className = 'full-screen';
-        if (!app) document.getElementById('keypad').style['display'] = 'flex';
       } else {
         document.getElementById('content').className = 'part-screen';
       }
@@ -64,7 +68,7 @@ var NextCaltrain = function () {
   }, {
     key: 'formatHints',
     value: function formatHints() {
-      if (app) hints = hints.slice(1, 6);
+      if (app) hints = hints.slice(0, 6);
       for (var i = 0; i < hints.length; i++) {
         for (var n = 0; n < 2; n++) {
           hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
@@ -76,7 +80,13 @@ var NextCaltrain = function () {
     key: 'bumpKeypadHint',
     value: function bumpKeypadHint() {
       hintIndex++;
-      if (hintIndex >= hints.length) hintIndex = 0;
+      if (hintIndex >= hints.length) {
+        hintIndex = -1;
+        NextCaltrain.displayScreen('hero');
+        return;
+      } else if (hintIndex == hints.length - 1 && app) {
+        NextCaltrain.populateSoftkeyMenu('', 'OK', '');
+      }
       document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
       document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
       if (Array.isArray(hints[hintIndex][1])) {
@@ -135,6 +145,13 @@ var NextCaltrain = function () {
       document.getElementById('blurb-grid').className = textClass;
       document.getElementById('blurb-hero').innerHTML = message.replace(' Schedule', '');
       document.getElementById('blurb-hero').className = textClass;
+    }
+  }, {
+    key: 'populateSoftkeyMenu',
+    value: function populateSoftkeyMenu(left, center, right) {
+      document.getElementById('softkey-left').innerHTML = left;
+      document.getElementById('softkey-center').innerHTML = center;
+      document.getElementById('softkey-right').innerHTML = right;
     }
   }, {
     key: 'loadTrip',
@@ -283,6 +300,20 @@ var NextCaltrain = function () {
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
       }
 
+      if (app) {
+        if (target === 'hero') {
+          NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
+        } else if (target === 'grid') {
+          NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', 'Back');
+        } else if (target === 'trip') {
+          NextCaltrain.populateSoftkeyMenu('Menu', '', 'Back');
+        } else if (target === 'about') {
+          NextCaltrain.populateSoftkeyMenu('', 'OK', '');
+        } else if (target === 'commands') {
+          NextCaltrain.populateSoftkeyMenu('', 'NEXT', 'Back');
+        }
+      }
+
       document.getElementById('title').innerHTML = 'Next Caltrain';
       document.title = target in titles ? titles[target] : 'Next Caltrain';
 
@@ -339,9 +370,11 @@ var NextCaltrain = function () {
           code = 'menu';
 
           e.preventDefault();
+        } else if (e.key === 'SoftRight' && app) {
+          code = BACK;
         } else if (e.key === 'Call') {
           code = 'flip';
-        } else if (e.key === '1' | e.key === '3') {
+        } else if (e.key === '1' || e.key === '3') {
           e.preventDefault();
         } else if (e.key === '2') {
           code = 'cycle';

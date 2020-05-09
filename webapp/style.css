@@ -52,7 +52,7 @@ body {
   height: 35px;
   font-size: 13pt;
   font-weight: lighter;
-  padding-left: 14px;
+  justify-content: space-around;
   font-family: 'Noto Sans', sans-serif;
   line-height: 33px;
   white-space: nowrap;
@@ -417,15 +417,15 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   width: 80px;
 }
 
-.softkey-left {
+#softkey-left {
   text-align: left;
 }
 
-.softkey-right {
+#softkey-right {
   text-align: right;
 }
 
-.select {
+#softkey-center {
   text-align: center;
   font-weight: bold;
   font-size: 11.5pt;
