@@ -20,6 +20,7 @@ var OK = 13;
 var BACK = 95;
 var HANGUP = 8;
 var ESC = 27;
+var CMD = 93;
 var UP = 53;
 var DOWN = 56;
 
@@ -28,7 +29,7 @@ var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Thanks for using<br/> Next Caltrain', `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`, 'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
+var hints = [['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 var hintIndex = -1;
 
@@ -63,6 +64,7 @@ var NextCaltrain = function () {
   }, {
     key: 'formatHints',
     value: function formatHints() {
+      if (app) hints = hints.slice(1, 6);
       for (var i = 0; i < hints.length; i++) {
         for (var n = 0; n < 2; n++) {
           hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
@@ -383,7 +385,7 @@ var NextCaltrain = function () {
         if (code === OK || code === BACK) {
           NextCaltrain.popupMenu('hide');
         }
-      } else if (code === 'menu' || code === 37) {
+      } else if (code === 'menu' || code === CMD) {
         if (kaios2 && document.fullscreenElement) document.exitFullscreen();
         if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
         NextCaltrain.popupMenu('show');

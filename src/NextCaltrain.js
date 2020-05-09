@@ -14,6 +14,7 @@ const OK = 13;
 const BACK = 95;
 const HANGUP = 8;
 const ESC = 27;
+const CMD = 93;
 const UP = 53;
 const DOWN = 56;
 // const SPLAT = 170;
@@ -24,24 +25,24 @@ const screens = 'hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
 const email = 'next-caltrain@netpress.com';
 
-const hints = [
+let hints = [
+  ['Select a train', [5,8],
+   'Use [5] and [8] keys to<br/>move seletion up or down.'],
   ['Set your origin', [1,3],
    'Use [4] and [6] keys to<br/>set your origin station.'],
   ['Set destination', [4,6],
    'Use [7] and [9] keys to<br/>set destination station.'],
-  ['Select a train', [5,8],
-   'Use [5] and [8] keys to<br/>move seletion up or down.'],
+  ['Change schedule', [2],
+   'Press [2] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],
    'Press the [CALL] button to<br/>flip the selected stations'],
   ['Save stations', ['l'],
    'Press the [LEFT] softkey to<br/>select "Save Stations".'],
   ['Bookmark app', ['r'],
    'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
-  ['Change schedule', [2],
-   'Press [2] to cycle through<br/>available schedules.'],
-  ['Thanks for using<br/> Next Caltrain',
-   `Please send feedback to<br/>&nbsp;<a href="mailto:${email}">${email}</a>.`,
-   'Note: The cursor (arrow)<br/>is not used by this app,<br/>just move it to the right.']];
+  ['Usability Caveats',
+   'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.',
+   'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 let hintIndex = -1;
 
@@ -74,6 +75,7 @@ class NextCaltrain {
   }
 
   static formatHints() {
+    if (app) hints = hints.slice(1, 6);
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
@@ -389,7 +391,7 @@ class NextCaltrain {
       if (code === OK || code === BACK) {
         NextCaltrain.popupMenu('hide');
       }
-    } else if (code === 'menu' || code === 37) { // * or <-
+    } else if (code === 'menu' || code === CMD) {
       if (kaios2 && document.fullscreenElement) document.exitFullscreen();
       if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
       NextCaltrain.popupMenu('show');
