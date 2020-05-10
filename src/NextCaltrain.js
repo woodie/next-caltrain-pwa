@@ -302,7 +302,7 @@ class NextCaltrain {
       } else if (target === 'about') {
         NextCaltrain.populateSoftkeyMenu('', 'OK', '');
       } else if (target === 'commands') {
-        NextCaltrain.populateSoftkeyMenu('', 'NEXT', 'Back');
+        NextCaltrain.populateSoftkeyMenu('', 'NEXT', '');
       }
     }
     // set the title
