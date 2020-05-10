@@ -27,22 +27,22 @@ const email = 'next-caltrain@netpress.com';
 
 let hints = [
   ['Set your origin', [1,3],
-   'Use [4] and [6] keys to<br/>set your origin station.'],
+    'Use [4] and [6] keys to<br/>set your origin station.'],
   ['Set destination', [4,6],
-   'Use [7] and [9] keys to<br/>set destination station.'],
+    'Use [7] and [9] keys to<br/>set destination station.'],
   ['Select a train', [5,8],
-   'Use [5] and [8] keys to<br/>move seletion up or down.'],
+    'Use [5] and [8] keys to<br/>move seletion up or down.'],
   ['Change schedule', [2],
-   'Press [2] to cycle through<br/>available schedules.'],
+    'Press [2] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],
-   'Press the [CALL] button to<br/>flip the selected stations'],
+    'Press the [CALL] button to<br/>flip the selected stations'],
   ['Save stations', ['l'],
-   'Press the [LEFT] softkey to<br/>select "Save Stations".'],
+    'Press the [LEFT] softkey to<br/>select "Save Stations".'],
   ['Bookmark app', ['r'],
-   'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
+    'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
   ['Usability Caveats',
-   'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.',
-   'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
+    'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.',
+    'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 let hintIndex = -1;
 
@@ -71,7 +71,7 @@ class NextCaltrain {
     }
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
-    const listing = document.getElementById('listing')
+    const listing = document.getElementById('listing');
     document.getElementById('date-string').innerHTML = dateString;
     NextCaltrain.attachListeners();
     NextCaltrain.setTheTime();
@@ -93,7 +93,7 @@ class NextCaltrain {
     if (hintIndex >= hints.length) {
       hintIndex = -1;
       NextCaltrain.displayScreen('hero');
-      return
+      return;
     } else if (hintIndex == hints.length - 1 && app) {
       NextCaltrain.populateSoftkeyMenu('', 'OK', '');
     }
@@ -462,8 +462,8 @@ class NextCaltrain {
       } else if (code === 54) { // 6
         offset = null;
         prefs.bumpStations(false, true);
-   // } else if (code === 55) { // 7
-   // } else if (code === 57) { // 9
+        // } else if (code === 55) { // 7
+        // } else if (code === 57) { // 9
       } else if (code === 'flip') {
         offset = null;
         prefs.flipStations();
