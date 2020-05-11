@@ -347,7 +347,7 @@ class NextCaltrain {
         NextCaltrain.press(DOWN);
       } else if (my < 0) {
         NextCaltrain.press(UP);
-      } else if (mx === 0 && e.timeStamp - ts > 300) {
+      } else if (mx === 0 && e.timeStamp - ts > 250) {
         if (cy === 0) {
           NextCaltrain.press(UP);
         } else if (cy >= vh - 1) {
