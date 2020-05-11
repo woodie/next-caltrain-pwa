@@ -72,7 +72,7 @@ var NextCaltrain = function () {
   }, {
     key: 'formatHints',
     value: function formatHints() {
-      if (app) hints = hints.slice(0, 6);
+      if (app) hints = hints.slice(0, 5);
       for (var i = 0; i < hints.length; i++) {
         for (var n = 0; n < 2; n++) {
           hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');

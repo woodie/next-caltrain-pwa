@@ -36,7 +36,6 @@ http://next-caltrain-pwa.appspot.com
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help5.png)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help6.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help7.png)
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/about.png)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
