@@ -9,6 +9,11 @@ let countdown = null;
 let trainId = null;
 let offset = null;
 let goodTime = null;
+let cx = null;
+let cy = null;
+let mx = null;
+let my = null;
+let ts = 0;
 
 const OK = 13;
 const BACK = 95;
@@ -30,8 +35,6 @@ let hints = [
     'Use [4] and [6] keys to<br/>set your origin station.'],
   ['Set destination', [4,6],
     'Use [7] and [9] keys to<br/>set destination station.'],
-  ['Select a train', [5,8],
-    'Use [5] and [8] keys to<br/>move seletion up or down.'],
   ['Change schedule', [2],
     'Press [2] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],
@@ -61,7 +64,6 @@ class NextCaltrain {
       } else {
         document.getElementById('keypad').style['display'] = 'flex';
       }
-      document.getElementById('main-hints').style['display'] = 'none';
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('about-filler').style['display'] = 'flex';
       document.getElementById('commands-filler').style['display'] = 'flex';
@@ -334,13 +336,23 @@ class NextCaltrain {
     };
     // Catch and convert cursor movements to UP/DOWN events (n/a on kaios1).
     document.body.addEventListener('mousemove', function (e) {
-      if (kaios2) {
-        if (e.movementY < 0) {
+      if (!kaios) return;
+      cx = e.clientX;
+      cy = e.clientY;
+      mx = e.movementX | e.mozMovementX;
+      my = e.movementY | e.mozMovementY;
+      if (my > 0) {
+        NextCaltrain.press(DOWN);
+      } else if (my < 0) {
+        NextCaltrain.press(UP);
+      } else if (mx === 0 && e.timeStamp - ts > 300) {
+        if (cy === 0) {
           NextCaltrain.press(UP);
-        } else if (e.movementY > 0) {
+        } else if (cy >= 227) {
           NextCaltrain.press(DOWN);
         }
       }
+      ts = e.timeStamp
     });
     // Catch and convert cursor click to OK event.
     document.addEventListener('click', function (e) {

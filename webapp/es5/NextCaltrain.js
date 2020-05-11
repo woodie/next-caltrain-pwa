@@ -15,6 +15,11 @@ var countdown = null;
 var trainId = null;
 var offset = null;
 var goodTime = null;
+var cx = null;
+var cy = null;
+var mx = null;
+var my = null;
+var ts = 0;
 
 var OK = 13;
 var BACK = 95;
@@ -29,7 +34,7 @@ var screens = 'hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Select a train', [5, 8], 'Use [5] and [8] keys to<br/>move seletion up or down.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
+var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 var hintIndex = -1;
 
@@ -49,7 +54,6 @@ var NextCaltrain = function () {
         } else {
           document.getElementById('keypad').style['display'] = 'flex';
         }
-        document.getElementById('main-hints').style['display'] = 'none';
         document.getElementById('softkey-menu').style['display'] = 'flex';
         document.getElementById('about-filler').style['display'] = 'flex';
         document.getElementById('commands-filler').style['display'] = 'flex';
@@ -342,13 +346,23 @@ var NextCaltrain = function () {
       };
 
       document.body.addEventListener('mousemove', function (e) {
-        if (kaios2) {
-          if (e.movementY < 0) {
+        if (!kaios) return;
+        cx = e.clientX;
+        cy = e.clientY;
+        mx = e.movementX | e.mozMovementX;
+        my = e.movementY | e.mozMovementY;
+        if (my > 0) {
+          NextCaltrain.press(DOWN);
+        } else if (my < 0) {
+          NextCaltrain.press(UP);
+        } else if (mx === 0 && e.timeStamp - ts > 300) {
+          if (cy === 0) {
             NextCaltrain.press(UP);
-          } else if (e.movementY > 0) {
+          } else if (cy >= 227) {
             NextCaltrain.press(DOWN);
           }
         }
+        ts = e.timeStamp;
       });
 
       document.addEventListener('click', function (e) {
