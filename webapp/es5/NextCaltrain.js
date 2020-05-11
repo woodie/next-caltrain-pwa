@@ -20,6 +20,7 @@ var cy = null;
 var mx = null;
 var my = null;
 var ts = 0;
+var vh = 228;
 
 var OK = 13;
 var BACK = 95;
@@ -351,6 +352,7 @@ var NextCaltrain = function () {
         cy = e.clientY;
         mx = e.movementX | e.mozMovementX;
         my = e.movementY | e.mozMovementY;
+        vh = document.fullscreenElement ? 320 : 228;
         if (my > 0) {
           NextCaltrain.press(DOWN);
         } else if (my < 0) {
@@ -358,7 +360,7 @@ var NextCaltrain = function () {
         } else if (mx === 0 && e.timeStamp - ts > 300) {
           if (cy === 0) {
             NextCaltrain.press(UP);
-          } else if (cy >= 227) {
+          } else if (cy >= vh - 1) {
             NextCaltrain.press(DOWN);
           }
         }

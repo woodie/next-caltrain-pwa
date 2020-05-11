@@ -14,6 +14,7 @@ let cy = null;
 let mx = null;
 let my = null;
 let ts = 0;
+let vh = 228;
 
 const OK = 13;
 const BACK = 95;
@@ -341,6 +342,7 @@ class NextCaltrain {
       cy = e.clientY;
       mx = e.movementX | e.mozMovementX;
       my = e.movementY | e.mozMovementY;
+      vh = (document.fullscreenElement) ? 320 : 228;
       if (my > 0) {
         NextCaltrain.press(DOWN);
       } else if (my < 0) {
@@ -348,7 +350,7 @@ class NextCaltrain {
       } else if (mx === 0 && e.timeStamp - ts > 300) {
         if (cy === 0) {
           NextCaltrain.press(UP);
-        } else if (cy >= 227) {
+        } else if (cy >= vh - 1) {
           NextCaltrain.press(DOWN);
         }
       }
