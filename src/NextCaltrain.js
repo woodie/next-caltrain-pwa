@@ -9,12 +9,9 @@ let countdown = null;
 let trainId = null;
 let offset = null;
 let goodTime = null;
-let cx = null;
-let cy = null;
-let mx = null;
-let my = null;
-let ts = 0;
+let dup = true;
 let vh = 228;
+let splash = false;
 
 const OK = 13;
 const BACK = 95;
@@ -27,7 +24,7 @@ const DOWN = 56;
 // const POUND = 163;
 // const ZERO = 48;
 
-const screens = 'hero grid trip about commands'.split(' ');
+const screens = 'splash hero grid trip about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
 const email = 'next-caltrain@netpress.com';
 
@@ -45,7 +42,7 @@ let hints = [
   ['Bookmark app', ['r'],
     'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
   ['Usability Caveats',
-    'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.',
+    'The cursor (pointer)<br/>is not used by this app<br/>so we keep it to the right.',
     'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 let hintIndex = -1;
@@ -60,9 +57,7 @@ class NextCaltrain {
       navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
     kaios = (kaios1 || kaios2);
     if (app || !kaios) {
-      if (app) {
-        NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
-      } else {
+      if (!app) {
         document.getElementById('keypad').style['display'] = 'flex';
       }
       document.getElementById('softkey-menu').style['display'] = 'flex';
@@ -71,6 +66,9 @@ class NextCaltrain {
       document.getElementById('content').className = 'full-screen';
     } else {
       document.getElementById('content').className = 'part-screen';
+      document.getElementById('hero-screen').style['display'] = 'none';
+      document.getElementById('splash-screen').style['display'] = 'flex';
+      splash = true;
     }
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
@@ -82,7 +80,7 @@ class NextCaltrain {
   }
 
   static formatHints() {
-    if (app) hints = hints.slice(0, 5);
+    if (!kaios) hints = hints.slice(0, 5);
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
@@ -295,7 +293,7 @@ class NextCaltrain {
       document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
     // set softkey menu
-    if (app) {
+    if (!kaios) {
       if (target === 'hero') {
         NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
       } else if (target === 'grid') {
@@ -330,31 +328,34 @@ class NextCaltrain {
     document.onfullscreenchange = function (e) {
       if (document.fullscreenElement) {
         document.getElementById('content').className = 'full-screen';
+        vh = 320;
       } else {
         document.getElementById('content').className = 'part-screen';
-        NextCaltrain.displayScreen('hero');
+        vh = 228;
+        NextCaltrain.displayScreen(splash ? 'splash' : 'hero');
       }
     };
     // Catch and convert cursor movements to UP/DOWN events (n/a on kaios1).
-    document.body.addEventListener('mousemove', function (e) {
+    document.addEventListener('mousemove', function (e) {
       if (!kaios) return;
-      cx = e.clientX;
-      cy = e.clientY;
-      mx = e.movementX | e.mozMovementX;
-      my = e.movementY | e.mozMovementY;
-      vh = (document.fullscreenElement) ? 320 : 228;
-      if (my > 0) {
+      dup = dup ? false : true;
+      if (kaios && splash && e.clientX >= 239) {
+        splash = false;
+        NextCaltrain.displayScreen('hero');
+      } else if (kaios && !splash && e.clientX < 239) {
+        splash = true;
+        NextCaltrain.displayScreen('splash');
+      } else if (e.mozMovementY > 0) {
         NextCaltrain.press(DOWN);
-      } else if (my < 0) {
+      } else if (e.mozMovementY < 0) {
         NextCaltrain.press(UP);
-      } else if (mx === 0 && e.timeStamp - ts > 250) {
-        if (cy === 0) {
+      } else if (e.mozMovementX === 0 && dup) {
+        if (e.clientY === 0) {
           NextCaltrain.press(UP);
-        } else if (cy >= vh - 1) {
+        } else if (e.clientY >= vh - 1) {
           NextCaltrain.press(DOWN);
         }
       }
-      ts = e.timeStamp
     });
     // Catch and convert cursor click to OK event.
     document.addEventListener('click', function (e) {
@@ -405,6 +406,7 @@ class NextCaltrain {
   }
 
   static press(code) {
+    if (splash) return;
     if (code === ESC) {
       // Simulate EXIT from fullscreen mode.
       NextCaltrain.displayScreen('hero');

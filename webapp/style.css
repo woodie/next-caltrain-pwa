@@ -19,6 +19,8 @@ body {
   font-size: 15pt;
 }
 
+div:hover { cursor: default; }
+
 #hero-screen {
   display: flex;
   justify-content: flex-start;
@@ -68,6 +70,49 @@ body {
   background-color: black;
   width: 240px;
   height: 228px;
+}
+
+#splash-screen {
+  position:relative;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  color: black;
+  background-color: #CCC;
+  width: 240px;
+  height: 228px;
+  overflow: hidden;
+}
+
+#splash-content > div { padding-bottom: 40px; }
+.splash-note { font-size: 12pt; }
+
+#wave {
+  animation: wave 1.5s linear infinite;
+  opacity: 0.2;
+  border-style: solid;
+  border-color: gray;
+  position: absolute;
+}
+@keyframes wave {
+  0% {
+    opacity: 0;
+    top: -191px;
+    left: -40px;
+    border-width: 80px;
+    border-radius: 600px;
+    width: 600px;
+    height: 600px;
+  }
+  100% {
+    opacity: 0.5;
+    top: 108px;
+    left: 228px;
+    border-width: 4px;
+    border-radius: 2px;
+    width: 2px;
+    height: 2px;
+  }
 }
 
 #about-screen {
@@ -326,7 +371,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   scrollbar-color: #666 black;
   white-space: nowrap;
   font-size: 11pt;
-  padding-left: 15px;`
+  padding-left: 15px;
   overflow-x: hidden;
   overflow-y: scroll;
   height: 228px;
@@ -377,7 +422,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 
 #mini-keypad {
   padding-top: 0;
-  padding-bottom: 4;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -404,7 +448,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   font-family: 'Noto Sans', sans-serif;
   line-height: 30px;
   background-color: black;
-  font-weight: thin;
   color: white;
   width: 240px;
   height: 30px;

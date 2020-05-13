@@ -3,7 +3,7 @@ CACHE MANIFEST
 
 CACHE:
 style.css
-icons/ic_NextCaltrain_112.png
+icons/favicon-128x128.png
 index.html
 es5/CaltrainSchedule.js
 es5/CaltrainService.js

@@ -15,12 +15,9 @@ var countdown = null;
 var trainId = null;
 var offset = null;
 var goodTime = null;
-var cx = null;
-var cy = null;
-var mx = null;
-var my = null;
-var ts = 0;
+var dup = true;
 var vh = 228;
+var splash = false;
 
 var OK = 13;
 var BACK = 95;
@@ -31,11 +28,11 @@ var UP = 53;
 var DOWN = 56;
 
 
-var screens = 'hero grid trip about commands'.split(' ');
+var screens = 'splash hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The pointer (arrow)<br/>is not used by this app.<br/>Just move it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
+var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The cursor (pointer)<br/>is not used by this app<br/>so we keep it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 var hintIndex = -1;
 
@@ -50,9 +47,7 @@ var NextCaltrain = function () {
       if (document.location.search === '?app') app = true;else if (document.location.search === '?kaios1' || navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;else if (document.location.search === '?kaios2' || navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
       kaios = kaios1 || kaios2;
       if (app || !kaios) {
-        if (app) {
-          NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
-        } else {
+        if (!app) {
           document.getElementById('keypad').style['display'] = 'flex';
         }
         document.getElementById('softkey-menu').style['display'] = 'flex';
@@ -61,6 +56,9 @@ var NextCaltrain = function () {
         document.getElementById('content').className = 'full-screen';
       } else {
         document.getElementById('content').className = 'part-screen';
+        document.getElementById('hero-screen').style['display'] = 'none';
+        document.getElementById('splash-screen').style['display'] = 'flex';
+        splash = true;
       }
 
       var dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
@@ -73,7 +71,7 @@ var NextCaltrain = function () {
   }, {
     key: 'formatHints',
     value: function formatHints() {
-      if (app) hints = hints.slice(0, 5);
+      if (!kaios) hints = hints.slice(0, 5);
       for (var i = 0; i < hints.length; i++) {
         for (var n = 0; n < 2; n++) {
           hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
@@ -305,7 +303,7 @@ var NextCaltrain = function () {
         document.getElementById(`${screens[i]}-screen`).style['display'] = display;
       }
 
-      if (app) {
+      if (!kaios) {
         if (target === 'hero') {
           NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
         } else if (target === 'grid') {
@@ -340,31 +338,34 @@ var NextCaltrain = function () {
       document.onfullscreenchange = function (e) {
         if (document.fullscreenElement) {
           document.getElementById('content').className = 'full-screen';
+          vh = 320;
         } else {
           document.getElementById('content').className = 'part-screen';
-          NextCaltrain.displayScreen('hero');
+          vh = 228;
+          NextCaltrain.displayScreen(splash ? 'splash' : 'hero');
         }
       };
 
-      document.body.addEventListener('mousemove', function (e) {
+      document.addEventListener('mousemove', function (e) {
         if (!kaios) return;
-        cx = e.clientX;
-        cy = e.clientY;
-        mx = e.movementX | e.mozMovementX;
-        my = e.movementY | e.mozMovementY;
-        vh = document.fullscreenElement ? 320 : 228;
-        if (my > 0) {
+        dup = dup ? false : true;
+        if (kaios && splash && e.clientX >= 239) {
+          splash = false;
+          NextCaltrain.displayScreen('hero');
+        } else if (kaios && !splash && e.clientX < 239) {
+          splash = true;
+          NextCaltrain.displayScreen('splash');
+        } else if (e.mozMovementY > 0) {
           NextCaltrain.press(DOWN);
-        } else if (my < 0) {
+        } else if (e.mozMovementY < 0) {
           NextCaltrain.press(UP);
-        } else if (mx === 0 && e.timeStamp - ts > 300) {
-          if (cy === 0) {
+        } else if (e.mozMovementX === 0 && dup) {
+          if (e.clientY === 0) {
             NextCaltrain.press(UP);
-          } else if (cy >= vh - 1) {
+          } else if (e.clientY >= vh - 1) {
             NextCaltrain.press(DOWN);
           }
         }
-        ts = e.timeStamp;
       });
 
       document.addEventListener('click', function (e) {
@@ -409,6 +410,7 @@ var NextCaltrain = function () {
   }, {
     key: 'press',
     value: function press(code) {
+      if (splash) return;
       if (code === ESC) {
         NextCaltrain.displayScreen('hero');
       } else if (code === 'prefs') {

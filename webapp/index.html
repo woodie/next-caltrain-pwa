@@ -37,12 +37,20 @@
       <div><span id="time"></span> <span id="ampm"></span></div>
     </div>
 
+    <div id="splash-screen" style="display: none;">
+      <div id="wave"></div>
+      <div id="splash-content">
+        <div>Move the cursor<br/>to the right<br/>to continue.</div>
+        <div class="splash-note">Press the left softkey for<br/>additional information.</div>
+      </div>
+    </div>
+
     <div id="about-screen" style="display: none;">
       <div id="about-filler" class="fake-titlebar" style="display: none;">
         About Next Caltrain
       </div>
       <div id="about-content">
-        <div><img id="about-image" src="icons/ic_NextCaltrain_112.png"></div>
+        <div><img id="about-image" src="icons/favicon-128x128.png"></div>
         <div><span id="app-name">Next Caltrain</span><br>for KaiOS phones</div>
         <div>&#169; 2020 John Woodell</div>
         <div>Schedule effective:<br><span id="date-string"></span>
@@ -138,9 +146,9 @@
 
     <!-- a softkey menu for app and desktop -->
     <div id="softkey-menu" style="display: none;">
-      <div id="softkey-left">Search</div>
+      <div id="softkey-left">Menu</div>
       <div id="softkey-center">SELECT</div>
-      <div id="softkey-right">Options</div>
+      <div id="softkey-right"></div>
     </div>
 
     <!-- a fake keypad for non-KaiOS devices -->
