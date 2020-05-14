@@ -17,8 +17,8 @@ const OK = 13;
 const BACK = 95;
 const HANGUP = 8;
 const ESC = 27;
-const UP = 53;
-const DOWN = 56;
+const UP = 38;
+const DOWN = 40;
 // const SPLAT = 170;
 // const POUND = 163;
 // const ZERO = 48;
@@ -396,12 +396,6 @@ class NextCaltrain {
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
         e.preventDefault();
-      } else if (code === 38) {
-        // Catch and convert UP arrow
-        code = UP;
-      } else if (code === 40) {
-        // Catch and convert DOWN arrow
-        code = DOWN;
       }
       NextCaltrain.press(code);
     });

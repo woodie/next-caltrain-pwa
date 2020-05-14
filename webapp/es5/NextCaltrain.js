@@ -23,8 +23,8 @@ var OK = 13;
 var BACK = 95;
 var HANGUP = 8;
 var ESC = 27;
-var UP = 53;
-var DOWN = 56;
+var UP = 38;
+var DOWN = 40;
 
 
 var screens = 'splash hero grid trip about commands'.split(' ');
@@ -400,10 +400,6 @@ var NextCaltrain = function () {
           e.preventDefault();
         } else if (code === OK) {
           e.preventDefault();
-        } else if (code === 38) {
-          code = UP;
-        } else if (code === 40) {
-          code = DOWN;
         }
         NextCaltrain.press(code);
       });
