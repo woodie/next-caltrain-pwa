@@ -23,7 +23,6 @@ var OK = 13;
 var BACK = 95;
 var HANGUP = 8;
 var ESC = 27;
-var CMD = 93;
 var UP = 53;
 var DOWN = 56;
 
@@ -326,7 +325,9 @@ var NextCaltrain = function () {
 
       if (kaios2) {
         if (target === 'grid' || target === 'trip') {
-          document.documentElement.requestFullscreen();
+          try {
+            document.documentElement.requestFullscreen();
+          } catch (e) {}
         } else if (target !== 'hero') {
           document.exitFullscreen();
         }
@@ -383,7 +384,7 @@ var NextCaltrain = function () {
           } else {
             return;
           }
-        } else if (e.key === 'SoftLeft') {
+        } else if (e.key === 'SoftLeft' || code === 220) {
           code = 'menu';
 
           e.preventDefault();
@@ -436,7 +437,7 @@ var NextCaltrain = function () {
         if (code === OK || code === BACK) {
           NextCaltrain.popupMenu('hide');
         }
-      } else if (code === 'menu' || code === CMD) {
+      } else if (code === 'menu') {
         if (kaios2 && document.fullscreenElement) document.exitFullscreen();
         if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
         NextCaltrain.popupMenu('show');

@@ -17,7 +17,6 @@ const OK = 13;
 const BACK = 95;
 const HANGUP = 8;
 const ESC = 27;
-const CMD = 93;
 const UP = 53;
 const DOWN = 56;
 // const SPLAT = 170;
@@ -316,7 +315,10 @@ class NextCaltrain {
     // request full sreen when KaiOS/2
     if (kaios2) {
       if (target === 'grid' || target === 'trip') {
-        document.documentElement.requestFullscreen();
+        try {
+          document.documentElement.requestFullscreen();
+        } catch (e) {
+        }
       } else if (target !== 'hero') {
         document.exitFullscreen();
       }
@@ -365,7 +367,7 @@ class NextCaltrain {
     });
     // Catch keydown events.
     document.addEventListener('keydown', function (e) {
-      var code = e.keyCode ? e.keyCode : e.which;
+      let code = e.keyCode ? e.keyCode : e.which;
       if (code === HANGUP) {
         // Catch and convert HANGUP to BACK
         code = BACK;
@@ -375,7 +377,7 @@ class NextCaltrain {
         } else {
           return;
         }
-      } else if (e.key === 'SoftLeft') {
+      } else if (e.key === 'SoftLeft' || code === 220) {
         code = 'menu';
         // Supress native SEARCH action.
         e.preventDefault();
@@ -440,7 +442,7 @@ class NextCaltrain {
       if (code === OK || code === BACK) {
         NextCaltrain.popupMenu('hide');
       }
-    } else if (code === 'menu' || code === CMD) {
+    } else if (code === 'menu') {
       if (kaios2 && document.fullscreenElement) document.exitFullscreen();
       if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
       NextCaltrain.popupMenu('show');
