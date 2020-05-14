@@ -337,20 +337,22 @@ class NextCaltrain {
         NextCaltrain.displayScreen(splash ? 'splash' : 'hero');
       }
     };
-    // Catch and convert cursor movements to UP/DOWN events (n/a on kaios1).
     document.addEventListener('mousemove', function (e) {
       if (!kaios) return;
       dup = dup ? false : true;
+      // Display splash screen unless cursor all-the-way right
       if (kaios && splash && e.clientX >= 239) {
         splash = false;
         NextCaltrain.displayScreen('hero');
       } else if (kaios && !splash && e.clientX < 239) {
         splash = true;
         NextCaltrain.displayScreen('splash');
+      // Convert cursor movements to UP/DOWN events
       } else if (e.mozMovementY > 0) {
         NextCaltrain.press(DOWN);
       } else if (e.mozMovementY < 0) {
         NextCaltrain.press(UP);
+      // Infer UP/DOWN when cursor bottoms/tops out
       } else if (e.mozMovementX === 0 && dup) {
         if (e.clientY === 0) {
           NextCaltrain.press(UP);
