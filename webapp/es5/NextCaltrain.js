@@ -15,7 +15,7 @@ var countdown = null;
 var trainId = null;
 var offset = null;
 var goodTime = null;
-var dup = true;
+var skip = false;
 var vh = 228;
 var splash = false;
 
@@ -346,10 +346,10 @@ var NextCaltrain = function () {
           NextCaltrain.displayScreen(splash ? 'splash' : 'hero');
         }
       };
-
       document.addEventListener('mousemove', function (e) {
         if (!kaios) return;
-        dup = dup ? false : true;
+        skip = skip ? false : true;
+
         if (kaios && splash && e.clientX >= 239) {
           splash = false;
           NextCaltrain.displayScreen('hero');
@@ -358,9 +358,17 @@ var NextCaltrain = function () {
           NextCaltrain.displayScreen('splash');
         } else if (e.mozMovementY > 0) {
           NextCaltrain.press(DOWN);
+          if (skip) {
+            NextCaltrain.press(DOWN);
+            skip = false;
+          }
         } else if (e.mozMovementY < 0) {
           NextCaltrain.press(UP);
-        } else if (e.mozMovementX === 0 && dup) {
+          if (skip) {
+            NextCaltrain.press(UP);
+            skip = false;
+          }
+        } else if (e.mozMovementX === 0 && !skip) {
           if (e.clientY === 0) {
             NextCaltrain.press(UP);
           } else if (e.clientY >= vh - 1) {

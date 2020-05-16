@@ -9,7 +9,7 @@ let countdown = null;
 let trainId = null;
 let offset = null;
 let goodTime = null;
-let dup = true;
+let skip = false;
 let vh = 228;
 let splash = false;
 
@@ -339,7 +339,7 @@ class NextCaltrain {
     };
     document.addEventListener('mousemove', function (e) {
       if (!kaios) return;
-      dup = dup ? false : true;
+      skip = skip ? false : true;
       // Display splash screen unless cursor all-the-way right
       if (kaios && splash && e.clientX >= 239) {
         splash = false;
@@ -350,10 +350,18 @@ class NextCaltrain {
       // Convert cursor movements to UP/DOWN events
       } else if (e.mozMovementY > 0) {
         NextCaltrain.press(DOWN);
+        if (skip) {
+           NextCaltrain.press(DOWN);
+           skip = false;
+        }
       } else if (e.mozMovementY < 0) {
         NextCaltrain.press(UP);
+        if (skip) {
+           NextCaltrain.press(UP);
+           skip = false;
+        }
       // Infer UP/DOWN when cursor bottoms/tops out
-      } else if (e.mozMovementX === 0 && dup) {
+      } else if (e.mozMovementX === 0 && !skip) {
         if (e.clientY === 0) {
           NextCaltrain.press(UP);
         } else if (e.clientY >= vh - 1) {
