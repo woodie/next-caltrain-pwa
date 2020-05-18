@@ -24,11 +24,23 @@ This app is fully functional, with support for Weekday, Saturday and Sunday Sche
 Trips that require a transfer stop should be supported. From your KaiOS phone, visit:
 http://next-caltrain-pwa.appspot.com
 
-## Main Application
+## Packaged Kaios App (side loaded)
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/hero.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/grid.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/trip.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
+
+## Website on KaiOS 1.0 phone
+
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.1.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.2.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.3.png)
+
+## Website on KaiOS 2.5 phone
+
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.1.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.2.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.3.png)
 
 ## Keypad Commands
 
