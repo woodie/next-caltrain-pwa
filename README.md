@@ -45,7 +45,7 @@ that the left softwey should read `MENU`.
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.2.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.3.png)
 
-### Packaged Kaios App (side loaded)
+### Packaged Kaios App (sideload with WebIDE)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
