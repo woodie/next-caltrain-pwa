@@ -3,13 +3,13 @@
 This Caltrain schedule is a progressive web app (PWA) designed for KaiOS phones without a touchscreen.
 This app runs in the KaiOS browser for phones without access to the store. The app can also be sideloaded.
 
-| Targeted Phones   | OS          | Browser    | Javascript | System chip    |
-| ----------------- | ----------- | ---------- | ---------- | -------------- |
-| Alcatel Go FLIP 3 | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 |
-| Nokia 2720 Flip   | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 205 |
-| Alcatel SMARTFLIP | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 |
-| Nokia 8110 4G     | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Snapdragon 205 |
-| Alcatel GO FLIP   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 |
+| Targeted Phones   | OS          | Browser    | Javascript | System chip    | Sideload |
+| ----------------- | ----------- | ---------- | ---------- | -------------- | -------- |
+| Alcatel GO FLIP 3 | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 | No       |
+| Nokia 2720 Flip   | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
+| Alcatel SMARTFLIP | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 | No       |
+| Nokia 8110 4G     | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
+| Alcatel GO FLIP   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 | Yes      |
 
 **Note: KaiOS 3.0 phones will be on Firefox 78 with ES 2018 support.**
 
@@ -17,6 +17,10 @@ This app runs in the KaiOS browser for phones without access to the store. The a
 
 This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
+
+## Development
+
+After making JS changes, `npm run build`, then browse `webapp/index.html`.
 
 ## Project Status
 
