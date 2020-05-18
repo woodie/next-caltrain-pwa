@@ -30,8 +30,8 @@ http://next-caltrain-pwa.appspot.com
 
 We're able to convert `mousemove` events to the associated D-Pad events,
 and we're able to override browser `keydown` events on the keypad and
-softkeys. Unfortunately, we can't change or softkey labels, so note 
-that the left softwey should read `MENU`.
+softkeys. Unfortunately, we can't change or softkey labels, but explain
+the left softwey should read `MENU`.
 
 ### Website on KaiOS 1.0 phones
 
