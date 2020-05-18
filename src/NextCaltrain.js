@@ -29,9 +29,9 @@ const email = 'next-caltrain@netpress.com';
 
 let hints = [
   ['Set your origin', [1,3],
-    'Use [4] and [6] keys to<br/>set your origin station.'],
+    'Use [1] and [3] keys to<br/>set your origin station.'],
   ['Set destination', [4,6],
-    'Use [7] and [9] keys to<br/>set destination station.'],
+    'Use [4] and [6] keys to<br/>set destination station.'],
   ['Change schedule', [2],
     'Press [2] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],

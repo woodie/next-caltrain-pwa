@@ -31,7 +31,7 @@ var screens = 'splash hero grid trip about commands'.split(' ');
 var titles = { 'about': 'About Next Caltrain', 'commands': 'Keypad commands' };
 var email = 'next-caltrain@netpress.com';
 
-var hints = [['Set your origin', [1, 3], 'Use [4] and [6] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [7] and [9] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The cursor (pointer)<br/>is not used by this app<br/>so we keep it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
+var hints = [['Set your origin', [1, 3], 'Use [1] and [3] keys to<br/>set your origin station.'], ['Set destination', [4, 6], 'Use [4] and [6] keys to<br/>set destination station.'], ['Change schedule', [2], 'Press [2] to cycle through<br/>available schedules.'], ['Flip direction', ['c'], 'Press the [CALL] button to<br/>flip the selected stations'], ['Save stations', ['l'], 'Press the [LEFT] softkey to<br/>select "Save Stations".'], ['Bookmark app', ['r'], 'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'], ['Usability Caveats', 'The cursor (pointer)<br/>is not used by this app<br/>so we keep it to the right.', 'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
 
 var hintIndex = -1;
 
