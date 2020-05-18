@@ -24,32 +24,37 @@ This app is fully functional, with support for Weekday, Saturday and Sunday Sche
 Trips that require a transfer stop should be supported. From your KaiOS phone, visit:
 http://next-caltrain-pwa.appspot.com
 
-## Packaged Kaios App (side loaded)
+We're able to convert `mousemove` events to the associated D-Pad events,
+and we're able to override browser `keydown` events on the keypad and
+softkeys. Unfortunately, we can't change or softkey labels, so note 
+that the left softwey should read `MENU`.
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
-
-## Website on KaiOS 1.0 phone
+### Website on KaiOS 1.0 phones
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.2.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.3.png)
 
-## Website on KaiOS 2.5 phone
+### Website on KaiOS 2.5 phones
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.2.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.3.png)
 
-## Keypad Commands
+### Packaged Kaios App (side loaded)
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
+
+### Keypad Commands
+
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help2.png)
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help3.png)
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help3.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help5.png)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
