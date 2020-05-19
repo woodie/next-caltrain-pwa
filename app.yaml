@@ -16,8 +16,16 @@ handlers:
   static_files: webapp/\1
   upload: webapp/(.+)
 
-- url: /(.*\.(appcache|manifest))
+# Manifest files
+
+- url: /(.+\.(appcache))
+  static_files: \1
+  upload: static/(.+\.(appcache))
   mime_type: text/cache-manifest
-  static_files: static/\1
-  upload: static/(.*\.(appcache|manifest))
-  expiration: "0m"
+  expiration: "0s"
+
+- url: /(.+\.(webapp))
+  static_files: \1
+  upload: (.+\.(webapp))
+  mime_type: application/x-web-app-manifest+json
+  expiration: "0s"

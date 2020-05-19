@@ -1,7 +1,6 @@
 CACHE MANIFEST
-# v1.0.0
+# v1 2020-05-18
 
-CACHE:
 style.css
 icons/favicon-128x128.png
 index.html
@@ -13,5 +12,6 @@ es5/NextCaltrain.js
 es5/Preferences.js
 es5/caltrainServiceData.js
 
+# Use from network if available
 NETWORK:
 *
