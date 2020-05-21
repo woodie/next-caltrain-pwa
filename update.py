@@ -15,7 +15,7 @@ def main():
   write_schedule_data(times, stops)
 
 def fetch_schedule_data():
-  source = 'http://www.caltrain.com/Assets/GTFS/caltrain/CT-GTFS.zip'
+  source = 'http://data.trilliumtransit.com/gtfs/caltrain-ca-us/caltrain-ca-us.zip'
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'downloads'])
   os.chdir('downloads')
@@ -24,7 +24,7 @@ def fetch_schedule_data():
   os.chdir(basedir)
   subprocess.call(['mkdir', '-p', 'CT-GTFS'])
   os.chdir('CT-GTFS')
-  subprocess.call(['unzip', '-o', '../downloads/CT-GTFS.zip'])
+  subprocess.call(['unzip', '-o', '-j', '../downloads/CT-GTFS.zip'])
   os.chdir(basedir)
 
 def parse_station_data():
@@ -71,7 +71,7 @@ def parse_schedule_data(stops):
             continue
           station_x = labels.index(station)
           for i in range(1, len(header)):
-            if row[i] == '':
+            if len(row) - 1 < i or row[i] == '':
               continue
             trip_id = header[i]
             parts = row[i].split(':')

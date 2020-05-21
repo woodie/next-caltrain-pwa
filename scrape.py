@@ -20,7 +20,7 @@ def main():
 
 def fetch_schedule_data():
   weekday_url = 'http://www.caltrain.com/schedules/weekdaytimetable.html'
-  #weekend_url = 'http://www.caltrain.com/schedules/weekend-timetable.html'
+  weekend_url = 'http://www.caltrain.com/schedules/weekend-timetable.html'
   #modified_url = 'http://www.caltrain.com/schedules/holidayservice/Modified_Schedule.html'
   #closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
   #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_17__2020.html'
@@ -29,7 +29,7 @@ def fetch_schedule_data():
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')
   subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
-  #subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
+  subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
   #subprocess.call(['curl', '-o', 'modified.htm', modified_url])
   #subprocess.call(['curl', '-o', 'closure.htm', closure_url])
   os.chdir(basedir)

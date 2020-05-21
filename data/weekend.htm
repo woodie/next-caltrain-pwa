@@ -8,7 +8,7 @@
 var ipVirDir="/";
 var ipSysImageDir="/system/images";
 var ipSiteTemplateDir="/SharedSites/3/templates";
-var ipDynamicFQDN="http://www.caltrain.com";
+var ipDynamicFQDN="https://www.caltrain.com";
 var ipCurrentPageClass="ContentPage";
 var ipCurrentPageDefID="3438";
 var ipCurrentTemplateID="4";
@@ -28,7 +28,7 @@ ipjPageSiteGroupID=0;
 </script>
 <meta name="description" content=""/>
 <meta name="Generator" content="IronPoint v7"/>
-<meta name="UpdateDateTime" content="1/7/2020 10:53:55 AM"/>
+<meta name="UpdateDateTime" content="5/16/2020 9:40:18 PM"/>
 
 <title>Weekend Timetable</title>
 
@@ -179,6 +179,12 @@ window.onload=tablecollapse;
   })();
 
 </script>
+<script>
+if (location.protocol !== 'https:') {
+location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+</script>
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -272,7 +278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="header">
     <a href="#info" class="skip">Skip to content</a>
     	<div id="top_nav_area">
-        	<div id="top_nav"><a href="/sitemap.html">site map</a> | <a href="http://www.smctd.com/BidsContracts.html" title="Bids and Contracts" target="_blank">bids/contracts</a> | <a title="Jobs" href="/about/Jobs.html">jobs</a> | <a title="Contact Us" href="/about/contact.html">contact</a></div>
+        	<div id="top_nav"><a href="/sitemap.html">site map</a> | <a href="https://www.smctd.com/BidsContracts.html" title="Bids and Contracts" target="_blank">bids/contracts</a> | <a title="Jobs" href="/about/Jobs.html">jobs</a> | <a title="Contact Us" href="/about/contact.html">contact</a></div>
           	<div id="search">
 <form name="IronPointForm_1" method="Post" id="IronPointForm_1" onsubmit="ipjSubmitIronPointForm(); return false;"><script language=javascript> <!--
 function SearchPageletSubmit_98(viewModeURL)
@@ -415,7 +421,15 @@ var pauseit=1
 //Specify the marquee's content (don't delete <nobr> tag)
 //Keep all content on ONE line, and backslash any single quotations (ie: that\'s great):
 
-var marqueecontent='<nobr> <a href="http://www.caltrain.com/alerts">System-Wide Construction, Check here for Current Advisories.</a></nobr>';
+/*var marqueecontent='<nobr> <a href="http://www.caltrain.com/alerts">System-Wide Construction, Check here for Current Advisories.</a></nobr>';*/
+
+//var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Caltrain_Service_Closure.html">SF Weekend Closure – Feb 22-Mar 29</a></nobr>';
+
+
+//var marqueecontent='<nobr> <a href="http://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain: Novel Coronavirus (COVID-19)</a></nobr>';
+
+var marqueecontent='<nobr> <a href="https://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">COVID-19: Latest Updates</a></nobr>';
+
 
 //var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/Weekend_SF_Caltrain_Closure.html">Additional SF Weekend Caltrain Closures April 20-21, May 4-5, June 1-2 and June 22-23.</a> &nbsp; &nbsp; &nbsp; <a href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019.html">New Timetable Changes Effective April 1.</a> &nbsp; &nbsp; &nbsp; <a lang="es"  href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Spanish.html">Cierre de servicio adicional para fines de semana en SF el 20/4-21/4, 04/5-05/5, 01/6-02/6 y 22/6-23/6</a> &nbsp; &nbsp; &nbsp; <a lang="es" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Spanish.html">Nuevos cambios en itinerario que entran en vigor el 1 de abril.</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Trad_Chinese.html">其他三藩市周末服務關閉：4/20-4/21, 5/4-5/5, 6/1-6/2和6/22-6/23。</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Chinese.html">新時間表改變，由4月1日起生效。</a></nobr>';
 
@@ -575,7 +589,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
 </div>
                 </div>
                 <div><div class="pagelet">
-<!--a href="/riderinfo/specialevents/SFGiants.html" title="Giants Service 2018"><img src="/Assets/Buttons/Small+Buttons+Caltrain/2014+Giants.gif" alt="2018 Giants" style="margin-top: 15px;" /></a-->
+<!--a href="/Page68.aspx" title="Giants Service 2018"><img src="/Assets/Buttons/Small+Buttons+Caltrain/2014+Giants.gif" alt="2018 Giants" style="margin-top: 15px;" /></a-->
 <a href="/Fares/howtobuy/CaltrainMobile.html" title="Caltrain Mobile"><img src="/Assets/Buttons/Small+Buttons+Caltrain/Caltrain+Mobile+Small+Button.png" alt="Caltrain Mobile" style="margin-top: 15px;" /></a>
 </div></div>
                 <div><style>
@@ -597,7 +611,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
                     <div id="textsize" class="button">
                     <a href="#" id="textsize-medium" onClick="setActiveStyleSheet('', 1);return false;">Text Size - Medium</a>
                     <a href="#" id="textsize-large" onClick="setActiveStyleSheet('fontsizelarge'); return false;">Text Size - Large</a>
-                    <a href="#" id="textsize-extralarge" onClick="setActiveStyleSheet('fontsizeextralarge'); return false;">Text Size - Extra Large</a> Text Size
+                    <a href="#" id="textsize-extralarge" onClick="setActiveStyleSheet('fontsizeextralarge'); return false;">Text Size - Extra Large</a> Text Size
                     </div>
                     
                 	<div id="buttonset">
@@ -981,20 +995,20 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     font-style: italic;
     }
 </style>
-<p style="margin-bottom: 0px;"><strong>Alternative formats</strong></p>
+<p style="margin-bottom: 0px;"><strong>Effective May 16, 2020<br />
+<br />
+Alternative formats</strong></p>
+<p><strong><br />
+<a title="CT_WeekendTT__05-16-2020" href="/Assets/Assets/pdfs/CT_WeekendTT__05-16-2020.pdf">Download Weekend Timetable</a>&nbsp;(Effective May 16, 2020)<br />
+</strong><a href="/schedules/weekend-timetable/weekend_TT_scrolling.html"><strong>View Scrolling Version</strong></a></p>
+<!--<p><strong>Special Event Service:</strong></p>
 <ul>
-    <li><strong><a href="/Assets/_Marketing/pdf/Caltrain+Weekend+Timetable+-+Effective+April+1$!2c+2019.pdf" title="Download Weekend Timetable">Download Weekend Timetable</a> (PDF, 111 KB)</strong>
-    </li>
-    <li><a href="http://www.caltrain.com/schedules/realtime/Schedules_-_mobile.html"><strong>Mobile Friendly Schedules</strong></a></li>
-</ul>
-<p><strong>Special Event Service:</strong></p>
-<ul>
-    <li><a href="/riderinfo/specialevents/Levis_Stadium_Service/49ers_Game_Service/Before_1_35_p_m__Playoff_Game_-_Jan__11.html" title="Before 1:35 p.m. Playoff Game - Jan. 11">Playoff Game Special: 49ers vs Minnesota Vikings - Saturday, Jan. 11 at 1:35 p.m.&nbsp;</a></li>
+    <li><a href="/riderinfo/specialevents.html" title="Special Events">Giants Fan Fest Extra Pre- and Post Game Service. Sat., Feb. 8</a>&nbsp;</li>
     <br />
-</ul>
-<p><strong>Legend:</strong> <br />
-- Train bypasses station.&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;* Train departure may be delayed up to 15 minutes after Sharks games.
-</p>
+</ul>-->
+<p><strong>Legend:<br />
+</strong> <br />
+- Train bypasses station.&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;* Train departure may be delayed up to 15 minutes after Sharks games.</p>
 <p>On weekends, a <span style="font-weight: bold; color: #338639;">shuttle bus</span> connects the Tamien and Diridon stations.  Passengers ride free on the Caltrain shuttles. Timetable subject to change without notice.</p>
 <table cellspacing="0" cellpadding="4">
     <tbody>
@@ -1315,13 +1329,13 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
             <th class="zone2" id="even"><a href="/stations/belmontstation.html?" title="Belmont">Belmont</a></th>
             <td class="zone2 am">8:02a</td>
             <td class="zone2 am">9:32a</td>
-            <td class="zone2 bullet">&nbsp;&nbsp;—</td>
+            <td class="zone2 bullet">10:26a</td>
             <td class="zone2 am">11:02a</td>
             <td class="zone2 pm">12:32p</td>
             <td class="zone2 pm">2:02p</td>
             <td class="zone2 pm">3:32p</td>
             <td class="zone2 pm">5:02p</td>
-            <td class="zone2 bullet">&nbsp;&nbsp;—</td>
+            <td class="zone2 bullet">5:56p</td>
             <td class="zone2 pm">6:32p</td>
             <td class="zone2 pm">8:02p</td>
             <td class="zone2 pm">9:32p</td>
@@ -1329,22 +1343,10 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
             <td class="zone2 pm">11:21p</td>
         </tr>
         <tr>
-            <th class="zone2" id="even">2</th>
-            <th class="zone2" id="even"><a href="/stations/hillsdalestation.html?" title="Hillsdale">Hillsdale</a></th>
-            <td class="zone2 am">8:05a</td>
-            <td class="zone2 am">9:35a</td>
-            <td class="zone2 bullet am">10:27a</td>
-            <td class="zone2 am">11:05a</td>
-            <td class="zone2 pm">12:35p</td>
-            <td class="zone2 pm">2:05p</td>
-            <td class="zone2 pm">3:35p</td>
-            <td class="zone2 pm">5:05p</td>
-            <td class="zone2 bullet pm">5:57p</td>
-            <td class="zone2 pm">6:35p</td>
-            <td class="zone2 pm">8:05p</td>
-            <td class="zone2 pm">9:35p</td>
-            <td class="zone2 pm">11:05p</td>
-            <td class="zone2 pm">11:24p</td>
+            <th id="even" style="background-color: #f7e89d;">2</th>
+            <th id="even" style="background-color: #f7e89d;"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
+            <td class="zone2 am" colspan="16" style="text-align: center; background-color: #f7e89d;"><em><strong><span style="color: #000000;">Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</span></strong></em><br />
+            </td>
         </tr>
         <tr>
             <th class="zone2" id="even">2</th>
@@ -1510,7 +1512,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
         </tr>
         <tr id="zoneline">
             <th>1</th>
-            <th class="zone1">Arrives <a href="/stations/sanfranciscostation.html?" title="San Francisco">San Francisco</a></th>
+            <th class="zone1"><a href="/stations/sanfranciscostation.html?" title="San Francisco">San Francisco</a></th>
             <td class="zone1 am">8:52a</td>
             <td class="zone1 am">10:22a</td>
             <td class="zone1 bullet am">11:00a</td>
@@ -1529,7 +1531,6 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     </tbody>
 </table>
 <strong>
-<hr />
 </strong>
 <h1 style="text-align: left;">Southbound Service</h1>
 <table class="SB_TT" summary="Weekday Southbound service" alt="Weekday Southbound service">
@@ -1740,22 +1741,10 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
             <td class="zone2 am">12:44a</td>
         </tr>
         <tr>
-            <th class="zone2" id="even">2</th>
-            <th class="zone2" id="even"><a href="/stations/hillsdalestation.html?" title="Hillsdale">Hillsdale</a></th>
-            <td class="zone2 am">8:52a</td>
-            <td class="zone2 am">10:22a</td>
-            <td class="zone2 am">11:52a</td>
-            <td class="zone2 bullet pm">12:30p</td>
-            <td class="zone2 pm">1:22p</td>
-            <td class="zone2 pm">2:52p</td>
-            <td class="zone2 pm">4:22p</td>
-            <td class="zone2 pm">5:52p</td>
-            <td class="zone2 pm">7:22p</td>
-            <td class="zone2 bullet pm">8:00p</td>
-            <td class="zone2 pm">8:52p</td>
-            <td class="zone2 pm">10:22p</td>
-            <td class="zone2 pm">11:35p</td>
-            <td class="zone2 am">12:48a</td>
+            <th id="even" style="background-color: #f7e89d;">2</th>
+            <th id="even" style="background-color: #f7e89d;"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
+            <td class="zone2 am" colspan="16" style="text-align: center; background-color: #f7e89d;"><em><strong><span style="color: #000000;">Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</span></strong></em><br />
+            </td>
         </tr>
         <tr>
             <th class="zone2" id="even">2</th>
@@ -1763,13 +1752,13 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
             <td class="zone2 am">8:56a</td>
             <td class="zone2 am">10:26a</td>
             <td class="zone2 am">11:56a</td>
-            <td class="zone2 bullet">&nbsp;&nbsp;—</td>
+            <td class="zone2 bullet">12:32p</td>
             <td class="zone2 pm">1:26p</td>
             <td class="zone2 pm">2:56p</td>
             <td class="zone2 pm">4:26p</td>
             <td class="zone2 pm">5:56p</td>
             <td class="zone2 pm">7:26p</td>
-            <td class="zone2 bullet">&nbsp;&nbsp;—</td>
+            <td class="zone2 bullet">8:02p</td>
             <td class="zone2 pm">8:56p</td>
             <td class="zone2 pm">10:26p</td>
             <td class="zone2 pm">11:39p</td>
@@ -2047,25 +2036,6 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
         </tr>
     </tbody>
 </table>
-<p><strong><a href="/Assets/_Marketing/pdf/Caltrain+Weekend+Timetable+-+Effective+April+1$!2c+2019.pdf" title="Download Weekend Timetable">Download Weekend Timetable</a> (PDF, 111 KB)</strong></p>
-<p><strong>Legend:</strong> <br />
-- Train bypasses station.&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;* Train departure may be delayed up to 15 minutes after Sharks games.</p>
-<p>On weekends, a <span style="font-weight: bold; color: #338639;">shuttle bus</span> connects the Tamien and Diridon stations.  Passengers ride free on the Caltrain shuttles. Timetable subject to change without notice.</p>
-<table cellspacing="0" cellpadding="4">
-    <tbody>
-        <tr id="legend">
-            <td style="border: 1px solid #000000; width: 120px; text-align: center; color: #ffffff; background-color: #000000;">Saturday Only
-            </td>
-            <td style="border: 1px solid #000000; width: 120px; text-align: center; background-color: #ffffff;">400 Local</td>
-            <td style="border: 1px solid #000000; width: 120px; text-align: center; background-color: #f0b2a1;">800  Baby Bullet</td>
-        </tr>
-    </tbody>
-</table>
-<a href="http://www.caltrain.com/schedules/realtime/Schedules_-_mobile.html">
-<div id="fixed-bottom-button" class="fixed-button feedback-button">
-<p>Mobile Schedules</p>
-</div>
-</a>
 <script>
 window.mobilecheck = function() {
   var check = false;
@@ -2079,7 +2049,7 @@ if ((typeof footer === "object" && footer !== null) && (typeof fixedBtn === "obj
    /* If the fixed bottom button is too far away from bottom of content then put button in footer */
    if ((fixedBtn.getBoundingClientRect().bottom - footer.getBoundingClientRect().bottom) > 100) {
         var newNode = document.createElement("div");
-        newNode.innerHTML = '<p><a href="http://www.caltrain.com/schedules/realtime/Schedules_-_mobile.html">Mobile Schedules</a></p>';
+        newNode.innerHTML = '<p><a href="https://www.caltrain.com/schedules/realtime/Schedules_-_mobile.html">Mobile Schedules</a></p>';
         newNode.className = "fixed-button feedback-button";
         newNode.id = "footer-button";
         newNode.style.display = "inline-block";
@@ -2130,7 +2100,7 @@ function googleTranslateElementInit() {
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <span style="font-size: 7pt;"><a href="/riderinfo/Translations.html">Translation Info</a></span></div>
-      	<div id="seo">Copyright ©2019 caltrain.com&nbsp; •&nbsp; <a href="/about/privacypolicy.html" title="Privacy Policy">Privacy Policy</a> &nbsp; •&nbsp; <a href="http://www.smctd.com/" title="San Mateo County Transit District" target="_blank">San Mateo County Transit District</a>&nbsp; •&nbsp; <a href="http://www.caltrain.com/SocialMedia">Social Media</a></div>
+      	<div id="seo">Copyright ©2020 caltrain.com&nbsp; •&nbsp; <a href="/about/privacypolicy.html" title="Privacy Policy">Privacy Policy</a> &nbsp; •&nbsp; <a href="http://www.smctd.com/" title="San Mateo County Transit District" target="_blank">San Mateo County Transit District</a>&nbsp; •&nbsp; <a href="http://www.caltrain.com/SocialMedia">Social Media</a></div>
   	</div>
 	<!-- /footer -->
 
@@ -2158,5 +2128,5 @@ ipjInitIronPointFormHandling();
 //-->
 </script>
 
-<form name="IronPointForm_Footer" method="Post" id="IronPointForm_Footer" onsubmit="ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="7//r1lW1ZY5HFqd/IysJZlpdcDKI7duG3MbA7YELK9ISiItNjpYhxhU0tmPYv4/5M0m8KWJFkCcUbFmAqqVxoj5PIyBRF1sCfoM5VmH5J5xb0eP7XwkBrIUC7G8MAYNQj7zMCAHQWXGisWGoLPStLx+ra2Rf89KToJ2ElxUyc/HpSyxgbAIB99XKxheaCgBrNkyFWEzJ3JXfR2OLP/o06cf8/d6c3ujae+b+vf6EnxxoqAYw43uBVOoDwdVFp2BHcsUpYlfAqiP3kw6N1+MA2WfC9UOXNOtwfsrTJNF38YgffYNeBo67x4DiTuATAsXsk35xegBqDGj+gHVehAOaSpLgEGm+4dgnke2zNuakJpZ7/vIMdTcngsrsYd6y+hzinWxgY1g5Y8DVBchEn2tzKgI2vJ+IXTiMF1n70R5L/3k5HR3VHOF74nuTxTOp4Bu+j8Eu3D8SYFbSEhYKYhwL09bEdOLDD1qeH2Ud3z4yg844m2kM" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
+<form name="IronPointForm_Footer" method="Post" id="IronPointForm_Footer" onsubmit="ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="oVVmXMryhtpbejGgQAvpIBbGV3lXWlxUrJSvM0HH04lhKQd2FMzdSSOUmrWtn1cKPAZuLx2paCaNMuVPu8KvIJn1KkUZheS3wC0/2/PepPQ+IxDAlqF6cNWsbvrabup6hbD90XKlJw9pOp6qdSvduVwXO0fJaseRTt0Xmxpv7N090MytN2IrWKadjY8bRemSTSZLwJ2xCAAwl4cczVKJI3esgvjETBTJ3RESufa89JC/1a7vNk5pz+XIO84NDStSvxm4f9FA7csY1OQ9yA4dIJI+tu6FU2eluOFcSNltGDcNBLhuGfmVvcHG15OwNApqJuT+ud4a570iZ/bnhBmM17Vr3lro1IbCrMtQypIQ5M1+MN/wN3rx8uzEJo4yKpEK7PQCaLrAq8nX+2ACTaX80HEt8rIwqbA6aF+LNbt77/FUzQOHoZXTJm4ZpiCGOmRQ7pgpBdrw/s4Tw3mx3+7ZtlSlFbnb+eX/2CBO7YNBjV9xpEnL" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
 </html>

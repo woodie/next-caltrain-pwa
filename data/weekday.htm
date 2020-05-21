@@ -8,7 +8,7 @@
 var ipVirDir="/";
 var ipSysImageDir="/system/images";
 var ipSiteTemplateDir="/SharedSites/3/templates";
-var ipDynamicFQDN="http://www.caltrain.com";
+var ipDynamicFQDN="https://www.caltrain.com";
 var ipCurrentPageClass="ContentPage";
 var ipCurrentPageDefID="21";
 var ipCurrentTemplateID="4";
@@ -28,7 +28,7 @@ ipjPageSiteGroupID=0;
 </script>
 <meta name="description" content=""/>
 <meta name="Generator" content="IronPoint v7"/>
-<meta name="UpdateDateTime" content="3/29/2020 11:52:36 PM"/>
+<meta name="UpdateDateTime" content="5/17/2020 11:52:38 AM"/>
 
 <title>Weekday Timetable</title>
 
@@ -179,6 +179,12 @@ window.onload=tablecollapse;
   })();
 
 </script>
+<script>
+if (location.protocol !== 'https:') {
+location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+</script>
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -266,7 +272,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="header">
     <a href="#info" class="skip">Skip to content</a>
     	<div id="top_nav_area">
-        	<div id="top_nav"><a href="/sitemap.html">site map</a> | <a href="http://www.smctd.com/BidsContracts.html" title="Bids and Contracts" target="_blank">bids/contracts</a> | <a title="Jobs" href="/about/Jobs.html">jobs</a> | <a title="Contact Us" href="/about/contact.html">contact</a></div>
+        	<div id="top_nav"><a href="/sitemap.html">site map</a> | <a href="https://www.smctd.com/BidsContracts.html" title="Bids and Contracts" target="_blank">bids/contracts</a> | <a title="Jobs" href="/about/Jobs.html">jobs</a> | <a title="Contact Us" href="/about/contact.html">contact</a></div>
           	<div id="search">
 <form name="IronPointForm_1" method="Post" id="IronPointForm_1" onsubmit="ipjSubmitIronPointForm(); return false;"><script language=javascript> <!--
 function SearchPageletSubmit_98(viewModeURL)
@@ -416,7 +422,7 @@ var pauseit=1
 
 //var marqueecontent='<nobr> <a href="http://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain: Novel Coronavirus (COVID-19)</a></nobr>';
 
-var marqueecontent='<nobr> <a href="http:/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">COVID-19 Updates: New Schedule 3/30</a></nobr>';
+var marqueecontent='<nobr> <a href="https://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">COVID-19: Latest Updates</a></nobr>';
 
 
 //var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/Weekend_SF_Caltrain_Closure.html">Additional SF Weekend Caltrain Closures April 20-21, May 4-5, June 1-2 and June 22-23.</a> &nbsp; &nbsp; &nbsp; <a href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019.html">New Timetable Changes Effective April 1.</a> &nbsp; &nbsp; &nbsp; <a lang="es"  href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Spanish.html">Cierre de servicio adicional para fines de semana en SF el 20/4-21/4, 04/5-05/5, 01/6-02/6 y 22/6-23/6</a> &nbsp; &nbsp; &nbsp; <a lang="es" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Spanish.html">Nuevos cambios en itinerario que entran en vigor el 1 de abril.</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Trad_Chinese.html">其他三藩市周末服務關閉：4/20-4/21, 5/4-5/5, 6/1-6/2和6/22-6/23。</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Chinese.html">新時間表改變，由4月1日起生效。</a></nobr>';
@@ -660,9 +666,9 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     /*NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(7),  .NB_TT tr td:nth-child(9), .NB_TT tr td:nth-child(12), .NB_TT tr td:nth-child(14), .NB_TT tr td:nth-child(17), .NB_TT tr td:nth-child(32), .NB_TT tr td:nth-child(35), .NB_TT tr td:nth-child(37), .NB_TT tr td:nth-child(40), .NB_TT tr td:nth-child(42){
     background-color: #F0B2A1;} *//*light red*/
     /* .NB_TT tr td:nth-child(6), .NB_TT tr td:nth-child(8), .NB_TT tr td:nth-child(10), .NB_TT tr td:nth-child(11), .NB_TT tr td:nth-child(13), .NB_TT tr td:nth-child(15), .NB_TT tr td:nth-child(16), .NB_TT tr td:nth-child(18), .NB_TT tr td:nth-child(19), .NB_TT tr td:nth-child(21), .NB_TT tr td:nth-child(28), .NB_TT tr td:nth-child(30), .NB_TT tr td:nth-child(31), .NB_TT tr td:nth-child(33), .NB_TT tr td:nth-child(34), .NB_TT tr td:nth-child(36), .NB_TT tr td:nth-child(38), .NB_TT tr td:nth-child(39), .NB_TT tr td:nth-child(41), .NB_TT tr td:nth-child(43), .NB_TT tr td:nth-child(44){
-    background-color: #F7E89D; }*/ /*yellow*/
+    background-color: #FCEDC6; }*/ /*yellow*/
     .NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(6), .NB_TT tr td:nth-child(7), .NB_TT tr td:nth-child(8), .NB_TT tr td:nth-child(17), .NB_TT tr td:nth-child(18), .NB_TT tr td:nth-child(19), .NB_TT tr td:nth-child(20), .NB_TT tr td:nth-child(28), .NB_TT tr td:nth-child(30), .NB_TT tr td:nth-child(31), .NB_TT tr td:nth-child(33), .NB_TT tr td:nth-child(34), .NB_TT tr td:nth-child(36), .NB_TT tr td:nth-child(38), .NB_TT tr td:nth-child(39), .NB_TT tr td:nth-child(41), .NB_TT tr td:nth-child(43), .NB_TT tr td:nth-child(44), .NB_TT tr td:nth-child(47){
-    background-color: #F7E89D; }
+    background-color: #FCEDC6; }
     .NB_TT tr td:nth-child(20), .NB_TT tr td:nth-child(22), .NB_TT tr td:nth-child(23), .NB_TT tr td:nth-child(24), .NB_TT tr td:nth-child(25), .NB_TT tr td:nth-child(26), .NB_TT tr td:nth-child(27), .NB_TT tr td:nth-child(29), .NB_TT tr td:nth-child(45), .NB_TT tr td:nth-child(46), .NB_TT tr td:nth-child(47), .NB_TT tr td:nth-child(48), .NB_TT tr td:nth-child(49),{
     background-color: #FFFFFF;
     }
@@ -682,9 +688,9 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     /*.SB_TT tr td:nth-child(7), td:nth-child(9), td:nth-child(12), td:nth-child(14), td:nth-child(17), td:nth-child(30), td:nth-child(33), td:nth-child(35), td:nth-child(38), td:nth-child(40), td:nth-child(43){
     background-color: #F0B2A1;}*//*light red*/
     /*.SB_TT tr td:nth-child(5), td:nth-child(6), td:nth-child(8), td:nth-child(10), td:nth-child(11), td:nth-child(13), td:nth-child(15), td:nth-child(16), td:nth-child(18), td:nth-child(20), td:nth-child(27), td:nth-child(29), td:nth-child(31), td:nth-child(32), td:nth-child(34), td:nth-child(36), td:nth-child(37), td:nth-child(39), td:nth-child(41), td:nth-child(42), td:nth-child(44){
-    background-color: #F7E89D;}*/ /*yellow*/
+    background-color: #FCEDC6;}*/ /*yellow*/
     .SB_TT tr td:nth-child(5), td:nth-child(7), td:nth-child(6), .SB_TT td:nth-child(16), .SB_TT tr td:nth-child(17), .SB_TT td:nth-child(18), .SB_TT td:nth-child(19), .SB_TT td:nth-child(27), .SB_TT td:nth-child(29), td:nth-child(31), td:nth-child(32), td:nth-child(34), td:nth-child(36), td:nth-child(37), td:nth-child(39), td:nth-child(41), td:nth-child(42), td:nth-child(44){
-    background-color: #F7E89D;}
+    background-color: #FCEDC6;}
     /*.SB_TT td:nth-child(n+24):nth-child(-n+48){
     font-weight: bold;
     }
@@ -794,7 +800,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     }
 </style>
 <div class="notice warning">
-<p><strong>Notice:</strong> In response to a significant decline in ridership stemming from efforts to contain the spread of the coronavirus (COVID-19), Caltrain will be adjusting its weekday service, effective Monday, March 30. Get the latest on <a href="http:/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain’s response</a>.
+<p><strong>Notice:</strong> In response to a significant decline in ridership stemming from efforts to contain the spread of the coronavirus (COVID-19), Caltrain will be adjusting its weekday service, effective Monday, March 30. Get the latest on <a href="https:/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain’s response</a>.
 </p>
 </div>
 <!--<p><strong>NEW SCHEDULE Effective March 17, 2020</strong></p>-->
@@ -803,31 +809,27 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
 <a href="/projectsplans/Plans/SouthSantaClaraCountyService.html" title="South Santa Clara County Service"><img style="margin-bottom: 20px;" alt="Gilroy Morgan Hill Learn More Banner" width="500px" src="/Assets/_Planning/South+Santa+Clara+County+Service/Gilroy+Morgan+Hill+Learn+More+Banner.png" /></a></p>
 -->
 <!--<p><span style="background-color: #ffffff; font-family: Arial; font-size: 13px;">In response to a significant decline in ridership stemming from efforts to contain the spread of the coronavirus (COVID-19), Caltrain will be adjusting its weekday service, effective Tuesday, March 17.</span></p>-->
-<!---<p style="margin-bottom: 0px;"><strong>Legend:</strong>&nbsp;</p>
-<p>
- Train bypasses station.<br />
+<p><strong>Effective May 16, 2020<br />
+</strong><strong><br />
+Alternative formats<br />
+</strong><strong><br />
+<a href="/schedules/weekdaytimetable/weekday_TT_scrolling.html?" title="Weekday Timetable">View Scrolling Version</a><br />
+</strong><strong><a title="CT_PrinterFriendlySchedule_05-16-2020" href="/Assets/Assets/pdfs/CT_PrinterFriendlySchedule_05-16-2020.pdf">Download PDF Timetables</a></strong></p>
+<p><strong>Legend:</strong> <br />
+<br />
+- Train bypasses station.<br />
 + Train may leave up to 5 minutes early.<br />
-* Train departure may be delayed up to 15 minutes after Sharks games.</p>x
-<table width="800px" cellspacing="0" cellpadding="4">
+* Train departure may be delayed up to 15 minutes after Sharks games.<br />
+<br />
+<strong>Types of Service Descriptions:</strong></p>
+<table width="800px" cellspacing="0" cellpadding="4" style="left: 581px; width: 223px; height: 16px;">
     <tbody>
-        <tr id="legend">
-            <td style="border: 1px solid #000000; width: 13%; text-align: center;">100 Local
+        <tr>
+            <td style="border: 1px solid #000000; width: 10px; text-align: center;">200 Local
             </td>
-            <td style="width: 13%; text-align: center; background-color: #f7e89d;">200-stop</td>
-            <td style="width: 30%; text-align: center; background-color: #bddc9b;">Timed transfers for local service.</td>
-            <td valign="bottom" style="width: 25%; text-align: left;">Types of service descriptions</td>
         </tr>
     </tbody>
-</table>-->
-<p><strong>Effective March 30, 2020<br />
-</strong><strong><br />
-Alternative formats</strong></p>
-<ul>
-    <!--<li><strong><a href="/schedules/weekdaytimetable/weekday_TT_scrolling.html?" title="Weekday Timetable">View Scrolling Version</a></strong></li>-->
-    <li><strong><a href="/schedules/weekdaytimetable/weekday_TT_scrolling.html?" title="Weekday Timetable">View Scrolling Version</a></strong></li>
-    <li><a title="CT_PrinterFriendlySchedule_03-30-2020" href="/Assets/Assets/pdfs/CT_PrinterFriendlySchedule_03-30-2020_FINAL.PDF"><strong>Download PDF Timetables</strong></a></li>
-</ul>
-<p style="margin-bottom: 0px;"><strong>Legend:</strong>&nbsp;</p>
+</table>
 <h1 style="text-align: left;">Northbound Service</h1>
 <table class="NB_TT" summary="Weekday Northbound service" alt="Weekday Northbound service">
     <thead>
@@ -843,7 +845,6 @@ Alternative formats</strong></p>
             <th>135</th>
             <th>139</th>
             <th>143</th>
-            <th>Northbound Train No.</th>
             <th>147</th>
             <th>151</th>
             <th>155</th>
@@ -873,7 +874,6 @@ Alternative formats</strong></p>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
-            <th class="center" id="even"><a href="/stations/gilroystation.html" title="Gilroy" target="blank">Gilroy</a></th>
             <td></td>
             <td></td>
             <td></td>
@@ -902,7 +902,6 @@ Alternative formats</strong></p>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
-            <th class="center" id="even"><a href="/stations/sanmartinstation.html" title="San Martin" target="blank">San Martin</a></th>
             <td></td>
             <td></td>
             <td></td>
@@ -931,7 +930,6 @@ Alternative formats</strong></p>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
-            <th class="center" id="even"><a href="/stations/morganhillstation.html" title="Morgan Hill" target="blank">Morgan Hill</a></th>
             <td></td>
             <td></td>
             <td></td>
@@ -960,7 +958,6 @@ Alternative formats</strong></p>
             <td class="zone5"></td>
             <td class="zone5"></td>
             <td class="zone5"></td>
-            <th class="center"><a href="/stations/blossomhillstation.html" title="Blossom Hill" target="blank">Blossom Hill</a></th>
             <td></td>
             <td></td>
             <td></td>
@@ -989,7 +986,6 @@ Alternative formats</strong></p>
             <td class="zone5"></td>
             <td class="zone5"></td>
             <td class="zone5"></td>
-            <th class="center"><a href="/stations/capitolstation.html" title="Capitol" target="blank">Capitol</a></th>
             <td></td>
             <td></td>
             <td></td>
@@ -1018,7 +1014,6 @@ Alternative formats</strong></p>
             <td class="zone4"></td>
             <td class="zone4"></td>
             <td class="zone4"></td>
-            <th class="center" id="even"><a href="/stations/tamienstation.html" title="Tamien" target="blank">Tamien</a></th>
             <td class="zone4"></td>
             <td class="zone4"></td>
             <td class="zone4"></td>
@@ -1047,7 +1042,6 @@ Alternative formats</strong></p>
             <td class="zone4 am">9:13a</td>
             <td class="zone4 am">10:13a</td>
             <td class="zone4 am">11:13a</td>
-            <th class="center" id="even"><a href="/stations/sanjosediridonstation.html" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
             <td class="zone4 pm">12:13p</td>
             <td class="zone4 pm">1:13p</td>
             <td class="zone4 pm">2:13p</td>
@@ -1076,7 +1070,6 @@ Alternative formats</strong></p>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
-            <th class="center" id="even"><a href="/stations/collegeparkstation.html" title="College Park" target="blank">College Park</a></th>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
@@ -1105,7 +1098,6 @@ Alternative formats</strong></p>
             <td class="zone4 am">9:18a</td>
             <td class="zone4 am">10:18a</td>
             <td class="zone4 am">11:18a</td>
-            <th class="center" id="even"><a href="/stations/santaclarastation.html" title="Santa Clara" target="blank">Santa Clara</a></th>
             <td class="zone4 pm">12:18p</td>
             <td class="zone4 pm">1:18p</td>
             <td class="zone4 pm">2:18p</td>
@@ -1134,7 +1126,6 @@ Alternative formats</strong></p>
             <td class="zone4 am">9:24a</td>
             <td class="zone4 am">10:24a</td>
             <td class="zone4 am">11:24a</td>
-            <th class="center" id="even"><a href="/stations/lawrencestation.html" title="Lawrence" target="blank">Lawrence</a></th>
             <td class="zone4 pm">12:24p</td>
             <td class="zone4 pm">1:24p</td>
             <td class="zone4 pm">2:24p</td>
@@ -1163,7 +1154,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:29a</td>
             <td class="zone3 am">10:28a</td>
             <td class="zone3 am">11:28a</td>
-            <th class="center"><a href="/stations/sunnyvalestation.html" title="Sunnyvale" target="blank">Sunnyvale</a></th>
             <td class="zone3 pm">12:28p</td>
             <td class="zone3 pm">1:28p</td>
             <td class="zone3 pm">2:28p</td>
@@ -1192,7 +1182,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:34a</td>
             <td class="zone3 am">10:33a</td>
             <td class="zone3 am">11:33a</td>
-            <th class="center"><a href="/stations/mountainviewstation.html" title="Mountain View" target="blank">Mountain View</a></th>
             <td class="zone3 pm">12:33p</td>
             <td class="zone3 pm">1:33p</td>
             <td class="zone3 pm">2:33p</td>
@@ -1221,7 +1210,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:38a</td>
             <td class="zone3 am">10:37a</td>
             <td class="zone3 am">11:37a</td>
-            <th class="center"><a href="/stations/sanantoniostation.html" title="San Antonio" target="blank">San Antonio</a></th>
             <td class="zone3 pm">12:37p</td>
             <td class="zone3 pm">1:37p</td>
             <td class="zone3 pm">2:37p</td>
@@ -1250,7 +1238,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:42a</td>
             <td class="zone3 am">10:42a</td>
             <td class="zone3 am">11:41a</td>
-            <th class="center"><a href="/stations/californiaavenuestation.html" title="California Ave." target="blank">California Ave</a></th>
             <td class="zone3 pm">12:41p</td>
             <td class="zone3 pm">1:41p</td>
             <td class="zone3 pm">2:41p</td>
@@ -1279,7 +1266,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:47a</td>
             <td class="zone3 am">10:47a</td>
             <td class="zone3 am">11:46a</td>
-            <th class="center"><a href="/stations/paloaltostation.html" title="Palo Alto" target="blank">Palo Alto</a></th>
             <td class="zone3 pm">12:46p</td>
             <td class="zone3 pm">1:46p</td>
             <td class="zone3 pm">2:46p</td>
@@ -1308,7 +1294,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:50a</td>
             <td class="zone3 am">10:50a</td>
             <td class="zone3 am">11:49a</td>
-            <th class="center"><a href="/stations/menloparkstation.html" title="Menlo Park" target="blank">Menlo Park</a></th>
             <td class="zone3 pm">12:49p</td>
             <td class="zone3 pm">1:49p</td>
             <td class="zone3 pm">2:49p</td>
@@ -1337,7 +1322,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:57a</td>
             <td class="zone2 am">10:55a</td>
             <td class="zone2 am">11:55a</td>
-            <th class="center" id="even"><a href="/stations/redwoodcitystation.html" title="Redwood City" target="blank">Redwood City</a></th>
             <td class="zone2 pm">12:55p</td>
             <td class="zone2 pm">1:55p</td>
             <td class="zone2 pm">2:55p</td>
@@ -1366,7 +1350,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">10:01a</td>
             <td class="zone2 am">10:59a</td>
             <td class="zone2 am">11:59a</td>
-            <th class="center" id="even"><a href="/stations/sancarlosstation.html" title="San Carlos" target="blank">San Carlos</a></th>
             <td class="zone2 pm">12:59p</td>
             <td class="zone2 pm">1:59p</td>
             <td class="zone2 pm">2:59p</td>
@@ -1395,7 +1378,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">10:05a</td>
             <td class="zone2 am">11:03a</td>
             <td class="zone2 pm">12:03p</td>
-            <th class="center" id="even"><a href="/stations/belmontstation.html" title="Belmont" target="blank">Belmont</a></th>
             <td class="zone2 pm">1:03p</td>
             <td class="zone2 pm">2:03p</td>
             <td class="zone2 pm">3:03p</td>
@@ -1413,32 +1395,10 @@ Alternative formats</strong></p>
             <td></td>
         </tr>
         <tr>
-            <th id="even">2</th>
-            <th id="even"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <td class="zone2 am">5:22a</td>
-            <td class="zone2 am">5:56a</td>
-            <td class="zone2 am">6:58a</td>
-            <td class="zone2 am">7:58a</td>
-            <td class="zone2 am">8:21a</td>
-            <td class="zone2 am">9:23a</td>
-            <td class="zone2 am">10:08a</td>
-            <td class="zone2 am">11:06a</td>
-            <td class="zone2 pm">12:06p</td>
-            <th class="center" id="even"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <td class="zone2 pm">1:06p</td>
-            <td class="zone2 pm">2:06p</td>
-            <td class="zone2 pm">3:06p</td>
-            <td class="zone2 pm">4:10p</td>
-            <td class="zone2">4:36p</td>
-            <td class="zone2">5:40p</td>
-            <td class="zone2">6:40p</td>
-            <td class="zone2 pm">7:38p</td>
-            <td class="zone2 pm">8:38p</td>
-            <td class="zone2 pm">9:38p</td>
-            <td class="zone2 pm">10:38p</td>
-            <td class="zone2 pm">11:24p</td>
-            <th id="even"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <th id="even">2</th>
+            <th id="even" style="background-color: #f7e89d;">2</th>
+            <th id="even" style="background-color: #f7e89d;"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
+            <td class="zone2 am" colspan="23" style="text-align: center; background-color: #f7e89d;"><em><strong>Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</strong></em><br />
+            </td>
             <td></td>
         </tr>
         <tr>
@@ -1453,7 +1413,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">10:11a</td>
             <td class="zone2 am">11:09a</td>
             <td class="zone2 pm">12:09p</td>
-            <th class="center" id="even"><a href="/stations/haywardparkstation.html" title="Hayward Park" target="blank">Hayward Park</a></th>
             <td class="zone2 pm">1:09p</td>
             <td class="zone2 pm">2:09p</td>
             <td class="zone2 pm">3:09p</td>
@@ -1482,7 +1441,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">10:15a</td>
             <td class="zone2 am">11:12a</td>
             <td class="zone2 pm">12:12p</td>
-            <th class="center" id="even"><a href="/stations/sanmateostation.html" title="San Mateo" target="blank">San Mateo</a></th>
             <td class="zone2 pm">1:12p</td>
             <td class="zone2 pm">2:12p</td>
             <td class="zone2 pm">3:14p</td>
@@ -1511,7 +1469,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">10:18a</td>
             <td class="zone2 am">11:15a</td>
             <td class="zone2 pm">12:15p</td>
-            <th class="center" id="even"><a href="/stations/burlingamestation.html" title="Burlingame" target="blank">Burlingame</a></th>
             <td class="zone2 pm">1:15p</td>
             <td class="zone2 pm">2:15p</td>
             <td class="zone2 pm">3:17p</td>
@@ -1540,7 +1497,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">10:23a</td>
             <td class="zone2 am">11:20a</td>
             <td class="zone2 pm">12:20p</td>
-            <th class="center" id="even"><a href="/stations/millbraetransitcenter.html" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
             <td class="zone2 pm">1:20p</td>
             <td class="zone2 pm">2:20p</td>
             <td class="zone2 pm">3:22p</td>
@@ -1569,7 +1525,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">10:28a</td>
             <td class="zone1 am">11:25a</td>
             <td class="zone1 pm">12:25p</td>
-            <th class="center"><a href="/stations/sanbrunostation.html" title="San Bruno" target="blank">San Bruno</a></th>
             <td class="zone1 pm">1:25p</td>
             <td class="zone1 pm">2:25p</td>
             <td class="zone1 pm">3:27p</td>
@@ -1598,7 +1553,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">10:32a</td>
             <td class="zone1 am">11:29a</td>
             <td class="zone1 pm">12:29p</td>
-            <th class="center"><a href="/stations/southsanfranciscostation.html" title="South San Francisco" target="blank">So. San Francisco</a></th>
             <td class="zone1 pm">1:29p</td>
             <td class="zone1 pm">2:29p</td>
             <td class="zone1 pm">3:31p</td>
@@ -1627,7 +1581,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">10:38a</td>
             <td class="zone1 am">11:35a</td>
             <td class="zone1 pm">12:35p</td>
-            <th class="center"><a href="/stations/bayshorestation.html" title="Bayshore" target="blank">Bayshore</a></th>
             <td class="zone1 pm">1:35p</td>
             <td class="zone1 pm">2:35p</td>
             <td class="zone1 pm">3:37p</td>
@@ -1656,7 +1609,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">10:44a</td>
             <td class="zone1 am">11:41a</td>
             <td class="zone1 pm">12:41p</td>
-            <th class="center"><a href="/stations/22ndstreetstation.html" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
             <td class="zone1 pm">1:41p</td>
             <td class="zone1 pm">2:41p</td>
             <td class="zone1 pm">3:43p</td>
@@ -1685,7 +1637,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">10:52a</td>
             <td class="zone1 am">11:48a</td>
             <td class="zone1 pm">12:48p</td>
-            <th class="center"><a href="/stations/sanfranciscostation.html" title="San Francisco" target="blank">San Francisco</a></th>
             <td class="zone1 pm">1:48p</td>
             <td class="zone1 pm">2:48p</td>
             <td class="zone1 pm">3:52p</td>
@@ -1718,7 +1669,6 @@ Alternative formats</strong></p>
             <th>134</th>
             <th>138</th>
             <th>142</th>
-            <th>Southbound Train No.</th>
             <th>146</th>
             <th>150</th>
             <th>152</th>
@@ -1748,7 +1698,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">9:00a</td>
             <td class="zone1 am">10:00a</td>
             <td class="zone1 am">11:00a</td>
-            <th class="center"><a href="/stations/sanfranciscostation.html" title="San Francisco" target="blank">San Francisco</a></th>
             <td class="zone1 pm">12:00p</td>
             <td class="zone1 pm">1:00p</td>
             <td class="zone1 pm">2:00p</td>
@@ -1776,7 +1725,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">9:05a</td>
             <td class="zone1 am">10:04a</td>
             <td class="zone1 am">11:04a</td>
-            <th class="center"><a href="/stations/22ndstreetstation.html" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
             <td class="zone1 pm">12:04p</td>
             <td class="zone1 pm">1:04p</td>
             <td class="zone1 pm">2:04p</td>
@@ -1804,7 +1752,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">9:10a</td>
             <td class="zone1 am">10:09a</td>
             <td class="zone1 am">11:09a</td>
-            <th class="center"><a href="/stations/bayshorestation.html" title="Bayshore" target="blank">Bayshore</a></th>
             <td class="zone1 pm">12:09p</td>
             <td class="zone1 pm">1:09p</td>
             <td class="zone1 pm">2:09p</td>
@@ -1832,7 +1779,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">9:17a</td>
             <td class="zone1 am">10:16a</td>
             <td class="zone1 am">11:16a</td>
-            <th class="center"><a href="/stations/southsanfranciscostation.html" title="South San Francisco" target="blank">So. San Francisco</a></th>
             <td class="zone1 pm">12:16p</td>
             <td class="zone1 pm">1:16p</td>
             <td class="zone1 pm">2:16p</td>
@@ -1860,7 +1806,6 @@ Alternative formats</strong></p>
             <td class="zone1 am">9:21a</td>
             <td class="zone1 am">10:20a</td>
             <td class="zone1 am">11:20a</td>
-            <th class="center"><a href="/stations/sanbrunostation.html" title="San Bruno" target="blank">San Bruno</a></th>
             <td class="zone1 pm">12:20p</td>
             <td class="zone1 pm">1:20p</td>
             <td class="zone1 pm">2:20p</td>
@@ -1888,7 +1833,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:25a</td>
             <td class="zone2 am">10:25a</td>
             <td class="zone2 am">11:25a</td>
-            <th class="center" id="even"><a href="/stations/millbraetransitcenter.html" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
             <td class="zone2 pm">12:25p</td>
             <td class="zone2 pm">1:25p</td>
             <td class="zone2 pm">2:25p</td>
@@ -1916,7 +1860,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:29a</td>
             <td class="zone2 am">10:29a</td>
             <td class="zone2 am">11:29a</td>
-            <th class="center" id="even"><a href="/stations/burlingamestation.html" title="Burlingame" target="blank">Burlingame</a></th>
             <td class="zone2 pm">12:29p</td>
             <td class="zone2 pm">1:29p</td>
             <td class="zone2 pm">2:29p</td>
@@ -1944,7 +1887,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:32a</td>
             <td class="zone2 am">10:32a</td>
             <td class="zone2 am">11:32a</td>
-            <th class="center" id="even"><a href="/stations/sanmateostation.html" title="San Mateo" target="blank">San Mateo</a></th>
             <td class="zone2 pm">12:32p</td>
             <td class="zone2 pm">1:32p</td>
             <td class="zone2 pm">2:32p</td>
@@ -1972,7 +1914,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:36a</td>
             <td class="zone2 am">10:36a</td>
             <td class="zone2 am">11:36a</td>
-            <th class="center" id="even"><a href="/stations/haywardparkstation.html" title="Hayward Park" target="blank">Hayward Park</a></th>
             <td class="zone2 pm">12:36p</td>
             <td class="zone2 pm">1:36p</td>
             <td class="zone2 pm">2:36p</td>
@@ -1990,32 +1931,11 @@ Alternative formats</strong></p>
             <th id="even">2</th>
         </tr>
         <tr>
-            <th id="even">2</th>
-            <th id="even"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <td class="zone2 am">5:32a</td>
-            <td class="zone2 am">6:03a</td>
-            <td class="zone2 am">6:54a</td>
-            <td class="zone2 am">7:54a</td>
-            <td class="zone2 am">8:54a</td>
-            <td class="zone2 am">9:39a</td>
-            <td class="zone2 am">10:39a</td>
-            <td class="zone2 am">11:39a</td>
-            <th class="center" id="even"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <td class="zone2 pm">12:39p</td>
-            <td class="zone2 pm">1:39p</td>
-            <td class="zone2 pm">2:39p</td>
-            <td class="zone2 pm">3:42p</td>
-            <td class="zone2 pm">4:13p</td>
-            <td class="zone2 pm">5:11p</td>
-            <td class="zone2 pm">6:11p</td>
-            <td class="zone2 pm">7:11p</td>
-            <td class="zone2 pm">8:11p</td>
-            <td class="zone2 pm">9:11p</td>
-            <td class="zone2 pm">10:11p</td>
-            <td class="zone2 am">11:11p</td>
-            <td class="zone2 am">12:47a</td>
-            <th id="even"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <th id="even">2</th>
+            <th id="even" style="background-color: #f7e89d;">2</th>
+            <th id="even" style="background-color: #f7e89d;"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
+            <td class="zone2 am" colspan="23" style="text-align: center; background-color: #f7e89d;"><em><strong>Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</strong></em><br />
+            </td>
+            <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
@@ -2028,7 +1948,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:43a</td>
             <td class="zone2 am">10:43a</td>
             <td class="zone2 am">11:43a</td>
-            <th class="center" id="even"><a href="/stations/belmontstation.html" title="Belmont" target="blank">Belmont</a></th>
             <td class="zone2 pm">12:43p</td>
             <td class="zone2 pm">1:43p</td>
             <td class="zone2 pm">2:43p</td>
@@ -2056,7 +1975,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:46a</td>
             <td class="zone2 am">10:46a</td>
             <td class="zone2 am">11:46a</td>
-            <th class="center" id="even"><a href="/stations/sancarlosstation.html" title="San Carlos" target="blank">San Carlos</a></th>
             <td class="zone2 pm">12:46p</td>
             <td class="zone2 pm">1:46p</td>
             <td class="zone2 pm">2:46p</td>
@@ -2084,7 +2002,6 @@ Alternative formats</strong></p>
             <td class="zone2 am">9:51a</td>
             <td class="zone2 am">10:51a</td>
             <td class="zone2 am">11:51a</td>
-            <th class="center" id="even"><a href="/stations/redwoodcitystation.html" title="Redwood City" target="blank">Redwood City</a></th>
             <td class="zone2 pm">12:51p</td>
             <td class="zone2 pm">1:51p</td>
             <td class="zone2 pm">2:51p</td>
@@ -2112,7 +2029,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">9:56a</td>
             <td class="zone3 am">10:56a</td>
             <td class="zone3 am">11:56a</td>
-            <th class="center"><a href="/stations/menloparkstation.html" title="Menlo Park" target="blank">Menlo Park</a></th>
             <td class="zone3 pm">12:56p</td>
             <td class="zone3 pm">1:56p</td>
             <td class="zone3 pm">2:56p</td>
@@ -2140,7 +2056,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">10:00a</td>
             <td class="zone3 am">11:00a</td>
             <td class="zone3 pm">12:00p</td>
-            <th class="center"><a href="/stations/paloaltostation.html" title="Palo Alto" target="blank">Palo Alto</a></th>
             <td class="zone3 pm">1:00p</td>
             <td class="zone3 pm">2:00p</td>
             <td class="zone3 pm">3:00p</td>
@@ -2168,7 +2083,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">10:04a</td>
             <td class="zone3 am">11:04a</td>
             <td class="zone3 pm">12:04p</td>
-            <th class="center"><a href="/stations/californiaavenuestation.html" title="California Ave." target="blank">California Ave</a></th>
             <td class="zone3 pm">1:04p</td>
             <td class="zone3 pm">2:04p</td>
             <td class="zone3 pm">3:04p</td>
@@ -2196,7 +2110,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">10:08a</td>
             <td class="zone3 am">11:08a</td>
             <td class="zone3 pm">12:08p</td>
-            <th class="center"><a href="/stations/sanantoniostation.html" title="San Antonio" target="blank">San&nbsp;Antonio</a></th>
             <td class="zone3 pm">1:08p</td>
             <td class="zone3 pm">2:08p</td>
             <td class="zone3 pm">3:08p</td>
@@ -2224,7 +2137,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">10:13a</td>
             <td class="zone3 am">11:13a</td>
             <td class="zone3 pm">12:13p</td>
-            <th class="center"><a href="/stations/mountainviewstation.html" title="Mountain View" target="blank">Mountain&nbsp;View</a></th>
             <td class="zone3 pm">1:13p</td>
             <td class="zone3 pm">2:13p</td>
             <td class="zone3 pm">3:13p</td>
@@ -2252,7 +2164,6 @@ Alternative formats</strong></p>
             <td class="zone3 am">10:18a</td>
             <td class="zone3 am">11:18a</td>
             <td class="zone3 pm">12:18p</td>
-            <th class="center"><a href="/stations/sunnyvalestation.html" title="Sunnyvale" target="blank">Sunnyvale</a></th>
             <td class="zone3 pm">1:18p</td>
             <td class="zone3 pm">2:18p</td>
             <td class="zone3 pm">3:18p</td>
@@ -2280,7 +2191,6 @@ Alternative formats</strong></p>
             <td class="zone4 am">10:22a</td>
             <td class="zone4 am">11:22a</td>
             <td class="zone4 pm">12:22p</td>
-            <th id="even" class="center"><a href="/stations/lawrencestation.html" title="Lawrence" target="blank">Lawrence</a></th>
             <td class="zone4 pm">1:22p</td>
             <td class="zone4 pm">2:22p</td>
             <td class="zone4 pm">3:22p</td>
@@ -2308,7 +2218,6 @@ Alternative formats</strong></p>
             <td class="zone4 am">10:27a</td>
             <td class="zone4 am">11:28a</td>
             <td class="zone4 pm">12:28p</td>
-            <th id="even" class="center"><a href="/stations/santaclarastation.html" title="Santa Clara" target="blank">Santa&nbsp;Clara</a></th>
             <td class="zone4 pm">1:28p</td>
             <td class="zone4 pm">2:28p</td>
             <td class="zone4 pm">3:28p</td>
@@ -2336,7 +2245,6 @@ Alternative formats</strong></p>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
-            <th class="center" id="even"><a href="/stations/collegeparkstation.html" title="College Park" target="blank">College&nbsp;Park</a></th>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
             <td class="zone4">&nbsp;&nbsp;–</td>
@@ -2364,7 +2272,6 @@ Alternative formats</strong></p>
             <td class="zone4 am">10:35a</td>
             <td class="zone4 am">11:35a</td>
             <td class="zone4 pm">12:35p</td>
-            <th class="center" id="even"><a href="/stations/sanjosediridonstation.html" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
             <td class="zone4 pm">1:35p</td>
             <td class="zone4 pm">2:35p</td>
             <td class="zone4 pm">3:35p</td>
@@ -2392,7 +2299,6 @@ Alternative formats</strong></p>
             <td class="zone4"></td>
             <td class="zone4"></td>
             <td class="zone4"></td>
-            <th class="center" id="even"><a href="/stations/tamienstation.html" title="Tamien" target="blank">Tamien</a></th>
             <td class="zone4"></td>
             <td class="zone4"></td>
             <td class="zone4"></td>
@@ -2420,7 +2326,6 @@ Alternative formats</strong></p>
             <td class="zone5"></td>
             <td class="zone5"></td>
             <td class="zone5"></td>
-            <th class="center"><a href="/stations/capitolstation.html" title="Capitol" target="blank">Capitol</a></th>
             <td class="zone5"></td>
             <td class="zone5"></td>
             <td class="zone5"></td>
@@ -2449,7 +2354,6 @@ Alternative formats</strong></p>
             <td class="zone5"></td>
             <td class="zone5"></td>
             <td class="zone5"></td>
-            <th class="center"><a href="/stations/blossomhillstation.html" title="Blossom Hill" target="blank">Blossom Hill</a></th>
             <td class="zone5"></td>
             <td class="zone5"></td>
             <td class="zone5"></td>
@@ -2478,7 +2382,6 @@ Alternative formats</strong></p>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
-            <th class="center" id="even"><a href="/stations/morganhillstation.html" title="Morgan Hill" target="blank">Morgan Hill</a></th>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
@@ -2507,7 +2410,6 @@ Alternative formats</strong></p>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
-            <th class="center" id="even"><a href="/stations/sanmartinstation.html" title="San Martin" target="blank">San Martin</a></th>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
@@ -2536,7 +2438,6 @@ Alternative formats</strong></p>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
-            <th id="even" class="center"><a href="/stations/gilroystation.html" title="Gilroy" target="blank">Gilroy</a></th>
             <td class="zone6"></td>
             <td class="zone6"></td>
             <td class="zone6"></td>
@@ -2557,22 +2458,7 @@ Alternative formats</strong></p>
     </tbody>
 </table>
 <!--p><a href="/Page68.aspx">
-</a><strong><a href="/schedules/PDF_Schedules.html" title="PDF Schedules" target="blank">Download PRINT READY PDF TIMETABLES</a></strong></p-->
-<p><strong>Legend:</strong> <br />
-- Train bypasses station.<br />
-+ Train may leave up to 5 minutes early.<br />
-* Train departure may be delayed up to 15 minutes after Sharks games.</p>
-<table width="800px" cellspacing="0" cellpadding="4">
-    <tbody>
-        <tr id="legend">
-            <td style="border: 1px solid #000000; width: 13%; text-align: center;">100 Local
-            </td>
-            <td style="width: 13%; text-align: center; background-color: #f7e89d;">200-stop</td>
-            <td style="width: 30%; text-align: center; background-color: #bddc9b;">Timed transfers for local service.</td>
-            <td valign="bottom" style="width: 25%; text-align: left;">Types of service descriptions</td>
-        </tr>
-    </tbody>
-</table><!-- CONTENT CONTROL END --></td>
+</a><strong><a href="/schedules/PDF_Schedules.html" title="PDF Schedules" target="blank">Download PRINT READY PDF TIMETABLES</a></strong></p--><!-- CONTENT CONTROL END --></td>
           </tr>
         </table>
     
@@ -2617,5 +2503,5 @@ ipjInitIronPointFormHandling();
 //-->
 </script>
 
-<form name="IronPointForm_Footer" method="Post" id="IronPointForm_Footer" onsubmit="ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="UEC+pYZYcHngjtNZBueTsRM+rLu81I9URkBcRcWH3aEGGc4atX2O1CPQpT7CjlG5FOL/BBE4mHPqj2mfO6jQyBHf+9CO7ekmebzMW/RGub02BPFJdN3Eq1pQWfR9f6Vg5w1ngdhQfK4fTztC62+t/S/XYZruv+xySpGf5Y4sng/yRE3//ovy6B1mpKWOI/W0pFIREHAh+rT3OLVcaEk2fhDvfZzlLXbAIGzo8IXsewzI8gJkMliRyRUIBRykSuTBjCtoG1TQaVlbO2OkGTRAj4MioJfgEat3zpOfbOD/hQaM8Oppwb3AjIGN1RztvW6cAm5fcMc26+WUOzhk02cPOWABYRXHqqTMIdRXSuRC+9lQvwRnb0nN1b7VaBGEnN6WCZ0xunyEx3l3yAvvKnjNhi8uxD4WZAiFoupinCnZYHlgsZAVnrGcIH8+KdZVDA+WUmptERioUB1snN48mJeqPcdB7V8N/4KSMRv4eEcBW+u0LL6/vy9zfZz7ScXYXyT8nuPFtQXpNNXT0+X+caxT1lJF/RaeYiuqf0a1kwQWF21u7QeRWtHksRhaR27X1OFvTdVz9BO0/yiZTkJx3SEJ+peXsjY/Nu2Wh3Z9A55z53cA72WMnRigXP3e+hsesjZgMTmlSMRn8li83b/ChVDWApOHac8p+ahJqMcST0waalkJ1fuOQmrVc4uZCcAWcHk6GweZ12evJwinYgrXMg3A59vdN7UEwGcprc8ylGsOXP6YFSxW2EU3Kdq20MwH78cZHImKstlcVYhjcEbuuNpKZmI5r4P8aHxlO6uJmvuHxQD1t6qdO6yYsWYIjedNZOrTZ2nenDOKm14ysoSblO0kRhE4ut4imSYUDh5D5s4muiB0av5XoCb8V77lOGRlVURgcbm7/w==" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
+<form name="IronPointForm_Footer" method="Post" id="IronPointForm_Footer" onsubmit="ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="odWQvtEdbTfO7dqB2+X2ftiCQPb4oU4JSvH+qrk38xuokw6Dx3MHEPZSGq+2oO/73nhDqxkXhQ38Rgi/nBC4O+H6uzS0tYSJrkx3d/tTvJin1pQRdaiJLThyz5NQaNyNvdks+WTvd8XSq5C2X3HJtPD7OXa9HLdKH26LOL53W4cVcSweI9Qzz4ovGNiTWURh71/q/L1KLsZ1jAIlvOYl0XFbiZKXy2J63ufrYaVIu2+zBVUDv5W0D8xK2Kj6pMHXWZzl0gyDYMANnJf5WD/ClYCPkCaPOn6fyIAuMt5V0OfolkJPA6XRUpM+uO5t68FYA9DmEuG4zTdGpHoCPhHR3rQ8Ck879VqV9VARrl4uQpb/fVMpKZYfJIQEoHkfYeBTj7wkAla65J33NUuPRrcG3ICw6GEU8MElVocFuvmZGpZ/xByOgYL3XWDYe7DJWZgGlYC9uwBBAIJECNW6JvNq3aNfU/0S8l+sA11fEHs0yDZ/kcjk/SgKj3sO5EdEAvwXZncHSeeOYCW3el1n4zhBI1rjs85F2xN33qsv0vKxzQ5PXFibZ1gox/NJpbXrAyYPK3oGnIS0Gv4j6Mx00HsYmk8qGJMqvhEYwQ3CBbbK4O496L7dnADKEnEkuW7j1TLZ4iM/+Nw/BSEGe1GifQRlXmu9Kwzi+6kvvpKxJpcv8JNehRL21ma5YKGUtixD1XzTe3ukP9n6tt+mI3lZ3Ig85SnRxP+7aAIo8tya4LtsIc1Bcjcnj9IMPQFfuCWYsfSsSveCnUDsstbQKV2prlrcOc2J4Q/QVr0TPpNjSBiwsBuWrmn8y+y1VTT7WkaUt0JCt8cY6lMhJ/73SHcSGKgng4P7AkmHkoxTmjcITUPkMFIuPOyfL89ft+JrW+LewlLM5k7yiQ==" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
 </html>
