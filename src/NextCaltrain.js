@@ -1,9 +1,9 @@
 let prefs = new Preferences(caltrainServiceData.southStops);
 let service = new CaltrainService();
 let app = false;
-let kaios1 = false;
-let kaios2 = false;
-let kaios = false;
+let kaiWeb1 = false;
+let kaiWeb2 = false;
+let kaiWeb = false;
 let schedule = null;
 let countdown = null;
 let trainId = null;
@@ -50,12 +50,12 @@ class NextCaltrain {
 
   static startApp() {
     if (document.location.search === '?app') app = true;
-    else if (document.location.search === '?kaios1' ||
-      navigator.userAgent.indexOf('KaiOS/1') !== -1) kaios1 = true;
-    else if (document.location.search === '?kaios2' ||
-      navigator.userAgent.indexOf('KAIOS/2') !== -1) kaios2 = true;
-    kaios = (kaios1 || kaios2);
-    if (app || !kaios) {
+    else if (document.location.search === '?kaiWeb1' ||
+      navigator.userAgent.toLowerCase().indexOf('kaios/1') > -1) kaiWeb1 = true;
+    else if (document.location.search === '?kaiWeb2' ||
+      navigator.userAgent.toLowerCase().indexOf('kaios/2') > -1) kaiWeb2 = true;
+    kaiWeb = (kaiWeb1 || kaiWeb2);
+    if (app || !kaiWeb) {
       if (!app) {
         document.getElementById('keypad').style['display'] = 'flex';
       }
@@ -79,11 +79,11 @@ class NextCaltrain {
   }
 
   static formatHints() {
-    if (!kaios) hints = hints.slice(0, 5);
+    if (!kaiWeb) hints = hints.slice(0, 5);
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2].replace(/\[/g, '<span class=\'btn\'>').replace(/\]/g, '</span>');
-        if (kaios1) hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
+        if (kaiWeb1) hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
       }
     }
   }
@@ -292,7 +292,7 @@ class NextCaltrain {
       document.getElementById(`${screens[i]}-screen`).style['display'] = display;
     }
     // set softkey menu
-    if (!kaios) {
+    if (!kaiWeb) {
       if (target === 'hero') {
         NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
       } else if (target === 'grid') {
@@ -313,7 +313,7 @@ class NextCaltrain {
       NextCaltrain.loadSchedule();
     }
     // request full sreen when KaiOS/2
-    if (kaios2) {
+    if (kaiWeb2) {
       if (target === 'grid' || target === 'trip') {
         try {
           document.documentElement.requestFullscreen();
@@ -326,6 +326,21 @@ class NextCaltrain {
   }
 
   static attachListeners() {
+    // https://www.kaiads.com/publishers/sdk.html
+    document.addEventListener('DOMContentLoaded', () => {
+      if (app) { // only when Kaios App
+        getKaiAd({
+          publisher: '8400043d-1768-4179-8a02-6bc7f7e62a25',
+          app: 'NextCaltrain',
+          slot: 'mainAdUnit',
+          test: 0,
+          onerror: err => console.error('Custom catch:', err),
+          onready: ad => {
+            ad.call('display')
+          }
+        })
+      }
+    });
     // Return to the hero screen when EXIT from fullscreen.
     document.onfullscreenchange = function (e) {
       if (document.fullscreenElement) {
@@ -338,13 +353,13 @@ class NextCaltrain {
       }
     };
     document.addEventListener('mousemove', function (e) {
-      if (!kaios) return;
+      if (!kaiWeb) return;
       skip = skip ? false : true;
       // Display splash screen unless cursor all-the-way right
-      if (kaios && splash && e.clientX >= 239) {
+      if (kaiWeb && splash && e.clientX >= 239) {
         splash = false;
         NextCaltrain.displayScreen('hero');
-      } else if (kaios && !splash && e.clientX < 239) {
+      } else if (kaiWeb && !splash && e.clientX < 239) {
         splash = true;
         NextCaltrain.displayScreen('splash');
       // Convert cursor movements to UP/DOWN events
@@ -371,7 +386,7 @@ class NextCaltrain {
     });
     // Catch and convert cursor click to OK event.
     document.addEventListener('click', function (e) {
-      if (kaios) {
+      if (kaiWeb) {
         NextCaltrain.press(OK);
       }
     });
@@ -447,7 +462,7 @@ class NextCaltrain {
         NextCaltrain.popupMenu('hide');
       }
     } else if (code === 'menu') {
-      if (kaios2 && document.fullscreenElement) document.exitFullscreen();
+      if (kaiWeb2 && document.fullscreenElement) document.exitFullscreen();
       if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
       NextCaltrain.popupMenu('show');
     } else if (NextCaltrain.currentScreen() === 'trip') {
