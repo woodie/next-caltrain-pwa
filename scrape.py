@@ -62,6 +62,8 @@ def parse_schedule_data(schedule, direction):
       times = tr.select('th')
       for td in tr.select('td'):
         row.append(_parse_time(td.text))
+      if len(row) < len(header):
+        row.extend([None] * (len(header) - len(row)))
       rows.append(row[0:len(header)])
   with open('data/%s_%s.csv' % (schedule, direction), mode='w') as out_file:
     csv_writer = csv.writer(out_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
