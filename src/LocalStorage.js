@@ -1,4 +1,4 @@
-class Preferences {
+class LocalStorage {
 
   constructor(stations) {
     this.stations = stations;

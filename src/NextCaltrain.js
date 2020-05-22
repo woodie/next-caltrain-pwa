@@ -1,4 +1,4 @@
-let prefs = new Preferences(caltrainServiceData.southStops);
+let prefs = new LocalStorage(caltrainServiceData.southStops);
 let service = new CaltrainService();
 let app = false;
 let kaiWeb1 = false;
