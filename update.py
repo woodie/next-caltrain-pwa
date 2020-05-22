@@ -106,7 +106,7 @@ def parse_schedule_data(stops):
   return _times
 
 def write_schedule_data(times, stops):
-  with open('src/caltrainServiceData.js', 'w') as f:
+  with open('src/@caltrainServiceData.js', 'w') as f:
     f.write("var caltrainServiceData = {\n")
     stat = os.stat('CT-GTFS/stop_times.txt')
     creation = 0
