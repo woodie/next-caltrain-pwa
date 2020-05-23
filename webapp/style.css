@@ -432,7 +432,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #content.part-screen > #minibar { display: none; }
 #content.full-screen > #hero-screen > #hero-filler { display: flex; }
 #content.part-screen > #hero-screen > #hero-filler { display: none; }
-#content.full-screen > #grid-screen > #fillbar { display: none; }
+#content.full-screen > #grid-screen > .fillbar { display: none; }
 #content.part-screen > #grid-screen > #schedule > #trip4 { display: none; }
 #content.part-screen > #grid-screen > #schedule > #trip5 { display: none; }
 #content.part-screen > #menu-screen { height: 228px; }
