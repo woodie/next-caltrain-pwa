@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --minified --out-file webapp/script.js"
+    "_todo": "babel src --minified --out-file webapp/script.js",
+    "build": "babel src --out-file webapp/script.js"
   },
   "repository": {
     "type": "git",

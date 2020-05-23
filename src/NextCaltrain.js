@@ -14,8 +14,7 @@ let vh = 228;
 let splash = false;
 let hintIndex = -1;
 let menuIndex = 0;
-let menuOptions;
-let listing;
+let listing = null;
 
 const OK = 13;
 const BACK = 95;
@@ -35,17 +34,14 @@ let hints = [
     'Use [1] and [3] keys to<br/>set your origin station.'],
   ['Set destination', [4,6],
     'Use [4] and [6] keys to<br/>set destination station.'],
-  ['Change schedule', [2],
-    'Press [2] to cycle through<br/>available schedules.'],
   ['Flip direction', ['c'],
     'Press the [CALL] button to<br/>flip the selected stations'],
-  ['Save stations', ['l'],
-    'Press the [LEFT] softkey to<br/>select "Save Stations".'],
-  ['Bookmark app', ['r'],
-    'Press the [RIGHT] softkey to<br/>select "Pin to Apps Menu".'],
-  ['Usability Caveats',
-    'The cursor (pointer)<br/>is not used by this app<br/>so we keep it to the right.',
-    'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
+  ['Change schedule', ['l'],
+    'Press the [LEFT] softkey<br/>to cycle through schedules.'],
+  ['Save stations', ['r'],
+    'Press the [RIGHT] softkey<br/>once to "Save Stations".'],
+  ['Bookmark app', ['l'],
+    'Press the [RIGHT] softkey<br/>twice to "Pin to Apps Menu".']];
 
 class NextCaltrain {
 
@@ -73,7 +69,6 @@ class NextCaltrain {
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
     listing = document.getElementById('listing');
-    menuOptions = document.getElementById('menu-list').getElementsByTagName('li');
     document.getElementById('date-string').innerHTML = dateString;
     NextCaltrain.attachListeners();
     NextCaltrain.setTheTime();
@@ -117,6 +112,7 @@ class NextCaltrain {
   }
 
   static moveMenuSelection() {
+    let menuOptions = document.getElementById('menu-list').getElementsByTagName('li');
     if (menuIndex >= menuOptions.length) {
       menuIndex = 0;
     } else if (menuIndex < 0) {
@@ -294,17 +290,17 @@ class NextCaltrain {
     // set softkey menu
     if (!kaiWeb) {
       if (target === 'hero') {
-        NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', '');
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Options');
       } else if (target === 'grid') {
-        NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', 'Back');
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Options');
       } else if (target === 'trip') {
-        NextCaltrain.populateSoftkeyMenu('Menu', '', 'Back');
+        NextCaltrain.populateSoftkeyMenu('', 'BACK', 'Options');
       } else if (target === 'menu') {
-        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Back');
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', '');
       } else if (target === 'about') {
         NextCaltrain.populateSoftkeyMenu('', 'OK', '');
       } else if (target === 'commands') {
-        NextCaltrain.populateSoftkeyMenu('', 'NEXT', 'Cancel');
+        NextCaltrain.populateSoftkeyMenu('', 'NEXT', '');
       }
     }
     // set the title
@@ -314,22 +310,12 @@ class NextCaltrain {
     if (target === 'grid' || target === 'hero') {
       NextCaltrain.loadSchedule();
     }
-    // request full sreen when KaiOS/2
-    if (kaiWeb2) {
-      if (target === 'grid' || target === 'trip') {
-        document.documentElement.requestFullscreen().catch(err => {
-          alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-        });
-      } else if (target !== 'hero') {
-        document.exitFullscreen();
-      }
-    }
   }
 
   static attachListeners() {
     // https://www.kaiads.com/publishers/sdk.html
     document.addEventListener('DOMContentLoaded', () => {
-      if (app) { // only when Kaios App
+      if (app && navigator.userAgent.toLowerCase().indexOf('kaios/2') > -1) {
         getKaiAd({
           publisher: '8400043d-1768-4179-8a02-6bc7f7e62a25',
           app: 'NextCaltrain',
@@ -342,17 +328,6 @@ class NextCaltrain {
         });
       }
     });
-    // Return to the hero screen when EXIT from fullscreen.
-    document.onfullscreenchange = function (e) {
-      if (document.fullscreenElement) {
-        document.getElementById('content').className = 'full-screen';
-        vh = 320;
-      } else {
-        document.getElementById('content').className = 'part-screen';
-        vh = 228;
-        NextCaltrain.displayScreen(splash ? 'splash' : 'hero');
-      }
-    };
     document.addEventListener('mousemove', function (e) {
       if (!kaiWeb) return;
       skip = skip ? false : true;
@@ -386,7 +361,7 @@ class NextCaltrain {
       }
     });
     // Catch and convert cursor click to OK event.
-    document.addEventListener('click', function (e) {
+    document.addEventListener('click', function () {
       if (kaiWeb) {
         NextCaltrain.press(OK);
       }
@@ -403,20 +378,24 @@ class NextCaltrain {
         } else {
           return;
         }
-      } else if (e.key === 'SoftLeft' || code === 220) {
-        code = 'menu';
+      } else if (e.key === 'Call' || code === 220) {
+        code = 'flip';
+      } else if (e.key === 'SoftLeft' || e.key === '[') {
+        code = 'cycle';
         // Supress native SEARCH action.
         e.preventDefault();
-      } else if (e.key === 'SoftRight' && app) {
-        code = BACK;
-        // Maintain OPTIONS menu unless app
-      } else if (e.key === 'Call') {
-        code = 'flip';
+      } else if (e.key === 'SoftRight' || e.key === ']') {
+        if (NextCaltrain.currentScreen() !== 'menu') {
+          // Support native OPTIONS on menu screen.
+          e.preventDefault();
+          code = 'menu';
+        } else {
+          code = BACK;
+        }
       } else if (e.key === '1' || e.key === '3') {
         // Catch 1,3 to stifle zoom in/out.
         e.preventDefault();
       } else if (e.key === '2') {
-        code = 'cycle';
         // Catch 2 to stifle screen lock.
         e.preventDefault();
       } else if (code === OK) {
@@ -430,7 +409,7 @@ class NextCaltrain {
   static press(code) {
     if (splash) return;
     if (code === ESC) {
-      // Simulate EXIT from fullscreen mode.
+      // Simulate EXIT.
       NextCaltrain.displayScreen('hero');
     } else if (code === 'prefs') {
       // Display the 'Save stations' confirmation.
@@ -461,6 +440,7 @@ class NextCaltrain {
     } else if (NextCaltrain.currentScreen() === 'menu') {
       // Handle and catch events intended for the menu.
       if (code === OK) {
+        let menuOptions = document.getElementById('menu-list').getElementsByTagName('li');
         let action = menuOptions[menuIndex].getAttribute('value');
         menuIndex = 0;
         if (action === 'prefs') NextCaltrain.displayScreen('hero');
@@ -475,7 +455,6 @@ class NextCaltrain {
       }
       NextCaltrain.moveMenuSelection();
     } else if (code === 'menu') {
-      if (kaiWeb2 && document.fullscreenElement) document.exitFullscreen();
       menuIndex = 0;
       NextCaltrain.displayScreen('menu');
     } else if (NextCaltrain.currentScreen() === 'trip') {
@@ -512,8 +491,6 @@ class NextCaltrain {
       } else if (code === 54) { // 6
         offset = null;
         prefs.bumpStations(false, true);
-        // } else if (code === 55) { // 7
-        // } else if (code === 57) { // 9
       } else if (code === 'flip') {
         offset = null;
         prefs.flipStations();
