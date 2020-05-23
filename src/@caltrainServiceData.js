@@ -1,3 +1,4 @@
+/* exported caltrainServiceData */
 var caltrainServiceData = {
 
   northStops: [

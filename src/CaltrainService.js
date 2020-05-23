@@ -3,6 +3,7 @@ const saturdayTripIds = [421,443,442,444]; // Saturday Only
 /**
 * A utility to simplify working with caltrainServiceData.
 * Some odd structures as this is a port from a Java app.
+* exported CaltrainService
 */
 class CaltrainService {
 

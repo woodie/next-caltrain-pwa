@@ -1,3 +1,4 @@
+/* exported CaltrainTrip */
 class CaltrainTrip {
 
   /**

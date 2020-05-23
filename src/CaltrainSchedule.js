@@ -17,6 +17,7 @@ const scheduleOptions = [
 //'Modified' // 3
 ];
 
+/* exported CaltrainSchedule */
 class CaltrainSchedule {
 
   constructor(goodTime) {

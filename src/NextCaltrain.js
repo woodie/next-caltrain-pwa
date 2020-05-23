@@ -15,6 +15,7 @@ let splash = false;
 let hintIndex = -1;
 let menuIndex = 0;
 let menuOptions;
+let listing;
 
 const OK = 13;
 const BACK = 95;
@@ -28,7 +29,6 @@ const DOWN = 40;
 
 const screens = 'splash hero grid trip menu about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
-const email = 'next-caltrain@netpress.com';
 
 let hints = [
   ['Set your origin', [1,3],
@@ -72,7 +72,7 @@ class NextCaltrain {
     }
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
-    const listing = document.getElementById('listing');
+    listing = document.getElementById('listing');
     menuOptions = document.getElementById('menu-list').getElementsByTagName('li');
     document.getElementById('date-string').innerHTML = dateString;
     NextCaltrain.attachListeners();
@@ -118,9 +118,9 @@ class NextCaltrain {
 
   static moveMenuSelection() {
     if (menuIndex >= menuOptions.length) {
-      menuIndex = 0
+      menuIndex = 0;
     } else if (menuIndex < 0) {
-      menuIndex = menuOptions.length - 1
+      menuIndex = menuOptions.length - 1;
     }
     for (let i = 0; i < menuOptions.length; i++) {
       menuOptions[i].className = menuIndex === i ? 'selected' : '';
@@ -173,7 +173,7 @@ class NextCaltrain {
     let trip = new CaltrainTrip(train, schedule.label());
     let lines = [];
     for (let i=0; i < trip.times.length; i++) {
-      stop = trip.times[i];
+      let stop = trip.times[i];
       let spacer = (i === 0) ? '' : '|';
       let fullTime = GoodTimes.fullTime(stop[1]);
       let filler = fullTime.length > 6 ? '' : '0';
@@ -317,10 +317,9 @@ class NextCaltrain {
     // request full sreen when KaiOS/2
     if (kaiWeb2) {
       if (target === 'grid' || target === 'trip') {
-        try {
-          document.documentElement.requestFullscreen();
-        } catch (e) {
-        }
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        });
       } else if (target !== 'hero') {
         document.exitFullscreen();
       }
@@ -338,9 +337,9 @@ class NextCaltrain {
           test: 0,
           onerror: err => console.error('Custom catch:', err),
           onready: ad => {
-            ad.call('display')
+            ad.call('display');
           }
-        })
+        });
       }
     });
     // Return to the hero screen when EXIT from fullscreen.
@@ -368,14 +367,14 @@ class NextCaltrain {
       } else if (e.mozMovementY > 0) {
         NextCaltrain.press(DOWN);
         if (skip) {
-           NextCaltrain.press(DOWN);
-           skip = false;
+          NextCaltrain.press(DOWN);
+          skip = false;
         }
       } else if (e.mozMovementY < 0) {
         NextCaltrain.press(UP);
         if (skip) {
-           NextCaltrain.press(UP);
-           skip = false;
+          NextCaltrain.press(UP);
+          skip = false;
         }
       // Infer UP/DOWN when cursor bottoms/tops out
       } else if (e.mozMovementX === 0 && !skip) {

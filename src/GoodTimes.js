@@ -1,6 +1,4 @@
-/**
- * A utility to simplify working with the date and time.
- */
+/* exported GoodTimes */
 class GoodTimes{
 
   constructor() {

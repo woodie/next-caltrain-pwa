@@ -1,3 +1,4 @@
+/* exported LocalStorage */
 class LocalStorage {
 
   constructor(stations) {
