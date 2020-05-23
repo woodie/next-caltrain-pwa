@@ -1,15 +1,11 @@
 {
   "name": "next-caltrain-pwa",
   "version": "1.0.0",
-  "description": "This is a Caltrain Schedule for modern Alcatel flip phones. The Alcatel `GO FLIP` and `SMARTFLIP` phones run on `KaiOS` which incorporates a modern Firefox browser with geo location capabilities. The `SMARTFLIP` supports full-screen mode but the `GO FLIP` does not, so this scredule will function in both modes.",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "description": "Caltrain opporates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
+  "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "_todo": "babel src --minified --out-file webapp/script.js",
-    "build": "babel src --out-file webapp/script.js"
+    "build": "babel src --minified --out-file webapp/script.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +13,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/woodie/next-caltrain-pwa/issues"
   },

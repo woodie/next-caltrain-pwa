@@ -39,8 +39,8 @@ let hints = [
   ['Change schedule', ['l'],
     'Press the [LEFT] softkey<br/>to cycle through schedules.'],
   ['Save stations', ['r'],
-    'Press the [RIGHT] softkey<br/>once to "Save Stations".'],
-  ['Bookmark app', ['l'],
+    'Press the [RIGHT] softkey<br/>and select "Save Stations".'],
+  ['Bookmark app', ['r'],
     'Press the [RIGHT] softkey<br/>twice to "Pin to Apps Menu".']];
 
 class NextCaltrain {
@@ -91,7 +91,7 @@ class NextCaltrain {
       hintIndex = -1;
       NextCaltrain.displayScreen('hero');
       return;
-    } else if (hintIndex == hints.length - 1 && app) {
+    } else if (hintIndex == hints.length - 1) {
       NextCaltrain.populateSoftkeyMenu('', 'OK', '');
     }
     document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
