@@ -12,6 +12,9 @@ let goodTime = null;
 let skip = false;
 let vh = 228;
 let splash = false;
+let hintIndex = -1;
+let menuIndex = 0;
+let menuOptions;
 
 const OK = 13;
 const BACK = 95;
@@ -23,7 +26,7 @@ const DOWN = 40;
 // const POUND = 163;
 // const ZERO = 48;
 
-const screens = 'splash hero grid trip about commands'.split(' ');
+const screens = 'splash hero grid trip menu about commands'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
 const email = 'next-caltrain@netpress.com';
 
@@ -43,8 +46,6 @@ let hints = [
   ['Usability Caveats',
     'The cursor (pointer)<br/>is not used by this app<br/>so we keep it to the right.',
     'The left softkey label should<br/>read [MENU] but cannot be<br/>changed by this type of app.']];
-
-let hintIndex = -1;
 
 class NextCaltrain {
 
@@ -72,6 +73,7 @@ class NextCaltrain {
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
     const listing = document.getElementById('listing');
+    menuOptions = document.getElementById('menu-list').getElementsByTagName('li');
     document.getElementById('date-string').innerHTML = dateString;
     NextCaltrain.attachListeners();
     NextCaltrain.setTheTime();
@@ -111,6 +113,17 @@ class NextCaltrain {
       document.getElementById('mini-keypad').style['display'] = 'none';
       document.getElementById('hint-center').style['display'] = 'block';
       document.getElementById('hint-center').innerHTML = hints[hintIndex][1];
+    }
+  }
+
+  static moveMenuSelection() {
+    if (menuIndex >= menuOptions.length) {
+      menuIndex = 0
+    } else if (menuIndex < 0) {
+      menuIndex = menuOptions.length - 1
+    }
+    for (let i = 0; i < menuOptions.length; i++) {
+      menuOptions[i].className = menuIndex === i ? 'selected' : '';
     }
   }
 
@@ -265,19 +278,6 @@ class NextCaltrain {
     }
   }
 
-  static popupMenu(action) {
-    let popupElement = document.getElementById('popup-menu');
-    if (action === 'show') {
-      popupElement.style['display'] = 'block';
-      popupElement.selectedIndex = 3;
-      popupElement.focus();
-    } else if (action === 'hide') {
-      popupElement.style['display'] = 'none';
-    } else {
-      NextCaltrain.press(action);
-    }
-  }
-
   static currentScreen() {
     for (let i = 0; i < screens.length; i++) {
       if (document.getElementById(`${screens[i]}-screen`).style['display'] === 'flex') return screens[i];
@@ -299,6 +299,8 @@ class NextCaltrain {
         NextCaltrain.populateSoftkeyMenu('Menu', 'SELECT', 'Back');
       } else if (target === 'trip') {
         NextCaltrain.populateSoftkeyMenu('Menu', '', 'Back');
+      } else if (target === 'menu') {
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Back');
       } else if (target === 'about') {
         NextCaltrain.populateSoftkeyMenu('', 'OK', '');
       } else if (target === 'commands') {
@@ -454,17 +456,29 @@ class NextCaltrain {
         NextCaltrain.bumpKeypadHint();
       } else if (code == BACK) {
         hintIndex = -1;
+        // set title
         NextCaltrain.displayScreen('hero');
       }
-    } else if (document.getElementById('popup-menu').style['display'] === 'block') {
-      // Handle and catch events intended for the popup menu.
-      if (code === OK || code === BACK) {
-        NextCaltrain.popupMenu('hide');
+    } else if (NextCaltrain.currentScreen() === 'menu') {
+      // Handle and catch events intended for the menu.
+      if (code === OK) {
+        let action = menuOptions[menuIndex].getAttribute('value');
+        menuIndex = 0;
+        if (action === 'prefs') NextCaltrain.displayScreen('hero');
+        NextCaltrain.press(action);
+      } else if (code == UP) {
+        menuIndex--;
+      } else if (code == DOWN) {
+        menuIndex++;
+      } else if (code === BACK) {
+        menuIndex = 0;
+        NextCaltrain.displayScreen('hero');
       }
+      NextCaltrain.moveMenuSelection();
     } else if (code === 'menu') {
       if (kaiWeb2 && document.fullscreenElement) document.exitFullscreen();
-      if (NextCaltrain.currentScreen() !== 'hero') NextCaltrain.displayScreen('hero');
-      NextCaltrain.popupMenu('show');
+      menuIndex = 0;
+      NextCaltrain.displayScreen('menu');
     } else if (NextCaltrain.currentScreen() === 'trip') {
       // Handle events for the trip screen.
       if (code === OK || code === BACK) {

@@ -27,8 +27,55 @@ div:hover { cursor: default; }
   flex-direction: column;
 }
 
+#hero-filler {
+  display: flex;
+}
+
 .hour-filler {
   color: black;
+}
+
+#menu-screen {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: #EEE;
+  overflow: hidden;
+  width: 240px;
+}
+
+#menu-content > h2 {
+  color: #333;
+  background-color: #CCC;
+  font-size: 12pt;
+  font-weight: lighter;
+  line-height: 33px;
+  overflow: hidden;
+  margin: 0;
+}
+
+#menu-screen > .fillbar {
+  flex: 1;
+}
+
+#menu-list {
+  text-align: left;
+  font-size: 12pt;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menu-list > li {
+  color: #333;
+  background-color: white;
+  line-height: 48px;
+  padding-left: 10px;
+}
+
+#menu-list > li.selected {
+  color: white;
+  background-color: #8840FF;
 }
 
 #trip-filler {
@@ -44,9 +91,6 @@ div:hover { cursor: default; }
   width: 240px;
 }
 
-#hero-filler {
-  display: flex;
-}
 
 .fake-titlebar {
   color: black;
@@ -196,9 +240,8 @@ div:hover { cursor: default; }
   height: 100px;
 }
 
-#fillbar {
+.fillbar {
   background-image: linear-gradient(#888, black);
-  height: 23px;
 }
 
 #popup-menu {
@@ -257,6 +300,10 @@ div:hover { cursor: default; }
   background-color: black;
   width: 240px;
   overflow: hidden;
+}
+
+#grid-screen > .fillbar {
+  height: 23px;
 }
 
 #trip-screen {
@@ -388,6 +435,8 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #content.full-screen > #grid-screen > #fillbar { display: none; }
 #content.part-screen > #grid-screen > #schedule > #trip4 { display: none; }
 #content.part-screen > #grid-screen > #schedule > #trip5 { display: none; }
+#content.part-screen > #menu-screen { height: 228px; }
+#content.full-screen > #menu-screen { height: 263px; }
 #content.part-screen > #grid-screen { height: 228px; }
 #content.full-screen > #grid-screen { height: 263px; }
 #content.part-screen > #trip-screen > #trip-filler {  display: none; }

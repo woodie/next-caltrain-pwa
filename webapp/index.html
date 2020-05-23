@@ -105,19 +105,23 @@
             <div id="trip"></div><span id="trip-type"></span>
           </div>
         </div>
-        <select id="popup-menu" style="display: none;"
-          onblur="NextCaltrain.popupMenu('hide')"
-          onchange="NextCaltrain.popupMenu(this.value)">
-          <option value="about"> About Next Caltrain </option>
-          <option value="commands"> Keypad commands </option>
-          <option value="prefs"> Save stations </option>
-          <option value="hide" selected></option>
-        </select>
+      </div>
+    </div>
+
+    <div id="menu-screen" style="display: none;">
+      <div class="fillbar"></div>
+      <div id="menu-content">
+        <h2>Menu Options</h2>
+        <ul id="menu-list">
+          <li class="selected" value="about">About Next Caltrain</li>
+          <li value="commands">Keypad Commands</li>
+          <li value="prefs">Save Stations</li>
+        </ul>
       </div>
     </div>
 
     <div id="grid-screen" class="full-screen" style="display: none;">
-      <div id="fillbar"></div>
+      <div class="fillbar"></div>
       <div>
         <span id="origin-grid">Origin to</span><br>
         <span id="destin-grid">Destination</span>
