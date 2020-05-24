@@ -1,6 +1,7 @@
 {
   "name": "nextcaltrain",
   "display_name": "Next Caltrain",
+  "subhead": "Train schedule and trip planner for commuters.",
   "slogan": "",
   "Description": "Caltrain operates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
   "Select App Category": "Utilities",
