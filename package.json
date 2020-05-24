@@ -5,7 +5,8 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --minified --out-file webapp/script.js"
+    "build": "babel src --minified --out-file webapp/script.js",
+    "deploy": "gcloud app deploy app.yaml --quiet --project=next-caltrain-pwa"
   },
   "repository": {
     "type": "git",

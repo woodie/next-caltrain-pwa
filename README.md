@@ -25,27 +25,21 @@ After making JS changes, `npm run build`, then browse `webapp/index.html`.
 ## Project Status
 
 This app is fully functional, with support for Weekday, Saturday and Sunday Schedules.
-Trips that require a transfer stop should be supported. From your KaiOS phone, visit:
+Trips that require a transfer stop should also be supported. From any KaiOS phone, visit:
 http://next-caltrain-pwa.appspot.com
 
-We're able to convert `mousemove` events to the associated D-Pad events,
-and we're able to override browser `keydown` events on the keypad and
-softkeys. Unfortunately, we can't change or softkey labels, but explain
-the left softwey should read `MENU`.
+When the app is installed with WebIDE, we get D-Pad events and can change the softkey labels.
+When simply running in the browser, we have two major limitations. We need to convert `mousemove`
+events to the associated D-Pad events which is tricky, and we can't change the softkey labels
+so we have two sets of options from the same softkey.
 
-### Website on KaiOS 1.0 phones
+### Web App on KaiOS phones
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.2.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.3.png)
 
-### Website on KaiOS 2.5 phones
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.1.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.2.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/2.3.png)
-
-### Packaged Kaios App (sideload with WebIDE)
+### Hosted Kaios App (sideload with WebIDE)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
