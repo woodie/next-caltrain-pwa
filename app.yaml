@@ -12,12 +12,6 @@ handlers:
   static_files: webapp/index.html
   upload: webapp/index.html
 
-- url: /(.+\.(appcache))
-  static_files: webapp/manifest.appcache
-  upload: webapp/manifest.appcache
-  mime_type: text/cache-manifest
-  expiration: "0s"
-
 - url: /(.+\.(webapp))
   static_files: webapp/manifest.webapp
   upload: webapp/manifest.webapp
