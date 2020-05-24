@@ -1,0 +1,17 @@
+{
+  "name": "nextcaltrain",
+  "display_name": "Next Caltrain",
+  "slogan": "",
+  "Description": "Caltrain operates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
+  "Select App Category": "Utilities",
+  "kaiads_enabled": true,
+  "latest_version": "1.00",
+  "paid": false",
+  "site_url": "https://next-caltrain-pwa.appspot.com/manifest.webapp",
+  "type": "hosted",
+  "developer": {
+    "name": "John Woodell",
+    "email": "woodie@netpress.com",
+    "roles": ["Primary", "Engineer"]
+  }
+}
