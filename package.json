@@ -1,6 +1,6 @@
 {
   "name": "next-caltrain-pwa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Caltrain opporates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
   "main": "script.js",
   "scripts": {
