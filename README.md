@@ -33,6 +33,11 @@ When simply running in the browser, we have two major limitations. We need to co
 events to the associated D-Pad events which is tricky, and we can't change the softkey labels
 so we have two sets of options from the same softkey.
 
+This app is avialable from the KaiStore.
+
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-listing.png) &nbsp;
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-details.png)
+
 ### Web App on KaiOS phones
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.1.png) &nbsp;

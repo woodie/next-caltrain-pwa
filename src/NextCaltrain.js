@@ -47,6 +47,7 @@ let hints = [
   ['Bookmark app', ['r'],
     'Press the [RIGHT] softkey<br/>twice to "Pin to Apps Menu".']];
 
+/* exported NextCaltrain */
 class NextCaltrain {
 
   static startApp() {
