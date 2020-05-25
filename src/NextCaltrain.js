@@ -10,11 +10,15 @@ let trainId = null;
 let offset = null;
 let goodTime = null;
 let skip = false;
-let vh = 228;
 let splash = false;
 let hintIndex = -1;
 let menuIndex = 0;
 let listing = null;
+let vh = 228;
+// window.innerWidth  240
+// window.innerHeight 228
+// window.outerWidth  240
+// window.outerHeight 320
 
 const OK = 13;
 const BACK = 95;
@@ -52,10 +56,7 @@ class NextCaltrain {
     else if (document.location.search === '?kaiWeb2' ||
       navigator.userAgent.toLowerCase().indexOf('kaios/2') > -1) kaiWeb2 = true;
     kaiWeb = (kaiWeb1 || kaiWeb2);
-    if (app || !kaiWeb) {
-      if (!app) {
-        document.getElementById('keypad').style['display'] = 'flex';
-      }
+    if (!kaiWeb) {
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('about-filler').style['display'] = 'flex';
       document.getElementById('commands-filler').style['display'] = 'flex';
@@ -65,6 +66,10 @@ class NextCaltrain {
       document.getElementById('hero-screen').style['display'] = 'none';
       document.getElementById('splash-screen').style['display'] = 'flex';
       splash = true;
+    }
+    // render a keyboard
+    if (window.outerHeight > 320) {
+      document.getElementById('keypad').style['display'] = 'flex';
     }
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
