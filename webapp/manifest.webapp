@@ -1,12 +1,13 @@
 {
-  "version": "1.0.1",
+  "version": "1.01",
   "name": "Next Caltrain",
+  "subtitle": "Train schedule and trip planner for commuters.",
   "description": "Caltrain operates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
   "launch_path": "/index.html?app",
   "categories": ["utilities"],
   "cursor": false,
   "ime_default_softkey_bar": true,
-  "fullscreen": "true",
+  "fullscreen": true,
   "orientation": "portrait",
   "icons": {
     "56": "/icons/ic_NextCaltrain_56.png",
@@ -23,7 +24,7 @@
   "locales": {
     "en-US": {
       "name": "Next Caltrain",
-      "subtitle": "Schedule for Caltrain in Northern California.",
+      "subtitle": "Train schedule and trip planner for commuters.",
       "description": "Caltrain operates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones."
     }
   },
