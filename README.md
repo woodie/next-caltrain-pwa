@@ -35,8 +35,9 @@ so we have two sets of options from the same softkey.
 
 This app is avialable from the KaiStore.
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-listing.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-details.png)
+<kbd><img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-listing.png" /></kbd>
+&nbsp;
+<kbd><img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-details.png" /></kbd>
 
 ### Web App on KaiOS phones
 
