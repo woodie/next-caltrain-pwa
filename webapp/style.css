@@ -78,6 +78,39 @@ div:hover { cursor: default; }
   background-color: #8840FF;
 }
 
+#prefs-screen {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: #EEE;
+  overflow: hidden;
+  width: 240px;
+}
+
+#prefs-content > h2 {
+  color: #333;
+  background-color: #CCC;
+  font-size: 12pt;
+  font-weight: lighter;
+  line-height: 33px;
+  overflow: hidden;
+  margin: 0;
+}
+
+#prefs-screen > .fillbar {
+  flex: 1;
+}
+
+#confirmation {
+  color: black;
+  background-color: white;
+  text-align: left;
+  font-size: 12pt;
+  list-style-type: none;
+  margin: 0;
+  padding: 10px 15px;
+}
+
 #trip-filler {
   display: flex;
   justify-content: center;
@@ -437,6 +470,8 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #content.part-screen > #grid-screen > #schedule > #trip5 { display: none; }
 #content.part-screen > #menu-screen { height: 228px; }
 #content.full-screen > #menu-screen { height: 263px; }
+#content.part-screen > #prefs-screen { height: 228px; }
+#content.full-screen > #prefs-screen { height: 263px; }
 #content.part-screen > #grid-screen { height: 228px; }
 #content.full-screen > #grid-screen { height: 263px; }
 #content.part-screen > #trip-screen > #trip-filler {  display: none; }

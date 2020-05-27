@@ -30,7 +30,7 @@ const DOWN = 40;
 // const POUND = 163;
 // const ZERO = 48;
 
-const screens = 'splash hero grid trip menu about commands'.split(' ');
+const screens = 'splash hero grid trip menu about commands prefs'.split(' ');
 const titles = {'about':'About Next Caltrain', 'commands':'Keypad commands'};
 
 let hints = [
@@ -69,7 +69,7 @@ class NextCaltrain {
       splash = true;
     }
     // render a keyboard
-    if (window.outerHeight > 320) {
+    if (window.outerHeight > 320 && !kaiWeb) {
       document.getElementById('keypad').style['display'] = 'flex';
     }
     // setup the app state
@@ -97,7 +97,7 @@ class NextCaltrain {
       hintIndex = -1;
       NextCaltrain.displayScreen('hero');
       return;
-    } else if (hintIndex == hints.length - 1) {
+    } else if (hintIndex === hints.length - 1) {
       NextCaltrain.populateSoftkeyMenu('', 'OK', '');
     }
     document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
@@ -107,7 +107,7 @@ class NextCaltrain {
       document.getElementById('hint-center').style['display'] = 'none';
       for (let i = 1; i < 15; i++) {
         let key = (i < 10) ? i : ['l','r','c','o','h'][i - 10];
-        let cls = hints[hintIndex][1].indexOf(key) == -1 ? 'default' : 'selected';
+        let cls = hints[hintIndex][1].indexOf(key) === -1 ? 'default' : 'selected';
         document.getElementById(`k${key}`).className = cls;
       }
     } else {
@@ -303,6 +303,8 @@ class NextCaltrain {
         NextCaltrain.populateSoftkeyMenu('', 'BACK', 'Options');
       } else if (target === 'menu') {
         NextCaltrain.populateSoftkeyMenu('', 'SELECT', '');
+      } else if (target === 'prefs') {
+        NextCaltrain.populateSoftkeyMenu('Cancel', '', 'OK');
       } else if (target === 'about') {
         NextCaltrain.populateSoftkeyMenu('', 'OK', '');
       } else if (target === 'commands') {
@@ -385,19 +387,15 @@ class NextCaltrain {
           return;
         }
       } else if (e.key === 'Call' || code === 220) {
-        code = 'flip';
+        code = 'call';
       } else if (e.key === 'SoftLeft' || e.key === '[') {
-        code = 'cycle';
+        code = 'sl';
         // Supress native SEARCH action.
         e.preventDefault();
       } else if (e.key === 'SoftRight' || e.key === ']') {
-        if (NextCaltrain.currentScreen() !== 'menu') {
-          // Support native OPTIONS on menu screen.
-          e.preventDefault();
-          code = 'menu';
-        } else {
-          code = BACK;
-        }
+        code = 'sr';
+        // Support native OPTIONS on menu screen.
+        if (NextCaltrain.currentScreen() !== 'menu') e.preventDefault();
       } else if (e.key === '1' || e.key === '3') {
         // Catch 1,3 to stifle zoom in/out.
         e.preventDefault();
@@ -421,7 +419,9 @@ class NextCaltrain {
       // Display the 'Save stations' confirmation.
       let confirmation = ['Save', (prefs.flipped ? prefs.destin : prefs.origin), 'as morning and',
         (prefs.flipped ? prefs.origin : prefs.destin), 'as evening default stations?'].join(' ');
-      if (confirm(confirmation)) prefs.saveStops();
+      //if (confirm(confirmation)) prefs.saveStops();
+      document.getElementById('confirmation').innerHTML = confirmation;
+      NextCaltrain.displayScreen('prefs');
     } else if (code === 'about') {
       // Display the 'About' screen.
       NextCaltrain.displayScreen('about');
@@ -431,16 +431,23 @@ class NextCaltrain {
       NextCaltrain.displayScreen('commands');
     } else if (NextCaltrain.currentScreen() === 'about') {
       // Handle events on the 'About' screen.
-      if (code == OK || code == BACK) {
+      if (code === OK || code === BACK) {
         NextCaltrain.displayScreen('hero');
       }
     } else if (NextCaltrain.currentScreen() === 'commands') {
       // Handle events on the 'Keypad commands' screen.
-      if (code == OK) {
+      if (code === OK) {
         NextCaltrain.bumpKeypadHint();
-      } else if (code == BACK) {
+      } else if (code === BACK) {
         hintIndex = -1;
         // set title
+        NextCaltrain.displayScreen('hero');
+      }
+    } else if (NextCaltrain.currentScreen() === 'prefs') {
+      if ((kaiWeb && code === OK) || (!kaiWeb && code === 'sr')) {
+        prefs.saveStops();
+        NextCaltrain.displayScreen('hero');
+      } else if ((kaiWeb && code === BACK) || (!kaiWeb && code === 'sl')) {
         NextCaltrain.displayScreen('hero');
       }
     } else if (NextCaltrain.currentScreen() === 'menu') {
@@ -449,18 +456,18 @@ class NextCaltrain {
         let menuOptions = document.getElementById('menu-list').getElementsByTagName('li');
         let action = menuOptions[menuIndex].getAttribute('value');
         menuIndex = 0;
-        if (action === 'prefs') NextCaltrain.displayScreen('hero');
+        //if (action === 'prefs') NextCaltrain.displayScreen('hero');
         NextCaltrain.press(action);
-      } else if (code == UP) {
+      } else if (code === UP) {
         menuIndex--;
-      } else if (code == DOWN) {
+      } else if (code === DOWN) {
         menuIndex++;
       } else if (code === BACK) {
         menuIndex = 0;
         NextCaltrain.displayScreen('hero');
       }
       NextCaltrain.moveMenuSelection();
-    } else if (code === 'menu') {
+    } else if (code === 'sr') {
       menuIndex = 0;
       NextCaltrain.displayScreen('menu');
     } else if (NextCaltrain.currentScreen() === 'trip') {
@@ -497,10 +504,10 @@ class NextCaltrain {
       } else if (code === 54) { // 6
         offset = null;
         prefs.bumpStations(false, true);
-      } else if (code === 'flip') {
+      } else if (code === 'call') {
         offset = null;
         prefs.flipStations();
-      } else if (code === 'cycle') {
+      } else if (code === 'sl') {
         // clearTimeout(countdown);
         schedule.next();
         offset = null;
