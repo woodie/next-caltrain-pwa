@@ -336,6 +336,25 @@ class NextCaltrain {
         });
       }
     });
+    document.addEventListener('touchstart', function(e) {
+      let code = null;
+      if (e.target.id === 'softkey-center') {
+        code = OK;
+      } else if (e.target.id === 'softkey-left') {
+        code = 'sl';
+      } else if (e.target.id === 'softkey-right') {
+        code = 'sr';
+      } else if (e.target.getAttribute('value') === 'about') {
+        code = 'about';
+      } else if (e.target.getAttribute('value') === 'commands') {
+        code = 'commands';
+      } else if (e.target.getAttribute('value') === 'prefs') {
+        code = 'prefs';
+      } else {
+        return;
+      }
+      NextCaltrain.press(code);
+    });
     document.addEventListener('mousemove', function (e) {
       if (!kaiWeb) return;
       skip = skip ? false : true;
