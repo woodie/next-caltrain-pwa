@@ -18,9 +18,13 @@ This app runs in the KaiOS browser for phones without access to the store. The a
 This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
 
-## Development
+Early on, we decided not to use any frameworks, not even jQuery. This app is just vanilla JS, HTML and CSS.
+
+## Develop and Deploy
 
 After making JS changes, `npm run build`, then browse `webapp/index.html`.
+
+Deploy to App Engine with `npm run deploy` (after updating the project name in `package.json`.
 
 ## Project Status
 
@@ -33,19 +37,19 @@ When simply running in the browser, we have two major limitations. We need to co
 events to the associated D-Pad events which is tricky, and we can't change the softkey labels
 so we have two sets of options from the same softkey.
 
-This app is avialable from the KaiStore.
+This app is avialable from [the KaiStore](https://www.kaiostech.com/store/apps/?bundle_id=com.netpress.nextcaltrain).
 
 <kbd><img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-listing.png" /></kbd>
 &nbsp;
 <kbd><img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-details.png" /></kbd>
 
-### Web App on KaiOS phones
+### Website in KaiOS browser
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.2.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.3.png)
 
-### Hosted Kaios App (sideload with WebIDE)
+### Hosted App from KaiStore
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
