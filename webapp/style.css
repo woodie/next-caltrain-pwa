@@ -352,7 +352,7 @@ div:hover { cursor: default; }
   white-space: nowrap;
 }
 
-#minibar {
+#statusbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -461,8 +461,8 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #listing::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px black; }
 #listing::-webkit-scrollbar-thumb { -webkit-box-shadow: inset 0 0 6px #666; }
 
-#content.full-screen > #minibar { display: flex; }
-#content.part-screen > #minibar { display: none; }
+#content.full-screen > #statusbar { display: flex; }
+#content.part-screen > #statusbar { display: none; }
 #content.full-screen > #hero-screen > #hero-filler { display: flex; }
 #content.part-screen > #hero-screen > #hero-filler { display: none; }
 #content.full-screen > #grid-screen > .fillbar { display: none; }
