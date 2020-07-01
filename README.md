@@ -65,5 +65,5 @@ This app is avialable from [the KaiStore](https://www.kaiostech.com/store/apps/?
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help5.png)
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.png)
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
 
