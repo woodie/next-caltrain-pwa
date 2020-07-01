@@ -14,21 +14,21 @@ var ipCurrentPageDefID="21";
 var ipCurrentTemplateID="4";
 //-->
 </script>
-<script src="/scripts/ip-utilities.js?ver=14.2.152.0" type="text/javascript"></script>
+<script src="/scripts/ip-utilities.js?ver=20.1.65.0" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
 ipjPageSiteID=3;
 ipjPageSiteGroupID=0;
 //-->
 </script>
-<script src="/scripts/ip-ulaccordion.js?ver=14.2.152.0" type="text/javascript"></script>
+<script src="/scripts/ip-ulaccordion.js?ver=20.1.65.0" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
 //-->
 </script>
 <meta name="description" content=""/>
 <meta name="Generator" content="IronPoint v7"/>
-<meta name="UpdateDateTime" content="5/17/2020 11:52:38 AM"/>
+<meta name="UpdateDateTime" content="6/24/2020 1:50:33 PM"/>
 
 <title>Weekday Timetable</title>
 
@@ -180,8 +180,15 @@ window.onload=tablecollapse;
 
 </script>
 <script>
+var browser = navigator.appName
 if (location.protocol !== 'https:') {
-location.replace(`https:${location.href.substring(location.protocol.length)}`);
+location.replace("https:${location.href.substring(location.protocol.length)}");
+if ((browser=="Microsoft Internet Explorer" || browser=="Netscape"))
+{
+var locationSubstring = location.href.substring(location.protocol.length)
+var locationString = "https:" + locationSubstring
+window.location=locationString;
+}
 }
 </script>
 
@@ -192,7 +199,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NWTTZ9H');</script>
 <!-- End Google Tag Manager -->
-<script type="text/javascript" src="http://nexus.ensighten.com/choozle/2643/Bootstrap.js"></script>
+<script type="text/javascript" src="https://nexus.ensighten.com/choozle/2643/Bootstrap.js"></script>
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -207,6 +214,7 @@ fbq('track', "PageView");</script>
 src="https://www.facebook.com/tr?id=772610419548473&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
+<style id="ipf-antiClickjack">body{display:none!important;}</style><script type="text/javascript">if(self===top){var ipfantiClickjack=document.getElementById("ipf-antiClickjack");ipfantiClickjack.parentNode.removeChild(ipfantiClickjack);}else{top.location=self.location;}</script>
 <style>
   @keyframes bottom-up {
     from {
@@ -256,7 +264,7 @@ src="https://www.facebook.com/tr?id=772610419548473&ev=PageView&noscript=1"
 </style>
 
 </head>
-<body id="thebody" class="Level3"><form name="IronPointForm" method="Post" action="/schedules/weekdaytimetable.html" id="IronPointForm" runat="server">
+<body id="thebody" class="Level3"><form name="IronPointForm" method="post" action="/schedules/weekdaytimetable.html" id="IronPointForm">
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
 </div>
@@ -274,7 +282,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     	<div id="top_nav_area">
         	<div id="top_nav"><a href="/sitemap.html">site map</a> | <a href="https://www.smctd.com/BidsContracts.html" title="Bids and Contracts" target="_blank">bids/contracts</a> | <a title="Jobs" href="/about/Jobs.html">jobs</a> | <a title="Contact Us" href="/about/contact.html">contact</a></div>
           	<div id="search">
-<form name="IronPointForm_1" method="Post" id="IronPointForm_1" onsubmit="ipjSubmitIronPointForm(); return false;"><script language=javascript> <!--
+<form name="IronPointForm_1" method="post" id="IronPointForm_1" onsubmit="javascript: ipjSubmitIronPointForm(); return false;"><script language=javascript> <!--
 function SearchPageletSubmit_98(viewModeURL)
 {
 document.forms['IronPointForm'].__VIEWSTATE.name='NOVIEWSTATE';
@@ -296,8 +304,7 @@ ipjSubmitIronPointForm('PageletSubmission');
 
 <ul id="sectionMenuElementID_0" class="ipf-sectionmenu">
 	<li id="pageid11" data-pageid="11" class="ipf-parent ipf-active1" data-level="1"><div><a href="/schedules.html">Schedules</a></div>
-	<ul>
-		<li id="pageid21" data-pageid="21" class="ipf-active2" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
+	<ul>		<li id="pageid21" data-pageid="21" class="ipf-active2" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
 		<li id="pageid3438" data-pageid="3438" data-level="2"><a href="/schedules/weekend-timetable.html">Weekend Timetable</a></li>
 		<li id="pageid195" data-pageid="195" data-level="2"><a href="/schedules/holidayservice.html">Holiday Service</a></li>
 		<li id="pageid240" data-pageid="240" data-level="2"><a href="/schedules/PDF_Schedules.html">PDF Schedules</a></li>
@@ -305,16 +312,15 @@ ipjSubmitIronPointForm('PageletSubmission');
 		<li id="pageid22" data-pageid="22" data-level="2"><a href="/schedules/tripplanners.html">Trip Planners</a></li>
 		<li id="pageid23" data-pageid="23" data-level="2"><a href="/schedules/Shuttles.html">Shuttles</a></li>
 		<li id="pageid5443" data-pageid="5443" data-level="2"><a href="/schedules/Special_Events.html">Special Events</a></li>
+		<li id="pageid6691" data-pageid="6691" data-level="2"><a href="/schedules/ABlimited.html">A/B Limited Schedule</a></li>
 	</ul>
 	</li>
 	<li id="pageid12" data-pageid="12" class="ipf-parent" data-level="1"><div><a href="/stations.html">Stations</a></div>
-	<ul>
-		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
+	<ul>		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
 	</ul>
 	</li>
 	<li id="pageid13" data-pageid="13" class="ipf-parent" data-level="1"><div><a href="/Fares.html">Fares</a></div>
-	<ul>
-		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
+	<ul>		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
 		<li id="pageid26" data-pageid="26" data-level="2"><a href="/Fares/tickettypes.html">Ticket Types</a></li>
 		<li id="pageid29" data-pageid="29" data-level="2"><a href="/Fares/howtobuy.html">How to Buy</a></li>
 		<li id="pageid5419" data-pageid="5419" data-level="2"><a href="/Fares/Fare_Evasion_Policy.html">Fare Evasion Policy</a></li>
@@ -325,9 +331,7 @@ ipjSubmitIronPointForm('PageletSubmission');
 	</ul>
 	</li>
 	<li id="pageid14" data-pageid="14" class="ipf-parent" data-level="1"><div><a href="/riderinfo.html">Rider Information</a></div>
-	<ul>
-		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
-		<li id="pageid6161" data-pageid="6161" data-level="2"><a href="/riderinfo/get_rewarded.html">Get Rewarded</a></li>
+	<ul>		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
 		<li id="pageid15" data-pageid="15" data-level="2"><a href="/riderinfo/Accessibility.html">Accessibility</a></li>
 		<li id="pageid31" data-pageid="31" data-level="2"><a href="/riderinfo/destinations.html">Destinations</a></li>
 		<li id="pageid32" data-pageid="32" data-level="2"><a href="/riderinfo/connections.html">Transit Connections</a></li>
@@ -344,16 +348,14 @@ ipjSubmitIronPointForm('PageletSubmission');
 	</ul>
 	</li>
 	<li id="pageid16" data-pageid="16" class="ipf-parent" data-level="1"><div><a href="/projectsplans.html">Projects &amp; Plans</a></div>
-	<ul>
-		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
+	<ul>		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
 		<li id="pageid46" data-pageid="46" data-level="2"><a href="/projectsplans/Plans.html">Plans</a></li>
 		<li id="pageid1617" data-pageid="1617" data-level="2"><a href="/projectsplans/CaltrainModernization.html">Caltrain Modernization</a></li>
 		<li id="pageid5225" data-pageid="5225" data-level="2"><a href="/projectsplans/Business_Plan.html">Business Plan</a></li>
 	</ul>
 	</li>
 	<li id="pageid79" data-pageid="79" class="ipf-parent" data-level="1"><div><a href="/about.html">About Caltrain</a></div>
-	<ul>
-		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
+	<ul>		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
 		<li id="pageid6158" data-pageid="6158" data-level="2"><a href="/about/Meetings.html">Meetings</a></li>
 		<li id="pageid81" data-pageid="81" data-level="2"><a href="/about/bod.html">Board of Directors</a></li>
 		<li id="pageid129" data-pageid="129" data-level="2"><a href="/about/advisorycommittees.html">Advisory Committees</a></li>
@@ -391,7 +393,7 @@ ipjInitUnorderedListMenuItemsActive("sectionMenuElementID_0");
     <div id="content" class="clear">
     
     	<div id="ticker-wrap"><div id="ticker" style="position: relative;">
-<a href="http://www.caltrain.com/schedules/realtime/stations/Service_Alerts.html" id="service-alerts" style="background-color: #c7202f; display: table-cell; position: absolute; top: 1px; z-index: 1; vertical-align: middle; padding: 2px 10px; color: #ffffff; text-transform: uppercase; left: 0px; font-size: inherit; border: none; letter-spacing: 1.1px; font-weight: bold; cursor: pointer; text-decoration: none;">Alerts
+<a href="https://www.caltrain.com/schedules/realtime/stations/Service_Alerts.html" id="service-alerts" style="background-color: #c7202f; display: table-cell; position: absolute; top: 1px; z-index: 1; vertical-align: middle; padding: 2px 10px; color: #ffffff; text-transform: uppercase; left: 0px; font-size: inherit; border: none; letter-spacing: 1.1px; font-weight: bold; cursor: pointer; text-decoration: none;">Alerts
 </a>
 <script language="JavaScript1.2">
 
@@ -415,17 +417,17 @@ var pauseit=1
 //Specify the marquee's content (don't delete <nobr> tag)
 //Keep all content on ONE line, and backslash any single quotations (ie: that\'s great):
 
-/*var marqueecontent='<nobr> <a href="http://www.caltrain.com/alerts">System-Wide Construction, Check here for Current Advisories.</a></nobr>';*/
+/*var marqueecontent='<nobr> <a href="https://www.caltrain.com/alerts">System-Wide Construction, Check here for Current Advisories.</a></nobr>';*/
 
-//var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Caltrain_Service_Closure.html">SF Weekend Closure – Feb 22-Mar 29</a></nobr>';
+//var marqueecontent='<nobr> <a href="https://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Caltrain_Service_Closure.html">SF Weekend Closure – Feb 22-Mar 29</a></nobr>';
 
 
-//var marqueecontent='<nobr> <a href="http://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain: Novel Coronavirus (COVID-19)</a></nobr>';
+//var marqueecontent='<nobr> <a href="https://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain: Novel Coronavirus (COVID-19)</a></nobr>';
 
 var marqueecontent='<nobr> <a href="https://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">COVID-19: Latest Updates</a></nobr>';
 
 
-//var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/Weekend_SF_Caltrain_Closure.html">Additional SF Weekend Caltrain Closures April 20-21, May 4-5, June 1-2 and June 22-23.</a> &nbsp; &nbsp; &nbsp; <a href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019.html">New Timetable Changes Effective April 1.</a> &nbsp; &nbsp; &nbsp; <a lang="es"  href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Spanish.html">Cierre de servicio adicional para fines de semana en SF el 20/4-21/4, 04/5-05/5, 01/6-02/6 y 22/6-23/6</a> &nbsp; &nbsp; &nbsp; <a lang="es" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Spanish.html">Nuevos cambios en itinerario que entran en vigor el 1 de abril.</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Trad_Chinese.html">其他三藩市周末服務關閉：4/20-4/21, 5/4-5/5, 6/1-6/2和6/22-6/23。</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Chinese.html">新時間表改變，由4月1日起生效。</a></nobr>';
+//var marqueecontent='<nobr> <a href="https://www.caltrain.com/riderinfo/newsletterandnotices/Weekend_SF_Caltrain_Closure.html">Additional SF Weekend Caltrain Closures April 20-21, May 4-5, June 1-2 and June 22-23.</a> &nbsp; &nbsp; &nbsp; <a href="https://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019.html">New Timetable Changes Effective April 1.</a> &nbsp; &nbsp; &nbsp; <a lang="es"  href="https://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Spanish.html">Cierre de servicio adicional para fines de semana en SF el 20/4-21/4, 04/5-05/5, 01/6-02/6 y 22/6-23/6</a> &nbsp; &nbsp; &nbsp; <a lang="es" href="https://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Spanish.html">Nuevos cambios en itinerario que entran en vigor el 1 de abril.</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="https://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Trad_Chinese.html">其他三藩市周末服務關閉：4/20-4/21, 5/4-5/5, 6/1-6/2和6/22-6/23。</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="https://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Chinese.html">新時間表改變，由4月1日起生效。</a></nobr>';
 
 ////NO NEED TO EDIT BELOW THIS LINE////////////
 marqueespeed=(document.all)? marqueespeed : Math.max(1, marqueespeed-1) //slow speed down by 1 for NS
@@ -500,8 +502,7 @@ document.write('</td></table>')
 
 <ul id="sectionMenuElementID_1" class="ipf-sectionmenu">
 	<li id="pageid11" data-pageid="11" class="ipf-parent ipf-active1" data-level="1"><div><a href="/schedules.html">Schedules</a></div>
-	<ul rel="open">
-		<li id="pageid21" data-pageid="21" class="ipf-active2" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
+	<ul rel="open">		<li id="pageid21" data-pageid="21" class="ipf-active2" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
 		<li id="pageid3438" data-pageid="3438" data-level="2"><a href="/schedules/weekend-timetable.html">Weekend Timetable</a></li>
 		<li id="pageid195" data-pageid="195" data-level="2"><a href="/schedules/holidayservice.html">Holiday Service</a></li>
 		<li id="pageid240" data-pageid="240" data-level="2"><a href="/schedules/PDF_Schedules.html">PDF Schedules</a></li>
@@ -509,16 +510,15 @@ document.write('</td></table>')
 		<li id="pageid22" data-pageid="22" data-level="2"><a href="/schedules/tripplanners.html">Trip Planners</a></li>
 		<li id="pageid23" data-pageid="23" data-level="2"><a href="/schedules/Shuttles.html">Shuttles</a></li>
 		<li id="pageid5443" data-pageid="5443" data-level="2"><a href="/schedules/Special_Events.html">Special Events</a></li>
+		<li id="pageid6691" data-pageid="6691" data-level="2"><a href="/schedules/ABlimited.html">A/B Limited Schedule</a></li>
 	</ul>
 	</li>
 	<li id="pageid12" data-pageid="12" class="ipf-parent" data-level="1"><div><a href="/stations.html">Stations</a></div>
-	<ul>
-		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
+	<ul>		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
 	</ul>
 	</li>
 	<li id="pageid13" data-pageid="13" class="ipf-parent" data-level="1"><div><a href="/Fares.html">Fares</a></div>
-	<ul>
-		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
+	<ul>		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
 		<li id="pageid26" data-pageid="26" data-level="2"><a href="/Fares/tickettypes.html">Ticket Types</a></li>
 		<li id="pageid29" data-pageid="29" data-level="2"><a href="/Fares/howtobuy.html">How to Buy</a></li>
 		<li id="pageid5419" data-pageid="5419" data-level="2"><a href="/Fares/Fare_Evasion_Policy.html">Fare Evasion Policy</a></li>
@@ -529,9 +529,7 @@ document.write('</td></table>')
 	</ul>
 	</li>
 	<li id="pageid14" data-pageid="14" class="ipf-parent" data-level="1"><div><a href="/riderinfo.html">Rider Information</a></div>
-	<ul>
-		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
-		<li id="pageid6161" data-pageid="6161" data-level="2"><a href="/riderinfo/get_rewarded.html">Get Rewarded</a></li>
+	<ul>		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
 		<li id="pageid15" data-pageid="15" data-level="2"><a href="/riderinfo/Accessibility.html">Accessibility</a></li>
 		<li id="pageid31" data-pageid="31" data-level="2"><a href="/riderinfo/destinations.html">Destinations</a></li>
 		<li id="pageid32" data-pageid="32" data-level="2"><a href="/riderinfo/connections.html">Transit Connections</a></li>
@@ -548,16 +546,14 @@ document.write('</td></table>')
 	</ul>
 	</li>
 	<li id="pageid16" data-pageid="16" class="ipf-parent" data-level="1"><div><a href="/projectsplans.html">Projects &amp; Plans</a></div>
-	<ul>
-		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
+	<ul>		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
 		<li id="pageid46" data-pageid="46" data-level="2"><a href="/projectsplans/Plans.html">Plans</a></li>
 		<li id="pageid1617" data-pageid="1617" data-level="2"><a href="/projectsplans/CaltrainModernization.html">Caltrain Modernization</a></li>
 		<li id="pageid5225" data-pageid="5225" data-level="2"><a href="/projectsplans/Business_Plan.html">Business Plan</a></li>
 	</ul>
 	</li>
 	<li id="pageid79" data-pageid="79" class="ipf-parent" data-level="1"><div><a href="/about.html">About Caltrain</a></div>
-	<ul>
-		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
+	<ul>		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
 		<li id="pageid6158" data-pageid="6158" data-level="2"><a href="/about/Meetings.html">Meetings</a></li>
 		<li id="pageid81" data-pageid="81" data-level="2"><a href="/about/bod.html">Board of Directors</a></li>
 		<li id="pageid129" data-pageid="129" data-level="2"><a href="/about/advisorycommittees.html">Advisory Committees</a></li>
@@ -615,7 +611,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
                         <div class="addthis_toolbox addthis_default_style" style="margin:0; padding:0; float:left;">
                         <!--<a href="http://www.addthis.com/bookmark.php?v=250&pub=xa-4b0e17fd67bc8665" class="addthis_button_compact"></a>-->
                         </div>
-                        <!--<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4b0e17fd67bc8665"></script>-->
+                        <!--<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4b0e17fd67bc8665"></script>-->
                         <!-- AddThis Button END -->
                         </div>
                         <div class="print button"><a href="javascript: ipjOpenPrintPage('/schedules/weekdaytimetable.html?PageMode=Print');" class="ipb"></a></div>
@@ -643,17 +639,21 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     white-space: nowrap;
     }
     tbody th {
-    background-color: #FAF1F1;
+    background-color: #edf7eb;
     border-top: 1px solid #CCC;
+    color: #000000;
+    font-weight: lighter;
     }
     tbody th#even {
-    background-color: #F7DEDF;
+    background-color: #D7DFD5;
+    color: #000000;
+    font-weight: lighter;
     }
     tbody th.center {
     text-align: center;
     }
     tr#zoneline{
-    border-bottom: 2px solid #555555;
+    border-bottom: 2px solid #D2565D;
     }
     /*Northbound Timetable*/
     .NB {
@@ -663,14 +663,31 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     border-top: 1px solid #CCC;
     border-bottom: 1px solid #CCC;
     }
-    /*NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(7),  .NB_TT tr td:nth-child(9), .NB_TT tr td:nth-child(12), .NB_TT tr td:nth-child(14), .NB_TT tr td:nth-child(17), .NB_TT tr td:nth-child(32), .NB_TT tr td:nth-child(35), .NB_TT tr td:nth-child(37), .NB_TT tr td:nth-child(40), .NB_TT tr td:nth-child(42){
-    background-color: #F0B2A1;} *//*light red*/
+    .NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(8), .NB_TT tr td:nth-child(11), .NB_TT tr td:nth-child(14),  .NB_TT tr td:nth-child(25), .NB_TT tr td:nth-child(28), .NB_TT tr td:nth-child(31)
+    {
+    background-color: #FCEDC6; /*Light Yellow - Passed color*/
+    }
+    .NB_TT tr td:nth-child(6), .NB_TT tr td:nth-child(9), .NB_TT tr td:nth-child(12), .NB_TT tr td:nth-child(15), .NB_TT tr td:nth-child(26), .NB_TT tr td:nth-child(29), .NB_TT tr td:nth-child(32)
+    {
+    background-color: #F6DD84;/*Yellow - Passed color*/
+    }
+    /*Southbound*/
+    .SB_TT tr td:nth-child(5), .SB_TT tr td:nth-child(8), .SB_TT tr td:nth-child(11), .SB_TT tr td:nth-child(23), .SB_TT tr td:nth-child(26), .SB_TT tr td:nth-child(29), .SB_TT tr td:nth-child(32)
+    {
+    background-color: #FCEDC6; /*Light Yellow - Passed color*/
+    }
+    .SB_TT tr td:nth-child(6), .SB_TT tr td:nth-child(9), .SB_TT tr td:nth-child(12), .SB_TT tr td:nth-child(14), .SB_TT tr td:nth-child(24), .SB_TT tr td:nth-child(27), .SB_TT tr td:nth-child(30), .SB_TT tr td:nth-child(33)
+    {
+    background-color: #F6DD84; /*Light Yellow - Passed color*/
+    }
+    /*NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(7),  .NB_TT tr td:nth-child(9), .NB_TT tr td:nth-child(12), .NB_TT tr td:nth-child(14), .NB_TT tr td:nth-child(17), .NB_TT tr td:nth-child(32), .NB_TT tr td:nth-child(35), .NB_TT tr td:nth-child(37), .NB_TT tr td:nth-child(40), .NB_TT tr td:nth-child(42)
+    {background-color: #F0B2A1;} *//*light red*/
     /* .NB_TT tr td:nth-child(6), .NB_TT tr td:nth-child(8), .NB_TT tr td:nth-child(10), .NB_TT tr td:nth-child(11), .NB_TT tr td:nth-child(13), .NB_TT tr td:nth-child(15), .NB_TT tr td:nth-child(16), .NB_TT tr td:nth-child(18), .NB_TT tr td:nth-child(19), .NB_TT tr td:nth-child(21), .NB_TT tr td:nth-child(28), .NB_TT tr td:nth-child(30), .NB_TT tr td:nth-child(31), .NB_TT tr td:nth-child(33), .NB_TT tr td:nth-child(34), .NB_TT tr td:nth-child(36), .NB_TT tr td:nth-child(38), .NB_TT tr td:nth-child(39), .NB_TT tr td:nth-child(41), .NB_TT tr td:nth-child(43), .NB_TT tr td:nth-child(44){
     background-color: #FCEDC6; }*/ /*yellow*/
-    .NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(6), .NB_TT tr td:nth-child(7), .NB_TT tr td:nth-child(8), .NB_TT tr td:nth-child(17), .NB_TT tr td:nth-child(18), .NB_TT tr td:nth-child(19), .NB_TT tr td:nth-child(20), .NB_TT tr td:nth-child(28), .NB_TT tr td:nth-child(30), .NB_TT tr td:nth-child(31), .NB_TT tr td:nth-child(33), .NB_TT tr td:nth-child(34), .NB_TT tr td:nth-child(36), .NB_TT tr td:nth-child(38), .NB_TT tr td:nth-child(39), .NB_TT tr td:nth-child(41), .NB_TT tr td:nth-child(43), .NB_TT tr td:nth-child(44), .NB_TT tr td:nth-child(47){
-    background-color: #FCEDC6; }
-    .NB_TT tr td:nth-child(20), .NB_TT tr td:nth-child(22), .NB_TT tr td:nth-child(23), .NB_TT tr td:nth-child(24), .NB_TT tr td:nth-child(25), .NB_TT tr td:nth-child(26), .NB_TT tr td:nth-child(27), .NB_TT tr td:nth-child(29), .NB_TT tr td:nth-child(45), .NB_TT tr td:nth-child(46), .NB_TT tr td:nth-child(47), .NB_TT tr td:nth-child(48), .NB_TT tr td:nth-child(49),{
-    background-color: #FFFFFF;
+    /*.NB_TT tr td:nth-child(5), .NB_TT tr td:nth-child(6), .NB_TT tr td:nth-child(7), .NB_TT tr td:nth-child(8), .NB_TT tr td:nth-child(17), .NB_TT tr td:nth-child(18), .NB_TT tr td:nth-child(19), .NB_TT tr td:nth-child(20), .NB_TT tr td:nth-child(28), .NB_TT tr td:nth-child(30), .NB_TT tr td:nth-child(31), .NB_TT tr td:nth-child(33), .NB_TT tr td:nth-child(34), .NB_TT tr td:nth-child(36), .NB_TT tr td:nth-child(38), .NB_TT tr td:nth-child(39), .NB_TT tr td:nth-child(41), .NB_TT tr td:nth-child(43), .NB_TT tr td:nth-child(44), .NB_TT tr td:nth-child(47)*/
+    {background-color: #FCEDC6; }
+    /*.NB_TT tr td:nth-child(20), .NB_TT tr td:nth-child(22), .NB_TT tr td:nth-child(23), .NB_TT tr td:nth-child(24), .NB_TT tr td:nth-child(25), .NB_TT tr td:nth-child(26), .NB_TT tr td:nth-child(27), .NB_TT tr td:nth-child(29), .NB_TT tr td:nth-child(45), .NB_TT tr td:nth-child(46), .NB_TT tr td:nth-child(47), .NB_TT tr td:nth-child(48), .NB_TT tr td:nth-child(49),*/
+    {background-color: #FFFFFF;
     }
     /*.NB_TT td:nth-child(n+25):nth-child(-n+49){
     font-weight: bold;
@@ -689,8 +706,8 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     background-color: #F0B2A1;}*//*light red*/
     /*.SB_TT tr td:nth-child(5), td:nth-child(6), td:nth-child(8), td:nth-child(10), td:nth-child(11), td:nth-child(13), td:nth-child(15), td:nth-child(16), td:nth-child(18), td:nth-child(20), td:nth-child(27), td:nth-child(29), td:nth-child(31), td:nth-child(32), td:nth-child(34), td:nth-child(36), td:nth-child(37), td:nth-child(39), td:nth-child(41), td:nth-child(42), td:nth-child(44){
     background-color: #FCEDC6;}*/ /*yellow*/
-    .SB_TT tr td:nth-child(5), td:nth-child(7), td:nth-child(6), .SB_TT td:nth-child(16), .SB_TT tr td:nth-child(17), .SB_TT td:nth-child(18), .SB_TT td:nth-child(19), .SB_TT td:nth-child(27), .SB_TT td:nth-child(29), td:nth-child(31), td:nth-child(32), td:nth-child(34), td:nth-child(36), td:nth-child(37), td:nth-child(39), td:nth-child(41), td:nth-child(42), td:nth-child(44){
-    background-color: #FCEDC6;}
+    /*.SB_TT tr td:nth-child(5), td:nth-child(7), td:nth-child(6), .SB_TT td:nth-child(16), .SB_TT tr td:nth-child(17), .SB_TT td:nth-child(18), .SB_TT td:nth-child(19), .SB_TT td:nth-child(27), .SB_TT td:nth-child(29), td:nth-child(31), td:nth-child(32), td:nth-child(34), td:nth-child(36), td:nth-child(37), td:nth-child(39), td:nth-child(41), td:nth-child(42), td:nth-child(44){
+    background-color: #FCEDC6;}*/
     /*.SB_TT td:nth-child(n+24):nth-child(-n+48){
     font-weight: bold;
     }
@@ -780,7 +797,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     text-decoration: none;
     }
     .notice-wrapper .notice-body a {
-    color: #005C86;
+    color: #000000;
     }
     .notice-wrapper .notice-body a:hover {
     text-decoration: none;
@@ -798,39 +815,97 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     padding-right: 6px;
     margin-bottom: 10px;
     }
+    /* Section header style*/
+    .caption {
+    display: block;
+    width: 99%;
+    background: #D2565D;
+    height: 30px;
+    padding-left: 10px;
+    color: #fff;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: lighter;
+    box-sizing: border-box;
+    }
+    .wrapper {
+    padding: 20px;
+    max-width: 1100px;
+    width: 95%;
+    }
+    header {
+    padding: 0 15px;
+    }
+    .columns {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 5px 0;
+    text-align: center;
+    line-height: 30px;
+    width: 1600px;
+    }
+    .column {
+    flex: 1;
+    border: none;
+    margin: 8px;
+    background-color: none;
+    border-right: 1px solid #B4C2CB;
+    &:first-child { margin-left: 0; }
+    &:last-child { margin-right: 0; }
+    }
+    h3 {font-size: 24px;}
+    a.pagelink:link,
+    a.pagelink:visited,
+    a.pagelink:hover
+    { color: #FF1D25;
+    }
 </style>
 <div class="notice warning">
-<p><strong>Notice:</strong> In response to a significant decline in ridership stemming from efforts to contain the spread of the coronavirus (COVID-19), Caltrain will be adjusting its weekday service, effective Monday, March 30. Get the latest on <a href="https:/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain’s response</a>.
-</p>
+<p><strong>Notice:</strong> Starting June 15, Caltrain will increase <a href="https:/Page6686.aspx">Weekday Service</a> to 70 trains per day, including Limited trains and 6-car sets to allow for faster travel times and physical distancing onboard. Please see our <a href="https:/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">COVID page</a> for more info.</p>
 </div>
 <!--<p><strong>NEW SCHEDULE Effective March 17, 2020</strong></p>-->
 <!--
 <p>
-<a href="/projectsplans/Plans/SouthSantaClaraCountyService.html" title="South Santa Clara County Service"><img style="margin-bottom: 20px;" alt="Gilroy Morgan Hill Learn More Banner" width="500px" src="/Assets/_Planning/South+Santa+Clara+County+Service/Gilroy+Morgan+Hill+Learn+More+Banner.png" /></a></p>
+<a href="/projectsplans/Plans/SouthSantaClaraCountyService.html?" title="South Santa Clara County Service"><img style="margin-bottom: 20px;" alt="Gilroy Morgan Hill Learn More Banner" width="500px" src="/Assets/_Planning/South+Santa+Clara+County+Service/Gilroy+Morgan+Hill+Learn+More+Banner.png" /></a></p>
 -->
 <!--<p><span style="background-color: #ffffff; font-family: Arial; font-size: 13px;">In response to a significant decline in ridership stemming from efforts to contain the spread of the coronavirus (COVID-19), Caltrain will be adjusting its weekday service, effective Tuesday, March 17.</span></p>-->
-<p><strong>Effective May 16, 2020<br />
-</strong><strong><br />
-Alternative formats<br />
-</strong><strong><br />
-<a href="/schedules/weekdaytimetable/weekday_TT_scrolling.html?" title="Weekday Timetable">View Scrolling Version</a><br />
-</strong><strong><a title="CT_PrinterFriendlySchedule_05-16-2020" href="/Assets/Assets/pdfs/CT_PrinterFriendlySchedule_05-16-2020.pdf">Download PDF Timetables</a></strong></p>
-<p><strong>Legend:</strong> <br />
-<br />
-- Train bypasses station.<br />
-+ Train may leave up to 5 minutes early.<br />
-* Train departure may be delayed up to 15 minutes after Sharks games.<br />
-<br />
-<strong>Types of Service Descriptions:</strong></p>
-<table width="800px" cellspacing="0" cellpadding="4" style="left: 581px; width: 223px; height: 16px;">
+<div class="caption">Effective June 15, 2020</div>
+<div class="wrapper">
+<section class="columns">
+<div class="column">
+<h3>Alternative formats</h3>
+<p><i class="fa fa-angle-double-down" style="font-size:18px;color:red;"></i>&nbsp;<a class="pagelink" href="/schedules/weekdaytimetable/weekday_TT_scrolling/Weekday_Timetable___Scrolling___June_15__2020.html" title="Weekday Timetable Scroll">View Scrolling Version</a></p>
+<p><i class="fa fa-file-pdf-o" style="font-size:18px;color:red;"></i>&nbsp;<a title="CT_PrinterFriendlySchedule_06-15-2020_web" href="/Assets/Assets/pdfs/CT_PrinterFriendlySchedule_06-15-2020_web.pdf">Download PDF Timetables</a></p>
+</div>
+<div class="column">
+<h3>Legend</h3>
+<p><i class="fa fa-minus" aria-hidden="true"></i> Train bypasses station.</p>
+<p>+ Train may leave up to 5 minutes early.</p>
+<p>* Train departure may be delayed up to 15 minutes after   Sharks games.</p>
+</div>
+<div class="column">
+<h3>Types of Service Descriptions</h3>
+<p style="text-align: center;">
+</p>
+<table width="100px" cellspacing="0" cellpadding="6" style="right: 300px; width: 400px; height: 22px;">
     <tbody>
         <tr>
-            <td style="border: 1px solid #000000; width: 10px; text-align: center;">200 Local
-            </td>
+            <td style="border: 1px solid #000000;  text-align: center;"><span style="font-size: 13px;">100 Local
+            </span></td>
+            <!--  <td style="border: 1px solid #000000;  text-align: center; background-color: #bddc9b;"><span style="font-size: 13px;">Timed transfers for local service.</span></td>-->
+            <td style="border: 1px solid #000000;  text-align: center; background-color: #FCEDC6;"><span style="font-size: 13px;">200 Limited A</span></td>
+            <td style="border: 1px solid #000000;  text-align: center; background-color: #F6DD84;"><span style="font-size: 13px;">200 Limited B</span></td>
         </tr>
     </tbody>
 </table>
-<h1 style="text-align: left;">Northbound Service</h1>
+<p><br />
+<strong>Note:</strong> Visit the new <a href="http://www.caltrain.com/schedules/ABlimited.html" title="A/B Limiteds" target="_blank">A/B Limiteds</a>&nbsp;page for more information. </p>
+</div>
+</section>
+</div>
+<br />
+<div class="caption">Northbound Service - Weekday Service to San Francisco</div>
 <table class="NB_TT" summary="Weekday Northbound service" alt="Weekday Northbound service">
     <thead>
         <tr>
@@ -838,824 +913,1275 @@ Alternative formats<br />
             <th>Northbound Train No.</th>
             <th>101</th>
             <th>103</th>
+            <th>205</th>
             <th>207</th>
+            <th>113</th>
+            <th>215</th>
             <th>217</th>
-            <th>221</th>
-            <th>231</th>
-            <th>135</th>
+            <th>123</th>
+            <th>225</th>
+            <th>227</th>
+            <th>133</th>
+            <th>235</th>
+            <th>237</th>
             <th>139</th>
+            <th>141</th>
             <th>143</th>
+            <th>145</th>
             <th>147</th>
+            <th>Northbound Train No.</th>
             <th>151</th>
             <th>155</th>
             <th>159</th>
             <th>261</th>
-            <th>269</th>
-            <th>279</th>
-            <th>289</th>
+            <th>263</th>
+            <th>169</th>
+            <th>271</th>
+            <th>273</th>
+            <th>179</th>
+            <th>281</th>
+            <th>283</th>
+            <th>189</th>
+            <th>191</th>
             <th>193</th>
             <th>195</th>
             <th>197</th>
-            <th>*199</th>
+            <th>199</th>
             <th>Northbound Train No.</th>
             <th>Zone</th>
         </tr>
     </thead>
+    <thead>
+    </thead>
     <tbody>
         <tr>
-            <th id="even">6</th>
-            <th id="even"><a href="/stations/gilroystation.html" title="Gilroy" target="blank">Gilroy</a></th>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6 am">6:06a</td>
-            <td class="zone6 am">6:35a</td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th id="even"><a href="/stations/gilroystation.html" title="Gilroy" target="blank">Gilroy</a></th>
-            <th id="even">6</th>
+            <td style="font-style: italic; text-align: center;"><strong>Service Type</strong></td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="text-align: center;">&nbsp;</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="text-align: center;"><em><strong>Service Type</strong></em></td>
             <td></td>
         </tr>
         <tr>
             <th id="even">6</th>
-            <th id="even"><a href="/stations/sanmartinstation.html" title="San Martin" target="blank">San Martin</a></th>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6 am">6:15a</td>
-            <td class="zone6 am">6:44a</td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th id="even"><a href="/stations/sanmartinstation.html" title="San Martin" target="blank">San Martin</a></th>
+            <th id="even"><a href="/stations/gilroystation.html?" title="Gilroy" target="blank">Gilroy</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:03a</td>
+            <td>&nbsp;</td>
+            <td>6:33a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/gilroystation.html?" title="Gilroy" target="blank">Gilroy</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/gilroystation.html?" title="Gilroy" target="blank">Gilroy</a></th>
             <th id="even">6</th>
-            <td></td>
+        </tr>
+        <tr>
+            <th id="even">6</th>
+            <th id="even"><a href="/stations/sanmartinstation.html?" title="San Martin" target="blank">San Martin</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:12a</td>
+            <td>&nbsp;</td>
+            <td>6:42a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/sanmartinstation.html?" title="San Martin" target="blank">San Martin</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/sanmartinstation.html?" title="San Martin" target="blank">San Martin</a></th>
+            <th id="even">6</th>
         </tr>
         <tr id="zoneline">
             <th id="even">6</th>
-            <th id="even"><a href="/stations/morganhillstation.html" title="Morgan Hill" target="blank">Morgan Hill</a></th>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6 am">6:21a</td>
-            <td class="zone6 am">6:50a</td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th id="even"><a href="/stations/morganhillstation.html" title="Morgan Hill" target="blank">Morgan Hill</a></th>
+            <th id="even"><a href="/stations/morganhillstation.html?" title="Morgan Hill" target="blank">Morgan Hill</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:18a</td>
+            <td>&nbsp;</td>
+            <td>6:48a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/morganhillstation.html?" title="Morgan Hill" target="blank">Morgan Hill</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/morganhillstation.html?" title="Morgan Hill" target="blank">Morgan Hill</a></th>
             <th id="even">6</th>
-            <td></td>
         </tr>
         <tr>
             <th>5</th>
-            <th><a href="/stations/blossomhillstation.html" title="Blossom Hill" target="blank">Blossom Hill</a></th>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5 am">6:36a</td>
-            <td class="zone5 am">7:05a</td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th><a href="/stations/blossomhillstation.html" title="Blossom Hill" target="blank">Blossom Hill</a></th>
+            <th><a href="/stations/blossomhillstation.html?" title="Blossom Hill" target="blank">Blossom Hill</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:34a</td>
+            <td>&nbsp;</td>
+            <td>7:03a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/blossomhillstation.html?" title="Blossom Hill" target="blank">Blossom Hill</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/blossomhillstation.html?" title="Blossom Hill" target="blank">Blossom Hill</a></th>
             <th>5</th>
-            <td></td>
         </tr>
         <tr id="zoneline">
             <th>5</th>
-            <th><a href="/stations/capitolstation.html" title="Capitol" target="blank">Capitol</a></th>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5 am">6:42a</td>
-            <td class="zone5 am">7:11a</td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th><a href="/stations/capitolstation.html" title="Capitol" target="blank">Capitol</a></th>
+            <th><a href="/stations/capitolstation.html?" title="Capitol" target="blank">Capitol</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:40a</td>
+            <td>&nbsp;</td>
+            <td>7:09a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/capitolstation.html?" title="Capitol" target="blank">Capitol</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/capitolstation.html?" title="Capitol" target="blank">Capitol</a></th>
             <th>5</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/tamienstation.html" title="Tamien" target="blank">Tamien</a></th>
-            <td class="zone4"></td>
-            <td class="zone4 am">4:55a</td>
-            <td class="zone4 am">5:51a</td>
-            <td class="zone4 am">6:50a</td>
-            <td class="zone4 am">7:19a</td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4 pm">3:32p</td>
-            <td class="zone4 pm">4:33p</td>
-            <td class="zone4 pm">5:32p</td>
-            <td class="zone4 pm">6:38p</td>
-            <td class="zone4"></td>
-            <td class="zone4 pm">8:37p</td>
-            <td class="zone4 pm">9:37p</td>
-            <td class="zone4"></td>
-            <th id="even"><a href="/stations/tamienstation.html" title="Tamien" target="blank">Tamien</a></th>
+            <th id="even"><a href="/stations/tamienstation.html?" title="Tamien" target="blank">Tamien</a></th>
+            <td>&nbsp;</td>
+            <td>4:56a</td>
+            <td>5:47a</td>
+            <td>6:00a</td>
+            <td>6:19a</td>
+            <td>6:47a</td>
+            <td>6:58a</td>
+            <td>7:16a</td>
+            <td>7:47a</td>
+            <td>&nbsp;</td>
+            <td>8:19a</td>
+            <td>&nbsp;</td>
+            <td>9:00a</td>
+            <td>&nbsp;</td>
+            <td>9:43a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/tamienstation.html?" title="Tamien" target="blank">Tamien</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>3:45p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>4:45p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:00p</td>
+            <td>&nbsp;</td>
+            <td>6:42p</td>
+            <td>&nbsp;</td>
+            <td>8:43p</td>
+            <td>9:43p</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/tamienstation.html?" title="Tamien" target="blank">Tamien</a></th>
             <th id="even">4</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/sanjosediridonstation.html" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
-            <td class="zone4 am">4:28a</td>
-            <td class="zone4 am">5:03a</td>
-            <td class="zone4 am">5:59a</td>
-            <td class="zone4 am">6:59a</td>
-            <td class="zone4 am">7:28a</td>
-            <td class="zone4 am">8:28a</td>
-            <td class="zone4 am">9:13a</td>
-            <td class="zone4 am">10:13a</td>
-            <td class="zone4 am">11:13a</td>
-            <td class="zone4 pm">12:13p</td>
-            <td class="zone4 pm">1:13p</td>
-            <td class="zone4 pm">2:13p</td>
-            <td class="zone4 pm">3:13p</td>
-            <td class="zone4 pm">3:40p</td>
-            <td class="zone4 pm">4:40p</td>
-            <td class="zone4 pm">5:40p</td>
-            <td class="zone4 pm">6:45p</td>
-            <td class="zone4 pm">7:45p</td>
-            <td class="zone4 pm">8:45p</td>
-            <td class="zone4 pm">9:45p</td>
-            <td class="zone4 pm">10:30p</td>
-            <th id="even"><a href="/stations/sanjosediridonstation.html" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
+            <th id="even"><a href="/stations/sanjosediridonstation.html?" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
+            <td>4:28a</td>
+            <td>5:03a</td>
+            <td>5:54a</td>
+            <td>6:07a</td>
+            <td>6:26a</td>
+            <td>6:54a</td>
+            <td>7:07a</td>
+            <td>7:24a</td>
+            <td>7:54a</td>
+            <td>8:07a</td>
+            <td>8:26a</td>
+            <td>8:54a</td>
+            <td>9:07a</td>
+            <td>9:20a</td>
+            <td>9:50a</td>
+            <td>10:50a</td>
+            <td>11:50a</td>
+            <td>12:50p</td>
+            <th id="even"><a href="/stations/sanjosediridonstation.html?" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
+            <td>1:50p</td>
+            <td>2:50p</td>
+            <td>3:20p</td>
+            <td>3:51p</td>
+            <td>4:07p</td>
+            <td>4:25p</td>
+            <td>4:51p</td>
+            <td>5:07p</td>
+            <td>5:25p</td>
+            <td>5:52p</td>
+            <td>6:07p</td>
+            <td>6:25p</td>
+            <td>6:49p</td>
+            <td>7:43p</td>
+            <td>8:50p</td>
+            <td>9:50p</td>
+            <td>10:30p</td>
+            <th id="even"><a href="/stations/sanjosediridonstation.html?" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
             <th id="even">4</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/collegeparkstation.html" title="College Park" target="blank">College Park</a></th>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4 pm">3:16p</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <th id="even"><a href="/stations/collegeparkstation.html" title="College Park" target="blank">College Park</a></th>
+            <th id="even"><a href="/stations/collegeparkstation.html?" title="College Park" target="blank">College Park</a></th>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:28a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <th id="even"><a href="/stations/collegeparkstation.html?" title="College Park" target="blank">College Park</a></th>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>3:24p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <th id="even"><a href="/stations/collegeparkstation.html?" title="College Park" target="blank">College Park</a></th>
             <th id="even">4</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/santaclarastation.html" title="Santa Clara" target="blank">Santa Clara</a></th>
-            <td class="zone4 am">4:33a</td>
-            <td class="zone4 am">5:08a</td>
-            <td class="zone4 am">6:06a</td>
-            <td class="zone4 am">7:06a</td>
-            <td class="zone4 am">7:33a</td>
-            <td class="zone4 am">8:33a</td>
-            <td class="zone4 am">9:18a</td>
-            <td class="zone4 am">10:18a</td>
-            <td class="zone4 am">11:18a</td>
-            <td class="zone4 pm">12:18p</td>
-            <td class="zone4 pm">1:18p</td>
-            <td class="zone4 pm">2:18p</td>
-            <td class="zone4 pm">3:20p</td>
-            <td class="zone4 pm">3:45p</td>
-            <td class="zone4 pm">4:46p</td>
-            <td class="zone4 pm">5:46p</td>
-            <td class="zone4">6:50p</td>
-            <td class="zone4 pm">7:50p</td>
-            <td class="zone4 pm">8:50p</td>
-            <td class="zone4 pm">9:50p</td>
-            <td class="zone4 pm">10:35p</td>
-            <th id="even"><a href="/stations/santaclarastation.html" title="Santa Clara" target="blank">Santa Clara</a></th>
+            <th id="even"><a href="/stations/santaclarastation.html?" title="Santa Clara" target="blank">Santa Clara</a></th>
+            <td>4:34a</td>
+            <td>5:09a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:13a</td>
+            <td>6:32a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:13a</td>
+            <td>7:32a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:13a</td>
+            <td>8:32a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:13a</td>
+            <td>9:26a</td>
+            <td>9:56a</td>
+            <td>10:56a</td>
+            <td>11:56a</td>
+            <td>12:56p</td>
+            <th id="even"><a href="/stations/santaclarastation.html?" title="Santa Clara" target="blank">Santa Clara</a></th>
+            <td>1:56p</td>
+            <td>2:56p</td>
+            <td>3:27p</td>
+            <td>3:58p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:31p</td>
+            <td>4:58p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:31p</td>
+            <td>5:58p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:31p</td>
+            <td>6:55p</td>
+            <td>7:49p</td>
+            <td>8:56p</td>
+            <td>9:56p</td>
+            <td>10:36p</td>
+            <th id="even"><a href="/stations/santaclarastation.html?" title="Santa Clara" target="blank">Santa Clara</a></th>
             <th id="even">4</th>
-            <td></td>
         </tr>
         <tr id="zoneline">
             <th id="even">4</th>
-            <th id="even"><a href="/stations/lawrencestation.html" title="Lawrence" target="blank">Lawrence</a></th>
-            <td class="zone4 am">4:39a</td>
-            <td class="zone4 am">5:13a</td>
-            <td class="zone4 am">6:12a</td>
-            <td class="zone4 am">7:12a</td>
-            <td class="zone4 am">7:39a</td>
-            <td class="zone4">8:39a</td>
-            <td class="zone4 am">9:24a</td>
-            <td class="zone4 am">10:24a</td>
-            <td class="zone4 am">11:24a</td>
-            <td class="zone4 pm">12:24p</td>
-            <td class="zone4 pm">1:24p</td>
-            <td class="zone4 pm">2:24p</td>
-            <td class="zone4 pm">3:25p</td>
-            <td class="zone4 pm">3:50p</td>
-            <td class="zone4 pm">4:54p</td>
-            <td class="zone4 pm">5:54p</td>
-            <td class="zone4 pm">6:55p</td>
-            <td class="zone4 pm">7:55p</td>
-            <td class="zone4 pm">8:55p</td>
-            <td class="zone4 pm">9:55p</td>
-            <td class="zone4 pm">10:40p</td>
-            <th id="even"><a href="/stations/lawrencestation.html" title="Lawrence" target="blank">Lawrence</a></th>
+            <th id="even"><a href="/stations/lawrencestation.html?" title="Lawrence" target="blank">Lawrence</a></th>
+            <td>4:40a</td>
+            <td>5:15a</td>
+            <td>6:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:38a</td>
+            <td>7:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:38a</td>
+            <td>8:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:38a</td>
+            <td>9:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:32a</td>
+            <td>10:02a</td>
+            <td>11:02a</td>
+            <td>12:02p</td>
+            <td>1:02p</td>
+            <th id="even"><a href="/stations/lawrencestation.html?" title="Lawrence" target="blank">Lawrence</a></th>
+            <td>2:02p</td>
+            <td>3:02p</td>
+            <td>3:33p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:17p</td>
+            <td>4:37p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:17p</td>
+            <td>5:37p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:17p</td>
+            <td>6:37p</td>
+            <td>7:01p</td>
+            <td>7:55p</td>
+            <td>9:02p</td>
+            <td>10:02p</td>
+            <td>10:42p</td>
+            <th id="even"><a href="/stations/lawrencestation.html?" title="Lawrence" target="blank">Lawrence</a></th>
             <th id="even">4</th>
-            <td></td>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/sunnyvalestation.html" title="Sunnyvale" target="blank">Sunnyvale</a></th>
-            <td class="zone3 am">4:43a</td>
-            <td class="zone3 am">5:18a</td>
-            <td class="zone3 am">6:20a</td>
-            <td class="zone3 am">7:20a</td>
-            <td class="zone3 am">7:43a</td>
-            <td class="zone3 am">8:44a</td>
-            <td class="zone3 am">9:29a</td>
-            <td class="zone3 am">10:28a</td>
-            <td class="zone3 am">11:28a</td>
-            <td class="zone3 pm">12:28p</td>
-            <td class="zone3 pm">1:28p</td>
-            <td class="zone3 pm">2:28p</td>
-            <td class="zone3 pm">3:30p</td>
-            <td class="zone3 pm">3:57p</td>
-            <td class="zone3 pm">5:00p</td>
-            <td class="zone3 pm">6:00p</td>
-            <td class="zone3">7:00p</td>
-            <td class="zone3 pm">8:00p</td>
-            <td class="zone3 pm">9:00p</td>
-            <td class="zone3 pm">10:00p</td>
-            <td class="zone3 pm">10:45p</td>
-            <th><a href="/stations/sunnyvalestation.html" title="Sunnyvale" target="blank">Sunnyvale</a></th>
+            <th><a href="/stations/sunnyvalestation.html?" title="Sunnyvale" target="blank">Sunnyvale</a></th>
+            <td>4:44a</td>
+            <td>5:19a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:22a</td>
+            <td>6:42a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:22a</td>
+            <td>7:42a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:22a</td>
+            <td>8:42a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:22a</td>
+            <td>9:36a</td>
+            <td>10:07a</td>
+            <td>11:06a</td>
+            <td>12:06p</td>
+            <td>1:06p</td>
+            <th><a href="/stations/sunnyvalestation.html?" title="Sunnyvale" target="blank">Sunnyvale</a></th>
+            <td>2:06p</td>
+            <td>3:06p</td>
+            <td>3:38p</td>
+            <td>4:07p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:41p</td>
+            <td>5:07p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:41p</td>
+            <td>6:07p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:41p</td>
+            <td>7:06p</td>
+            <td>8:00p</td>
+            <td>9:06p</td>
+            <td>10:06p</td>
+            <td>10:46p</td>
+            <th><a href="/stations/sunnyvalestation.html?" title="Sunnyvale" target="blank">Sunnyvale</a></th>
             <th>3</th>
-            <td></td>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/mountainviewstation.html" title="Mountain View" target="blank">Mountain View</a></th>
-            <td class="zone3 am">4:48a</td>
-            <td class="zone3 am">5:23a</td>
-            <td class="zone3 am">6:25a</td>
-            <td class="zone3 am">7:25a</td>
-            <td class="zone3 am">7:48a</td>
-            <td class="zone3 am">8:49a</td>
-            <td class="zone3 am">9:34a</td>
-            <td class="zone3 am">10:33a</td>
-            <td class="zone3 am">11:33a</td>
-            <td class="zone3 pm">12:33p</td>
-            <td class="zone3 pm">1:33p</td>
-            <td class="zone3 pm">2:33p</td>
-            <td class="zone3 pm">3:35p</td>
-            <td class="zone3 pm">4:02p</td>
-            <td class="zone3 pm">5:05p</td>
-            <td class="zone3 pm">6:05p</td>
-            <td class="zone3 pm">7:05p</td>
-            <td class="zone3 pm">8:05p</td>
-            <td class="zone3 pm">9:05p</td>
-            <td class="zone3 pm">10:05p</td>
-            <td class="zone3 pm">10:50p</td>
-            <th><a href="/stations/mountainviewstation.html" title="Mountain View" target="blank">Mountain View</a></th>
+            <th><a href="/stations/mountainviewstation.html?" title="Mountain View" target="blank">Mountain View</a></th>
+            <td>4:49a</td>
+            <td>5:24a</td>
+            <td>6:12a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:48a</td>
+            <td>7:12a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:48a</td>
+            <td>8:12a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:48a</td>
+            <td>9:12a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:42a</td>
+            <td>10:12a</td>
+            <td>11:12a</td>
+            <td>12:12p</td>
+            <td>1:12p</td>
+            <th><a href="/stations/mountainviewstation.html?" title="Mountain View" target="blank">Mountain View</a></th>
+            <td>2:12p</td>
+            <td>3:12p</td>
+            <td>3:43p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:25p</td>
+            <td>4:47p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:25p</td>
+            <td>5:47p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:25p</td>
+            <td>6:47p</td>
+            <td>7:11p</td>
+            <td>8:06p</td>
+            <td>9:12p</td>
+            <td>10:12p</td>
+            <td>10:51p</td>
+            <th><a href="/stations/mountainviewstation.html?" title="Mountain View" target="blank">Mountain View</a></th>
             <th>3</th>
-            <td></td>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/sanantoniostation.html" title="San Antonio" target="blank">San Antonio</a></th>
-            <td class="zone3 am">4:52a</td>
-            <td class="zone3 am">5:27a</td>
-            <td class="zone3 am">6:29a</td>
-            <td class="zone3 am">7:29a</td>
-            <td class="zone3">7:52a</td>
-            <td class="zone3">8:53a</td>
-            <td class="zone3 am">9:38a</td>
-            <td class="zone3 am">10:37a</td>
-            <td class="zone3 am">11:37a</td>
-            <td class="zone3 pm">12:37p</td>
-            <td class="zone3 pm">1:37p</td>
-            <td class="zone3 pm">2:37p</td>
-            <td class="zone3 pm">3:39p</td>
-            <td class="zone3 pm">4:06p</td>
-            <td class="zone3 pm">5:09p</td>
-            <td class="zone3 pm">6:09p</td>
-            <td class="zone3">7:08p</td>
-            <td class="zone3 pm">8:08p</td>
-            <td class="zone3 pm">9:08p</td>
-            <td class="zone3 pm">10:08p</td>
-            <td class="zone3 pm">10:54p</td>
-            <th><a href="/stations/sanantoniostation.html" title="San Antonio" target="blank">San Antonio</a></th>
+            <th><a href="/stations/sanantoniostation.html?" title="San Antonio" target="blank">San Antonio</a></th>
+            <td>4:53a</td>
+            <td>5:28a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:28a</td>
+            <td>6:51a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:28a</td>
+            <td>7:51a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:28a</td>
+            <td>8:51a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:28a</td>
+            <td>9:45a</td>
+            <td>10:16a</td>
+            <td>11:16a</td>
+            <td>12:16p</td>
+            <td>1:16p</td>
+            <th><a href="/stations/sanantoniostation.html?" title="San Antonio" target="blank">San Antonio</a></th>
+            <td>2:16p</td>
+            <td>3:16p</td>
+            <td>3:47p</td>
+            <td>4:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:51p</td>
+            <td>5:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:51p</td>
+            <td>6:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:51p</td>
+            <td>7:15p</td>
+            <td>8:10p</td>
+            <td>9:16p</td>
+            <td>10:16p</td>
+            <td>10:55p</td>
+            <th><a href="/stations/sanantoniostation.html?" title="San Antonio" target="blank">San Antonio</a></th>
             <th>3</th>
-            <td></td>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/californiaavenuestation.html" title="California Ave." target="blank">California Ave</a></th>
-            <td class="zone3 am">4:57a</td>
-            <td class="zone3 am">5:31a</td>
-            <td class="zone3 am">6:34a</td>
-            <td class="zone3 am">7:34a</td>
-            <td class="zone3 am">7:56a</td>
-            <td class="zone3">8:57a</td>
-            <td class="zone3 am">9:42a</td>
-            <td class="zone3 am">10:42a</td>
-            <td class="zone3 am">11:41a</td>
-            <td class="zone3 pm">12:41p</td>
-            <td class="zone3 pm">1:41p</td>
-            <td class="zone3 pm">2:41p</td>
-            <td class="zone3 pm">3:43p</td>
-            <td class="zone3 pm">4:11p</td>
-            <td class="zone3 pm">5:14p</td>
-            <td class="zone3 pm">6:14p</td>
-            <td class="zone3 pm">7:13p</td>
-            <td class="zone3 pm">8:13p</td>
-            <td class="zone3 pm">9:13p</td>
-            <td class="zone3 pm">10:13p</td>
-            <td class="zone3 pm">10:59p</td>
-            <th><a href="/stations/californiaavenuestation.html" title="California Ave." target="blank">California Ave</a></th>
+            <th><a href="/stations/californiaavenuestation.html?" title="California Ave." target="blank">California Ave</a></th>
+            <td>4:57a</td>
+            <td>5:32a</td>
+            <td>6:19a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:56a</td>
+            <td>7:19a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:56a</td>
+            <td>8:19a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:56a</td>
+            <td>9:19a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:50a</td>
+            <td>10:20a</td>
+            <td>11:20a</td>
+            <td>12:20p</td>
+            <td>1:20p</td>
+            <th><a href="/stations/californiaavenuestation.html?" title="California Ave." target="blank">California Ave</a></th>
+            <td>2:20p</td>
+            <td>3:20p</td>
+            <td>3:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:32p</td>
+            <td>4:55p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:32p</td>
+            <td>5:55p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:32p</td>
+            <td>6:55p</td>
+            <td>7:19p</td>
+            <td>8:15p</td>
+            <td>9:20p</td>
+            <td>10:20p</td>
+            <td>10:59p</td>
+            <th><a href="/stations/californiaavenuestation.html?" title="California Ave." target="blank">California Ave</a></th>
             <th>3</th>
-            <td></td>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/paloaltostation.html" title="Palo Alto" target="blank">Palo Alto</a></th>
-            <td class="zone3 am">5:01a</td>
-            <td class="zone3 am">5:36a</td>
-            <td class="zone3 am">6:38a</td>
-            <td class="zone3 am">7:38a</td>
-            <td class="zone3">8:01a</td>
-            <td class="zone3">9:02a</td>
-            <td class="zone3 am">9:47a</td>
-            <td class="zone3 am">10:47a</td>
-            <td class="zone3 am">11:46a</td>
-            <td class="zone3 pm">12:46p</td>
-            <td class="zone3 pm">1:46p</td>
-            <td class="zone3 pm">2:46p</td>
-            <td class="zone3 pm">3:47p</td>
-            <td class="zone3 pm">4:15p</td>
-            <td class="zone3 pm">5:20p</td>
-            <td class="zone3 pm">6:20p</td>
-            <td class="zone3 pm">7:17p</td>
-            <td class="zone3 pm">8:17p</td>
-            <td class="zone3 pm">9:17p</td>
-            <td class="zone3 pm">10:17p</td>
-            <td class="zone3 pm">11:04p</td>
-            <th><a href="/stations/paloaltostation.html" title="Palo Alto" target="blank">Palo Alto</a></th>
+            <th><a href="/stations/paloaltostation.html?" title="Palo Alto" target="blank">Palo Alto</a></th>
+            <td>5:01a</td>
+            <td>5:36a</td>
+            <td>6:24a</td>
+            <td>6:36a</td>
+            <td>7:00a</td>
+            <td>7:24a</td>
+            <td>7:36a</td>
+            <td>8:00a</td>
+            <td>8:24a</td>
+            <td>8:36a</td>
+            <td>9:00a</td>
+            <td>9:24a</td>
+            <td>9:36a</td>
+            <td>9:54a</td>
+            <td>10:25a</td>
+            <td>11:25a</td>
+            <td>12:25p</td>
+            <td>1:25p</td>
+            <th><a href="/stations/paloaltostation.html?" title="Palo Alto" target="blank">Palo Alto</a></th>
+            <td>2:25p</td>
+            <td>3:25p</td>
+            <td>3:59p</td>
+            <td>4:21p</td>
+            <td>4:37p</td>
+            <td>5:00p</td>
+            <td>5:21p</td>
+            <td>5:37p</td>
+            <td>6:00p</td>
+            <td>6:21p</td>
+            <td>6:37p</td>
+            <td>7:00p</td>
+            <td>7:24p</td>
+            <td>8:21p</td>
+            <td>9:25p</td>
+            <td>10:25p</td>
+            <td>11:03p</td>
+            <th><a href="/stations/paloaltostation.html?" title="Palo Alto" target="blank">Palo Alto</a></th>
             <th>3</th>
-            <td></td>
         </tr>
         <tr id="zoneline">
             <th>3</th>
-            <th><a href="/stations/menloparkstation.html" title="Menlo Park" target="blank">Menlo Park</a></th>
-            <td class="zone3 am">5:04a</td>
-            <td class="zone3 am">5:39a</td>
-            <td class="zone3 am">6:41a</td>
-            <td class="zone3 am">7:41a</td>
-            <td class="zone3 am">8:04a</td>
-            <td class="zone3 am">9:05a</td>
-            <td class="zone3 am">9:50a</td>
-            <td class="zone3 am">10:50a</td>
-            <td class="zone3 am">11:49a</td>
-            <td class="zone3 pm">12:49p</td>
-            <td class="zone3 pm">1:49p</td>
-            <td class="zone3 pm">2:49p</td>
-            <td class="zone3 pm">3:51p</td>
-            <td class="zone3 pm">4:19p</td>
-            <td class="zone3 pm">5:23p</td>
-            <td class="zone3 pm">6:23p</td>
-            <td class="zone3 pm">7:20p</td>
-            <td class="zone3 pm">8:20p</td>
-            <td class="zone3 pm">9:20p</td>
-            <td class="zone3 pm">10:20p</td>
-            <td class="zone3 pm">11:07p</td>
-            <th><a href="/stations/menloparkstation.html" title="Menlo Park" target="blank">Menlo Park</a></th>
+            <th><a href="/stations/menloparkstation.html?" title="Menlo Park" target="blank">Menlo Park</a></th>
+            <td>5:04a</td>
+            <td>5:39a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:39a</td>
+            <td>7:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:39a</td>
+            <td>8:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:39a</td>
+            <td>9:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:39a</td>
+            <td>9:58a</td>
+            <td>10:29a</td>
+            <td>11:29a</td>
+            <td>12:29p</td>
+            <td>1:29p</td>
+            <th><a href="/stations/menloparkstation.html?" title="Menlo Park" target="blank">Menlo Park</a></th>
+            <td>2:29p</td>
+            <td>3:29p</td>
+            <td>4:04p</td>
+            <td>4:24p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:03p</td>
+            <td>5:24p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:03p</td>
+            <td>6:24p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:03p</td>
+            <td>7:28p</td>
+            <td>8:26p</td>
+            <td>9:29p</td>
+            <td>10:29p</td>
+            <td>11:06p</td>
+            <th><a href="/stations/menloparkstation.html?" title="Menlo Park" target="blank">Menlo Park</a></th>
             <th>3</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/redwoodcitystation.html" title="Redwood City" target="blank">Redwood City</a></th>
-            <td class="zone2 am">5:10a</td>
-            <td class="zone2 am">5:44a</td>
-            <td class="zone2 am">6:47a</td>
-            <td class="zone2 am">7:47a</td>
-            <td class="zone2 am">8:10a</td>
-            <td class="zone2 am">9:12a</td>
-            <td class="zone2 am">9:57a</td>
-            <td class="zone2 am">10:55a</td>
-            <td class="zone2 am">11:55a</td>
-            <td class="zone2 pm">12:55p</td>
-            <td class="zone2 pm">1:55p</td>
-            <td class="zone2 pm">2:55p</td>
-            <td class="zone2 pm">3:58p</td>
-            <td class="zone2 pm">4:24p</td>
-            <td class="zone2 pm">5:29p</td>
-            <td class="zone2 pm">6:29p</td>
-            <td class="zone2 pm">7:27p</td>
-            <td class="zone2 pm">8:27p</td>
-            <td class="zone2 pm">9:27p</td>
-            <td class="zone2 pm">10:27p</td>
-            <td class="zone2 pm">11:13p</td>
-            <th id="even"><a href="/stations/redwoodcitystation.html" title="Redwood City" target="blank">Redwood City</a></th>
+            <th id="even"><a href="/stations/redwoodcitystation.html?" title="Redwood City" target="blank">Redwood City</a></th>
+            <td>5:10a</td>
+            <td>5:45a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:46a</td>
+            <td>7:09a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:46a</td>
+            <td>8:09a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:46a</td>
+            <td>9:09a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:46a</td>
+            <td>10:05a</td>
+            <td>10:35a</td>
+            <td>11:35a</td>
+            <td>12:35p</td>
+            <td>1:35p</td>
+            <th id="even"><a href="/stations/redwoodcitystation.html?" title="Redwood City" target="blank">Redwood City</a></th>
+            <td>2:35p</td>
+            <td>3:35p</td>
+            <td>4:12p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:44p</td>
+            <td>5:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:44p</td>
+            <td>6:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:44p</td>
+            <td>7:09p</td>
+            <td>7:34p</td>
+            <td>8:33p</td>
+            <td>9:35p</td>
+            <td>10:35p</td>
+            <td>11:12p</td>
+            <th id="even"><a href="/stations/redwoodcitystation.html?" title="Redwood City" target="blank">Redwood City</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/sancarlosstation.html" title="San Carlos" target="blank">San Carlos</a></th>
-            <td class="zone2 am">5:15a</td>
-            <td class="zone2 am">5:49a</td>
-            <td class="zone2">6:51a</td>
-            <td class="zone2">7:51a</td>
-            <td class="zone2 am">8:14a</td>
-            <td class="zone2 am">9:16a</td>
-            <td class="zone2 am">10:01a</td>
-            <td class="zone2 am">10:59a</td>
-            <td class="zone2 am">11:59a</td>
-            <td class="zone2 pm">12:59p</td>
-            <td class="zone2 pm">1:59p</td>
-            <td class="zone2 pm">2:59p</td>
-            <td class="zone2 pm">4:03p</td>
-            <td class="zone2 pm">4:29p</td>
-            <td class="zone2 pm">5:33p</td>
-            <td class="zone2 pm">6:33p</td>
-            <td class="zone2 pm">7:31p</td>
-            <td class="zone2 pm">8:31p</td>
-            <td class="zone2 pm">9:31p</td>
-            <td class="zone2 pm">10:31p</td>
-            <td class="zone2 pm">11:17p</td>
-            <th id="even"><a href="/stations/sancarlosstation.html" title="San Carlos" target="blank">San Carlos</a></th>
+            <th id="even"><a href="/stations/sancarlosstation.html?" title="San Carlos" target="blank">San Carlos</a></th>
+            <td>5:15a</td>
+            <td>5:50a</td>
+            <td>6:33a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:14a</td>
+            <td>7:33a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:14a</td>
+            <td>8:33a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:14a</td>
+            <td>9:33a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:11a</td>
+            <td>10:40a</td>
+            <td>11:40a</td>
+            <td>12:40p</td>
+            <td>1:40p</td>
+            <th id="even"><a href="/stations/sancarlosstation.html?" title="San Carlos" target="blank">San Carlos</a></th>
+            <td>2:40p</td>
+            <td>3:39p</td>
+            <td>4:16p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:49p</td>
+            <td>5:14p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:49p</td>
+            <td>6:14p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:49p</td>
+            <td>7:14p</td>
+            <td>7:40p</td>
+            <td>8:37p</td>
+            <td>9:40p</td>
+            <td>10:40p</td>
+            <td>11:17p</td>
+            <th id="even"><a href="/stations/sancarlosstation.html?" title="San Carlos" target="blank">San Carlos</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/belmontstation.html" title="Belmont" target="blank">Belmont</a></th>
-            <td class="zone2 am">5:18a</td>
-            <td class="zone2 am">5:52a</td>
-            <td class="zone2">6:55a</td>
-            <td class="zone2">7:55a</td>
-            <td class="zone2 am">8:18a</td>
-            <td class="zone2 am">9:20a</td>
-            <td class="zone2 am">10:05a</td>
-            <td class="zone2 am">11:03a</td>
-            <td class="zone2 pm">12:03p</td>
-            <td class="zone2 pm">1:03p</td>
-            <td class="zone2 pm">2:03p</td>
-            <td class="zone2 pm">3:03p</td>
-            <td class="zone2 pm">4:06p</td>
-            <td class="zone2">4:33p</td>
-            <td class="zone2">5:37p</td>
-            <td class="zone2">6:37p</td>
-            <td class="zone2">7:35p</td>
-            <td class="zone2 pm">8:35p</td>
-            <td class="zone2 pm">9:35p</td>
-            <td class="zone2 pm">10:35p</td>
-            <td class="zone2 pm">11:21p</td>
-            <th id="even"><a href="/stations/belmontstation.html" title="Belmont" target="blank">Belmont</a></th>
+            <th id="even"><a href="/stations/belmontstation.html?" title="Belmont" target="blank">Belmont</a></th>
+            <td>5:18a</td>
+            <td>5:53a</td>
+            <td>6:36a</td>
+            <td>6:52a</td>
+            <td>7:17a</td>
+            <td>7:36a</td>
+            <td>7:52a</td>
+            <td>8:17a</td>
+            <td>8:36a</td>
+            <td>8:52a</td>
+            <td>9:17a</td>
+            <td>9:36a</td>
+            <td>9:52a</td>
+            <td>10:16a</td>
+            <td>10:43a</td>
+            <td>11:43a</td>
+            <td>12:43p</td>
+            <td>1:43p</td>
+            <th id="even"><a href="/stations/belmontstation.html?" title="Belmont" target="blank">Belmont</a></th>
+            <td>2:43p</td>
+            <td>3:42p</td>
+            <td>4:20p</td>
+            <td>4:33p</td>
+            <td>4:53p</td>
+            <td>5:18p</td>
+            <td>5:33p</td>
+            <td>5:53p</td>
+            <td>6:18p</td>
+            <td>6:33p</td>
+            <td>6:53p</td>
+            <td>7:18p</td>
+            <td>7:44p</td>
+            <td>8:41p</td>
+            <td>9:43p</td>
+            <td>10:43p</td>
+            <td>11:20p</td>
+            <th id="even"><a href="/stations/belmontstation.html?" title="Belmont" target="blank">Belmont</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr>
-            <th id="even" style="background-color: #f7e89d;">2</th>
-            <th id="even" style="background-color: #f7e89d;"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <td class="zone2 am" colspan="23" style="text-align: center; background-color: #f7e89d;"><em><strong>Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</strong></em><br />
+            <th id="even">2</th>
+            <th id="even"><a href="/stations/hillsdalestation.html?" title="Hillsdale" target="blank">Hillsdale</a></th>
+            <td class="zone2 am" colspan="39" style="text-align: center; background-color: #EABB10;"><em><strong>Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</strong></em><br />
             </td>
             <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/haywardparkstation.html" title="Hayward Park" target="blank">Hayward Park</a></th>
-            <td class="zone2 am">5:25a</td>
-            <td class="zone2 am">5:59a</td>
-            <td class="zone2">7:01a</td>
-            <td class="zone2">8:01a</td>
-            <td class="zone2 am">8:24a</td>
-            <td class="zone2 am">9:26a</td>
-            <td class="zone2 am">10:11a</td>
-            <td class="zone2 am">11:09a</td>
-            <td class="zone2 pm">12:09p</td>
-            <td class="zone2 pm">1:09p</td>
-            <td class="zone2 pm">2:09p</td>
-            <td class="zone2 pm">3:09p</td>
-            <td class="zone2 pm">4:13p</td>
-            <td class="zone2">4:39p</td>
-            <td class="zone2">5:43p</td>
-            <td class="zone2">6:43p</td>
-            <td class="zone2">7:41p</td>
-            <td class="zone2 pm">8:41p</td>
-            <td class="zone2 pm">9:41p</td>
-            <td class="zone2 pm">10:41p</td>
-            <td class="zone2 pm">11:27p</td>
-            <th id="even"><a href="/stations/haywardparkstation.html" title="Hayward Park" target="blank">Hayward Park</a></th>
+            <th id="even"><a href="/stations/haywardparkstation.html?" title="Hayward Park" target="blank">Hayward Park</a></th>
+            <td>5:25a</td>
+            <td>6:00a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:25a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:25a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:25a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:24a</td>
+            <td>10:51a</td>
+            <td>11:51a</td>
+            <td>12:51p</td>
+            <td>1:51p</td>
+            <th id="even"><a href="/stations/haywardparkstation.html?" title="Hayward Park" target="blank">Hayward Park</a></th>
+            <td>2:51p</td>
+            <td>3:50p</td>
+            <td>4:27p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:25p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:25p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:25p</td>
+            <td>7:52p</td>
+            <td>8:49p</td>
+            <td>9:51p</td>
+            <td>10:51p</td>
+            <td>11:27p</td>
+            <th id="even"><a href="/stations/haywardparkstation.html?" title="Hayward Park" target="blank">Hayward Park</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/sanmateostation.html" title="San Mateo" target="blank">San Mateo</a></th>
-            <td class="zone2 am">5:28a</td>
-            <td class="zone2 am">6:03a</td>
-            <td class="zone2">7:05a</td>
-            <td class="zone2">8:05a</td>
-            <td class="zone2 am">8:27a</td>
-            <td class="zone2 am">9:30a</td>
-            <td class="zone2 am">10:15a</td>
-            <td class="zone2 am">11:12a</td>
-            <td class="zone2 pm">12:12p</td>
-            <td class="zone2 pm">1:12p</td>
-            <td class="zone2 pm">2:12p</td>
-            <td class="zone2 pm">3:14p</td>
-            <td class="zone2 pm">4:17p</td>
-            <td class="zone2 pm">4:42p</td>
-            <td class="zone2 pm">5:46p</td>
-            <td class="zone2 pm">6:46p</td>
-            <td class="zone2 pm">7:44p</td>
-            <td class="zone2 pm">8:44p</td>
-            <td class="zone2 pm">9:44p</td>
-            <td class="zone2 pm">10:44p</td>
-            <td class="zone2 pm">11:30p</td>
-            <th id="even"><a href="/stations/sanmateostation.html" title="San Mateo" target="blank">San Mateo</a></th>
+            <th id="even"><a href="/stations/sanmateostation.html?" title="San Mateo" target="blank">San Mateo</a></th>
+            <td>5:28a</td>
+            <td>6:03a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:00a</td>
+            <td>7:29a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:00a</td>
+            <td>8:29a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:00a</td>
+            <td>9:29a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:00a</td>
+            <td>10:29a</td>
+            <td>10:56a</td>
+            <td>11:56a</td>
+            <td>12:56p</td>
+            <td>1:56p</td>
+            <th id="even"><a href="/stations/sanmateostation.html?" title="San Mateo" target="blank">San Mateo</a></th>
+            <td>2:56p</td>
+            <td>3:54p</td>
+            <td>4:31p</td>
+            <td>4:40p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:29p</td>
+            <td>5:40p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:29p</td>
+            <td>6:41p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:29p</td>
+            <td>7:57p</td>
+            <td>8:53p</td>
+            <td>9:56p</td>
+            <td>10:56p</td>
+            <td>11:30p</td>
+            <th id="even"><a href="/stations/sanmateostation.html?" title="San Mateo" target="blank">San Mateo</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/burlingamestation.html" title="Burlingame" target="blank">Burlingame</a></th>
-            <td class="zone2 am">5:32a</td>
-            <td class="zone2 am">6:06a</td>
-            <td class="zone2">7:08a</td>
-            <td class="zone2">8:08a</td>
-            <td class="zone2 am">8:30a</td>
-            <td class="zone2 am">9:33a</td>
-            <td class="zone2 am">10:18a</td>
-            <td class="zone2 am">11:15a</td>
-            <td class="zone2 pm">12:15p</td>
-            <td class="zone2 pm">1:15p</td>
-            <td class="zone2 pm">2:15p</td>
-            <td class="zone2 pm">3:17p</td>
-            <td class="zone2 pm">4:20p</td>
-            <td class="zone2">4:45p</td>
-            <td class="zone2">5:49p</td>
-            <td class="zone2">6:49p</td>
-            <td class="zone2 pm">7:48p</td>
-            <td class="zone2 pm">8:48p</td>
-            <td class="zone2 pm">9:48p</td>
-            <td class="zone2 pm">10:48p</td>
-            <td class="zone2 pm">11:34p</td>
-            <th id="even"><a href="/stations/burlingamestation.html" title="Burlingame" target="blank">Burlingame</a></th>
+            <th id="even"><a href="/stations/burlingamestation.html?" title="Burlingame" target="blank">Burlingame</a></th>
+            <td>5:32a</td>
+            <td>6:07a</td>
+            <td>6:45a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:32a</td>
+            <td>7:45a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:32a</td>
+            <td>8:45a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:32a</td>
+            <td>9:45a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:32a</td>
+            <td>11:00a</td>
+            <td>11:59a</td>
+            <td>12:59p</td>
+            <td>1:59p</td>
+            <th id="even"><a href="/stations/burlingamestation.html?" title="Burlingame" target="blank">Burlingame</a></th>
+            <td>2:59p</td>
+            <td>3:58p</td>
+            <td>4:35p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:02p</td>
+            <td>5:33p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:02p</td>
+            <td>6:33p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:02p</td>
+            <td>7:33p</td>
+            <td>8:01p</td>
+            <td>8:57p</td>
+            <td>9:59p</td>
+            <td>10:59p</td>
+            <td>11:34p</td>
+            <th id="even"><a href="/stations/burlingamestation.html?" title="Burlingame" target="blank">Burlingame</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr id="zoneline">
             <th id="even">2</th>
-            <th id="even"><a href="/stations/millbraetransitcenter.html" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
-            <td class="zone2 am">5:36a</td>
-            <td class="zone2 am">6:11a</td>
-            <td class="zone2 am">7:13a</td>
-            <td class="zone2 am">8:13a</td>
-            <td class="zone2 am">8:35a</td>
-            <td class="zone2 am">9:38a</td>
-            <td class="zone2 am">10:23a</td>
-            <td class="zone2 am">11:20a</td>
-            <td class="zone2 pm">12:20p</td>
-            <td class="zone2 pm">1:20p</td>
-            <td class="zone2 pm">2:20p</td>
-            <td class="zone2 pm">3:22p</td>
-            <td class="zone2 pm">4:25p</td>
-            <td class="zone2 pm">4:50p</td>
-            <td class="zone2 pm">5:54p</td>
-            <td class="zone2 pm">6:54p</td>
-            <td class="zone2 pm">7:52p</td>
-            <td class="zone2 pm">8:52p</td>
-            <td class="zone2 pm">9:52p</td>
-            <td class="zone2 pm">10:52p</td>
-            <td class="zone2 pm">11:38p</td>
-            <th id="even"><a href="/stations/millbraetransitcenter.html" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
+            <th id="even"><a href="/stations/millbraetransitcenter.html?" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
+            <td>5:37a</td>
+            <td>6:12a</td>
+            <td>6:51a</td>
+            <td>7:07a</td>
+            <td>7:37a</td>
+            <td>7:51a</td>
+            <td>8:07a</td>
+            <td>8:37a</td>
+            <td>8:51a</td>
+            <td>9:07a</td>
+            <td>9:37a</td>
+            <td>9:51a</td>
+            <td>10:07a</td>
+            <td>10:38a</td>
+            <td>11:05a</td>
+            <td>12:05p</td>
+            <td>1:05p</td>
+            <td>2:05p</td>
+            <th id="even"><a href="/stations/millbraetransitcenter.html?" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
+            <td>3:05p</td>
+            <td>4:03p</td>
+            <td>4:40p</td>
+            <td>4:48p</td>
+            <td>5:08p</td>
+            <td>5:38p</td>
+            <td>5:48p</td>
+            <td>6:08p</td>
+            <td>6:38p</td>
+            <td>6:48p</td>
+            <td>7:08p</td>
+            <td>7:38p</td>
+            <td>8:06p</td>
+            <td>9:03p</td>
+            <td>10:05p</td>
+            <td>11:05p</td>
+            <td>11:39p</td>
+            <th id="even"><a href="/stations/millbraetransitcenter.html?" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
             <th id="even">2</th>
-            <td></td>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/sanbrunostation.html" title="San Bruno" target="blank">San Bruno</a></th>
-            <td class="zone1 am">5:41a</td>
-            <td class="zone1 am">6:16a</td>
-            <td class="zone1">7:18a</td>
-            <td class="zone1">8:18a</td>
-            <td class="zone1 am">8:40a</td>
-            <td class="zone1 am">9:43a</td>
-            <td class="zone1 am">10:28a</td>
-            <td class="zone1 am">11:25a</td>
-            <td class="zone1 pm">12:25p</td>
-            <td class="zone1 pm">1:25p</td>
-            <td class="zone1 pm">2:25p</td>
-            <td class="zone1 pm">3:27p</td>
-            <td class="zone1 pm">4:30p</td>
-            <td class="zone1">4:55p</td>
-            <td class="zone1">5:59p</td>
-            <td class="zone1">6:59p</td>
-            <td class="zone1">7:57p</td>
-            <td class="zone1 pm">8:57p</td>
-            <td class="zone1 pm">9:57p</td>
-            <td class="zone1 pm">10:57p</td>
-            <td class="zone1 pm">11:42p</td>
-            <th><a href="/stations/sanbrunostation.html" title="San Bruno" target="blank">San Bruno</a></th>
+            <th><a href="/stations/sanbrunostation.html?" title="San Bruno" target="blank">San Bruno</a></th>
+            <td>5:41a</td>
+            <td>6:16a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:12a</td>
+            <td>7:42a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:12a</td>
+            <td>8:42a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:12a</td>
+            <td>9:42a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:12a</td>
+            <td>10:42a</td>
+            <td>11:10a</td>
+            <td>12:10p</td>
+            <td>1:10p</td>
+            <td>2:10p</td>
+            <th><a href="/stations/sanbrunostation.html?" title="San Bruno" target="blank">San Bruno</a></th>
+            <td>3:10p</td>
+            <td>4:08p</td>
+            <td>4:44p</td>
+            <td>4:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:43p</td>
+            <td>5:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:43p</td>
+            <td>6:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:43p</td>
+            <td>8:11p</td>
+            <td>9:08p</td>
+            <td>10:10p</td>
+            <td>11:10p</td>
+            <td>11:43p</td>
+            <th><a href="/stations/sanbrunostation.html?" title="San Bruno" target="blank">San Bruno</a></th>
             <th>1</th>
-            <td></td>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/southsanfranciscostation.html" title="South San Francisco" target="blank">So. San Francisco</a></th>
-            <td class="zone1 am">5:45a</td>
-            <td class="zone1 am">6:20a</td>
-            <td class="zone1 am">7:22a</td>
-            <td class="zone1 am">8:22a</td>
-            <td class="zone1 am">8:44a</td>
-            <td class="zone1 am">9:47a</td>
-            <td class="zone1 am">10:32a</td>
-            <td class="zone1 am">11:29a</td>
-            <td class="zone1 pm">12:29p</td>
-            <td class="zone1 pm">1:29p</td>
-            <td class="zone1 pm">2:29p</td>
-            <td class="zone1 pm">3:31p</td>
-            <td class="zone1 pm">4:34p</td>
-            <td class="zone1">4:59p</td>
-            <td class="zone1">6:03p</td>
-            <td class="zone1">7:03p</td>
-            <td class="zone1">8:01p</td>
-            <td class="zone1 pm">9:01p</td>
-            <td class="zone1 pm">10:01p</td>
-            <td class="zone1 pm">11:01p</td>
-            <td class="zone1 pm">11:46p</td>
-            <th><a href="/stations/southsanfranciscostation.html" title="South San Francisco" target="blank">So. San Francisco</a></th>
+            <th><a href="/stations/southsanfranciscostation.html?" title="South San Francisco" target="blank">So. San Francisco</a></th>
+            <td>5:45a</td>
+            <td>6:20a</td>
+            <td>6:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:46a</td>
+            <td>7:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:46a</td>
+            <td>8:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:46a</td>
+            <td>9:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:46a</td>
+            <td>11:14a</td>
+            <td>12:14p</td>
+            <td>1:14p</td>
+            <td>2:14p</td>
+            <th><a href="/stations/southsanfranciscostation.html?" title="South San Francisco" target="blank">So. San Francisco</a></th>
+            <td>3:14p</td>
+            <td>4:12p</td>
+            <td>4:48p</td>
+            <td>4:57p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:47p</td>
+            <td>5:57p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:47p</td>
+            <td>6:57p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:47p</td>
+            <td>8:15p</td>
+            <td>9:12p</td>
+            <td>10:14p</td>
+            <td>11:14p</td>
+            <td>11:47p</td>
+            <th><a href="/stations/southsanfranciscostation.html?" title="South San Francisco" target="blank">So. San Francisco</a></th>
             <th>1</th>
-            <td></td>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/bayshorestation.html" title="Bayshore" target="blank">Bayshore</a></th>
-            <td class="zone1 am">5:51a</td>
-            <td class="zone1 am">6:26a</td>
-            <td class="zone1">7:28a</td>
-            <td class="zone1">8:28a</td>
-            <td class="zone1 am">8:50a</td>
-            <td class="zone1 am">9:53a</td>
-            <td class="zone1 am">10:38a</td>
-            <td class="zone1 am">11:35a</td>
-            <td class="zone1 pm">12:35p</td>
-            <td class="zone1 pm">1:35p</td>
-            <td class="zone1 pm">2:35p</td>
-            <td class="zone1 pm">3:37p</td>
-            <td class="zone1 pm">4:40p</td>
-            <td class="zone1">5:05p</td>
-            <td class="zone1">6:09p</td>
-            <td class="zone1">7:09p</td>
-            <td class="zone1">8:07p</td>
-            <td class="zone1 pm">9:07p</td>
-            <td class="zone1 pm">10:07p</td>
-            <td class="zone1 pm">11:07p</td>
-            <td class="zone1 pm">11:52p</td>
-            <th><a href="/stations/bayshorestation.html" title="Bayshore" target="blank">Bayshore</a></th>
+            <th><a href="/stations/bayshorestation.html?" title="Bayshore" target="blank">Bayshore</a></th>
+            <td>5:52a</td>
+            <td>6:27a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:52a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:52a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:52a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:52a</td>
+            <td>11:21a</td>
+            <td>12:21p</td>
+            <td>1:21p</td>
+            <td>2:21p</td>
+            <th><a href="/stations/bayshorestation.html?" title="Bayshore" target="blank">Bayshore</a></th>
+            <td>3:21p</td>
+            <td>4:19p</td>
+            <td>4:54p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:54p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:54p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:54p</td>
+            <td>8:21p</td>
+            <td>9:18p</td>
+            <td>10:21p</td>
+            <td>11:21p</td>
+            <td>11:54p</td>
+            <th><a href="/stations/bayshorestation.html?" title="Bayshore" target="blank">Bayshore</a></th>
             <th>1</th>
-            <td></td>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/22ndstreetstation.html" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
-            <td class="zone1 am">5:57a</td>
-            <td class="zone1 am">6:32a</td>
-            <td class="zone1">7:34a</td>
-            <td class="zone1">8:34a</td>
-            <td class="zone1 am">8:56a</td>
-            <td class="zone1 am">9:59a</td>
-            <td class="zone1 am">10:44a</td>
-            <td class="zone1 am">11:41a</td>
-            <td class="zone1 pm">12:41p</td>
-            <td class="zone1 pm">1:41p</td>
-            <td class="zone1 pm">2:41p</td>
-            <td class="zone1 pm">3:43p</td>
-            <td class="zone1 pm">4:46p</td>
-            <td class="zone1 pm">5:11p</td>
-            <td class="zone1 pm">6:15p</td>
-            <td class="zone1 pm">7:15p</td>
-            <td class="zone1 pm">8:13p</td>
-            <td class="zone1 pm">9:13p</td>
-            <td class="zone1 pm">10:13p</td>
-            <td class="zone1 pm">11:13p</td>
-            <td class="zone1 pm">11:58p</td>
-            <th><a href="/stations/22ndstreetstation.html" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
+            <th><a href="/stations/22ndstreetstation.html?" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
+            <td>5:57a</td>
+            <td>6:32a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:24a</td>
+            <td>7:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:24a</td>
+            <td>8:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:24a</td>
+            <td>9:58a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:24a</td>
+            <td>10:58a</td>
+            <td>11:27a</td>
+            <td>12:27p</td>
+            <td>1:27p</td>
+            <td>2:27p</td>
+            <th><a href="/stations/22ndstreetstation.html?" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
+            <td>3:27p</td>
+            <td>4:25p</td>
+            <td>5:00p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:24p</td>
+            <td>6:00p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:24p</td>
+            <td>7:00p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:24p</td>
+            <td>8:00p</td>
+            <td>8:27p</td>
+            <td>9:24p</td>
+            <td>10:27p</td>
+            <td>11:27p</td>
+            <td>11:59p</td>
+            <th><a href="/stations/22ndstreetstation.html?" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
             <th>1</th>
-            <td></td>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/sanfranciscostation.html" title="San Francisco" target="blank">San Francisco</a></th>
-            <td class="zone1 am">6:03a</td>
-            <td class="zone1 am">6:38a</td>
-            <td class="zone1 am">7:42a</td>
-            <td class="zone1 am">8:42a</td>
-            <td class="zone1 am">9:03a</td>
-            <td class="zone1 am">10:07a</td>
-            <td class="zone1 am">10:52a</td>
-            <td class="zone1 am">11:48a</td>
-            <td class="zone1 pm">12:48p</td>
-            <td class="zone1 pm">1:48p</td>
-            <td class="zone1 pm">2:48p</td>
-            <td class="zone1 pm">3:52p</td>
-            <td class="zone1 pm">4:53p</td>
-            <td class="zone1 pm">5:18p</td>
-            <td class="zone1 pm">6:22p</td>
-            <td class="zone1 pm">7:22p</td>
-            <td class="zone1 pm">8:20p</td>
-            <td class="zone1 pm">9:20p</td>
-            <td class="zone1 pm">10:20p</td>
-            <td class="zone1 pm">11:20p</td>
-            <td class="zone1 am">12:05a</td>
-            <th><a href="/stations/sanfranciscostation.html" title="San Francisco" target="blank">San Francisco</a></th>
+            <th><a href="/stations/sanfranciscostation.html?" title="San Francisco" target="blank">San Francisco</a></th>
+            <td>6:03a</td>
+            <td>6:38a</td>
+            <td>7:11a</td>
+            <td>7:30a</td>
+            <td>8:04a</td>
+            <td>8:11a</td>
+            <td>8:30a</td>
+            <td>9:04a</td>
+            <td>9:11a</td>
+            <td>9:30a</td>
+            <td>10:04a</td>
+            <td>10:11a</td>
+            <td>10:29a</td>
+            <td>11:04a</td>
+            <td>11:33a</td>
+            <td>12:32p</td>
+            <td>1:32p</td>
+            <td>2:32p</td>
+            <th><a href="/stations/sanfranciscostation.html?" title="San Francisco" target="blank">San Francisco</a></th>
+            <td>3:32p</td>
+            <td>4:31p</td>
+            <td>5:06p</td>
+            <td>5:10p</td>
+            <td>5:29p</td>
+            <td>6:05p</td>
+            <td>6:10p</td>
+            <td>6:29p</td>
+            <td>7:05p</td>
+            <td>7:11p</td>
+            <td>7:29p</td>
+            <td>8:05p</td>
+            <td>8:33p</td>
+            <td>9:30p</td>
+            <td>10:32p</td>
+            <td>11:32p</td>
+            <td>12:05a</td>
+            <th><a href="/stations/sanfranciscostation.html?" title="San Francisco" target="blank">San Francisco</a></th>
             <th>1</th>
-            <td></td>
         </tr>
     </tbody>
 </table>
-<h1 style="text-align: left;">Southbound Service</h1>
+<div class="caption">Southbound Service- Weekday Service to San Jose/Gilroy</div>
 <table class="SB_TT" summary="Weekday Southbound service" alt="Weekday Southbound service">
     <thead>
         <tr>
@@ -1663,802 +2189,1276 @@ Alternative formats<br />
             <th>Southbound Train No.</th>
             <th>102</th>
             <th>104</th>
+            <th>206</th>
             <th>208</th>
+            <th>114</th>
+            <th>216</th>
             <th>218</th>
+            <th>124</th>
+            <th>226</th>
             <th>228</th>
             <th>134</th>
+            <th>236</th>
             <th>138</th>
+            <th>140</th>
             <th>142</th>
+            <th>144</th>
             <th>146</th>
+            <th>148</th>
+            <th>Southbound Train No.</th>
             <th>150</th>
-            <th>152</th>
-            <th>156</th>
-            <th>258</th>
+            <th>252</th>
+            <th>254</th>
+            <th>160</th>
+            <th>262</th>
             <th>264</th>
+            <th>170</th>
+            <th>272</th>
             <th>274</th>
+            <th>180</th>
+            <th>282</th>
             <th>284</th>
             <th>190</th>
             <th>192</th>
             <th>194</th>
             <th>196</th>
-            <th>198</th>
+            <th>198
+            </th>
             <th>Southbound Train No.</th>
             <th>Zone</th>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <td></td>
+            <td style="font-style: italic; text-align: center;">Service Type</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local </td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="text-align: center;">&nbsp;</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Limited A</td>
+            <td style="font-style: italic; text-align: center;">Limited B</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="font-style: italic; text-align: center;">Local</td>
+            <td style="text-align: center;"><em><strong>Service Type</strong></em></td>
+            <td><br />
+            </td>
+        </tr>
+        <tr>
             <th>1</th>
-            <th><a href="/stations/sanfranciscostation.html" title="San Francisco" target="blank">San Francisco</a></th>
-            <td class="zone1 am">4:55a</td>
-            <td class="zone1 am">5:25a</td>
-            <td class="zone1 am">6:15a</td>
-            <td class="zone1 am">7:15a</td>
-            <td class="zone1 am">8:15a</td>
-            <td class="zone1 am">9:00a</td>
-            <td class="zone1 am">10:00a</td>
-            <td class="zone1 am">11:00a</td>
-            <td class="zone1 pm">12:00p</td>
-            <td class="zone1 pm">1:00p</td>
-            <td class="zone1 pm">2:00p</td>
-            <td class="zone1 pm">3:00p</td>
-            <td class="zone1 pm">3:34p</td>
-            <td class="zone1 pm">4:32p</td>
-            <td class="zone1 pm">5:32p</td>
-            <td class="zone1 pm">6:32p</td>
-            <td class="zone1 pm">7:30p</td>
-            <td class="zone1 pm">8:30p</td>
-            <td class="zone1 pm">9:30p</td>
-            <td class="zone1 am">10:30p</td>
-            <td class="zone1 am">12:05a</td>
-            <th><a href="/stations/sanfranciscostation.html" title="San Francisco" target="blank">San Francisco</a></th>
+            <th><a href="/stations/sanfranciscostation.html?" title="San Francisco" target="blank">San Francisco</a></th>
+            <td>4:51a</td>
+            <td>5:25a</td>
+            <td>6:00a</td>
+            <td>6:12a</td>
+            <td>6:33a</td>
+            <td>7:00a</td>
+            <td>7:12a</td>
+            <td>7:33a</td>
+            <td>8:00a</td>
+            <td>8:12a</td>
+            <td>8:33a</td>
+            <td>9:12a</td>
+            <td>9:35a</td>
+            <td>10:35a</td>
+            <td>11:35a</td>
+            <td>12:35p</td>
+            <td>1:35p</td>
+            <td>2:35p</td>
+            <th><a href="/stations/sanfranciscostation.html?" title="San Francisco" target="blank">San Francisco</a></th>
+            <td>3:15p</td>
+            <td>3:55p</td>
+            <td>4:12p</td>
+            <td>4:35p</td>
+            <td>5:00p</td>
+            <td>5:12p</td>
+            <td>5:33p</td>
+            <td>6:00p</td>
+            <td>6:12p</td>
+            <td>6:33p</td>
+            <td>7:00p</td>
+            <td>7:12p</td>
+            <td>7:35p</td>
+            <td>8:35p</td>
+            <td>9:35p</td>
+            <td>10:35p</td>
+            <td>12:05a</td>
+            <th><a href="/stations/sanfranciscostation.html?" title="San Francisco" target="blank">San Francisco</a></th>
             <th>1</th>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/22ndstreetstation.html" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
-            <td class="zone1 am">4:59a</td>
-            <td class="zone1 am">5:29a</td>
-            <td class="zone1 am">6:20a</td>
-            <td class="zone1 am">7:20a</td>
-            <td class="zone1 am">8:20a</td>
-            <td class="zone1 am">9:05a</td>
-            <td class="zone1 am">10:04a</td>
-            <td class="zone1 am">11:04a</td>
-            <td class="zone1 pm">12:04p</td>
-            <td class="zone1 pm">1:04p</td>
-            <td class="zone1 pm">2:04p</td>
-            <td class="zone1 pm">3:04p</td>
-            <td class="zone1">3:39p</td>
-            <td class="zone1 pm">4:37p</td>
-            <td class="zone1 pm">5:37p</td>
-            <td class="zone1 pm">6:37p</td>
-            <td class="zone1 pm">7:34p</td>
-            <td class="zone1 pm">8:34p</td>
-            <td class="zone1 pm">9:34p</td>
-            <td class="zone1 am">10:34p</td>
-            <td class="zone1 am">12:10a</td>
-            <th><a href="/stations/22ndstreetstation.html" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
+            <th><a href="/stations/22ndstreetstation.html?" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
+            <td>4:56a</td>
+            <td>5:30a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:18a</td>
+            <td>6:38a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:18a</td>
+            <td>7:38a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:18a</td>
+            <td>8:38a</td>
+            <td>9:18a</td>
+            <td>9:40a</td>
+            <td>10:40a</td>
+            <td>11:40a</td>
+            <td>12:40p</td>
+            <td>1:40p</td>
+            <td>2:40p</td>
+            <th><a href="/stations/22ndstreetstation.html?" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
+            <td>3:21p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:18p</td>
+            <td>4:41p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:18p</td>
+            <td>5:39p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:18p</td>
+            <td>6:39p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:18p</td>
+            <td>7:40p</td>
+            <td>8:40p</td>
+            <td>9:40p</td>
+            <td>10:40p</td>
+            <td>12:10a</td>
+            <th><a href="/stations/22ndstreetstation.html?" title="22nd St." target="blank">22<sup>nd</sup> Street</a></th>
             <th>1</th>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/bayshorestation.html" title="Bayshore" target="blank">Bayshore</a></th>
-            <td class="zone1 am">5:04a</td>
-            <td class="zone1 am">5:34a</td>
-            <td class="zone1 am">6:25a</td>
-            <td class="zone1 am">7:25a</td>
-            <td class="zone1 am">8:25a</td>
-            <td class="zone1 am">9:10a</td>
-            <td class="zone1 am">10:09a</td>
-            <td class="zone1 am">11:09a</td>
-            <td class="zone1 pm">12:09p</td>
-            <td class="zone1 pm">1:09p</td>
-            <td class="zone1 pm">2:09p</td>
-            <td class="zone1 pm">3:09p</td>
-            <td class="zone1">3:44p</td>
-            <td class="zone1 pm">4:42p</td>
-            <td class="zone1 pm">5:42p</td>
-            <td class="zone1 pm">6:42p</td>
-            <td class="zone1 pm">7:39p</td>
-            <td class="zone1 pm">8:39p</td>
-            <td class="zone1 pm">9:39p</td>
-            <td class="zone1 am">10:39p</td>
-            <td class="zone1 am">12:15a</td>
-            <th><a href="/stations/bayshorestation.html" title="Bayshore" target="blank">Bayshore</a></th>
+            <th><a href="/stations/bayshorestation.html?" title="Bayshore" target="blank">Bayshore</a></th>
+            <td>5:01a</td>
+            <td>5:35a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:44a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:44a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:44a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:45a</td>
+            <td>10:45a</td>
+            <td>11:45a</td>
+            <td>12:45p</td>
+            <td>1:45p</td>
+            <td>2:45p</td>
+            <th><a href="/stations/bayshorestation.html?" title="Bayshore" target="blank">Bayshore</a></th>
+            <td>3:26p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:46p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:45p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:45p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:45p</td>
+            <td>8:45p</td>
+            <td>9:45p</td>
+            <td>10:45p</td>
+            <td>12:15a</td>
+            <th><a href="/stations/bayshorestation.html?" title="Bayshore" target="blank">Bayshore</a></th>
             <th>1</th>
         </tr>
         <tr>
             <th>1</th>
-            <th><a href="/stations/southsanfranciscostation.html" title="South San Francisco" target="blank">So. San Francisco</a></th>
-            <td class="zone1 am">5:10a</td>
-            <td class="zone1 am">5:40a</td>
-            <td class="zone1 am">6:32a</td>
-            <td class="zone1 am">7:32a</td>
-            <td class="zone1 am">8:32a</td>
-            <td class="zone1 am">9:17a</td>
-            <td class="zone1 am">10:16a</td>
-            <td class="zone1 am">11:16a</td>
-            <td class="zone1 pm">12:16p</td>
-            <td class="zone1 pm">1:16p</td>
-            <td class="zone1 pm">2:16p</td>
-            <td class="zone1 pm">3:16p</td>
-            <td class="zone1">3:51p</td>
-            <td class="zone1 pm">4:49p</td>
-            <td class="zone1 pm">5:49p</td>
-            <td class="zone1 pm">6:49p</td>
-            <td class="zone1 pm">7:46p</td>
-            <td class="zone1 pm">8:46p</td>
-            <td class="zone1 pm">9:46p</td>
-            <td class="zone1 am">10:46p</td>
-            <td class="zone1 am">12:21a</td>
-            <th><a href="/stations/southsanfranciscostation.html" title="South San Francisco" target="blank">So. San Francisco</a></th>
+            <th><a href="/stations/southsanfranciscostation.html?" title="South San Francisco" target="blank">So. San Francisco</a></th>
+            <td>5:08a</td>
+            <td>5:42a</td>
+            <td>6:13a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:50a</td>
+            <td>7:13a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:50a</td>
+            <td>8:13a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:50a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:52a</td>
+            <td>10:52a</td>
+            <td>11:52a</td>
+            <td>12:52p</td>
+            <td>1:52p</td>
+            <td>2:52p</td>
+            <th><a href="/stations/southsanfranciscostation.html?" title="South San Francisco" target="blank">So. San Francisco</a></th>
+            <td>3:32p</td>
+            <td>4:08p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:52p</td>
+            <td>5:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:51p</td>
+            <td>6:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:51p</td>
+            <td>7:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:52p</td>
+            <td>8:52p</td>
+            <td>9:52p</td>
+            <td>10:52p</td>
+            <td>12:22a</td>
+            <th><a href="/stations/southsanfranciscostation.html?" title="South San Francisco" target="blank">So. San Francisco</a></th>
             <th>1</th>
         </tr>
         <tr id="zoneline">
             <th>1</th>
-            <th><a href="/stations/sanbrunostation.html" title="San Bruno" target="blank">San Bruno</a></th>
-            <td class="zone1 am">5:14a</td>
-            <td class="zone1 am">5:44a</td>
-            <td class="zone1 am">6:36a</td>
-            <td class="zone1 am">7:36a</td>
-            <td class="zone1 am">8:36a</td>
-            <td class="zone1 am">9:21a</td>
-            <td class="zone1 am">10:20a</td>
-            <td class="zone1 am">11:20a</td>
-            <td class="zone1 pm">12:20p</td>
-            <td class="zone1 pm">1:20p</td>
-            <td class="zone1 pm">2:20p</td>
-            <td class="zone1 pm">3:20p</td>
-            <td class="zone1 pm">3:55p</td>
-            <td class="zone1 pm">4:53p</td>
-            <td class="zone1 pm">5:53p</td>
-            <td class="zone1 pm">6:53p</td>
-            <td class="zone1 pm">7:50p</td>
-            <td class="zone1 pm">8:50p</td>
-            <td class="zone1 pm">9:50p</td>
-            <td class="zone1 am">10:50p</td>
-            <td class="zone1 am">12:25a</td>
-            <th><a href="/stations/sanbrunostation.html" title="San Bruno" target="blank">San Bruno</a></th>
+            <th><a href="/stations/sanbrunostation.html?" title="San Bruno" target="blank">San Bruno</a></th>
+            <td>5:12a</td>
+            <td>5:46a</td>
+            <td>6:17a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:54a</td>
+            <td>7:17a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:54a</td>
+            <td>8:17a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:54a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:56a</td>
+            <td>10:56a</td>
+            <td>11:56a</td>
+            <td>12:56p</td>
+            <td>1:56p</td>
+            <td>2:56p</td>
+            <th><a href="/stations/sanbrunostation.html?" title="San Bruno" target="blank">San Bruno</a></th>
+            <td>3:36p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:30p</td>
+            <td>4:56p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:30p</td>
+            <td>5:55p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:30p</td>
+            <td>6:55p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:30p</td>
+            <td>7:56p</td>
+            <td>8:56p</td>
+            <td>9:56p</td>
+            <td>10:56p</td>
+            <td>12:26a</td>
+            <th><a href="/stations/sanbrunostation.html?" title="San Bruno" target="blank">San Bruno</a></th>
             <th>1</th>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/millbraetransitcenter.html" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
-            <td class="zone2 am">5:18a</td>
-            <td class="zone2 am">5:48a</td>
-            <td class="zone2 am">6:40a</td>
-            <td class="zone2 am">7:40a</td>
-            <td class="zone2 am">8:40a</td>
-            <td class="zone2 am">9:25a</td>
-            <td class="zone2 am">10:25a</td>
-            <td class="zone2 am">11:25a</td>
-            <td class="zone2 pm">12:25p</td>
-            <td class="zone2 pm">1:25p</td>
-            <td class="zone2 pm">2:25p</td>
-            <td class="zone2 pm">3:27p</td>
-            <td class="zone2 pm">3:59p</td>
-            <td class="zone2 pm">4:57p</td>
-            <td class="zone2 pm">5:57p</td>
-            <td class="zone2 pm">6:57p</td>
-            <td class="zone2 pm">7:56p</td>
-            <td class="zone2 pm">8:56p</td>
-            <td class="zone2 pm">9:56p</td>
-            <td class="zone2 am">10:56p</td>
-            <td class="zone2 am">12:33a</td>
-            <th id="even"><a href="/stations/millbraetransitcenter.html" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
+            <th id="even"><a href="/stations/millbraetransitcenter.html?" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
+            <td>5:16a</td>
+            <td>5:50a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:33a</td>
+            <td>6:59a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:33a</td>
+            <td>7:59a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:33a</td>
+            <td>8:59a</td>
+            <td>9:33a</td>
+            <td>10:01a</td>
+            <td>11:01a</td>
+            <td>12:01p</td>
+            <td>1:01p</td>
+            <td>2:01p</td>
+            <td>3:01p</td>
+            <th id="even"><a href="/stations/millbraetransitcenter.html?" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
+            <td>3:41p</td>
+            <td>4:17p</td>
+            <td>4:35p</td>
+            <td>5:01p</td>
+            <td>5:20p</td>
+            <td>5:35p</td>
+            <td>6:00p</td>
+            <td>6:20p</td>
+            <td>6:35p</td>
+            <td>7:00p</td>
+            <td>7:20p</td>
+            <td>7:36p</td>
+            <td>8:01p</td>
+            <td>9:01p</td>
+            <td>10:01p</td>
+            <td>11:00p</td>
+            <td>12:30a</td>
+            <th id="even"><a href="/stations/millbraetransitcenter.html?" title="Millbrae Transit Center" target="blank">Millbrae</a></th>
             <th id="even">2</th>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/burlingamestation.html" title="Burlingame" target="blank">Burlingame</a></th>
-            <td class="zone2 am">5:22a</td>
-            <td class="zone2 am">5:53a</td>
-            <td class="zone2 am">6:44a</td>
-            <td class="zone2 am">7:44a</td>
-            <td class="zone2 am">8:44a</td>
-            <td class="zone2 am">9:29a</td>
-            <td class="zone2 am">10:29a</td>
-            <td class="zone2 am">11:29a</td>
-            <td class="zone2 pm">12:29p</td>
-            <td class="zone2 pm">1:29p</td>
-            <td class="zone2 pm">2:29p</td>
-            <td class="zone2 pm">3:32p</td>
-            <td class="zone2 pm">4:03p</td>
-            <td class="zone2 pm">5:01p</td>
-            <td class="zone2 pm">6:01p</td>
-            <td class="zone2 pm">7:01p</td>
-            <td class="zone2 pm">8:01p</td>
-            <td class="zone2 pm">9:01p</td>
-            <td class="zone2 pm">10:01p</td>
-            <td class="zone2 am">11:01p</td>
-            <td class="zone2 am">12:37a</td>
-            <th id="even"><a href="/stations/burlingamestation.html" title="Burlingame" target="blank">Burlingame</a></th>
+            <th id="even"><a href="/stations/burlingamestation.html?" title="Burlingame" target="blank">Burlingame</a></th>
+            <td>5:21a</td>
+            <td>5:55a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:39a</td>
+            <td>7:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:39a</td>
+            <td>8:04a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:39a</td>
+            <td>9:04a</td>
+            <td>9:40a</td>
+            <td>10:06a</td>
+            <td>11:06a</td>
+            <td>12:06p</td>
+            <td>1:06p</td>
+            <td>2:06p</td>
+            <td>3:06p</td>
+            <th id="even"><a href="/stations/burlingamestation.html?" title="Burlingame" target="blank">Burlingame</a></th>
+            <td>3:46p</td>
+            <td>4:24p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:06p</td>
+            <td>5:26p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:05p</td>
+            <td>6:26p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:05p</td>
+            <td>7:26p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:06p</td>
+            <td>9:06p</td>
+            <td>10:06p</td>
+            <td>11:05p</td>
+            <td>12:35a</td>
+            <th id="even"><a href="/stations/burlingamestation.html?" title="Burlingame" target="blank">Burlingame</a></th>
             <th id="even">2</th>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/sanmateostation.html" title="San Mateo" target="blank">San Mateo</a></th>
-            <td class="zone2 am">5:25a</td>
-            <td class="zone2 am">5:57a</td>
-            <td class="zone2 am">6:47a</td>
-            <td class="zone2 am">7:47a</td>
-            <td class="zone2 am">8:47a</td>
-            <td class="zone2 am">9:32a</td>
-            <td class="zone2 am">10:32a</td>
-            <td class="zone2 am">11:32a</td>
-            <td class="zone2 pm">12:32p</td>
-            <td class="zone2 pm">1:32p</td>
-            <td class="zone2 pm">2:32p</td>
-            <td class="zone2 pm">3:35p</td>
-            <td class="zone2 pm">4:06p</td>
-            <td class="zone2 pm">5:04p</td>
-            <td class="zone2 pm">6:04p</td>
-            <td class="zone2 pm">7:04p</td>
-            <td class="zone2 pm">8:04p</td>
-            <td class="zone2 pm">9:04p</td>
-            <td class="zone2 pm">10:04p</td>
-            <td class="zone2 am">11:04p</td>
-            <td class="zone2 am">12:40a</td>
-            <th id="even"><a href="/stations/sanmateostation.html" title="San Mateo" target="blank">San Mateo</a></th>
+            <th id="even"><a href="/stations/sanmateostation.html?" title="San Mateo" target="blank">San Mateo</a></th>
+            <td>5:25a</td>
+            <td>5:59a</td>
+            <td>6:27a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:07a</td>
+            <td>7:26a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:07a</td>
+            <td>8:26a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:07a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:10a</td>
+            <td>11:10a</td>
+            <td>12:10p</td>
+            <td>1:10p</td>
+            <td>2:10p</td>
+            <td>3:10p</td>
+            <th id="even"><a href="/stations/sanmateostation.html?" title="San Mateo" target="blank">San Mateo</a></th>
+            <td>3:50p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:43p</td>
+            <td>5:10p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:43p</td>
+            <td>6:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:43p</td>
+            <td>7:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:43p</td>
+            <td>8:10p</td>
+            <td>9:10p</td>
+            <td>10:10p</td>
+            <td>11:09p</td>
+            <td>12:39a</td>
+            <th id="even"><a href="/stations/sanmateostation.html?" title="San Mateo" target="blank">San Mateo</a></th>
             <th id="even">2</th>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/haywardparkstation.html" title="Hayward Park" target="blank">Hayward Park</a></th>
-            <td class="zone2 am">5:28a</td>
-            <td class="zone2 am">6:00a</td>
-            <td class="zone2 am">6:51a</td>
-            <td class="zone2 am">7:51a</td>
-            <td class="zone2 am">8:51a</td>
-            <td class="zone2 am">9:36a</td>
-            <td class="zone2 am">10:36a</td>
-            <td class="zone2 am">11:36a</td>
-            <td class="zone2 pm">12:36p</td>
-            <td class="zone2 pm">1:36p</td>
-            <td class="zone2 pm">2:36p</td>
-            <td class="zone2 pm">3:39p</td>
-            <td class="zone2">4:10p</td>
-            <td class="zone2 pm">5:08p</td>
-            <td class="zone2 pm">6:08p</td>
-            <td class="zone2 pm">7:08p</td>
-            <td class="zone2 pm">8:08p</td>
-            <td class="zone2 pm">9:08p</td>
-            <td class="zone2 pm">10:08p</td>
-            <td class="zone2 am">11:08p</td>
-            <td class="zone2 am">12:44a</td>
-            <th id="even"><a href="/stations/haywardparkstation.html" title="Hayward Park" target="blank">Hayward Park</a></th>
+            <th id="even"><a href="/stations/haywardparkstation.html?" title="Hayward Park" target="blank">Hayward Park</a></th>
+            <td>5:28a</td>
+            <td>6:02a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:11a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:11a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:11a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:14a</td>
+            <td>11:14a</td>
+            <td>12:14p</td>
+            <td>1:14p</td>
+            <td>2:14p</td>
+            <td>3:14p</td>
+            <th id="even"><a href="/stations/haywardparkstation.html?" title="Hayward Park" target="blank">Hayward Park</a></th>
+            <td>3:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:13p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:12p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:12p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:13p</td>
+            <td>9:14p</td>
+            <td>10:14p</td>
+            <td>11:12p</td>
+            <td>12:42a</td>
+            <th id="even"><a href="/stations/haywardparkstation.html?" title="Hayward Park" target="blank">Hayward Park</a></th>
             <th id="even">2</th>
         </tr>
         <tr>
-            <th id="even" style="background-color: #f7e89d;">2</th>
-            <th id="even" style="background-color: #f7e89d;"><a href="/stations/hillsdalestation.html" title="Hillsdale" target="blank">Hillsdale</a></th>
-            <td class="zone2 am" colspan="23" style="text-align: center; background-color: #f7e89d;"><em><strong>Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</strong></em><br />
+            <th id="even">2</th>
+            <th id="even"><a href="/stations/hillsdalestation.html?" title="Hillsdale" target="blank">Hillsdale</a></th>
+            <td class="zone2 am" colspan="39" style="text-align: center; background-color: #EABB10;"><em><strong>Hillsdale Station is temporarily closed. All train service will move from Hillsdale Station to Belmont Station.</strong></em><br />
             </td>
             <td></td>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/belmontstation.html" title="Belmont" target="blank">Belmont</a></th>
-            <td class="zone2 am">5:35a</td>
-            <td class="zone2 am">6:07a</td>
-            <td class="zone2 am">6:58a</td>
-            <td class="zone2 am">7:58a</td>
-            <td class="zone2 am">8:58a</td>
-            <td class="zone2 am">9:43a</td>
-            <td class="zone2 am">10:43a</td>
-            <td class="zone2 am">11:43a</td>
-            <td class="zone2 pm">12:43p</td>
-            <td class="zone2 pm">1:43p</td>
-            <td class="zone2 pm">2:43p</td>
-            <td class="zone2 pm">3:46p</td>
-            <td class="zone2 pm">4:17p</td>
-            <td class="zone2 pm">5:15p</td>
-            <td class="zone2 pm">6:15p</td>
-            <td class="zone2 pm">7:15p</td>
-            <td class="zone2 pm">8:15p</td>
-            <td class="zone2 pm">9:15p</td>
-            <td class="zone2 pm">10:15p</td>
-            <td class="zone2 am">11:15p</td>
-            <td class="zone2 am">12:51a</td>
-            <th id="even"><a href="/stations/belmontstation.html" title="Belmont" target="blank">Belmont</a></th>
+            <th id="even"><a href="/stations/belmontstation.html?" title="Belmont" target="blank">Belmont</a></th>
+            <td>5:35a</td>
+            <td>6:09a</td>
+            <td>6:34a</td>
+            <td>6:47a</td>
+            <td>7:18a</td>
+            <td>7:33a</td>
+            <td>7:47a</td>
+            <td>8:18a</td>
+            <td>8:33a</td>
+            <td>8:47a</td>
+            <td>9:18a</td>
+            <td>9:50a</td>
+            <td>10:21a</td>
+            <td>11:21a</td>
+            <td>12:21p</td>
+            <td>1:21p</td>
+            <td>2:21p</td>
+            <td>3:21p</td>
+            <th id="even"><a href="/stations/belmontstation.html?" title="Belmont" target="blank">Belmont</a></th>
+            <td>4:01p</td>
+            <td>4:35p</td>
+            <td>4:50p</td>
+            <td>5:21p</td>
+            <td>5:35p</td>
+            <td>5:50p</td>
+            <td>6:20p</td>
+            <td>6:35p</td>
+            <td>6:50p</td>
+            <td>7:20p</td>
+            <td>7:34p</td>
+            <td>7:50p</td>
+            <td>8:21p</td>
+            <td>9:21p</td>
+            <td>10:21p</td>
+            <td>11:19p</td>
+            <td>12:49a</td>
+            <th id="even"><a href="/stations/belmontstation.html?" title="Belmont" target="blank">Belmont</a></th>
             <th id="even">2</th>
         </tr>
         <tr>
             <th id="even">2</th>
-            <th id="even"><a href="/stations/sancarlosstation.html" title="San Carlos" target="blank">San Carlos</a></th>
-            <td class="zone2 am">5:38a</td>
-            <td class="zone2 am">6:10a</td>
-            <td class="zone2 am">7:01a</td>
-            <td class="zone2 am">8:01a</td>
-            <td class="zone2 am">9:01a</td>
-            <td class="zone2 am">9:46a</td>
-            <td class="zone2 am">10:46a</td>
-            <td class="zone2 am">11:46a</td>
-            <td class="zone2 pm">12:46p</td>
-            <td class="zone2 pm">1:46p</td>
-            <td class="zone2 pm">2:46p</td>
-            <td class="zone2 pm">3:49p</td>
-            <td class="zone2 pm">4:20p</td>
-            <td class="zone2 pm">5:18p</td>
-            <td class="zone2 pm">6:18p</td>
-            <td class="zone2 pm">7:18p</td>
-            <td class="zone2 pm">8:18p</td>
-            <td class="zone2 pm">9:18p</td>
-            <td class="zone2 pm">10:18p</td>
-            <td class="zone2 am">11:18p</td>
-            <td class="zone2 am">12:54a</td>
-            <th id="even"><a href="/stations/sancarlosstation.html" title="San Carlos" target="blank">San Carlos</a></th>
+            <th id="even"><a href="/stations/sancarlosstation.html?" title="San Carlos" target="blank">San Carlos</a></th>
+            <td>5:39a</td>
+            <td>6:13a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:51a</td>
+            <td>7:22a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:51a</td>
+            <td>8:22a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:51a</td>
+            <td>9:22a</td>
+            <td>9:54a</td>
+            <td>10:25a</td>
+            <td>11:25a</td>
+            <td>12:25p</td>
+            <td>1:25p</td>
+            <td>2:25p</td>
+            <td>3:25p</td>
+            <th id="even"><a href="/stations/sancarlosstation.html?" title="San Carlos" target="blank">San Carlos</a></th>
+            <td>4:04p</td>
+            <td>4:38p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:24p</td>
+            <td>5:38p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:23p</td>
+            <td>6:38p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:23p</td>
+            <td>7:38p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:24p</td>
+            <td>9:25p</td>
+            <td>10:25p</td>
+            <td>11:23p</td>
+            <td>12:53a</td>
+            <th id="even"><a href="/stations/sancarlosstation.html?" title="San Carlos" target="blank">San Carlos</a></th>
             <th id="even">2</th>
         </tr>
         <tr id="zoneline">
             <th id="even">2</th>
-            <th id="even"><a href="/stations/redwoodcitystation.html" title="Redwood City" target="blank">Redwood City</a></th>
-            <td class="zone2 am">5:41a</td>
-            <td class="zone2 am">6:15a</td>
-            <td class="zone2 am">7:06a</td>
-            <td class="zone2 am">8:06a</td>
-            <td class="zone2 am">9:06a</td>
-            <td class="zone2 am">9:51a</td>
-            <td class="zone2 am">10:51a</td>
-            <td class="zone2 am">11:51a</td>
-            <td class="zone2 pm">12:51p</td>
-            <td class="zone2 pm">1:51p</td>
-            <td class="zone2 pm">2:51p</td>
-            <td class="zone2 pm">3:54p</td>
-            <td class="zone2 pm">4:25p</td>
-            <td class="zone2 pm">5:23p</td>
-            <td class="zone2 pm">6:23p</td>
-            <td class="zone2 pm">7:23p</td>
-            <td class="zone2 pm">8:23p</td>
-            <td class="zone2 pm">9:23p</td>
-            <td class="zone2 pm">10:23p</td>
-            <td class="zone2 am">11:23p</td>
-            <td class="zone2 am">12:59a</td>
-            <th id="even"><a href="/stations/redwoodcitystation.html" title="Redwood City" target="blank">Redwood City</a></th>
+            <th id="even"><a href="/stations/redwoodcitystation.html?" title="Redwood City" target="blank">Redwood City</a></th>
+            <td>5:43a</td>
+            <td>6:17a</td>
+            <td>6:40a</td>
+            <td>6:56a</td>
+            <td>7:27a</td>
+            <td>7:40a</td>
+            <td>7:56a</td>
+            <td>8:27a</td>
+            <td>8:40a</td>
+            <td>8:56a</td>
+            <td>9:27a</td>
+            <td>9:59a</td>
+            <td>10:30a</td>
+            <td>11:30a</td>
+            <td>12:30p</td>
+            <td>1:30p</td>
+            <td>2:30p</td>
+            <td>3:30p</td>
+            <th id="even"><a href="/stations/redwoodcitystation.html?" title="Redwood City" target="blank">Redwood City</a></th>
+            <td>4:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>4:57p</td>
+            <td>5:29p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:57p</td>
+            <td>6:28p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:57p</td>
+            <td>7:28p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:56p</td>
+            <td>8:30p</td>
+            <td>9:30p</td>
+            <td>10:30p</td>
+            <td>11:27p</td>
+            <td>12:57a</td>
+            <th id="even"><a href="/stations/redwoodcitystation.html?" title="Redwood City" target="blank">Redwood City</a></th>
             <th id="even">2</th>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/menloparkstation.html" title="Menlo Park" target="blank">Menlo Park</a></th>
-            <td class="zone3 am">5:47a</td>
-            <td class="zone3 am">6:20a</td>
-            <td class="zone3">7:11a</td>
-            <td class="zone3">8:11a</td>
-            <td class="zone3">9:11a</td>
-            <td class="zone3 am">9:56a</td>
-            <td class="zone3 am">10:56a</td>
-            <td class="zone3 am">11:56a</td>
-            <td class="zone3 pm">12:56p</td>
-            <td class="zone3 pm">1:56p</td>
-            <td class="zone3 pm">2:56p</td>
-            <td class="zone3 pm">3:59p</td>
-            <td class="zone3 pm">4:30p</td>
-            <td class="zone3 pm">5:28p</td>
-            <td class="zone3 pm">6:28p</td>
-            <td class="zone3 pm">7:28p</td>
-            <td class="zone3 pm">8:28p</td>
-            <td class="zone3 pm">9:28p</td>
-            <td class="zone3 pm">10:28p</td>
-            <td class="zone3 am">11:28p</td>
-            <td class="zone3 am">1:04a</td>
-            <th><a href="/stations/menloparkstation.html" title="Menlo Park" target="blank">Menlo Park</a></th>
+            <th><a href="/stations/menloparkstation.html?" title="Menlo Park" target="blank">Menlo Park</a></th>
+            <td>5:49a</td>
+            <td>6:23a</td>
+            <td>6:46a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:33a</td>
+            <td>7:46a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:33a</td>
+            <td>8:46a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:35a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:36a</td>
+            <td>11:36a</td>
+            <td>12:36p</td>
+            <td>1:36p</td>
+            <td>2:36p</td>
+            <td>3:36p</td>
+            <th><a href="/stations/menloparkstation.html?" title="Menlo Park" target="blank">Menlo Park</a></th>
+            <td>4:15p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:03p</td>
+            <td>5:35p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:03p</td>
+            <td>6:34p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:03p</td>
+            <td>7:34p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:02p</td>
+            <td>8:36p</td>
+            <td>9:36p</td>
+            <td>10:36p</td>
+            <td>11:33p</td>
+            <td>1:03a</td>
+            <th><a href="/stations/menloparkstation.html?" title="Menlo Park" target="blank">Menlo Park</a></th>
             <th>3</th>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/paloaltostation.html" title="Palo Alto" target="blank">Palo Alto</a></th>
-            <td class="zone3 am">5:51a</td>
-            <td class="zone3 am">6:24a</td>
-            <td class="zone3 am">7:15a</td>
-            <td class="zone3 am">8:15a</td>
-            <td class="zone3 am">9:15a</td>
-            <td class="zone3 am">10:00a</td>
-            <td class="zone3 am">11:00a</td>
-            <td class="zone3 pm">12:00p</td>
-            <td class="zone3 pm">1:00p</td>
-            <td class="zone3 pm">2:00p</td>
-            <td class="zone3 pm">3:00p</td>
-            <td class="zone3 pm">4:04p</td>
-            <td class="zone3 pm">4:34p</td>
-            <td class="zone3">5:32p</td>
-            <td class="zone3">6:32p</td>
-            <td class="zone3">7:32p</td>
-            <td class="zone3 pm">8:32p</td>
-            <td class="zone3 pm">9:32p</td>
-            <td class="zone3 pm">10:32p</td>
-            <td class="zone3 am">11:32p</td>
-            <td class="zone3 am">1:08a</td>
-            <th><a href="/stations/paloaltostation.html" title="Palo Alto" target="blank">Palo Alto</a></th>
+            <th><a href="/stations/paloaltostation.html?" title="Palo Alto" target="blank">Palo Alto</a></th>
+            <td>5:53a</td>
+            <td>6:27a</td>
+            <td>6:51a</td>
+            <td>7:04a</td>
+            <td>7:37a</td>
+            <td>7:50a</td>
+            <td>8:04a</td>
+            <td>8:37a</td>
+            <td>8:50a</td>
+            <td>9:04a</td>
+            <td>9:39a</td>
+            <td>10:08a</td>
+            <td>10:41a</td>
+            <td>11:41a</td>
+            <td>12:41p</td>
+            <td>1:41p</td>
+            <td>2:41p</td>
+            <td>3:41p</td>
+            <th><a href="/stations/paloaltostation.html?" title="Palo Alto" target="blank">Palo Alto</a></th>
+            <td>4:19p</td>
+            <td>4:48p</td>
+            <td>5:08p</td>
+            <td>5:39p</td>
+            <td>5:49p</td>
+            <td>6:08p</td>
+            <td>6:38p</td>
+            <td>6:48p</td>
+            <td>7:08p</td>
+            <td>7:38p</td>
+            <td>7:48p</td>
+            <td>8:07p</td>
+            <td>8:40p</td>
+            <td>9:41p</td>
+            <td>10:41p</td>
+            <td>11:37p</td>
+            <td>1:07a</td>
+            <th><a href="/stations/paloaltostation.html?" title="Palo Alto" target="blank">Palo Alto</a></th>
             <th>3</th>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/californiaavenuestation.html" title="California Ave." target="blank">California Ave</a></th>
-            <td class="zone3 am">5:55a</td>
-            <td class="zone3 am">6:28a</td>
-            <td class="zone3">7:19a</td>
-            <td class="zone3">8:19a</td>
-            <td class="zone3">9:19a</td>
-            <td class="zone3 am">10:04a</td>
-            <td class="zone3 am">11:04a</td>
-            <td class="zone3 pm">12:04p</td>
-            <td class="zone3 pm">1:04p</td>
-            <td class="zone3 pm">2:04p</td>
-            <td class="zone3 pm">3:04p</td>
-            <td class="zone3 pm">4:08p</td>
-            <td class="zone3 pm">4:38p</td>
-            <td class="zone3">5:36p</td>
-            <td class="zone3">6:36p</td>
-            <td class="zone3">7:36p</td>
-            <td class="zone3 pm">8:35p</td>
-            <td class="zone3 pm">9:35p</td>
-            <td class="zone3 pm">10:35p</td>
-            <td class="zone3 am">11:35p</td>
-            <td class="zone3 am">1:11a</td>
-            <th><a href="/stations/californiaavenuestation.html" title="California Ave." target="blank">California Ave</a></th>
+            <th><a href="/stations/californiaavenuestation.html?" title="California Ave." target="blank">California Ave</a></th>
+            <td>5:56a</td>
+            <td>6:30a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:08a</td>
+            <td>7:40a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:08a</td>
+            <td>8:40a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:08a</td>
+            <td>9:43a</td>
+            <td>10:12a</td>
+            <td>10:44a</td>
+            <td>11:44a</td>
+            <td>12:44p</td>
+            <td>1:44p</td>
+            <td>2:44p</td>
+            <td>3:44p</td>
+            <th><a href="/stations/californiaavenuestation.html?" title="California Ave." target="blank">California Ave</a></th>
+            <td>4:23p</td>
+            <td>4:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:43p</td>
+            <td>5:54p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:42p</td>
+            <td>6:53p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:42p</td>
+            <td>7:52p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:44p</td>
+            <td>9:44p</td>
+            <td>10:44p</td>
+            <td>11:40p</td>
+            <td>1:10a</td>
+            <th><a href="/stations/californiaavenuestation.html?" title="California Ave." target="blank">California Ave</a></th>
             <th>3</th>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/sanantoniostation.html" title="San Antonio" target="blank">San&nbsp;Antonio</a></th>
-            <td class="zone3 am">5:59a</td>
-            <td class="zone3 am">6:32a</td>
-            <td class="zone3">7:23a</td>
-            <td class="zone3">8:23a</td>
-            <td class="zone3">9:23a</td>
-            <td class="zone3 am">10:08a</td>
-            <td class="zone3 am">11:08a</td>
-            <td class="zone3 pm">12:08p</td>
-            <td class="zone3 pm">1:08p</td>
-            <td class="zone3 pm">2:08p</td>
-            <td class="zone3 pm">3:08p</td>
-            <td class="zone3 pm">4:12p</td>
-            <td class="zone3 pm">4:42p</td>
-            <td class="zone3">5:40p</td>
-            <td class="zone3">6:40p</td>
-            <td class="zone3">7:40p</td>
-            <td class="zone3 pm">8:39p</td>
-            <td class="zone3 pm">9:39p</td>
-            <td class="zone3 pm">10:39p</td>
-            <td class="zone3 am">11:39p</td>
-            <td class="zone3 am">1:15a</td>
-            <th><a href="/stations/sanantoniostation.html" title="San Antonio" target="blank">San&nbsp;Antonio</a></th>
+            <th><a href="/stations/sanantoniostation.html?" title="San Antonio" target="blank">San&nbsp;Antonio</a></th>
+            <td>6:01a</td>
+            <td>6:35a</td>
+            <td>6:57a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:45a</td>
+            <td>7:56a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:45a</td>
+            <td>8:56a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:47a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:49a</td>
+            <td>11:49a</td>
+            <td>12:49p</td>
+            <td>1:49p</td>
+            <td>2:49p</td>
+            <td>3:49p</td>
+            <th><a href="/stations/sanantoniostation.html?" title="San Antonio" target="blank">San&nbsp;Antonio</a></th>
+            <td>4:28p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:14p</td>
+            <td>5:47p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:14p</td>
+            <td>6:46p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:14p</td>
+            <td>7:46p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:13p</td>
+            <td>8:49p</td>
+            <td>9:49p</td>
+            <td>10:49p</td>
+            <td>11:45p</td>
+            <td>1:15a</td>
+            <th><a href="/stations/sanantoniostation.html?" title="San Antonio" target="blank">San&nbsp;Antonio</a></th>
             <th>3</th>
         </tr>
         <tr>
             <th>3</th>
-            <th><a href="/stations/mountainviewstation.html" title="Mountain View" target="blank">Mountain&nbsp;View</a></th>
-            <td class="zone3 am">6:04a</td>
-            <td class="zone3 am">6:37a</td>
-            <td class="zone3">7:28a</td>
-            <td class="zone3">8:28a</td>
-            <td class="zone3">9:28a</td>
-            <td class="zone3 am">10:13a</td>
-            <td class="zone3 am">11:13a</td>
-            <td class="zone3 pm">12:13p</td>
-            <td class="zone3 pm">1:13p</td>
-            <td class="zone3 pm">2:13p</td>
-            <td class="zone3 pm">3:13p</td>
-            <td class="zone3 pm">4:17p</td>
-            <td class="zone3 pm">4:47p</td>
-            <td class="zone3 pm">5:45p</td>
-            <td class="zone3 pm">6:45p</td>
-            <td class="zone3 pm">7:45p</td>
-            <td class="zone3 pm">8:44p</td>
-            <td class="zone3 pm">9:44p</td>
-            <td class="zone3 pm">10:44p</td>
-            <td class="zone3 am">11:44p</td>
-            <td class="zone3 am">1:20a</td>
-            <th><a href="/stations/mountainviewstation.html" title="Mountain View" target="blank">Mountain&nbsp;View</a></th>
+            <th><a href="/stations/mountainviewstation.html?" title="Mountain View" target="blank">Mountain&nbsp;View</a></th>
+            <td>6:05a</td>
+            <td>6:39a</td>
+            <td>7:02a</td>
+            <td>7:15a</td>
+            <td>7:50a</td>
+            <td>8:01a</td>
+            <td>8:16a</td>
+            <td>8:50a</td>
+            <td>9:01a</td>
+            <td>9:16a</td>
+            <td>9:52a</td>
+            <td>10:20a</td>
+            <td>10:54a</td>
+            <td>11:54a</td>
+            <td>12:54p</td>
+            <td>1:54p</td>
+            <td>2:54p</td>
+            <td>3:54p</td>
+            <th><a href="/stations/mountainviewstation.html?" title="Mountain View" target="blank">Mountain&nbsp;View</a></th>
+            <td>4:33p</td>
+            <td>5:00p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:52p</td>
+            <td>6:02p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:51p</td>
+            <td>7:00p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:51p</td>
+            <td>7:59p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:53p</td>
+            <td>9:54p</td>
+            <td>10:54p</td>
+            <td>11:49p</td>
+            <td>1:19a</td>
+            <th><a href="/stations/mountainviewstation.html?" title="Mountain View" target="blank">Mountain&nbsp;View</a></th>
             <th>3</th>
         </tr>
         <tr id="zoneline">
             <th>3</th>
-            <th><a href="/stations/sunnyvalestation.html" title="Sunnyvale" target="blank">Sunnyvale</a></th>
-            <td class="zone3 am">6:10a</td>
-            <td class="zone3 am">6:42a</td>
-            <td class="zone3">7:33a</td>
-            <td class="zone3">8:33a</td>
-            <td class="zone3">9:33a</td>
-            <td class="zone3 am">10:18a</td>
-            <td class="zone3 am">11:18a</td>
-            <td class="zone3 pm">12:18p</td>
-            <td class="zone3 pm">1:18p</td>
-            <td class="zone3 pm">2:18p</td>
-            <td class="zone3 pm">3:18p</td>
-            <td class="zone3 pm">4:22p</td>
-            <td class="zone3 pm">4:52p</td>
-            <td class="zone3 pm">5:50p</td>
-            <td class="zone3 pm">6:50p</td>
-            <td class="zone3 pm">7:50p</td>
-            <td class="zone3 pm">8:49p</td>
-            <td class="zone3 pm">9:49p</td>
-            <td class="zone3 pm">10:49p</td>
-            <td class="zone3 am">11:49p</td>
-            <td class="zone3 am">1:25a</td>
-            <th><a href="/stations/sunnyvalestation.html" title="Sunnyvale" target="blank">Sunnyvale</a></th>
+            <th><a href="/stations/sunnyvalestation.html?" title="Sunnyvale" target="blank">Sunnyvale</a></th>
+            <td>6:10a</td>
+            <td>6:44a</td>
+            <td>7:08a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:55a</td>
+            <td>8:08a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:55a</td>
+            <td>9:08a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:57a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:59a</td>
+            <td>11:59a</td>
+            <td>12:59p</td>
+            <td>1:59p</td>
+            <td>2:59p</td>
+            <td>3:59p</td>
+            <th><a href="/stations/sunnyvalestation.html?" title="Sunnyvale" target="blank">Sunnyvale</a></th>
+            <td>4:38p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:22p</td>
+            <td>5:57p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:22p</td>
+            <td>6:56p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:22p</td>
+            <td>7:56p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:21p</td>
+            <td>8:59p</td>
+            <td>9:59p</td>
+            <td>10:59p</td>
+            <td>11:54p</td>
+            <td>1:24a</td>
+            <th><a href="/stations/sunnyvalestation.html?" title="Sunnyvale" target="blank">Sunnyvale</a></th>
             <th>3</th>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/lawrencestation.html" title="Lawrence" target="blank">Lawrence</a></th>
-            <td class="zone4 am">6:15a</td>
-            <td class="zone4 am">6:46a</td>
-            <td class="zone4">7:37a</td>
-            <td class="zone4">8:37a</td>
-            <td class="zone4">9:37a</td>
-            <td class="zone4 am">10:22a</td>
-            <td class="zone4 am">11:22a</td>
-            <td class="zone4 pm">12:22p</td>
-            <td class="zone4 pm">1:22p</td>
-            <td class="zone4 pm">2:22p</td>
-            <td class="zone4 pm">3:22p</td>
-            <td class="zone4 pm">4:27p</td>
-            <td class="zone4 pm">4:56p</td>
-            <td class="zone4">5:54p</td>
-            <td class="zone4 pm">6:54p</td>
-            <td class="zone4">7:54p</td>
-            <td class="zone4 pm">8:53p</td>
-            <td class="zone4 pm">9:53p</td>
-            <td class="zone4 pm">10:53p</td>
-            <td class="zone4 am">11:53p</td>
-            <td class="zone4 am">1:29a</td>
-            <th id="even"><a href="/stations/lawrencestation.html" title="Lawrence" target="blank">Lawrence</a></th>
+            <th id="even"><a href="/stations/lawrencestation.html?" title="Lawrence" target="blank">Lawrence</a></th>
+            <td>6:14a</td>
+            <td>6:49a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:23a</td>
+            <td>7:59a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:23a</td>
+            <td>8:59a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:23a</td>
+            <td>10:02a</td>
+            <td>10:28a</td>
+            <td>11:04a</td>
+            <td>12:04p</td>
+            <td>1:04p</td>
+            <td>2:04p</td>
+            <td>3:04p</td>
+            <td>4:04p</td>
+            <th id="even"><a href="/stations/lawrencestation.html?" title="Lawrence" target="blank">Lawrence</a></th>
+            <td>4:43p</td>
+            <td>5:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:02p</td>
+            <td>6:11p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:00p</td>
+            <td>7:09p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:00p</td>
+            <td>8:07p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:03p</td>
+            <td>10:04p</td>
+            <td>11:04p</td>
+            <td>11:58p</td>
+            <td>1:28a</td>
+            <th id="even"><a href="/stations/lawrencestation.html?" title="Lawrence" target="blank">Lawrence</a></th>
             <th id="even">4</th>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/santaclarastation.html" title="Santa Clara" target="blank">Santa&nbsp;Clara</a></th>
-            <td class="zone4 am">6:22a</td>
-            <td class="zone4 am">6:51a</td>
-            <td class="zone4 am">7:42a</td>
-            <td class="zone4 am">8:42a</td>
-            <td class="zone4 am">9:42a</td>
-            <td class="zone4 am">10:27a</td>
-            <td class="zone4 am">11:28a</td>
-            <td class="zone4 pm">12:28p</td>
-            <td class="zone4 pm">1:28p</td>
-            <td class="zone4 pm">2:28p</td>
-            <td class="zone4 pm">3:28p</td>
-            <td class="zone4 pm">4:32p</td>
-            <td class="zone4 pm">5:01p</td>
-            <td class="zone4 pm">5:59p</td>
-            <td class="zone4 pm">6:59p</td>
-            <td class="zone4 pm">7:59p</td>
-            <td class="zone4 pm">8:58p</td>
-            <td class="zone4 pm">9:58p</td>
-            <td class="zone4 pm">10:58p</td>
-            <td class="zone4 am">11:58p</td>
-            <td class="zone4 am">1:34a</td>
-            <th id="even"><a href="/stations/santaclarastation.html" title="Santa Clara" target="blank">Santa&nbsp;Clara</a></th>
+            <th id="even"><a href="/stations/santaclarastation.html?" title="Santa Clara" target="blank">Santa&nbsp;Clara</a></th>
+            <td>6:20a</td>
+            <td>6:55a</td>
+            <td>7:16a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:05a</td>
+            <td>8:15a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>9:05a</td>
+            <td>9:15a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>10:07a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>11:10a</td>
+            <td>12:10p</td>
+            <td>1:10p</td>
+            <td>2:10p</td>
+            <td>3:10p</td>
+            <td>4:10p</td>
+            <th id="even"><a href="/stations/santaclarastation.html?" title="Santa Clara" target="blank">Santa&nbsp;Clara</a></th>
+            <td>4:49p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>5:30p</td>
+            <td>6:07p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>6:30p</td>
+            <td>7:06p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>7:30p</td>
+            <td>8:06p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:29p</td>
+            <td>9:09p</td>
+            <td>10:10p</td>
+            <td>11:10p</td>
+            <td>12:04a</td>
+            <td>1:34a</td>
+            <th id="even"><a href="/stations/santaclarastation.html?" title="Santa Clara" target="blank">Santa&nbsp;Clara</a></th>
             <th id="even">4</th>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/collegeparkstation.html" title="College Park" target="blank">College&nbsp;Park</a></th>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4 pm">4:35p</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <td class="zone4">&nbsp;&nbsp;–</td>
-            <th id="even"><a href="/stations/collegeparkstation.html" title="College Park" target="blank">College&nbsp;Park</a></th>
+            <th id="even"><a href="/stations/collegeparkstation.html?" title="College Park" target="blank">College&nbsp;Park</a></th>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>8:08a</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <th id="even"><a href="/stations/collegeparkstation.html?" title="College Park" target="blank">College&nbsp;Park</a></th>
+            <td>4:52p</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <td>&nbsp;&nbsp;–</td>
+            <th id="even"><a href="/stations/collegeparkstation.html?" title="College Park" target="blank">College&nbsp;Park</a></th>
             <th id="even">4</th>
         </tr>
         <tr>
             <th id="even">4</th>
-            <th id="even"><a href="/stations/sanjosediridonstation.html" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
-            <td class="zone4 am">6:31a</td>
-            <td class="zone4 am">7:05a</td>
-            <td class="zone4 am">7:50a</td>
-            <td class="zone4 am">8:50a</td>
-            <td class="zone4 am">9:50a</td>
-            <td class="zone4 am">10:35a</td>
-            <td class="zone4 am">11:35a</td>
-            <td class="zone4 pm">12:35p</td>
-            <td class="zone4 pm">1:35p</td>
-            <td class="zone4 pm">2:35p</td>
-            <td class="zone4 pm">3:35p</td>
-            <td class="zone4 pm">4:44p</td>
-            <td class="zone4 pm">5:09p</td>
-            <td class="zone4 pm">6:07p</td>
-            <td class="zone4 pm">7:07p</td>
-            <td class="zone4 pm">8:07p</td>
-            <td class="zone4 pm">9:06p</td>
-            <td class="zone4 pm">10:06p</td>
-            <td class="zone4 pm">11:06p</td>
-            <td class="zone4 pm">12:06a</td>
-            <td class="zone4 am">1:42a</td>
-            <th id="even"><a href="/stations/sanjosediridonstation.html" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
+            <th id="even"><a href="/stations/sanjosediridonstation.html?" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
+            <td>6:27a</td>
+            <td>7:04a</td>
+            <td>7:25a</td>
+            <td>7:33a</td>
+            <td>8:13a</td>
+            <td>8:22a</td>
+            <td>8:35a</td>
+            <td>9:11a</td>
+            <td>9:22a</td>
+            <td>9:34a</td>
+            <td>10:14a</td>
+            <td>10:40a</td>
+            <td>11:18a</td>
+            <td>12:18p</td>
+            <td>1:16p</td>
+            <td>2:16p</td>
+            <td>3:16p</td>
+            <td>4:16p</td>
+            <th id="even"><a href="/stations/sanjosediridonstation.html?" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
+            <td>4:59p</td>
+            <td>5:21p</td>
+            <td>5:36p</td>
+            <td>6:16p</td>
+            <td>6:24p</td>
+            <td>6:36p</td>
+            <td>7:14p</td>
+            <td>7:19p</td>
+            <td>7:38p</td>
+            <td>8:12p</td>
+            <td>8:17p</td>
+            <td>8:35p</td>
+            <td>9:16p</td>
+            <td>10:18p</td>
+            <td>11:18p</td>
+            <td>12:11a</td>
+            <td>1:41a</td>
+            <th id="even"><a href="/stations/sanjosediridonstation.html?" title="San Jose Diridon" target="blank">San Jose Diridon</a></th>
             <th id="even">4</th>
         </tr>
         <tr id="zoneline">
             <th id="even">4</th>
-            <th id="even"><a href="/stations/tamienstation.html" title="Tamien" target="blank">Tamien</a></th>
-            <td class="zone4"></td>
-            <td class="zone4 am">7:10a</td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4 pm">4:50p</td>
-            <td class="zone4 pm">5:14p</td>
-            <td class="zone4">6:13p</td>
-            <td class="zone4 pm">7:12p</td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <td class="zone4 pm">10:11p</td>
-            <td class="zone4 pm">11:11p</td>
-            <td class="zone4"></td>
-            <td class="zone4"></td>
-            <th id="even"><a href="/stations/tamienstation.html" title="Tamien" target="blank">Tamien</a></th>
+            <th id="even"><a href="/stations/tamienstation.html?" title="Tamien" target="blank">Tamien</a></th>
+            <td>&nbsp;</td>
+            <td>7:09a</td>
+            <td>7:30a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>8:40a</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>10:45a</td>
+            <td>11:23a</td>
+            <td>12:23p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/tamienstation.html?" title="Tamien" target="blank">Tamien</a></th>
+            <td>5:06p</td>
+            <td>5:26p</td>
+            <td>&nbsp;</td>
+            <td>6:21p</td>
+            <td>6:31p</td>
+            <td>&nbsp;</td>
+            <td>7:19p</td>
+            <td>&nbsp;</td>
+            <td>7:43p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>10:23p</td>
+            <td>11:23p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/tamienstation.html?" title="Tamien" target="blank">Tamien</a></th>
             <th id="even">4</th>
         </tr>
         <tr>
             <th>5</th>
-            <th><a href="/stations/capitolstation.html" title="Capitol" target="blank">Capitol</a></th>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5 pm">4:57p</td>
-            <td class="zone5"></td>
-            <td class="zone5">6:20p</td>
-            <td class="zone5 pm"><br />
-            </td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <th><a href="/stations/capitolstation.html" title="Capitol" target="blank">Capitol</a></th>
+            <th><a href="/stations/capitolstation.html?" title="Capitol" target="blank">Capitol</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/capitolstation.html?" title="Capitol" target="blank">Capitol</a></th>
+            <td>5:13p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:39p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/capitolstation.html?" title="Capitol" target="blank">Capitol</a></th>
             <th>5</th>
         </tr>
         <tr id="zoneline">
             <th>5</th>
-            <th><a href="/stations/blossomhillstation.html" title="Blossom Hill" target="blank">Blossom Hill</a></th>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5 pm">5:03p</td>
-            <td class="zone5"></td>
-            <td class="zone5">6:26p</td>
-            <td class="zone5 pm"><br />
-            </td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <td class="zone5"></td>
-            <th><a href="/stations/blossomhillstation.html" title="Blossom Hill" target="blank">Blossom Hill</a></th>
+            <th><a href="/stations/blossomhillstation.html?" title="Blossom Hill" target="blank">Blossom Hill</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/blossomhillstation.html?" title="Blossom Hill" target="blank">Blossom Hill</a></th>
+            <td>5:19p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:45p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th><a href="/stations/blossomhillstation.html?" title="Blossom Hill" target="blank">Blossom Hill</a></th>
             <th>5</th>
         </tr>
         <tr>
             <th id="even">6</th>
-            <th id="even"><a href="/stations/morganhillstation.html" title="Morgan Hill" target="blank">Morgan Hill</a></th>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6 pm">5:16p</td>
-            <td class="zone6"></td>
-            <td class="zone6">6:39p</td>
-            <td class="zone6 pm"><br />
-            </td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <th id="even"><a href="/stations/morganhillstation.html" title="Morgan Hill" target="blank">Morgan Hill</a></th>
+            <th id="even"><a href="/stations/morganhillstation.html?" title="Morgan Hill" target="blank">Morgan Hill</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/morganhillstation.html?" title="Morgan Hill" target="blank">Morgan Hill</a></th>
+            <td>5:32p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>6:58p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/morganhillstation.html?" title="Morgan Hill" target="blank">Morgan Hill</a></th>
             <th id="even">6</th>
         </tr>
         <tr>
             <th id="even">6</th>
-            <th id="even"><a href="/stations/sanmartinstation.html" title="San Martin" target="blank">San Martin</a></th>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6 pm">5:22p</td>
-            <td class="zone6"></td>
-            <td class="zone6">6:45p</td>
-            <td class="zone6 pm"><br />
-            </td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <th id="even"><a href="/stations/sanmartinstation.html" title="San Martin" target="blank">San Martin</a></th>
+            <th id="even"><a href="/stations/sanmartinstation.html?" title="San Martin" target="blank">San Martin</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/sanmartinstation.html?" title="San Martin" target="blank">San Martin</a></th>
+            <td>5:38p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>7:05p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/sanmartinstation.html?" title="San Martin" target="blank">San Martin</a></th>
             <th id="even">6</th>
         </tr>
         <tr>
             <th id="even">6</th>
-            <th id="even"><a href="/stations/gilroystation.html" title="Gilroy" target="blank">Gilroy</a></th>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6 pm">5:37p</td>
-            <td class="zone6"></td>
-            <td class="zone6">7:01p</td>
-            <td class="zone6 pm"><br />
-            </td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <td class="zone6"></td>
-            <th id="even"><a href="/stations/gilroystation.html" title="Gilroy" target="blank">Gilroy</a></th>
+            <th id="even"><a href="/stations/gilroystation.html?" title="Gilroy" target="blank">Gilroy</a></th>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/gilroystation.html?" title="Gilroy" target="blank">Gilroy</a></th>
+            <td>5:51p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>7:18p</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <th id="even"><a href="/stations/gilroystation.html?" title="Gilroy" target="blank">Gilroy</a></th>
             <th id="even">6</th>
         </tr>
     </tbody>
 </table>
 <!--p><a href="/Page68.aspx">
-</a><strong><a href="/schedules/PDF_Schedules.html" title="PDF Schedules" target="blank">Download PRINT READY PDF TIMETABLES</a></strong></p--><!-- CONTENT CONTROL END --></td>
+</a><strong><a href="/schedules/PDF_Schedules.html?" title="PDF Schedules" target="blank">Download PRINT READY PDF TIMETABLES</a></strong></p--><!-- CONTENT CONTROL END --></td>
           </tr>
         </table>
     
@@ -2475,7 +3475,7 @@ function googleTranslateElementInit() {
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <span style="font-size: 7pt;"><a href="/riderinfo/Translations.html">Translation Info</a></span></div>
-      	<div id="seo">Copyright ©2020 caltrain.com&nbsp; •&nbsp; <a href="/about/privacypolicy.html" title="Privacy Policy">Privacy Policy</a> &nbsp; •&nbsp; <a href="http://www.smctd.com/" title="San Mateo County Transit District" target="_blank">San Mateo County Transit District</a>&nbsp; •&nbsp; <a href="http://www.caltrain.com/SocialMedia">Social Media</a></div>
+      	<div id="seo">Copyright ©2020 caltrain.com&nbsp; •&nbsp; <a href="/about/privacypolicy.html" title="Privacy Policy">Privacy Policy</a> &nbsp; •&nbsp; <a href="https://www.smctd.com/" title="San Mateo County Transit District" target="_blank">San Mateo County Transit District</a>&nbsp; •&nbsp; <a href="https://www.caltrain.com/SocialMedia">Social Media</a></div>
   	</div>
 	<!-- /footer -->
 
@@ -2503,5 +3503,5 @@ ipjInitIronPointFormHandling();
 //-->
 </script>
 
-<form name="IronPointForm_Footer" method="Post" id="IronPointForm_Footer" onsubmit="ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="PXxauQhYNL4qZknZWJhqOp/UwGFMNG41Mu/vv6cQ1hcebByQ8TVt5lMar9QcBfn/qE3v6hA/2zV5yoO1SfT6DwFeDoQmb6einT0cPaI0VNh9vKtdCRg1FqXyeGbBnHfTmPp0XtLoQ58CS7hkIGQLJI0itWFQulRqxvMPDdTxF9JUaw59VZ7jgeX3zy9C0mxVw/nPzmdJUm6jUsM4PjXpz8U46ihS4Hb+Z8D07FNmIFJ4HAJVcchU/gu4t8DMU/QOXfY/4YZYY0Da/Gagslh2vJM4+UnOAD4qckoYhDnlOwk7dq6XbvJ3qrCsPtHwXQM1TK8gqHoHXkA5ApJwtF1tSQd+2VSHXs2NEvRH0VCbH3vEnY+f8LARI10Kp11V+F2qBNyJz5f7jpBdmlYbnpPLSAE/eABHC5fZiBCyTECsF8qU3KjuuRaYTDsjvBmch/5qQiCZXb9RXBQ9EVTmvmtLjeCrKmt1457OlEmDKpf6UXcADv6TOeAugZ55wpoSa918nY1zR9zLMcYUUq1ko7aee5PqxIqXVHi3SnfTv0IBVRmvgR63wjBkDYkQIj17XmuKVLUNn/CihqG7nxEVj0oGHCYnAxHpvxo13KkEgV32cjfjSYEosj+MJy05pVFDe90bZVYVUtirBj68KflPdAaNgjPeQ6vA8WR5LIC53eSEWJFq2p8fey0yNbdJXI8iBF0iUFszSlxToSbA6x6+eBnlS8tWtXK1KmuIrUSsqxK9sDQNt1MW0oFYjdzBounlSKBPA+hvpAa3FzsCvNZReYptNjQQsptzaB1t9ktw8VX2823sRYqRYUWF6XrXNBqJJBuB5quhCbFS53eXWb8Rsusefue1qOyqb0iKNjEkhBUS8/DFf6J6uoJ4s8jfnkaFk46EQjQtJA==" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
+<form name="IronPointForm_Footer" method="post" id="IronPointForm_Footer" onsubmit="javascript: ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="NB4h3QBW4odPeJeSUWHi4CT31CIrRej4wL8MNA7BHL8Y9xgigxBzkabNH45FwnYdVf9GATxSNxuCTCfLWMe0IK1sJZmAiMzYIWG261GEYndfxl9hE75oUi2m79dm19me1dDwhwo/syN/yE7t07paoMQ9MkOaGIPic+0kVO57EH/XekmoJZUMwiLjzc7M2qI88hWf4HcNR8edsT//gFlD2flEvpsvGtf5JTjeZFEeBf2butrN8rSG4dXHdaXneHr0YD8h1xqb5X1Vm0oP2cgDibLIZOJP02nIhfNIJV2y9eRhlbcybrMMPoDXn/F4gMxC+q9NxAxC9YQ/wdx1Na6xPFBer4ux6YWOVpOZm5yd1H/thky+dxmfn5hRIDVy+2pPODE2o6IhuQMDnuH6uETRQCDy0rF+6+O5+Xq6D8O60eBTR7mr50NlykDd7LdBokjggD0GR62XbTxYYWoRxSVZtSItG3lSVTVJyi797c9wvnwLX2oRkkwlnB7TFoh/8edcpYFLuXE5TFQaHRNwgrew/gVav6MB3FfeeezMcr3YMQslqJdWVHMd2tJsxayIss/96Wz9uYBfWiBJJOjUHJtyOHThgKkQq/QN2JaFRyffXo5DGTMhrK9m2M5aPmVm0Db8fGRoHGgcpIHZfnPk546vrq3QRJqUSmmektU9KYiRvAsZS7jSoDhXbpUjTmbcWd7t9rqkWCxrPzt1vOGaYFoYplreOy+pNP9Y1ntcHB3CafkCQbT1ONuPAhWZ9IuqAQecSCZk5X+wHIcfZ+k5IZ3w/4D4oEglPG8zdsg0fDilHgxKHAwci7hOkWOZv57U78Hl2E211KxSYA6g0lTb5e4fqS9OuSRmCbT50ni5TJuJKw1L8NN1Deai+8i0bKSqa9dfifSayw==" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
 </html>

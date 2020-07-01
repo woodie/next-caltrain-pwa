@@ -14,21 +14,21 @@ var ipCurrentPageDefID="3438";
 var ipCurrentTemplateID="4";
 //-->
 </script>
-<script src="/scripts/ip-utilities.js?ver=14.2.152.0" type="text/javascript"></script>
+<script src="/scripts/ip-utilities.js?ver=20.1.65.0" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
 ipjPageSiteID=3;
 ipjPageSiteGroupID=0;
 //-->
 </script>
-<script src="/scripts/ip-ulaccordion.js?ver=14.2.152.0" type="text/javascript"></script>
+<script src="/scripts/ip-ulaccordion.js?ver=20.1.65.0" type="text/javascript"></script>
 <script type="text/javascript">
 <!--
 //-->
 </script>
 <meta name="description" content=""/>
 <meta name="Generator" content="IronPoint v7"/>
-<meta name="UpdateDateTime" content="5/16/2020 9:40:18 PM"/>
+<meta name="UpdateDateTime" content="6/19/2020 4:01:56 PM"/>
 
 <title>Weekend Timetable</title>
 
@@ -180,8 +180,15 @@ window.onload=tablecollapse;
 
 </script>
 <script>
+var browser = navigator.appName
 if (location.protocol !== 'https:') {
-location.replace(`https:${location.href.substring(location.protocol.length)}`);
+location.replace("https:${location.href.substring(location.protocol.length)}");
+if ((browser=="Microsoft Internet Explorer" || browser=="Netscape"))
+{
+var locationSubstring = location.href.substring(location.protocol.length)
+var locationString = "https:" + locationSubstring
+window.location=locationString;
+}
 }
 </script>
 
@@ -192,7 +199,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NWTTZ9H');</script>
 <!-- End Google Tag Manager -->
-<script type="text/javascript" src="http://nexus.ensighten.com/choozle/2643/Bootstrap.js"></script>
+<script type="text/javascript" src="https://nexus.ensighten.com/choozle/2643/Bootstrap.js"></script>
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -207,6 +214,7 @@ fbq('track', "PageView");</script>
 src="https://www.facebook.com/tr?id=772610419548473&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Facebook Pixel Code -->
+<style id="ipf-antiClickjack">body{display:none!important;}</style><script type="text/javascript">if(self===top){var ipfantiClickjack=document.getElementById("ipf-antiClickjack");ipfantiClickjack.parentNode.removeChild(ipfantiClickjack);}else{top.location=self.location;}</script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Anton|Roboto+Condensed:700i|Roboto:500" rel="stylesheet">
 <style>
@@ -262,7 +270,7 @@ src="https://www.facebook.com/tr?id=772610419548473&ev=PageView&noscript=1"
 </style>
 
 </head>
-<body id="thebody" class="Level3"><form name="IronPointForm" method="Post" action="/schedules/weekend-timetable.html" id="IronPointForm" runat="server">
+<body id="thebody" class="Level3"><form name="IronPointForm" method="post" action="/schedules/weekend-timetable.html" id="IronPointForm">
 <div>
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
 </div>
@@ -280,7 +288,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     	<div id="top_nav_area">
         	<div id="top_nav"><a href="/sitemap.html">site map</a> | <a href="https://www.smctd.com/BidsContracts.html" title="Bids and Contracts" target="_blank">bids/contracts</a> | <a title="Jobs" href="/about/Jobs.html">jobs</a> | <a title="Contact Us" href="/about/contact.html">contact</a></div>
           	<div id="search">
-<form name="IronPointForm_1" method="Post" id="IronPointForm_1" onsubmit="ipjSubmitIronPointForm(); return false;"><script language=javascript> <!--
+<form name="IronPointForm_1" method="post" id="IronPointForm_1" onsubmit="javascript: ipjSubmitIronPointForm(); return false;"><script language=javascript> <!--
 function SearchPageletSubmit_98(viewModeURL)
 {
 document.forms['IronPointForm'].__VIEWSTATE.name='NOVIEWSTATE';
@@ -302,8 +310,7 @@ ipjSubmitIronPointForm('PageletSubmission');
 
 <ul id="sectionMenuElementID_0" class="ipf-sectionmenu">
 	<li id="pageid11" data-pageid="11" class="ipf-parent ipf-active1" data-level="1"><div><a href="/schedules.html">Schedules</a></div>
-	<ul>
-		<li id="pageid21" data-pageid="21" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
+	<ul>		<li id="pageid21" data-pageid="21" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
 		<li id="pageid3438" data-pageid="3438" class="ipf-active2" data-level="2"><a href="/schedules/weekend-timetable.html">Weekend Timetable</a></li>
 		<li id="pageid195" data-pageid="195" data-level="2"><a href="/schedules/holidayservice.html">Holiday Service</a></li>
 		<li id="pageid240" data-pageid="240" data-level="2"><a href="/schedules/PDF_Schedules.html">PDF Schedules</a></li>
@@ -311,16 +318,15 @@ ipjSubmitIronPointForm('PageletSubmission');
 		<li id="pageid22" data-pageid="22" data-level="2"><a href="/schedules/tripplanners.html">Trip Planners</a></li>
 		<li id="pageid23" data-pageid="23" data-level="2"><a href="/schedules/Shuttles.html">Shuttles</a></li>
 		<li id="pageid5443" data-pageid="5443" data-level="2"><a href="/schedules/Special_Events.html">Special Events</a></li>
+		<li id="pageid6691" data-pageid="6691" data-level="2"><a href="/schedules/ABlimited.html">A/B Limited Schedule</a></li>
 	</ul>
 	</li>
 	<li id="pageid12" data-pageid="12" class="ipf-parent" data-level="1"><div><a href="/stations.html">Stations</a></div>
-	<ul>
-		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
+	<ul>		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
 	</ul>
 	</li>
 	<li id="pageid13" data-pageid="13" class="ipf-parent" data-level="1"><div><a href="/Fares.html">Fares</a></div>
-	<ul>
-		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
+	<ul>		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
 		<li id="pageid26" data-pageid="26" data-level="2"><a href="/Fares/tickettypes.html">Ticket Types</a></li>
 		<li id="pageid29" data-pageid="29" data-level="2"><a href="/Fares/howtobuy.html">How to Buy</a></li>
 		<li id="pageid5419" data-pageid="5419" data-level="2"><a href="/Fares/Fare_Evasion_Policy.html">Fare Evasion Policy</a></li>
@@ -331,9 +337,7 @@ ipjSubmitIronPointForm('PageletSubmission');
 	</ul>
 	</li>
 	<li id="pageid14" data-pageid="14" class="ipf-parent" data-level="1"><div><a href="/riderinfo.html">Rider Information</a></div>
-	<ul>
-		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
-		<li id="pageid6161" data-pageid="6161" data-level="2"><a href="/riderinfo/get_rewarded.html">Get Rewarded</a></li>
+	<ul>		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
 		<li id="pageid15" data-pageid="15" data-level="2"><a href="/riderinfo/Accessibility.html">Accessibility</a></li>
 		<li id="pageid31" data-pageid="31" data-level="2"><a href="/riderinfo/destinations.html">Destinations</a></li>
 		<li id="pageid32" data-pageid="32" data-level="2"><a href="/riderinfo/connections.html">Transit Connections</a></li>
@@ -350,16 +354,14 @@ ipjSubmitIronPointForm('PageletSubmission');
 	</ul>
 	</li>
 	<li id="pageid16" data-pageid="16" class="ipf-parent" data-level="1"><div><a href="/projectsplans.html">Projects &amp; Plans</a></div>
-	<ul>
-		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
+	<ul>		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
 		<li id="pageid46" data-pageid="46" data-level="2"><a href="/projectsplans/Plans.html">Plans</a></li>
 		<li id="pageid1617" data-pageid="1617" data-level="2"><a href="/projectsplans/CaltrainModernization.html">Caltrain Modernization</a></li>
 		<li id="pageid5225" data-pageid="5225" data-level="2"><a href="/projectsplans/Business_Plan.html">Business Plan</a></li>
 	</ul>
 	</li>
 	<li id="pageid79" data-pageid="79" class="ipf-parent" data-level="1"><div><a href="/about.html">About Caltrain</a></div>
-	<ul>
-		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
+	<ul>		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
 		<li id="pageid6158" data-pageid="6158" data-level="2"><a href="/about/Meetings.html">Meetings</a></li>
 		<li id="pageid81" data-pageid="81" data-level="2"><a href="/about/bod.html">Board of Directors</a></li>
 		<li id="pageid129" data-pageid="129" data-level="2"><a href="/about/advisorycommittees.html">Advisory Committees</a></li>
@@ -397,7 +399,7 @@ ipjInitUnorderedListMenuItemsActive("sectionMenuElementID_0");
     <div id="content" class="clear">
     
     	<div id="ticker-wrap"><div id="ticker" style="position: relative;">
-<a href="http://www.caltrain.com/schedules/realtime/stations/Service_Alerts.html" id="service-alerts" style="background-color: #c7202f; display: table-cell; position: absolute; top: 1px; z-index: 1; vertical-align: middle; padding: 2px 10px; color: #ffffff; text-transform: uppercase; left: 0px; font-size: inherit; border: none; letter-spacing: 1.1px; font-weight: bold; cursor: pointer; text-decoration: none;">Alerts
+<a href="https://www.caltrain.com/schedules/realtime/stations/Service_Alerts.html" id="service-alerts" style="background-color: #c7202f; display: table-cell; position: absolute; top: 1px; z-index: 1; vertical-align: middle; padding: 2px 10px; color: #ffffff; text-transform: uppercase; left: 0px; font-size: inherit; border: none; letter-spacing: 1.1px; font-weight: bold; cursor: pointer; text-decoration: none;">Alerts
 </a>
 <script language="JavaScript1.2">
 
@@ -421,17 +423,17 @@ var pauseit=1
 //Specify the marquee's content (don't delete <nobr> tag)
 //Keep all content on ONE line, and backslash any single quotations (ie: that\'s great):
 
-/*var marqueecontent='<nobr> <a href="http://www.caltrain.com/alerts">System-Wide Construction, Check here for Current Advisories.</a></nobr>';*/
+/*var marqueecontent='<nobr> <a href="https://www.caltrain.com/alerts">System-Wide Construction, Check here for Current Advisories.</a></nobr>';*/
 
-//var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Caltrain_Service_Closure.html">SF Weekend Closure – Feb 22-Mar 29</a></nobr>';
+//var marqueecontent='<nobr> <a href="https://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Caltrain_Service_Closure.html">SF Weekend Closure – Feb 22-Mar 29</a></nobr>';
 
 
-//var marqueecontent='<nobr> <a href="http://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain: Novel Coronavirus (COVID-19)</a></nobr>';
+//var marqueecontent='<nobr> <a href="https://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">Caltrain: Novel Coronavirus (COVID-19)</a></nobr>';
 
 var marqueecontent='<nobr> <a href="https://www.caltrain.com/about/MediaRelations/news/Caltrain_Updates__Novel_Coronavirus__COVID-19_.html">COVID-19: Latest Updates</a></nobr>';
 
 
-//var marqueecontent='<nobr> <a href="http://www.caltrain.com/riderinfo/newsletterandnotices/Weekend_SF_Caltrain_Closure.html">Additional SF Weekend Caltrain Closures April 20-21, May 4-5, June 1-2 and June 22-23.</a> &nbsp; &nbsp; &nbsp; <a href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019.html">New Timetable Changes Effective April 1.</a> &nbsp; &nbsp; &nbsp; <a lang="es"  href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Spanish.html">Cierre de servicio adicional para fines de semana en SF el 20/4-21/4, 04/5-05/5, 01/6-02/6 y 22/6-23/6</a> &nbsp; &nbsp; &nbsp; <a lang="es" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Spanish.html">Nuevos cambios en itinerario que entran en vigor el 1 de abril.</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Trad_Chinese.html">其他三藩市周末服務關閉：4/20-4/21, 5/4-5/5, 6/1-6/2和6/22-6/23。</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="http://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Chinese.html">新時間表改變，由4月1日起生效。</a></nobr>';
+//var marqueecontent='<nobr> <a href="https://www.caltrain.com/riderinfo/newsletterandnotices/Weekend_SF_Caltrain_Closure.html">Additional SF Weekend Caltrain Closures April 20-21, May 4-5, June 1-2 and June 22-23.</a> &nbsp; &nbsp; &nbsp; <a href="https://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019.html">New Timetable Changes Effective April 1.</a> &nbsp; &nbsp; &nbsp; <a lang="es"  href="https://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Spanish.html">Cierre de servicio adicional para fines de semana en SF el 20/4-21/4, 04/5-05/5, 01/6-02/6 y 22/6-23/6</a> &nbsp; &nbsp; &nbsp; <a lang="es" href="https://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Spanish.html">Nuevos cambios en itinerario que entran en vigor el 1 de abril.</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="https://www.caltrain.com/riderinfo/newsletterandnotices/SF_Weekend_Closure_-_Trad_Chinese.html">其他三藩市周末服務關閉：4/20-4/21, 5/4-5/5, 6/1-6/2和6/22-6/23。</a> &nbsp; &nbsp; &nbsp; <a lang="zh-Hant" href="https://www.caltrain.com/schedules/New_Timetable_Effective_April_1__2019_-_Chinese.html">新時間表改變，由4月1日起生效。</a></nobr>';
 
 ////NO NEED TO EDIT BELOW THIS LINE////////////
 marqueespeed=(document.all)? marqueespeed : Math.max(1, marqueespeed-1) //slow speed down by 1 for NS
@@ -506,8 +508,7 @@ document.write('</td></table>')
 
 <ul id="sectionMenuElementID_1" class="ipf-sectionmenu">
 	<li id="pageid11" data-pageid="11" class="ipf-parent ipf-active1" data-level="1"><div><a href="/schedules.html">Schedules</a></div>
-	<ul rel="open">
-		<li id="pageid21" data-pageid="21" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
+	<ul rel="open">		<li id="pageid21" data-pageid="21" data-level="2"><a href="/schedules/weekdaytimetable.html">Weekday Timetable</a></li>
 		<li id="pageid3438" data-pageid="3438" class="ipf-active2" data-level="2"><a href="/schedules/weekend-timetable.html">Weekend Timetable</a></li>
 		<li id="pageid195" data-pageid="195" data-level="2"><a href="/schedules/holidayservice.html">Holiday Service</a></li>
 		<li id="pageid240" data-pageid="240" data-level="2"><a href="/schedules/PDF_Schedules.html">PDF Schedules</a></li>
@@ -515,16 +516,15 @@ document.write('</td></table>')
 		<li id="pageid22" data-pageid="22" data-level="2"><a href="/schedules/tripplanners.html">Trip Planners</a></li>
 		<li id="pageid23" data-pageid="23" data-level="2"><a href="/schedules/Shuttles.html">Shuttles</a></li>
 		<li id="pageid5443" data-pageid="5443" data-level="2"><a href="/schedules/Special_Events.html">Special Events</a></li>
+		<li id="pageid6691" data-pageid="6691" data-level="2"><a href="/schedules/ABlimited.html">A/B Limited Schedule</a></li>
 	</ul>
 	</li>
 	<li id="pageid12" data-pageid="12" class="ipf-parent" data-level="1"><div><a href="/stations.html">Stations</a></div>
-	<ul>
-		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
+	<ul>		<li id="pageid312" data-pageid="312" data-level="2"><a href="/stations/systemmap.html">System Map</a></li>
 	</ul>
 	</li>
 	<li id="pageid13" data-pageid="13" class="ipf-parent" data-level="1"><div><a href="/Fares.html">Fares</a></div>
-	<ul>
-		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
+	<ul>		<li id="pageid25" data-pageid="25" data-level="2"><a href="/Fares/farechart.html">Fare Chart</a></li>
 		<li id="pageid26" data-pageid="26" data-level="2"><a href="/Fares/tickettypes.html">Ticket Types</a></li>
 		<li id="pageid29" data-pageid="29" data-level="2"><a href="/Fares/howtobuy.html">How to Buy</a></li>
 		<li id="pageid5419" data-pageid="5419" data-level="2"><a href="/Fares/Fare_Evasion_Policy.html">Fare Evasion Policy</a></li>
@@ -535,9 +535,7 @@ document.write('</td></table>')
 	</ul>
 	</li>
 	<li id="pageid14" data-pageid="14" class="ipf-parent" data-level="1"><div><a href="/riderinfo.html">Rider Information</a></div>
-	<ul>
-		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
-		<li id="pageid6161" data-pageid="6161" data-level="2"><a href="/riderinfo/get_rewarded.html">Get Rewarded</a></li>
+	<ul>		<li id="pageid2096" data-pageid="2096" data-level="2"><a href="/riderinfo/howtoride.html">How to Ride</a></li>
 		<li id="pageid15" data-pageid="15" data-level="2"><a href="/riderinfo/Accessibility.html">Accessibility</a></li>
 		<li id="pageid31" data-pageid="31" data-level="2"><a href="/riderinfo/destinations.html">Destinations</a></li>
 		<li id="pageid32" data-pageid="32" data-level="2"><a href="/riderinfo/connections.html">Transit Connections</a></li>
@@ -554,16 +552,14 @@ document.write('</td></table>')
 	</ul>
 	</li>
 	<li id="pageid16" data-pageid="16" class="ipf-parent" data-level="1"><div><a href="/projectsplans.html">Projects &amp; Plans</a></div>
-	<ul>
-		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
+	<ul>		<li id="pageid43" data-pageid="43" data-level="2"><a href="/projectsplans/Projects.html">Projects</a></li>
 		<li id="pageid46" data-pageid="46" data-level="2"><a href="/projectsplans/Plans.html">Plans</a></li>
 		<li id="pageid1617" data-pageid="1617" data-level="2"><a href="/projectsplans/CaltrainModernization.html">Caltrain Modernization</a></li>
 		<li id="pageid5225" data-pageid="5225" data-level="2"><a href="/projectsplans/Business_Plan.html">Business Plan</a></li>
 	</ul>
 	</li>
 	<li id="pageid79" data-pageid="79" class="ipf-parent" data-level="1"><div><a href="/about.html">About Caltrain</a></div>
-	<ul>
-		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
+	<ul>		<li id="pageid6180" data-pageid="6180" data-level="2"><a href="/about/News.html">News</a></li>
 		<li id="pageid6158" data-pageid="6158" data-level="2"><a href="/about/Meetings.html">Meetings</a></li>
 		<li id="pageid81" data-pageid="81" data-level="2"><a href="/about/bod.html">Board of Directors</a></li>
 		<li id="pageid129" data-pageid="129" data-level="2"><a href="/about/advisorycommittees.html">Advisory Committees</a></li>
@@ -621,7 +617,7 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
                         <div class="addthis_toolbox addthis_default_style" style="margin:0; padding:0; float:left;">
                         <!--<a href="http://www.addthis.com/bookmark.php?v=250&pub=xa-4b0e17fd67bc8665" class="addthis_button_compact"></a>-->
                         </div>
-                        <!--<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4b0e17fd67bc8665"></script>-->
+                        <!--<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4b0e17fd67bc8665"></script>-->
                         <!-- AddThis Button END -->
                         </div>
                         <div class="print button"><a href="javascript: ipjOpenPrintPage('/schedules/weekend-timetable.html?PageMode=Print');" class="ipb"></a></div>
@@ -654,21 +650,25 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     white-space: nowrap;
     }
     tbody th {
-    background-color: #FAF1F1;
+    background-color: #edf7eb;
     border-top: 1px solid #CCC;
+    color: #000000;
+    font-weight: lighter;
     }
     tbody th.station {
     text-align: right;
     }
     tbody th#even {
-    background-color: #F7DEDF;
+    background-color: #D7DFD5;
+    color: #000000;
+    font-weight: lighter;
     }
     tbody th#milepost {
     font-weight: normal;
     background-color: #FFFFFF;
     }
     tr#zoneline{
-    border-bottom: 2px solid #555555;
+    border-bottom: 2px solid #D2565D;
     }
     /*Northbound Timetable*/
     .NB_TT td, .SB_TT td{
@@ -994,33 +994,85 @@ ddtreemenu.createTree("sectionMenuElementID_1", true);
     color: #525252;
     font-style: italic;
     }
+    /* Section header style*/
+    .caption {
+    display: block;
+    width: 766px;
+    background: #D2565D;
+    height: 30px;
+    padding-left: 10px;
+    color: #fff;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: lighter;
+    box-sizing: border-box;
+    }
+    .wrapper {
+    padding: 20px;
+    max-width: 1100px;
+    width: 95%;
+    }
+    header {
+    padding: 0 15px;
+    }
+    .columns {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    text-align: center;
+    line-height: 20px;
+    width:740px;
+    }
+    .column {
+    flex: 1;
+    border: none;
+    padding: 17px;
+    margin-right: 10px;
+    margin-left: 5px;
+    background-color: none;
+    border-right: 1px solid #B4C2CB;
+    &:first-child { margin-left: 0; }
+    &:last-child { margin-right: 0; }
+    }
+    h3 {font-size: 17px;}
+    a.pagelink:link,
+    a.pagelink:visited,
+    a.pagelink:hover
+    { color: #FF1D25;
+    }
 </style>
-<p style="margin-bottom: 0px;"><strong>Effective May 16, 2020<br />
-<br />
-Alternative formats</strong></p>
-<p><strong><br />
-<a title="CT_WeekendTT__05-16-2020" href="/Assets/Assets/pdfs/CT_WeekendTT__05-16-2020.pdf">Download Weekend Timetable</a>&nbsp;(Effective May 16, 2020)<br />
-</strong><a href="/schedules/weekend-timetable/weekend_TT_scrolling.html"><strong>View Scrolling Version</strong></a></p>
-<!--<p><strong>Special Event Service:</strong></p>
-<ul>
-    <li><a href="/riderinfo/specialevents.html" title="Special Events">Giants Fan Fest Extra Pre- and Post Game Service. Sat., Feb. 8</a>&nbsp;</li>
-    <br />
-</ul>-->
-<p><strong>Legend:<br />
-</strong> <br />
-- Train bypasses station.&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;* Train departure may be delayed up to 15 minutes after Sharks games.</p>
-<p>On weekends, a <span style="font-weight: bold; color: #338639;">shuttle bus</span> connects the Tamien and Diridon stations.  Passengers ride free on the Caltrain shuttles. Timetable subject to change without notice.</p>
-<table cellspacing="0" cellpadding="4">
+<div class="caption">Effective May 16, 2020</div>
+<div class="wrapper">
+<section class="columns">
+<div class="column">
+<h3>Alternative formats</h3>
+<!--<p><i class="fa fa-angle-double-down" style="font-size:18px;color:red;"></i>&nbsp;<a class="pagelink" href="/schedules/weekdaytimetable/weekday_TT_scrolling.html?" title="Weekday Timetable">View Scrolling Version</a></p>-->
+<p><span style="font-size: 13px;"><i class="fa fa-file-pdf-o" style="color: red;"></i>&nbsp;<a title="CT_WeekendTT__05-16-2020" href="/Assets/Assets/pdfs/CT_WeekendTT__05-16-2020.pdf">Download PDF Timetables</a></span></p>
+</div>
+<div class="column">
+<h3>Legend</h3>
+<p><i class="fa fa-minus" aria-hidden="true"></i> Train bypasses station.</p>
+<p>* Train departure may be delayed up to 15 minutes after   Sharks games.</p>
+</div>
+<div class="column">
+<h3>Types of Service Descriptions</h3>
+<p style="text-align: center;">
+</p>
+<table width="100px" cellspacing="0" cellpadding="6" style="right: 300px; width: 400px; height: 22px;">
     <tbody>
-        <tr id="legend">
-            <td style="border: 1px solid #000000; width: 120px; text-align: center; color: #ffffff; background-color: #000000;">Saturday Only
+        <tr>
+            <td style="border: 1px solid #000000; width: 80px; text-align: center; color: #ffffff; background-color: #000000;">Saturday Only
             </td>
-            <td style="border: 1px solid #000000; width: 120px; text-align: center; background-color: #ffffff;">400 Local</td>
-            <td style="border: 1px solid #000000; width: 120px; text-align: center; background-color: #f0b2a1;">800 Baby Bullet</td>
+            <td style="border: 1px solid #000000; width: 80px; text-align: center; background-color: #ffffff;">400 Local</td>
+            <td style="border: 1px solid #000000; width: 80px; text-align: center; background-color: #f0b2a1;">800 Baby Bullet</td>
         </tr>
     </tbody>
 </table>
-<h1 style="text-align: left;">Northbound Service</h1>
+<p>On weekends, a <span style="font-weight: bold; color: #338639;">shuttle bus</span> connects the Tamien and Diridon stations.  Passengers ride free on the Caltrain shuttles. Timetable subject to change without notice.</p>
+</div>
+</section>
+</div>
+<div class="caption">Northbound Service</div>
 <table class="NB_TT" summary="Weekday Northbound service" alt="Weekday Northbound service">
     <thead>
         <tr>
@@ -1531,8 +1583,8 @@ Alternative formats</strong></p>
     </tbody>
 </table>
 <strong>
-</strong>
-<h1 style="text-align: left;">Southbound Service</h1>
+</strong><br />
+<div class="caption">Southbound Service</div>
 <table class="SB_TT" summary="Weekday Southbound service" alt="Weekday Southbound service">
     <thead>
         <tr>
@@ -2100,7 +2152,7 @@ function googleTranslateElementInit() {
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <span style="font-size: 7pt;"><a href="/riderinfo/Translations.html">Translation Info</a></span></div>
-      	<div id="seo">Copyright ©2020 caltrain.com&nbsp; •&nbsp; <a href="/about/privacypolicy.html" title="Privacy Policy">Privacy Policy</a> &nbsp; •&nbsp; <a href="http://www.smctd.com/" title="San Mateo County Transit District" target="_blank">San Mateo County Transit District</a>&nbsp; •&nbsp; <a href="http://www.caltrain.com/SocialMedia">Social Media</a></div>
+      	<div id="seo">Copyright ©2020 caltrain.com&nbsp; •&nbsp; <a href="/about/privacypolicy.html" title="Privacy Policy">Privacy Policy</a> &nbsp; •&nbsp; <a href="https://www.smctd.com/" title="San Mateo County Transit District" target="_blank">San Mateo County Transit District</a>&nbsp; •&nbsp; <a href="https://www.caltrain.com/SocialMedia">Social Media</a></div>
   	</div>
 	<!-- /footer -->
 
@@ -2128,5 +2180,5 @@ ipjInitIronPointFormHandling();
 //-->
 </script>
 
-<form name="IronPointForm_Footer" method="Post" id="IronPointForm_Footer" onsubmit="ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="wkeGcIqt5ocWzlMeyKorpyo41QzF8P1ig9aAcUaZmF849E2pRJGwfV8Tv1I8W7lvIrAD9pcpeT8RcYd5ikDBTzOdP/v9UenZNo2i1BHrbx2BjxXS5Euik6rkc722fvrWwBYXe6CTkhvMeCMnTuseRarZMb83Tou1oYeALLBK0FRgk2oojH2IM+LW24qlxyYyDGVCEzGysEnMs5ftwaDMNNL6uu/MPh5JGYfF44cBVgAnp/RMlnxLO75ZExMc8jnA/Py98drNrmMAsI6x0lpdr8gKyEB3rW4YZtMRtMsobo/53N9Xa1cW+JoG4woWfpOGz9qs/94IoUj6XFbTvRZGLaMEFXuMO30Gk/AKQErCwtevF6HtrsQX+/kpyGddAyRpK7z8k2hs91+ylCufhQlbah2FEEx75b9IaRsubP2UwX7L6oH/okN2Iq3+gOTTja+EfSYF6z9G20Pe9IdBj2c4VfsLvD7n/Vu927IEodnHiXFSO7NL" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
+<form name="IronPointForm_Footer" method="post" id="IronPointForm_Footer" onsubmit="javascript: ipjSubmitIronPointForm(); return false;"><input type="hidden" name="__VIEWSTATEFOOTER" id="__VIEWSTATEFOOTER" value="/M8/ztK3KVf85hplTRKxDBImGN7IKQAIRP8nrfkIMCvhFZUWSlQEj6Dz3eyd9W1gz9hjYSCWKlFKMwSLVmMO1d/ZrZZFoW9ZN5hOS+kv9YhM1pV3K9bT3lj46JNqClaNCv0hVFT+UECzLD1DqNPQqyrWPy/Qz+ncbWqm1G8F6PMwnFqaUsCfGJfnksp9rTUFBdOoOHZWnotCZBWkGkkkczZdN6LDvEZsFvc/anwpburYad0LqlE8/P2ZUsIqGNuCfcHVeyYiXsUSEA5Ko/XOaJNvye5UXSSUt+rvAs2Zjvv1uQXRJ+PwGnXWEPZcSVoh/91nCn/mznK5svP5Ow96lypNvYU4+t6u8EzcM8chQWOs7K7vfg6kbelQiOAzo64mSfAgwbkqjzUykpB+rN7NzNs/SlWT72R5H/LDk7bxRUGLzHQKm8GiXYUvbpqW9F5waTXgqHMjL1qUsmWEQ5Px7M9N41972JBvoEt0U248BAI6Gcqe" /></form><script type="text/javascript">ipjMoveViewstateFromFooter()</script></body>
 </html>
