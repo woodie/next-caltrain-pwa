@@ -12,4 +12,4 @@ jobs:
         with:
           project: Next Caltrain
           column: Triage
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.AUTOMATION_TOKEN }}
