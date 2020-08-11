@@ -1,0 +1,54 @@
+name: Comment on column move
+
+#  Until issue moved_columns_in_project events trigger workflows,
+#  we follow a serendipitous route to get some attributes.
+#  The project_card move event triggers various types of cards;
+#  so we process issues. Key project_card event attributes:
+#
+#  - github.event.sender.login             # user that triggered the event
+#  - github.event.project_card.url         # includes the issue number
+#  - github.event.project_card.column_url  # includes the column name
+
+on:
+  project_card:
+    types: [moved]
+
+env:
+  CONFIGURATION: |
+    { "method": "GET",
+      "headers": {
+        "Authorization": "Bearer ${{ secrets.AUTOMATION_TOKEN }}",
+        "Accept": "application/vnd.github.inertia-preview+json"
+      }
+    }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch card properties
+        uses: JamesIves/fetch-api-data-action@releases/v1
+        with:
+          # Populate $FETCH_API_DATA with payload
+          ENDPOINT: ${{ github.event.project_card.url }}
+          CONFIGURATION: ${{ env['CONFIGURATION'] }}
+      - name: Parse content URL
+        if: fromJson(env['FETCH_API_DATA']).content_url
+        uses: jungwinter/split@v1
+        id: split
+        with:
+          # ['https:',,'api.github.com','repos','woodie','whatever','issues','10']
+          msg: ${{ fromJson(env['FETCH_API_DATA']).content_url }}
+          seperator: '/'
+      - name: Fetch column properties
+        if: steps.split.outputs._6 == 'issues'
+        uses: JamesIves/fetch-api-data-action@releases/v1
+        with:
+          # Replace $FETCH_API_DATA with payload
+          ENDPOINT: ${{ github.event.project_card.column_url }}
+          CONFIGURATION: ${{ env['CONFIGURATION'] }}
+      - name: Create comment
+        if: steps.split.outputs._6 == 'issues'
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ steps.split.outputs._7 }}
+          body: "@${{ github.event.sender.login }} moved Issue to ${{ fromJson(env['FETCH_API_DATA']).name }}"
