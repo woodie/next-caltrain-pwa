@@ -1,8 +1,8 @@
-name: Move assigned pull requests into To do
+name: Move new issues into Defined Tasks
 
 on:
-  pull_request:
-    types: [assigned]
+  issues:
+    types: [opened]
 
 jobs:
   automate-project-columns:
@@ -11,5 +11,5 @@ jobs:
       - uses: alex-page/github-project-automation-plus@v0.2.4
         with:
           project: Next Caltrain
-          column: To do
+          column: Defined Tasks
           repo-token: ${{ secrets.AUTOMATION_TOKEN }}

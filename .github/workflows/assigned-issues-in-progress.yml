@@ -1,8 +1,8 @@
-name: Move new issues into Triage
+name: Move assigned issues to In Progress
 
 on:
   issues:
-    types: [opened]
+    types: [assigned]
 
 jobs:
   automate-project-columns:
@@ -11,5 +11,5 @@ jobs:
       - uses: alex-page/github-project-automation-plus@v0.2.4
         with:
           project: Next Caltrain
-          column: Triage
+          column: In Progress
           repo-token: ${{ secrets.AUTOMATION_TOKEN }}
