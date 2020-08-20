@@ -1,8 +1,8 @@
 name: Comment when issue moves columns
 
 on:
-  issues:
-    # moved_columns_in_project
+  project_card:
+    types: [moved]
 
 jobs:
   deploy:
