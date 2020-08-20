@@ -1,4 +1,4 @@
-name: Comment when issue moves columns
+name: Comment on column move
 
 on:
   project_card:
@@ -8,8 +8,37 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch card properties
+        uses: JamesIves/fetch-api-data-action@releases/v1
+        with:
+          ENDPOINT: ${{ github.event.project_card.url }}
+          CONFIGURATION: |
+            { "method": "GET",
+              "headers": {
+                "Authorization": "Bearer ${{ secrets.AUTOMATION_TOKEN }}",
+                "Accept": "application/vnd.github.inertia-preview+json"
+              }
+            }
+      - name: Parse content URL
+        uses: jungwinter/split@v1
+        id: split
+        with:
+          msg: ${{ fromJson(env['FETCH_API_DATA']).content_url }}
+          seperator: '/'
+      - name: Fetch column properties
+        uses: JamesIves/fetch-api-data-action@releases/v1
+        with:
+          ENDPOINT: ${{ github.event.project_card.column_url }}
+          CONFIGURATION: |
+            { "method": "GET",
+              "headers": {
+                "Authorization": "Bearer ${{ secrets.AUTOMATION_TOKEN }}",
+                "Accept": "application/vnd.github.inertia-preview+json"
+              }
+            }
       - name: Create comment
+        if: ${{ steps.split.outputs._6 == 'issues' }}
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.event.issue.number }}
-          body: 'this is a comment'
+          issue-number: ${{ steps.split.outputs._7 }}
+          body: "@${{ github.event.sender.login }} moved Issue to ${{ fromJson(env['FETCH_API_DATA']).name }}"
