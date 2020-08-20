@@ -2,11 +2,11 @@ name: Comment when issue moves columns
 
 on:
   issues:
-    types: [moved_columns_in_project]
+    types: [assigned] # moved_columns_in_project
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: logging
-        run: echo "moved columns in project"
+        run: echo "assigned" # "moved columns in project"
