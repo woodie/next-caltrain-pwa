@@ -8,5 +8,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: logging
-        run: echo "assigned" # "moved columns in project"
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.id }}
+          body: 'this is a comment'
