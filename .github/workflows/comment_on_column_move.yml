@@ -11,5 +11,5 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.event.issue.id }}
+          issue-number: ${{ github.event.issue.number }}
           body: 'this is a comment'
