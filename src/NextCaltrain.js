@@ -511,10 +511,10 @@ class NextCaltrain {
         offset--;
       } else if (code === DOWN) {
         offset++;
-      } else if (code === 49) { // 1
+      } else if (code === 49 || code === 55) { // 1 or 7
         offset = null;
         prefs.bumpStations(true, false);
-      } else if (code === 51) { // 3
+      } else if (code === 51 || code === 57) { // 3 or 9
         offset = null;
         prefs.bumpStations(true, true);
       } else if (code === 52) { // 4
