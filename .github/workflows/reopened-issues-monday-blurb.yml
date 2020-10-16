@@ -16,6 +16,7 @@ env:
         updates(limit: 1) { text_body body }
       }
     }
+  PEEPS: { users { name location } }
 
 jobs:
   reopened-issues-monday-blurb:
@@ -33,8 +34,10 @@ jobs:
 
       - id: parse
         run: |
-          echo "::set-output name=item_number::$(echo '${{ steps.response.outputs.output }}' | jq '.data.data.items_by_column_values[0].id')"
-          echo "::set-output name=item_author::$(echo '${{ steps.response.outputs.output }}' | jq '.data.data.items_by_column_values[0].creator.name')"
+          echo "::set-output name=item_number::$(echo ${{ fromJson(steps.response.outputs.output).data.data.items_by_column_values[0].id }})"
+          echo "::set-output name=item_author::$(echo ${{ fromJson(steps.response.outputs.output).data.data.items_by_column_values[0].creator.name }})"
+        # echo "::set-output name=item_number::$(echo '${{ steps.response.outputs.output }}' | jq '.data.data.items_by_column_values[0].id')"
+        # echo "::set-output name=item_author::$(echo '${{ steps.response.outputs.output }}' | jq '.data.data.items_by_column_values[0].creator.name')"
         # echo '::set-output name=github_data::$(jq ".data.items_by_column_values[0].column_values | .[] | select(.title==\"GitHub Issue\")" data/item.json )'
         # echo '::set-output name=assigned_to::$(jq ".data.items_by_column_values[0].column_values | .[] | select(.title==\"Assigned To\").text" data/item.json })'
 
