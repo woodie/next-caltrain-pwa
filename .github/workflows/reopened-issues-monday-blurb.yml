@@ -16,7 +16,8 @@ env:
         updates(limit: 1) { text_body body }
       }
     }
-  PEEPS: { users { name location } }
+  PEEPS: |
+    { users { name location } }
 
 jobs:
   reopened-issues-monday-blurb:
