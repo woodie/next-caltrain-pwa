@@ -48,7 +48,7 @@ def parse_station_data():
         _stops['south'].append(stop_id)
   return _stops
 
-def parse_schedule_data(stops):
+def web_parse_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
             'weekend':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
@@ -79,6 +79,10 @@ def parse_schedule_data(stops):
             _times[schedule][direction][trip_id][station_x] = str(departure)
     #finally:
     modFile.close()
+
+def parse_schedule_data(stops):
+  _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
+            'weekend':{'north':OrderedDict(), 'south':OrderedDict()}}
   with open('CT-GTFS/stop_times.txt', 'rb') as timesFile:
     timesReader = csv.reader(timesFile)
     header = next(timesReader, None)
@@ -87,7 +91,7 @@ def parse_schedule_data(stops):
     departure_x = header.index('departure_time')
     sortedLines = sorted(timesReader, key=lambda row: int(row[departure_x].replace(':','')))
     for row in sortedLines:
-      continue # until GTFS is back
+      # continue # until GTFS is back
       try:
         trip_id = int(row[trip_id_x])
       except:
