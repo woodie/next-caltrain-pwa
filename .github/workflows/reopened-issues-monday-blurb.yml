@@ -9,7 +9,7 @@ env:
     {
       items_by_column_values(board_id: ${{ secrets.MONDAY_BOARD }},
                              column_id: "name",
-                             column_value: "${0}") {
+                             column_value: "{0}") {
         id
         creator { name }
         column_values(ids: [github_issue, assignee7]) { title value text }
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: query
-        run: echo "::set-output name=query::$(echo $QUERY | sed -e 's/\"/\\\"/g')"
+        run: echo "::set-output name=query::$(echo {{$QUERY}} | sed -e 's/\"/\\\"/g')"
       - id: response
         uses: satak/webrequest-action@master
         with:
