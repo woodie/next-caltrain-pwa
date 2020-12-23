@@ -9,7 +9,7 @@ env:
     {
       items_by_column_values(board_id: ${{ secrets.MONDAY_BOARD }},
                              column_id: "name",
-                             column_value: "${{ github.event.issue.title }}") {
+                             column_value: "${0}") {
         id
         creator { name }
         column_values(ids: [github_issue, assignee7]) { title value text }
@@ -31,7 +31,7 @@ jobs:
           url: https://api.monday.com/v2
           method: POST
           headers: '{"Content-Type": "application/json", "Authorization": "${{ secrets.MONDAY_TOKEN }}"}'
-          payload: '{"query": "${{ steps.query.outputs.query }}"}'
+          payload: '{"query": "${{ format(steps.query.outputs.query, github.event.issue.title) }}"}'
 
       - id: parse
         run: |
