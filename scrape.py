@@ -7,20 +7,21 @@ from bs4 import BeautifulSoup
 
 def main():
   fetch_schedule_data()
-  parse_schedule_data('weekday','north')
-  parse_schedule_data('weekday','south')
-  parse_schedule_data('weekend','north')
-  parse_schedule_data('weekend','south')
-  #parse_schedule_data('modified','north')
-  #parse_schedule_data('modified','south')
+  #parse_schedule_data('weekday','north')
+  #parse_schedule_data('weekday','south')
+  #parse_schedule_data('weekend','north')
+  #parse_schedule_data('weekend','south')
+  parse_schedule_data('modified','north')
+  parse_schedule_data('modified','south')
   #parse_schedule_data('closure','north')
   #parse_schedule_data('closure','south')
   #parse_schedule_data('reduced','north')
   #parse_schedule_data('reduced','south')
 
 def fetch_schedule_data():
-  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
-  weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
+  #weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
+  #weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
+  modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
   #modified_url = 'http://www.caltrain.com/schedules/holidayservice/Modified_Schedule.html'
   #closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
   #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_17__2020.html'
@@ -28,20 +29,21 @@ def fetch_schedule_data():
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')
-  subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
-  subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
-  #subprocess.call(['curl', '-o', 'modified.htm', modified_url])
+  #subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
+  #subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
+  subprocess.call(['curl', '-o', 'modified.htm', modified_url])
   #subprocess.call(['curl', '-o', 'closure.htm', closure_url])
   os.chdir(basedir)
 
 def parse_schedule_data(schedule, direction):
   with open('data/%s.htm' % schedule) as f:
     soup = BeautifulSoup(f, 'html.parser')
-  if (schedule == 'modified'):
-    tbl_list = soup.select("table.schedule")
-    tbl = tbl_list[0] if (direction == 'north') else tbl_list[1]
-  else:
-    tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
+  #if (schedule == 'modified'):
+  #  tbl_list = soup.select("table.schedule")
+  #  tbl = tbl_list[0] if (direction == 'north') else tbl_list[1]
+  #else:
+  #  tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
+  tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
   header = ['']
   for tr in tbl.select('tr'):
     valid = tr.select('th')
