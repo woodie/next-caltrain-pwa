@@ -1,4 +1,4 @@
-const saturdayTripIds = [421,443,442,444]; // Saturday Only
+const saturdayTripIds = [421,480,481,484]; // Saturday Only
 
 /**
 * A utility to simplify working with caltrainServiceData.
