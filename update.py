@@ -6,6 +6,8 @@ import time
 import subprocess
 from collections import OrderedDict
 
+saturday_trip_ids = [421,480,481,484] # Saturday Only
+
 xstr = lambda s: s or ''
 
 def main():
@@ -141,6 +143,7 @@ def parse_schedule_data(stops):
 def write_schedule_data(times, stops):
   with open('src/@caltrainServiceData.js', 'w') as f:
     f.write("var caltrainServiceData = {\n")
+    f.write("\n  saturdayTripIds: [%s],\n" % ','.join(map(str, saturday_trip_ids)))
     stat = os.stat('CT-GTFS/stop_times.txt')
     creation = 0
     creation = long(stat.st_mtime * 1000)

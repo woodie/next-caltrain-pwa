@@ -1,5 +1,3 @@
-const saturdayTripIds = [421,480,481,484]; // Saturday Only
-
 /**
 * A utility to simplify working with caltrainServiceData.
 * Some odd structures as this is a port from a Java app.
@@ -77,7 +75,7 @@ class CaltrainService {
     let direction = CaltrainService.direction(departStop, arriveStop);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-    let skip = (schedule === 'Sunday') ? saturdayTripIds : [];
+    let skip = (schedule === 'Sunday') ? caltrainServiceData.saturdayTripIds : [];
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
 

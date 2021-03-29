@@ -1,5 +1,7 @@
 var caltrainServiceData = {
 
+  saturdayTripIds: [421,480,481,484],
+
   northStops: [
     'Gilroy','San Martin','Morgan Hill','Blossom Hill','Capitol','Tamien','San Jose Diridon','College Park','Santa Clara','Lawrence','Sunnyvale','Mountain View','San Antonio','California Ave','Palo Alto','Menlo Park','Redwood City','San Carlos','Belmont','Hillsdale','Hayward Park','San Mateo','Burlingame','Broadway','Millbrae','San Bruno','So San Francisco','Bayshore','22nd Street','San Francisco'],
 
