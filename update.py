@@ -13,7 +13,8 @@ xstr = lambda s: s or ''
 def main():
   fetch_schedule_data()
   stops = parse_station_data()
-  times = parse_schedule_data(stops)
+  #times = parse_gtfs_schedule_data(stops)
+  times = parse_web_schedule_data(stops)
   write_schedule_data(times, stops)
 
 def fetch_schedule_data():
@@ -52,12 +53,12 @@ def parse_station_data():
         _stops['south'].append(stop_id)
   return _stops
 
-def web_parse_schedule_data(stops):
+def parse_web_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
-            'weekend':{'north':OrderedDict(), 'south':OrderedDict()}}
+            'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
+            'modified':{'north':OrderedDict(), 'south':OrderedDict()}}
   for direction in ['north', 'south']:
-    # try
-    for schedule in ['weekday', 'weekend']:
+    for schedule in ['weekday', 'weekend', 'modified']:
       filename = 'data/%s_%s.csv' % (schedule, direction)
       with open(filename, 'rb') as modFile:
         labels = []
@@ -81,10 +82,10 @@ def web_parse_schedule_data(stops):
             parts = row[i].split(':')
             departure = int(parts[0]) * 60 + int(parts[1])
             _times[schedule][direction][trip_id][station_x] = str(departure)
-    #finally:
     modFile.close()
+  return _times
 
-def parse_schedule_data(stops):
+def parse_gtfs_schedule_data(stops):
   _times = {'weekday':{'north':OrderedDict(), 'south':OrderedDict()},
             'weekend':{'north':OrderedDict(), 'south':OrderedDict()},
             'modified':{'north':OrderedDict(), 'south':OrderedDict()}}
