@@ -22,12 +22,13 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "braces": "^2.3.1",
+    "braces": "^2.3.2",
     "eslint": "^6.8.0",
     "kind-of": "^6.0.3"
   },
   "dependencies": {
-    "acorn": "^7.1.1",
+    "acorn": "^7.4.1",
+    "glob-parent": "^5.1.2",
     "lodash": "^4.17.21",
     "minimist": "^1.2.5"
   }
