@@ -11,7 +11,7 @@ saturday_trip_ids = [421,480,481,484] # Saturday Only
 xstr = lambda s: s or ''
 
 def main():
-  fetch_schedule_data()
+  # fetch_schedule_data()
   stops = parse_station_data()
   #times = parse_gtfs_schedule_data(stops)
   times = parse_web_schedule_data(stops)
@@ -74,6 +74,8 @@ def parse_web_schedule_data(stops):
           station = row[0]
           if station == 'Shuttle Bus' or station == 'SamTrans Bus Bridge':
             continue
+          if station == 'S. San Francisco':
+            station = 'So San Francisco'
           station_x = labels.index(station)
           for i in range(1, len(header)):
             if len(row) - 1 < i or row[i] == '':

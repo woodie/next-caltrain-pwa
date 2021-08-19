@@ -6,7 +6,7 @@ import subprocess
 from bs4 import BeautifulSoup
 
 def main():
-  fetch_schedule_data()
+  #fetch_schedule_data()
   parse_schedule_data('weekday','north')
   parse_schedule_data('weekday','south')
   parse_schedule_data('weekend','north')
@@ -19,8 +19,11 @@ def main():
   #parse_schedule_data('reduced','south')
 
 def fetch_schedule_data():
-  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Weekday_Service_Changes_Effective_April_26__2021.html'
-  weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable/Weekend_Service_Changes_Effective_April_26__2021.html'
+  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Weekday_Service_Changes_-_Effective_August_30__2021.html'
+  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Weekday_Service_Changes_Effective_April_26__2021.html'
+  weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable/Weekend_Service_Changes_-_Effective_August_30__2021.html'
+  # weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable/Weekend_Service_Changes_Effective_April_26__2021.html'
+
   #weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
   #weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
   modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
@@ -44,6 +47,7 @@ def parse_schedule_data(schedule, direction):
   tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
   thead = tbl.select_one('thead')
   header = ['']
+  print(">>>>>>>>>>>. ", schedule, ": ", direction)
   for tr in thead.select('tr'):
     valid = tr.select(tag)
     if len(valid) > 9:
