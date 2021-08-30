@@ -6,7 +6,7 @@ import subprocess
 from bs4 import BeautifulSoup
 
 def main():
-  #fetch_schedule_data()
+  fetch_schedule_data()
   parse_schedule_data('weekday','north')
   parse_schedule_data('weekday','south')
   parse_schedule_data('weekend','north')
@@ -47,7 +47,6 @@ def parse_schedule_data(schedule, direction):
   tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
   thead = tbl.select_one('thead')
   header = ['']
-  print(">>>>>>>>>>>. ", schedule, ": ", direction)
   for tr in thead.select('tr'):
     valid = tr.select(tag)
     if len(valid) > 9:
@@ -80,6 +79,7 @@ def parse_schedule_data(schedule, direction):
 def _parse_stop(text):
   text = text.replace('Departs ', '').replace('Arrives ', '')
   text = text.replace("So. San", "So San")
+  text = text.replace("S. San", "So San")
   text = text.replace("South SF", "So San Francisco")
   text = text.replace("Mt View", "Mountain View")
   text = text.replace("SJ D", "San Jose D")
