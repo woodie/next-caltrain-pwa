@@ -19,18 +19,10 @@ def main():
   #parse_schedule_data('reduced','south')
 
 def fetch_schedule_data():
-  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Weekday_Service_Changes_-_Effective_August_30__2021.html'
-  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Weekday_Service_Changes_Effective_April_26__2021.html'
-  weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable/Weekend_Service_Changes_-_Effective_August_30__2021.html'
-  # weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable/Weekend_Service_Changes_Effective_April_26__2021.html'
-
-  #weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
-  #weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
+  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
+  weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
   modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
-  #modified_url = 'http://www.caltrain.com/schedules/holidayservice/Modified_Schedule.html'
   #closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
-  #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_17__2020.html'
-  #reduced_url = 'http://www.caltrain.com/schedules/weekdaytimetable/Upcoming_Reduced_Schedule_March_30__2020.html'
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')

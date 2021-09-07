@@ -35,15 +35,9 @@ class CaltrainTrip {
   static type(trip) {
     if (trip > 900) {
       return 'Unknown';
-    } else if (trip > 800) { // Weekend & Modified
+    } else if (trip > 700) { // New Weekday
       return 'Baby Bullet';
-    } else if (trip > 500) { // Modified
-      return 'Limited';
-    } else if (trip > 400) { // Weekend & Modified
-      return 'Local';
     } else if (trip > 300) { // Weekday
-      return 'Baby Bullet';
-    } else if (trip > 200) { // Weekday
       return 'Limited';
     } else if (trip > 100) { // Weekday
       return 'Local';
