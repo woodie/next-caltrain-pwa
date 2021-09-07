@@ -7,7 +7,7 @@ class LocalStorage {
     let savedAM = parseInt(localStorage.getItem('stopAM'));
     let savedPM = parseInt(localStorage.getItem('stopPM'));
     if (Number.isNaN(savedAM) || savedAM < 0 || savedAM >= stations.length) {
-      localStorage.setItem('stopAM', 16);
+      localStorage.setItem('stopAM', 15);
     }
     if (Number.isNaN(savedAM) || savedPM < 0 || savedPM >= stations.length) {
       localStorage.setItem('stopPM', 0);
