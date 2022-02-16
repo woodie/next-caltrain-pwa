@@ -23,7 +23,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "braces": "^2.3.2",
-    "eslint": "^6.8.0",
+    "eslint": "^8.9.0",
     "kind-of": "^6.0.3"
   },
   "dependencies": {
