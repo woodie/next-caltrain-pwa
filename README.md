@@ -22,9 +22,17 @@ Early on, we decided not to use any frameworks, not even jQuery. This app is jus
 
 ## Develop and Deploy
 
-After making JS changes, `npm run build`, then browse `webapp/index.html`.
+After making JS changes, build the app and browse the HTML file locally.
+```
+npm run build
+open webapp/index.html
+```
 
-Deploy to App Engine with `npm run deploy` (after updating the project name in `package.json`.
+Authenticate ans deploy to App Engine (after updating the project name in `package.json`).
+```
+gcloud auth login
+npm run deploy
+```
 
 ## Project Status
 
