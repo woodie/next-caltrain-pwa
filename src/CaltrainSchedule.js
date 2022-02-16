@@ -16,10 +16,17 @@ const special = {
 //'2021-01-18': 3, // Martin Luther King Jr Day
 //'2021-02-15': 3, // Presidents Day
   '2021-05-31': 2, // Memorial Day
+  '2021-11-25': 2, // Thanksgiving Day
+  '2021-11-26': 3, // Day After Thanksgiving
   '2021-12-24': 3, // Christmas Eve
   '2021-12-25': 0, // Christmas Day
   '2021-12-31': 0, // New Year’s Eve
-  '2021-01-01': 2, // New Year’s Day
+  '2022-01-01': 2, // New Year’s Day
+  '2022-01-17': 3, // Martin Luther King Jr. Day
+  '2022-02-21': 3, // Presidents Day
+  '2022-05-30': 2, // Memorial Day
+  '2022-12-24': 3, // Christmas Eve
+  '2022-12-25': 0, // Christmas Day
 };
 const scheduleOptions = [
   'Weekday', // 0
