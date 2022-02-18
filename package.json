@@ -22,7 +22,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "braces": "^2.3.1"
+    "braces": "^2.3.1",
+    "glob-parent": "^6.0.2"
   },
   "dependencies": {
   }
