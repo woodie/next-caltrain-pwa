@@ -39,11 +39,14 @@ def parse_station_data():
     stop_id_x = header.index('stop_id')
     stop_name_x = header.index('stop_name')
     for row in stopsReader:
+      if not row[stop_id_x].isdigit():
+        continue # skip malformed stops
       stop_id = int(row[stop_id_x])
       if (stop_id > 70400):
         continue # skip fake stops
       stop_name = ' '.join(i for i in row[stop_name_x].split() if i not in extra)
       stop_name = stop_name.replace("South San", "So San")
+      stop_name = stop_name.replace("Avenue", "Ave")
       if stop_name == 'Atherton':
         continue # should be dropped from GTFS
       _stops['labels'][stop_id] = stop_name

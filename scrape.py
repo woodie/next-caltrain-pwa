@@ -48,6 +48,9 @@ def parse_schedule_data(schedule, direction):
           header.append(train_id)
   tbody = tbl.select_one('tbody')
   rows = []
+  # hack to deal with bad HTML
+  if tbody == None:
+    tbody = tbl.select_one('thead')
   for tr in tbody.select('tr'):
     valid = tr.select('th')
     if len(valid) < 2:
