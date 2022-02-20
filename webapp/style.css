@@ -601,16 +601,15 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   margin-bottom: 3px;
   font-size: 14pt;
   width: 78px;
-  height: 30px;
+  height: 40px;
 }
 
 .keycol > .ok {
-  height: 33px;
+  height: 82px;
 }
 
 .keycol > .arrow {
   font-size: 8pt;
-  height: 22px;
 }
 
 .keycol > .answer {
