@@ -497,7 +497,9 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 }
 
 .station-dot {
+  padding: 0 3px;
   font-size: 20pt;
+  -webkit-text-stroke: 6px;
 }
 
 .target {

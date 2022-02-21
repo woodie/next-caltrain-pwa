@@ -185,7 +185,7 @@ class NextCaltrain {
           <div class="station-time"><br/><span
                class="hour-filler">${filler}</span>${fullTime}</div>
           <div class="station-spacer ${style}">${spacer}<br/><span
-               class="station-dot ${target}">&#9679;</span></div>
+               class="station-dot ${target}">&#x2022;</span></div>
           <div class="station-name"><br/>${stop[0]}</div></div>`);
     }
     listing.innerHTML = lines.join('\n');
