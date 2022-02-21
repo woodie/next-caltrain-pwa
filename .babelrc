@@ -1,7 +1,7 @@
 {
   "comments": false,
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "browsers": ["firefox >= 37"]
       }
