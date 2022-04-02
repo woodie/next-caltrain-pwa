@@ -19,8 +19,8 @@ def main():
   #parse_schedule_data('reduced','south')
 
 def fetch_schedule_data():
-  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Temporary_Weekday_Service_Changes_-_Effective_March_14__2022.html'
-  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
+  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Temporary_Weekday_Service_Changes_-_Effective_March_14__2022.html'
+  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
   weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
   modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
   #closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
