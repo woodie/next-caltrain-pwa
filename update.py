@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import csv
 import os
@@ -33,7 +33,7 @@ def fetch_schedule_data():
 def parse_station_data():
   _stops = {'north':[], 'south':[], 'labels':{}}
   extra = ['Caltrain', 'Station']
-  with open('CT-GTFS/stops.txt', 'rb') as stopsFile:
+  with open('CT-GTFS/stops.txt', 'r', encoding=None) as stopsFile:
     stopsReader = csv.reader(stopsFile)
     header = next(stopsReader, None)
     stop_id_x = header.index('stop_id')
@@ -63,7 +63,7 @@ def parse_web_schedule_data(stops):
   for direction in ['north', 'south']:
     for schedule in ['weekday', 'weekend', 'modified']:
       filename = 'data/%s_%s.csv' % (schedule, direction)
-      with open(filename, 'rb') as modFile:
+      with open(filename, 'r', encoding=None) as modFile:
         labels = []
         for stop_id in stops[direction]:
           labels.append(stops['labels'][stop_id])
@@ -150,7 +150,7 @@ def write_schedule_data(times, stops):
     f.write("\n  saturdayTripIds: [%s],\n" % ','.join(map(str, saturday_trip_ids)))
     stat = os.stat('CT-GTFS/stop_times.txt')
     creation = 0
-    creation = long(stat.st_mtime * 1000)
+    creation = int(stat.st_mtime * 1000)
     for direction in ['north', 'south']:
       f.write("\n  %sStops: [" % (direction))
       f.write("\n    '")
