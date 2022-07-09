@@ -24,13 +24,23 @@ const special = {
 //'2021-12-31': 0, // New Year’s Eve
 //'2022-01-01': 1, // New Year’s Day
 //'2022-01-17': 3, // Martin Luther King Jr. Day
-  '2022-02-21': 3, // Presidents Day
+//'2022-02-21': 3, // Presidents Day
+//'2022-05-30': 2, // Memorial Day
+//'2022-07-04': 1, // Independence Day
+  '2022-09-05': 1  // Labor Day
+//'2022-12-24': 1, // Christmas Eve   Sat
+//'2022-12-25': 1, // Christmas Day   Sun
+//'2022-12-31': 1, // New Year’s Eve  Sat
+//'2023-01-01': 1, // New Year’s Day  Sun
 };
+// https://www.caltrain.com/schedules/holiday-service
+
 const scheduleOptions = [
   'Weekday', // 0
-  'Saturday',// 1
-  'Sunday',  // 2
-  'Modified' // 3
+  'Weekend'  // 1
+//'Saturday',// 1
+//'Sunday',  // 2
+//'Modified' // 3
 ];
 
 /* exported CaltrainSchedule */

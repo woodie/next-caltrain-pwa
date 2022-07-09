@@ -28,7 +28,7 @@ class CaltrainService {
   * Station name maps to index of column with stop times
   * @param train is train number.
   * @param direction is North or South.
-  * @param schedule is Weekday, Saturday, Sunday or Modified
+  * @param schedule is Weekday, Weekend (Saturday, Sunday or Modified)
 /
   * @return array of Station stop times.
   */
@@ -68,14 +68,15 @@ class CaltrainService {
   * @param trains the train IDs
   * @param departStop the departing stop name string
   * @param arriveStop the arriving stop name string
-  * @param schedule is Weekday, Saturday, Sunday or Modified
+  * @param schedule is Weekday, Weekend (Saturday, Sunday or Modified)
   * @return a two dementional array or ints
   */
   routes(departStop, arriveStop, schedule) {
     let direction = CaltrainService.direction(departStop, arriveStop);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-    let skip = (schedule === 'Sunday') ? caltrainServiceData.saturdayTripIds : [];
+  //let skip = (schedule === 'Sunday') ? caltrainServiceData.saturdayTripIds : [];
+    let skip = [];
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
 
