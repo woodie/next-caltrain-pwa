@@ -13,8 +13,8 @@ xstr = lambda s: s or ''
 def main():
   fetch_schedule_data()
   stops = parse_station_data()
-  #times = parse_gtfs_schedule_data(stops)
-  times = parse_web_schedule_data(stops)
+  times = parse_gtfs_schedule_data(stops)
+  #times = parse_web_schedule_data(stops)
   write_schedule_data(times, stops)
 
 def fetch_schedule_data():
@@ -96,7 +96,7 @@ def parse_gtfs_schedule_data(stops):
     filename = 'data/modified_%s.csv' % direction
     schedule = 'modified'
     try:
-      with open(filename, 'rb') as modFile:
+      with open(filename, 'r') as modFile:
         labels = []
         for stop_id in stops[direction]:
           labels.append(stops['labels'][stop_id])
@@ -118,7 +118,7 @@ def parse_gtfs_schedule_data(stops):
             _times[schedule][direction][trip_id][station_x] = str(departure)
     finally:
       modFile.close()
-  with open('CT-GTFS/stop_times.txt', 'rb') as timesFile:
+  with open('CT-GTFS/stop_times.txt', 'r') as timesFile:
     timesReader = csv.reader(timesFile)
     header = next(timesReader, None)
     trip_id_x = header.index('trip_id')

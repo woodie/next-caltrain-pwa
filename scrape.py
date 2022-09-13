@@ -20,16 +20,18 @@ def main():
 
 def fetch_schedule_data():
   # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Temporary_Weekday_Service_Changes_-_Effective_March_14__2022.html'
-  weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
-  weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
-  modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
+  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
+  # weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
+  weekday_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekday'
+  weekend_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekend'
+  # modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
   #closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')
   subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
   subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
-  subprocess.call(['curl', '-o', 'modified.htm', modified_url])
+  #subprocess.call(['curl', '-o', 'modified.htm', modified_url])
   #subprocess.call(['curl', '-o', 'closure.htm', closure_url])
   os.chdir(basedir)
 
