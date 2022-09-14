@@ -11,77 +11,68 @@ def main():
   parse_schedule_data('weekday','south')
   parse_schedule_data('weekend','north')
   parse_schedule_data('weekend','south')
-  parse_schedule_data('modified','north')
-  parse_schedule_data('modified','south')
-  #parse_schedule_data('closure','north')
-  #parse_schedule_data('closure','south')
-  #parse_schedule_data('reduced','north')
-  #parse_schedule_data('reduced','south')
 
 def fetch_schedule_data():
-  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable/Temporary_Weekday_Service_Changes_-_Effective_March_14__2022.html'
-  # weekday_url = 'https://www.caltrain.com/schedules/weekdaytimetable.html'
-  # weekend_url = 'https://www.caltrain.com/schedules/weekend-timetable.html'
-  weekday_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekday'
-  weekend_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekend'
-  # modified_url = 'https://www.caltrain.com/schedules/modified_schedule.html'
-  #closure_url = 'http://www.caltrain.com/schedules/SFWeekendServiceClosure.html'
+  schedule_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab'
+  # weekday_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekday'
+  # weekend_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekend'
   basedir = os.getcwd()
   subprocess.call(['mkdir', '-p', 'data'])
   os.chdir('data')
-  subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
-  subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
-  #subprocess.call(['curl', '-o', 'modified.htm', modified_url])
-  #subprocess.call(['curl', '-o', 'closure.htm', closure_url])
+  subprocess.call(['curl', '-o', 'schedule.htm', schedule_url])
+  # subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
+  # subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
   os.chdir(basedir)
 
+def _other_schedule(td, schedule):
+  if not td.has_attr('data-route-id'):
+    return True
+  if schedule == 'weekday':
+    return True if td['data-route-id'] == 'L2' else False
+  elif schedule == 'weekend':
+    return True if td['data-route-id'] != 'L2' else False
+
 def parse_schedule_data(schedule, direction):
-  with open('data/%s.htm' % schedule) as f:
+  # with open('data/%s.htm' % schedule) as f:
+  with open('data/schedule.htm') as f:
     soup = BeautifulSoup(f, 'html.parser')
-  tag = 'th' if (schedule == 'modified') else 'td'
-  tbl = soup.select_one("table.%sB_TT" % direction[0].upper())
-  thead = tbl.select_one('thead')
+  tbl = soup.findAll('table', {'data-direction' : "%sbound" % direction})[0]
+  # parse train ids
+  thead = tbl.select_one('tr')
   header = ['']
-  for tr in thead.select('tr'):
-    valid = tr.select(tag)
-    if len(valid) > 9:
-      for th in  tr.select(tag):
-        train_id = th.text.replace("*","").replace("br",'')
-        if len(train_id) > 2 and len(train_id) < 4:
-          header.append(train_id)
+  for td in thead.select('td'):
+    if _other_schedule(td, schedule):
+      continue
+    train_id = td.text
+    if len(train_id) == 3:
+      header.append(train_id)
+  # parse stop times
   tbody = tbl.select_one('tbody')
   rows = []
-  # hack to deal with bad HTML
-  if tbody == None:
-    tbody = tbl.select_one('thead')
   for tr in tbody.select('tr'):
-    valid = tr.select('th')
-    if len(valid) < 2:
+    if not tr.has_attr('data-stop-id'):
       continue
-    zone = valid[0].text.strip()
-    if len(zone) == 1: # busses don't have a zone
-      row = []
-      row.append(_parse_stop(valid[1].text))
-      times = tr.select('th')
-      for td in tr.select('td'):
-        row.append(_parse_time(td.text))
-      if len(row) < len(header):
-        row.extend([None] * (len(header) - len(row)))
-      rows.append(row[0:len(header)])
+    cols = tr.select('td')
+    row = []
+    row.append(_parse_stop(cols[1].text))
+    times = tr.select('th')
+    for td in tr.select('td'):
+      if _other_schedule(td, schedule):
+        continue
+      row.append(_parse_time(td.text))
+    if len(row) < len(header):
+      row.extend([None] * (len(header) - len(row)))
+    rows.append(row[0:len(header)])
   with open('data/%s_%s.csv' % (schedule, direction), mode='w') as out_file:
-    csv_writer = csv.writer(out_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    csv_writer = csv.writer(out_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator="\n")
     csv_writer.writerow(header)
     for row in rows:
       csv_writer.writerow(row)
 
 def _parse_stop(text):
   text = text.replace('Departs ', '').replace('Arrives ', '')
-  text = text.replace("So. San", "So San")
-  text = text.replace("S. San", "So San")
-  text = text.replace("South SF", "So San Francisco")
-  text = text.replace("Mt View", "Mountain View")
-  text = text.replace("SJ D", "San Jose D")
-  text = text.replace("Capital", "Capitol")
+  text = text.replace("South San", "So San")
+  text = text.replace("Avenue", "Ave")
   return text.replace(u'\xa0', u' ')
 
 def _parse_time(text):

@@ -13,8 +13,8 @@ xstr = lambda s: s or ''
 def main():
   fetch_schedule_data()
   stops = parse_station_data()
-  times = parse_gtfs_schedule_data(stops)
-  #times = parse_web_schedule_data(stops)
+  #times = parse_gtfs_schedule_data(stops)
+  times = parse_web_schedule_data(stops)
   write_schedule_data(times, stops)
 
 def fetch_schedule_data():
