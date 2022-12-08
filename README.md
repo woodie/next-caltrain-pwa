@@ -5,13 +5,12 @@ This app runs in the KaiOS browser for phones without access to the store. The a
 
 | Targeted Phones   | OS          | Browser    | Javascript | System chip    | Sideload |
 | ----------------- | ----------- | ---------- | ---------- | -------------- | -------- |
-| Alcatel GO FLIP 3 | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 | No       |
-| Nokia 2720 Flip   | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
+| Nokia 2780 Flip   | KaiOS 3.1   | Firefox 78 | ES 2018    | Snapdragon 215 |          |
+| Alcatel GO Flip 3 | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 | No       |
 | Alcatel SMARTFLIP | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 | No       |
+| Nokia 2720 Flip   | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
 | Nokia 8110 4G     | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
-| Alcatel GO FLIP   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 | Yes      |
-
-**Note: KaiOS 3.0 phones will be on Firefox 78 with ES 2018 support.**
+| Alcatel GO Flip   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 | Yes      |
 
 ## History and Goals
 
