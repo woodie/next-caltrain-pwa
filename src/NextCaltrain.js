@@ -56,7 +56,7 @@ class NextCaltrain {
     else if (document.location.search === '?kaiWeb1' ||
       navigator.userAgent.toLowerCase().indexOf('kaios/1') > -1) kaiWeb1 = true;
     else if (document.location.search === '?kaiWeb2' ||
-      navigator.userAgent.toLowerCase().indexOf('kaios/2') > -1) kaiWeb2 = true;
+      navigator.userAgent.toLowerCase().indexOf('kaios') > -1) kaiWeb2 = true;
     kaiWeb = (kaiWeb1 || kaiWeb2);
     if (navigator.userAgent.toLowerCase().indexOf("android") > -1) android = true;
     if (!kaiWeb) {
