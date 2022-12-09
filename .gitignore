@@ -3,3 +3,4 @@ CT-GTFS
 *.swp
 downloads
 node_modules
+data/*htm

@@ -12,23 +12,18 @@
     "type": "git",
     "url": "git+https://github.com/woodie/next-caltrain-pwa.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "caltrain",
+    "schedule"
+  ],
+  "author": "John Woodell <woodie@netpress.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/woodie/next-caltrain-pwa/issues"
   },
   "homepage": "https://github.com/woodie/next-caltrain-pwa#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "braces": "^2.3.1",
-    "eslint": "^6.8.0",
-    "kind-of": "^6.0.3"
-  },
-  "dependencies": {
-    "acorn": "^7.1.1",
-    "lodash": "^4.17.19",
-    "minimist": "^1.2.5"
+    "@babel/cli": "^7.17.3",
+    "@babel/preset-env": "^7.16.11"
   }
 }

@@ -1,6 +1,7 @@
 let prefs = new LocalStorage(caltrainServiceData.southStops);
 let service = new CaltrainService();
 let app = false;
+let android = false;
 let kaiWeb1 = false;
 let kaiWeb2 = false;
 let kaiWeb = false;
@@ -57,6 +58,7 @@ class NextCaltrain {
     else if (document.location.search === '?kaiWeb2' ||
       navigator.userAgent.toLowerCase().indexOf('kaios/2') > -1) kaiWeb2 = true;
     kaiWeb = (kaiWeb1 || kaiWeb2);
+    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) android = true;
     if (!kaiWeb) {
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('about-filler').style['display'] = 'flex';
@@ -181,11 +183,13 @@ class NextCaltrain {
       let filler = fullTime.length > 6 ? '' : '0';
       let style = (goodTime.inThePast(stop[1])) ? 'message-departed' : 'message-arriving';
       let target = (prefs.origin === stop[0] || prefs.destin === stop[0]) ? 'target' : '';
+      let bullet = (android) ? '&#x2022;' : '&#9679;';
+      let dot_is = (android) ? 'android' : 'station';
       lines.push(`<div class="station-stop">
           <div class="station-time"><br/><span
                class="hour-filler">${filler}</span>${fullTime}</div>
           <div class="station-spacer ${style}">${spacer}<br/><span
-               class="station-dot ${target}">&#9679;</span></div>
+               class="${dot_is}-dot ${target}">${bullet}</span></div>
           <div class="station-name"><br/>${stop[0]}</div></div>`);
     }
     listing.innerHTML = lines.join('\n');
@@ -511,10 +515,10 @@ class NextCaltrain {
         offset--;
       } else if (code === DOWN) {
         offset++;
-      } else if (code === 49) { // 1
+      } else if (code === 49 || code === 55) { // 1 or 7
         offset = null;
         prefs.bumpStations(true, false);
-      } else if (code === 51) { // 3
+      } else if (code === 51 || code === 57) { // 3 or 9
         offset = null;
         prefs.bumpStations(true, true);
       } else if (code === 52) { // 4
