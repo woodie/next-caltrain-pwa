@@ -370,20 +370,20 @@ class NextCaltrain {
         splash = true;
         NextCaltrain.displayScreen('splash');
       // Convert cursor movements to UP/DOWN events
-      } else if (e.mozMovementY > 0) {
+      } else if (e.movementY > 0) {
         NextCaltrain.press(DOWN);
         if (skip) {
           NextCaltrain.press(DOWN);
           skip = false;
         }
-      } else if (e.mozMovementY < 0) {
+      } else if (e.movementY < 0) {
         NextCaltrain.press(UP);
         if (skip) {
           NextCaltrain.press(UP);
           skip = false;
         }
       // Infer UP/DOWN when cursor bottoms/tops out
-      } else if (e.mozMovementX === 0 && !skip) {
+      } else if (e.movementX === 0 && !skip) {
         if (e.clientY === 0) {
           NextCaltrain.press(UP);
         } else if (e.clientY >= vh - 1) {
