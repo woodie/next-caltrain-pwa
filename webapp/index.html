@@ -23,13 +23,6 @@
   <base target="_blank">
 </head>
 
-<!--
-fetch('https://us-central1-next-caltrain-pwa.cloudfunctions.net/status?train=143')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.log(error));
--->
-
 <body>
   <div id="content">
 
@@ -93,7 +86,9 @@ fetch('https://us-central1-next-caltrain-pwa.cloudfunctions.net/status?train=143
     </div>
 
     <div id="hero-screen" style="display: flex;">
-      <div id="hero-filler" class="fake-titlebar"></div>
+      <div id="hero-filler" class="fake-titlebar">
+        <marquee id="marquee"></marquee>
+      </div>
       <div id="hero-content">
         <div id="fade">
           <div id="main-hints" style="display: none;">

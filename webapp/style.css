@@ -356,6 +356,10 @@ div:hover { cursor: default; }
   white-space: nowrap;
 }
 
+#marquee {
+  width: 240px;
+}
+
 #statusbar {
   display: flex;
   flex-direction: row;
