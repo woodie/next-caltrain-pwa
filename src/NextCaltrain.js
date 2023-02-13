@@ -276,7 +276,8 @@ class NextCaltrain {
         }
         tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
         NextCaltrain.populateBlurb(message, textClass);
-        fetch(`https://us-central1-next-caltrain-pwa.cloudfunctions.net/status?train=${trainId}`)
+        // fetch(`https://us-central1-next-caltrain-pwa.cloudfunctions.net/status?train=${trainId}`)
+        fetch(`/status?train=${trainId}`)
           .then(response => response.json())
           .then(data => marquee.innerHTML = data['message'])
           .catch(error => console.log(error));
