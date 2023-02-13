@@ -8,8 +8,7 @@ class Status
   REFRESH_SECONDS = 300 # 5 minutes
   RESP_HEADERS = {"Content-type" => "application/json; charset=utf-8"}
 
-  def initialize(bearer_token = "")
-    @bearer_token = bearer_token
+  def initialize
     @refresh_time = Time.now
   end
 
@@ -27,7 +26,7 @@ class Status
 
       if parts[0] == combo || row["text"].start_with?("Train #{train_id} ")
         return row["text"]
-      elsif fallback.empty? && (parts[0][1] != "B" && parts[0].size != 5) && parts[0] != "Train"
+      elsif fallback.empty? && parts[0] != "NB" && parts[0] != "SB" && parts[0] != "Train"
         fallback = row["text"]
       end
     end

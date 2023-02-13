@@ -1,5 +1,4 @@
 require "sinatra"
-require "json"
 require_relative "lib/status"
 
 get "/status" do
@@ -11,13 +10,9 @@ get "/status" do
 end
 
 get "/scrape" do
-  <<~HTML
-    <p>TBD</p>
-  HTML
+  [200, {}, ["TBD"]]
 end
 
 get "/" do
-  <<~HTML
-    <p>TBD</p>
-  HTML
+  [200, {}, ["TBD"]]
 end
