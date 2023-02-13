@@ -21,13 +21,34 @@ Early on, we decided not to use any frameworks, not even jQuery. This app is jus
 
 ## Develop and Deploy
 
+This is mostly a PWA writtend in `VanillaJS` and transcompiled to support older phones. We scrape status from
+[the Caltrain website](https://www.caltrain.com/alerts?active_tab=service_alerts_tab)
+and will (eventually) maintain a copy in App Engine
+[datastore](https://github.com/GoogleCloudPlatform/ruby-docs-samples/blob/main/appengine/standard-datastore/app.rb).
+
+### Backend
+
+After making Ruby changes, update the specs and test the backend locally.
+```
+bundle exec standardrb --fix
+bundle exec rspec -fd
+
+bundle exec ruby app.rb
+open http://localhost:4567/status
+```
+Note: The [Local development server](https://cloud.google.com/appengine/docs/standard/tools/local-devserver-command?tab=ruby)
+is **not currently** supported for the Ruby runtime so App Engine features and APSs
+can only be tested after deploying to the cloud.
+
+### Frontend
+
 After making JS changes, build the app and browse the HTML file locally.
 ```
 npm run build
 open webapp/index.html
 ```
 
-Authenticate ans deploy to App Engine (after updating the project name in `package.json`).
+Authenticate and deploy to App Engine (after updating the project name in `package.json`).
 ```
 gcloud auth login
 npm run deploy

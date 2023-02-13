@@ -1,3 +1,5 @@
+ENV["APP_ENV"] = "test"
+
 require_relative "../app"
 require "rack/test"
 
@@ -11,7 +13,6 @@ RSpec.describe "App" do
   subject { last_response }
 
   context "with placeholder endpoints" do
-
     it "should respond with TDB" do
       get "/"
       expect(subject.body).to match("TBD")
