@@ -17,10 +17,13 @@ handlers:
   mime_type: application/x-web-app-manifest+json
   expiration: "0s"
 
-- url: /status
+- url: /alerts
   script: auto
 
 - url: /scrape
+  script: auto
+
+- url: /status
   script: auto
 
 - url: /(.+)
