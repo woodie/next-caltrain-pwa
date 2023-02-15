@@ -1,5 +1,6 @@
 require "sinatra"
 require_relative "lib/status"
+require_relative "lib/scrape"
 
 get "/status" do
   @status ||= Status.new
@@ -10,7 +11,11 @@ get "/status" do
 end
 
 get "/scrape" do
-  [200, {}, ["TBD"]]
+  @scrape ||= Scrape.new
+  count = @scrape.update_cache
+  return [500, {}, ["Something went wrong."]] if count.nil?
+
+  [200, Status::RESP_HEADERS, [{count: count}.to_json]]
 end
 
 get "/" do
