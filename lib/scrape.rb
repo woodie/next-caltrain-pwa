@@ -26,6 +26,8 @@ class Scrape
 
       status = @datastore.entity "Status" do |e|
         e["text"] = row["text"]
+        # e["train"] = 123
+        # e["status"] = "10 minutes late"
         e["created_at"] = this_time
         e["stashed_at"] = Time.now
       end

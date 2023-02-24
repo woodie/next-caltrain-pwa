@@ -10,6 +10,10 @@ RSpec.describe Scrape do
     end
   end
 
+  # combo = train_id.to_i.even? ? "SB#{train_id}" : "NB#{train_id}"
+  # let(:msg1) { "Train 432 SB is running 9 minutes late approaching Nirvana." }
+  # let(:msg2) { "SB514 boarding on the northbound platform Santa Clara." }
+
   describe "#extract_data" do
     let(:html) { '<html><body><div class="view-tweets">' }
     let(:resp) { {"data" => []} }
