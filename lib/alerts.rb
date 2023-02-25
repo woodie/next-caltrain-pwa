@@ -26,9 +26,7 @@ class Alerts
     limit = max_results.to_i.clamp(MIN_RESULTS, MAX_RESULTS)
     query = @datastore.query("Status").order("created_at", :desc).limit(limit)
     payload = []
-    @datastore.run(query).each do |row|
-      payload << {"created_at" => row["created_at"], "text" => row["text"]}
-    end
+    @datastore.run(query).each {|row| payload << row.properties.to_h}
     payload
   end
 end
