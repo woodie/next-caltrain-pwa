@@ -58,6 +58,7 @@ RSpec.describe Scrape do
           expect(subject.update_cache).to be(1)
           expect(entity["train"]).to eq(310)
           expect(entity["delay"]).to eq(11)
+          expect(entity["station"]).to be_nil
         end
       end
 

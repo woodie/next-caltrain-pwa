@@ -27,14 +27,14 @@ class Scrape
       next if last_time >= this_time
 
       this_text = CGI.unescapeHTML(row["text"])
-      stations = parse_stations(this_text)
       train = parse_train(this_text)
       delay = parse_delay(this_text)
+      stations = delay.nil? ? parse_stations(this_text) : nil
       status = @datastore.entity "Status" do |e|
         e["text"] = this_text
-        e["station"] = stations
         e["train"] = train
         e["delay"] = delay
+        e["station"] = stations
         e["created_at"] = this_time
         e["stashed_at"] = Time.now
       end
@@ -45,13 +45,6 @@ class Scrape
   end
 
   private
-
-  def parse_stations(text)
-    out = []
-    words = text.split
-    @stations.each_pair { |k, v| out << k if (words & [k, v]).any? }
-    out.empty? ? nil : out
-  end
 
   def parse_train(text)
     train_text = text.scan(/Train \d\d\d .B/).join("")
@@ -64,6 +57,14 @@ class Scrape
     return nil unless text.include?("minutes late")
 
     text.split("minutes late").first.split(" ").last.to_i
+  end
+
+  def parse_stations(text)
+    out = []
+    text = text[0..-2] if text.end_with?(".")
+    words = text.split
+    @stations.each_pair { |k, v| out << k if (words & [k, v]).any? }
+    out.empty? ? nil : out
   end
 
   def status_page
