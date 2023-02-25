@@ -64,6 +64,11 @@ class Scrape
     text = text[0..-2] if text.end_with?(".")
     words = text.split
     @stations.each_pair { |k, v| out << k if (words & [k, v]).any? }
+    if text.include?("South San Francisco")
+      out << "SSF"
+    elsif text.include?("San Francisco")
+      out << "SFK"
+    end
     out.empty? ? nil : out
   end
 

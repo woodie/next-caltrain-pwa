@@ -26,28 +26,40 @@ RSpec.describe Scrape do
     end
 
     context "With some recent alerts" do
-      let(:msg1) { "Single tracking Palo Alto & California Ave until 4:00 beginning with 110." }
+      let(:msg0) { "Single tracking Palo Alto & California Ave until 4:00 beginning with 110." }
+      let(:msg1) { "For New Year’s Eve, last train will depart San Francisco at 2:00 AM." }
       let(:msg2) { "Train 310 SB is running about 11 minutes late approaching San Jose Diridon." }
       let(:msg3) { "There are no closures scheduled for this weekend. Weekend closures will resume February 25th." }
+
       let(:time) { Time.now.to_s }
       let(:payload) {
         {"data" => [
+          {"created_at" => time, "text" => msg0},
           {"created_at" => time, "text" => msg1},
           {"created_at" => time, "text" => msg2},
           {"created_at" => time, "text" => msg3}
         ]}
       }
 
-      it "should update 3 entries" do
-        expect(subject.update_cache).to be(3)
+      it "should update 4 entries" do
+        expect(subject.update_cache).to be(4)
       end
 
       context "With a multiple stations" do
-        let(:payload) { {"data" => [{"created_at" => time, "text" => msg1}]} }
+        let(:payload) { {"data" => [{"created_at" => time, "text" => msg0}]} }
 
         it "should set the stations" do
           expect(subject.update_cache).to be(1)
           expect(entity["station"]).to eq(["PAL", "CAL"])
+        end
+      end
+
+      context "With a similar stations" do
+        let(:payload) { {"data" => [{"created_at" => time, "text" => msg1}]} }
+
+        it "should set correct station" do
+          expect(subject.update_cache).to be(1)
+          expect(entity["station"]).to eq(["SFK"])
         end
       end
 
