@@ -1,3 +1,4 @@
+require "cgi"
 require "time"
 require "json"
 require "net/http"
@@ -9,6 +10,7 @@ class Scrape
 
   def initialize
     @datastore = Google::Cloud::Datastore.new(project_id: "next-caltrain-pwa")
+    @stations = JSON.parse(File.read(File.expand_path("../../data/stations.json", __FILE__)))
   end
 
   def update_cache
@@ -24,10 +26,15 @@ class Scrape
       this_time = Time.parse(row["created_at"])
       next if last_time >= this_time
 
+      this_text = CGI.unescapeHTML(row["text"])
+      stations = parse_stations(this_text)
+      train = parse_train(this_text)
+      delay = parse_delay(this_text)
       status = @datastore.entity "Status" do |e|
-        e["text"] = row["text"]
-        # e["train"] = 123
-        # e["status"] = "10 minutes late"
+        e["text"] = this_text
+        e["station"] = stations
+        e["train"] = train
+        e["delay"] = delay
         e["created_at"] = this_time
         e["stashed_at"] = Time.now
       end
@@ -35,6 +42,28 @@ class Scrape
       count += 1
     end
     count
+  end
+
+  private
+
+  def parse_stations(text)
+    out = []
+    words = text.split
+    @stations.each_pair { |k, v| out << k if (words & [k, v]).any? }
+    out.empty? ? nil : out
+  end
+
+  def parse_train(text)
+    train_text = text.scan(/Train \d\d\d .B/).join("")
+    return train_text.split[1].to_i unless train_text.empty?
+
+    nil # ignore other formats for now
+  end
+
+  def parse_delay(text)
+    return nil unless text.include?("minutes late")
+
+    text.split("minutes late").first.split(" ").last.to_i
   end
 
   def status_page
