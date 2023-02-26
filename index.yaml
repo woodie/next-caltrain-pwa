@@ -1,0 +1,13 @@
+indexes:
+- kind: Status
+  properties:
+  - name: train
+    direction: asc
+  - name: created_at
+    direction: desc
+- kind: Status
+  properties:
+  - name: station
+    direction: asc
+  - name: created_at
+    direction: desc

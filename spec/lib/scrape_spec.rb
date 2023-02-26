@@ -3,13 +3,13 @@ ENV["GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS"] = "1"
 require "scrape"
 
 RSpec.describe Scrape do
-  let(:entity) { {} }
-  let(:result) { [{"created_at" => Time.now - 3000}] }
-  let(:gcds) { double("GCD", query: double("Query", order: double("Order", limit: nil)), run: result, save: nil) }
+  let(:results) { [{"created_at" => Time.now - 3000}] }
+  let(:gcd) { double("GCD", run: results, save: nil) }
 
-  before { allow(Google::Cloud::Datastore).to receive(:new).and_return(gcds) }
+  before { allow(Google::Cloud::Datastore).to receive(:new).and_return(gcd) }
 
   describe "#update_cache" do
+    let(:entity) { {} }
     let(:html) { '<html><body><div class="view-tweets">' }
     let(:resp) { Net::HTTPSuccess.new(1.0, "200", "OK") }
     let(:payload) { {"data" => []} }
@@ -18,7 +18,8 @@ RSpec.describe Scrape do
       allow(Net::HTTP).to receive(:get_response).and_return(resp)
       allow(resp).to receive(:body).and_return(html)
       allow(subject).to receive(:extract_data).and_return(payload)
-      allow(gcds).to receive(:entity).and_yield(entity)
+      allow(gcd).to receive_message_chain(:query, :order, :limit)
+      allow(gcd).to receive(:entity).and_yield(entity)
     end
 
     it "should update nothing" do

@@ -40,6 +40,12 @@ Note: The [Local development server](https://cloud.google.com/appengine/docs/sta
 is **not currently** supported for the Ruby runtime so App Engine features and APSs
 can only be tested after deploying to the cloud.
 
+We can 'create' and 'cleanup` indexes.
+```
+gcloud datastore indexes create index.yaml --project=next-caltrain-pwa
+gcloud app deploy index.yaml --project=next-caltrain-pwa # also works
+```
+
 ### Frontend
 
 After making JS changes, build the app and browse the HTML file locally.

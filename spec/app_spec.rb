@@ -22,42 +22,21 @@ RSpec.describe "App" do
   end
 
   describe "/status" do
-    context "with invalid response" do
-      before { expect(Net::HTTP).to receive(:get_response) }
+    let(:results) { nil }
+    let(:gcd) { double("GCD", run: results) }
 
-      it "should return 500 with failure message" do
-        get "/status"
-        expect(subject.status).to eq 500
-        expect(subject.body).to eq "Something went wrong."
-      end
-    end
+    before { allow(Google::Cloud::Datastore).to receive(:new).and_return(gcd) }
 
-    context "with valid response" do
-      let(:resp) { Net::HTTPSuccess.new(1.0, "200", "OK") }
-      let(:data) { '<html><body><div class="view-tweets"></div></body></html>' }
+    context "with no results found" do
+      let(:results) { [] }
 
-      before do
-        expect(Net::HTTP).to receive(:get_response).and_return(resp)
-        expect(resp).to receive(:body).and_return(data)
-      end
+      before { allow(gcd).to receive_message_chain(:query, :where, :where, :order, :limit) }
 
       it "should return 200 with RESP headers" do
         get "/status"
         expect(subject.status).to eq 200
         expect(subject.body).to eq({"message" => ""}.to_json)
         expect(subject.content_type).to eq "application/json; charset=utf-8"
-      end
-    end
-  end
-
-  describe "/status" do
-    context "with invalid response" do
-      before { expect(Net::HTTP).to receive(:get_response) }
-
-      it "should return 500 with failure message" do
-        get "/status"
-        expect(subject.status).to eq 500
-        expect(subject.body).to eq "Something went wrong."
       end
     end
   end
