@@ -29,33 +29,45 @@ and will (eventually) maintain a copy in App Engine
 ### Backend
 
 After making Ruby changes, update the specs and test the backend locally.
-```
+```bash
+# Run linter
 bundle exec standardrb --fix
+
+# Run specs
 bundle exec rspec -fd
 
+# Run local server
 bundle exec ruby app.rb
 open http://localhost:4567/status
 ```
-Note: The [Local development server](https://cloud.google.com/appengine/docs/standard/tools/local-devserver-command?tab=ruby)
-is **not currently** supported for the Ruby runtime so App Engine features and APSs
-can only be tested after deploying to the cloud.
 
-We can 'create' and 'cleanup` indexes.
+The [Local development server](https://cloud.google.com/appengine/docs/standard/tools/local-devserver-command?tab=ruby)
+te
+
+is **not currently** supported for the Ruby runtime.  Some App Engine features can only be tested after deploying to the cloud.
+See [Configure Datastore indexes](https://cloud.google.com/appengine/docs/flexible/configuring-datastore-indexes-with-index-yaml?tab=ruby)
+for more information about datastore indexes.
+
+```bash
+# Deploy the index configuration file
+gcloud app deploy index.yaml
+
+# Delete unused indexes
+gcloud datastore indexes cleanup index.yaml
 ```
-gcloud datastore indexes create index.yaml --project=next-caltrain-pwa
-gcloud app deploy index.yaml --project=next-caltrain-pwa # also works
-```
+
+The `gcloud datastore indexes` command accepts `cleanup` as well as `create`, `describe` and `list`.
 
 ### Frontend
 
 After making JS changes, build the app and browse the HTML file locally.
-```
+```bash
 npm run build
 open webapp/index.html
 ```
 
 Authenticate and deploy to App Engine (after updating the project name in `package.json`).
-```
+```bash
 gcloud auth login
 npm run deploy
 ```
