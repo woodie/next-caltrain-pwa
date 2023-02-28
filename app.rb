@@ -29,6 +29,14 @@ get "/status" do
   [200, Status::RESP_HEADERS, [{message: message}.to_json]]
 end
 
+get "/delays" do
+  @status ||= Status.new
+  delays = @status.delays
+  return [500, {}, ["Something went wrong."]] if delays.nil?
+
+  [200, Status::RESP_HEADERS, [delays.to_json]]
+end
+
 get "/" do
   [200, {}, ["TBD"]]
 end

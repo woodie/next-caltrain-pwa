@@ -14,7 +14,9 @@ let skip = false;
 let splash = false;
 let hintIndex = -1;
 let menuIndex = 0;
-let marquee = null;
+// let marquee = null;
+let heroFiller = null;
+let delays = {};
 let listing = null;
 let vh = 228;
 // window.innerWidth  240
@@ -77,12 +79,18 @@ class NextCaltrain {
     }
     // setup the app state
     const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
-    marquee = document.getElementById('marquee');
+    // marquee = document.getElementById('marquee');
+    heroFiller = document.getElementById('hero-filler');
     listing = document.getElementById('listing');
     document.getElementById('date-string').innerHTML = dateString;
     NextCaltrain.attachListeners();
     NextCaltrain.setTheTime();
     NextCaltrain.formatHints();
+    // get the deplay message once
+    fetch(`/status?delays`)
+      .then(response => response.json())
+      .then(data => delays = data)
+      .catch(error => console.log(error));
   }
 
   static formatHints() {
@@ -277,10 +285,11 @@ class NextCaltrain {
         tripCardElement.className = ['trip-card', 'selection', tripClass, wrapClass].join(' ');
         NextCaltrain.populateBlurb(message, textClass);
         // fetch(`https://us-central1-next-caltrain-pwa.cloudfunctions.net/status?train=${trainId}`)
-        fetch(`/status?train=${trainId}`)
-          .then(response => response.json())
-          .then(data => marquee.innerHTML = data['message'])
-          .catch(error => console.log(error));
+        //fetch(`/status?train=${trainId}`)
+        //  .then(response => response.json())
+        //  .then(data => marquee.innerHTML = data['message'])
+        //  .catch(error => console.log(error));
+        heroFiller.innerHTML = delays[train_id];
       } else {
         if (goodTime.inThePast(minutes)) {
           tripCardElement.className = 'trip-card message-departed';

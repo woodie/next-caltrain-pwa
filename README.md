@@ -24,7 +24,7 @@ Early on, we decided not to use any frameworks, not even jQuery. This app is jus
 This is mostly a PWA writtend in `VanillaJS` and transcompiled to support older phones. We scrape status from
 [the Caltrain website](https://www.caltrain.com/alerts?active_tab=service_alerts_tab)
 and will (eventually) maintain a copy in App Engine
-[datastore](https://github.com/GoogleCloudPlatform/ruby-docs-samples/blob/main/appengine/standard-datastore/app.rb).
+[datastore](https://cloud.google.com/datastore/docs/reference/libraries#client-libraries-install-ruby).
 
 ### Backend
 

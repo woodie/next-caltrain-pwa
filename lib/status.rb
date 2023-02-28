@@ -2,6 +2,7 @@ require "time"
 require "json"
 require "net/http"
 require "nokogiri"
+require "google/cloud/datastore"
 
 class Status
   RESP_HEADERS = {"Content-type" => "application/json; charset=utf-8"}
@@ -20,5 +21,21 @@ class Status
 
     delay = result.first["delay"]
     "#{delay} minutes late"
+  end
+
+  def delays
+    query = @datastore.query("Status")
+      .where("created_at", ">", Time.now - 32400) # 9 hours
+      .order("created_at", :desc)
+    result = @datastore.run(query)
+    return {} if result.empty?
+
+    payload = {}
+    delay = result.each do |e|
+      train_id = e["train"]
+      next if train_id.nil? || payload.has_key?(train_id)
+      payload[train_id] = e["delay"]
+    end
+    payload
   end
 end

@@ -26,6 +26,9 @@ handlers:
 - url: /status
   script: auto
 
+- url: /delays
+  script: auto
+
 - url: /(.+)
   static_files: webapp/\1
   upload: webapp/(.+)
