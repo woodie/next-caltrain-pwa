@@ -356,6 +356,10 @@ div:hover { cursor: default; }
   white-space: nowrap;
 }
 
+#delay-span {
+  width: 240px;
+}
+
 #marquee {
   width: 240px;
 }

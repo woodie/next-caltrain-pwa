@@ -1,7 +1,14 @@
+require "cgi"
 require "sinatra"
 require_relative "lib/alerts"
 require_relative "lib/scrape"
 require_relative "lib/status"
+
+set :public_folder, 'webapp'
+
+get "/" do
+  send_file File.join(settings.public_folder, 'index.html')
+end
 
 get "/alerts" do
   return [204, Alerts::OPTS_HEADERS, []] if request.options?
@@ -30,13 +37,12 @@ get "/status" do
 end
 
 get "/delays" do
+  platform = request.env["HTTP_USER_AGENT"].to_s.split.last
+  trip = URI.decode_www_form_component(request.fullpath).split("=").last
+  logger.info "#{platform}: #{trip}"
   @status ||= Status.new
   delays = @status.delays
   return [500, {}, ["Something went wrong."]] if delays.nil?
 
   [200, Status::RESP_HEADERS, [delays.to_json]]
-end
-
-get "/" do
-  [200, {}, ["TBD"]]
 end

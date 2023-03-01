@@ -31,7 +31,7 @@ class Status
     return {} if result.empty?
 
     payload = {}
-    delay = result.each do |e|
+    result.each do |e|
       train_id = e["train"]
       next if train_id.nil? || payload.has_key?(train_id)
       payload[train_id] = e["delay"]
