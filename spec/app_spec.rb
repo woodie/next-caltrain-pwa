@@ -12,15 +12,6 @@ RSpec.describe "App" do
 
   subject { last_response }
 
-  describe "/" do
-    context "with placeholder endpoints" do
-      it "should respond with TDB" do
-        get "/"
-        expect(subject.body).to match("TBD")
-      end
-    end
-  end
-
   describe "/status" do
     let(:results) { nil }
     let(:gcd) { double("GCD", run: results) }

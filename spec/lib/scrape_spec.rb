@@ -43,25 +43,7 @@ RSpec.describe Scrape do
       }
 
       it "should update 4 entries" do
-        expect(subject.update_cache).to be(4)
-      end
-
-      context "With a multiple stations" do
-        let(:payload) { {"data" => [{"created_at" => time, "text" => msg0}]} }
-
-        it "should set the stations" do
-          expect(subject.update_cache).to be(1)
-          expect(entity["station"]).to eq(["PAL", "CAL"])
-        end
-      end
-
-      context "With a similar stations" do
-        let(:payload) { {"data" => [{"created_at" => time, "text" => msg1}]} }
-
-        it "should set correct station" do
-          expect(subject.update_cache).to be(1)
-          expect(entity["station"]).to eq(["SFK"])
-        end
+        expect(subject.update_cache).to be(1)
       end
 
       context "With reported train delay" do
@@ -71,18 +53,6 @@ RSpec.describe Scrape do
           expect(subject.update_cache).to be(1)
           expect(entity["train"]).to eq(310)
           expect(entity["delay"]).to eq(11)
-          expect(entity["station"]).to be_nil
-        end
-      end
-
-      context "With a general message" do
-        let(:payload) { {"data" => [{"created_at" => time, "text" => msg3}]} }
-
-        it "should not set meta data" do
-          expect(subject.update_cache).to be(1)
-          expect(entity["station"]).to be_nil
-          expect(entity["train"]).to be_nil
-          expect(entity["delay"]).to be_nil
         end
       end
     end
