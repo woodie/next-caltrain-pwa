@@ -19,7 +19,7 @@ RSpec.describe Scrape do
       allow(resp).to receive(:body).and_return(html)
       allow(subject).to receive(:extract_data).and_return(payload)
       allow(gcd).to receive_message_chain(:query, :order, :limit)
-      allow(gcd).to receive(:entity).and_yield(entity)
+      allow(gcd).to receive(:entity).and_return(entity)
     end
 
     it "should update nothing" do
@@ -31,7 +31,6 @@ RSpec.describe Scrape do
       let(:msg1) { "For New Year’s Eve, last train will depart San Francisco at 2:00 AM." }
       let(:msg2) { "Train 310 SB is running about 11 minutes late approaching San Jose Diridon." }
       let(:msg3) { "There are no closures scheduled for this weekend. Weekend closures will resume February 25th." }
-
       let(:time) { Time.now.to_s }
       let(:payload) {
         {"data" => [
@@ -41,6 +40,8 @@ RSpec.describe Scrape do
           {"created_at" => time, "text" => msg3}
         ]}
       }
+
+      before { allow(gcd).to receive_message_chain(:query, :where, :limit).and_return(entity) }
 
       it "should update 4 entries" do
         expect(subject.update_cache).to be(1)

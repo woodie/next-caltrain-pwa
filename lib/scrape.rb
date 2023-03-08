@@ -30,12 +30,13 @@ class Scrape
       delay = parse_delay(this_text)
       next if train.nil?
 
-      status = @datastore.entity "Status" do |e|
-        e["train"] = train
-        e["delay"] = delay
-        e["created_at"] = this_time
-        e["stashed_at"] = Time.now
-      end
+      q2 = @datastore.query("Status").where("train", "=", train).limit(1)
+      status = @datastore.run(q2).first
+      status = @datastore.entity("Status") if status.nil?
+      status["train"] = train
+      status["delay"] = delay
+      status["created_at"] = this_time
+      status["stashed_at"] = Time.now
       @datastore.save status
       count += 1
     end
