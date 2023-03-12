@@ -23,9 +23,6 @@ handlers:
 - url: /scrape
   script: auto
 
-#- url: /status
-#  script: auto
-
 - url: /delays
   script: auto
 

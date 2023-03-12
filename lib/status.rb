@@ -1,26 +1,30 @@
 require "time"
 require "json"
-require "net/http"
-require "nokogiri"
 require "google/cloud/datastore"
 
 class Status
-  RESP_HEADERS = {"Content-type" => "application/json; charset=utf-8"}
+  OPTS_HEADERS = {
+    "Access-Control-Allow-Origin" => "*",
+    "Access-Control-Allow-Methods" => "GET",
+    "Access-Control-Allow-Headers" => "Content-Type",
+    "Access-Control-Max-Age" => "3600"
+  }
+
+  CORS_HEADERS = {
+    "Access-Control-Allow-Origin" => "*",
+    "Content-type" => "application/json; charset=utf-8"
+  }
 
   def initialize
     @datastore = Google::Cloud::Datastore.new(project_id: "next-caltrain-pwa")
   end
 
-  def message(train_id)
+  def alerts
     query = @datastore.query("Status")
-      .where("train", "=", train_id.to_i)
-      .where("created_at", ">", Time.now - 32400) # 9 hours
-      .order("created_at", :desc).limit(1)
-    result = @datastore.run(query)
-    return "" if result.empty?
-
-    delay = result.first["delay"]
-    "#{delay} minutes late"
+      .order("created_at", :desc).limit(99)
+    payload = []
+    @datastore.run(query).each { |row| payload << row.properties.to_h }
+    payload
   end
 
   def delays

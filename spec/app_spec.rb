@@ -12,7 +12,7 @@ RSpec.describe "App" do
 
   subject { last_response }
 
-  describe "/status" do
+  describe "/delays" do
     let(:results) { nil }
     let(:gcd) { double("GCD", run: results) }
 
@@ -21,12 +21,12 @@ RSpec.describe "App" do
     context "with no results found" do
       let(:results) { [] }
 
-      before { allow(gcd).to receive_message_chain(:query, :where, :where, :order, :limit) }
+      before { allow(gcd).to receive_message_chain(:query, :where, :order) }
 
-      it "should return 200 with RESP headers" do
-        get "/status"
+      it "should return 200 with CORS headers" do
+        get "/delays"
         expect(subject.status).to eq 200
-        expect(subject.body).to eq({"message" => ""}.to_json)
+        expect(subject.body).to eq({}.to_json)
         expect(subject.content_type).to eq "application/json; charset=utf-8"
       end
     end

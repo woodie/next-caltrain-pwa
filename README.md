@@ -38,12 +38,10 @@ bundle exec rspec -fd
 
 # Run local server
 bundle exec ruby app.rb
-open http://localhost:4567/status
+open http://localhost:4567/alerts
 ```
 
 The [Local development server](https://cloud.google.com/appengine/docs/standard/tools/local-devserver-command?tab=ruby)
-te
-
 is **not currently** supported for the Ruby runtime.  Some App Engine features can only be tested after deploying to the cloud.
 See [Configure Datastore indexes](https://cloud.google.com/appengine/docs/flexible/configuring-datastore-indexes-with-index-yaml?tab=ruby)
 for more information about datastore indexes.
