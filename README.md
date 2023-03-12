@@ -30,7 +30,7 @@ and will (eventually) maintain a copy in App Engine
 
 The backend published a JSON that will look something like this.
 ```json
-{"117": 10, "120": 10, "307": 10, "408": 10, "513": 12, "513": 18, "705": 10, "707": 10,}
+{"117": 10, "120": 10, "307": 10, "408": 10, "513": 12, "513": 18, "705": 10, "707": 10}
 ```
 
 After making Ruby changes, update the specs and test the backend locally.
