@@ -83,31 +83,8 @@ so we have two sets of options from the same softkey.
 
 This app is avialable from [the KaiStore](https://www.kaiostech.com/store/apps/?bundle_id=com.netpress.nextcaltrain).
 
-<kbd><img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-listing.png" /></kbd>
-&nbsp;
-<kbd><img src="https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/store-details.png" /></kbd>
-
-### Website in KaiOS browser
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.1.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.2.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/1.3.png)
-
-### Hosted App from KaiStore
+![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
 
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
 ![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
-
-### Keypad Commands
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help0.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help1.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help2.png)
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help3.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help4.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/help5.png)
-
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
-

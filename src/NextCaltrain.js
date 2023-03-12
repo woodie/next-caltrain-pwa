@@ -85,7 +85,7 @@ class NextCaltrain {
     NextCaltrain.setTheTime();
     NextCaltrain.formatHints();
     // get the deplay message once
-    fetch(`/delays?trip=${encodeURI(prefs.tripLabels().join(' '))}`)
+    fetch('/delays')
       .then(response => response.json())
       .then(data => delays = data)
       .catch(error => console.log(error));
