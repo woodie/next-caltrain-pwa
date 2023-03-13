@@ -4,8 +4,9 @@
   "description": "Caltrain operates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --minified --out-file webapp/script.js",
+    "lint": "eslint --fix src; eslint --fix test",
+    "test": "mocha --require @babel/register",
+    "build": "babel --plugins remove-import-export src --minified --out-file webapp/script.js",
     "deploy": "gcloud app deploy app.yaml --quiet --project=next-caltrain-pwa"
   },
   "repository": {
@@ -25,6 +26,10 @@
   "devDependencies": {
     "@babel/cli": "^7.17.3",
     "@babel/core": "^7.20.5",
-    "@babel/preset-env": "^7.16.11"
+    "@babel/preset-env": "^7.16.11",
+    "@babel/register": "^7.21.0",
+    "babel-plugin-remove-import-export": "^1.1.1",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
   }
 }

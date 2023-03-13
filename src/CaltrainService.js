@@ -75,7 +75,7 @@ class CaltrainService {
     let direction = CaltrainService.direction(departStop, arriveStop);
     let departTimes = this.times(departStop, direction, schedule);
     let arriveTimes = this.times(arriveStop, direction, schedule);
-  //let skip = (schedule === 'Sunday') ? caltrainServiceData.saturdayTripIds : [];
+    //let skip = (schedule === 'Sunday') ? caltrainServiceData.saturdayTripIds : [];
     let skip = [];
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }

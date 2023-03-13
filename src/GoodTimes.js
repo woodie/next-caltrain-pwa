@@ -1,5 +1,5 @@
 /* exported GoodTimes */
-class GoodTimes{
+export class GoodTimes {
 
   constructor() {
     //let now = new Date('2020-10-15T08:10:10'); // force weekday
@@ -61,5 +61,4 @@ class GoodTimes{
       return `in ${minutes} min ${60 - this.seconds} sec`;
     }
   }
-
 }
