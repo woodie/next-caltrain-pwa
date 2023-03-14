@@ -1,5 +1,7 @@
-/* exported CaltrainTrip */
-class CaltrainTrip {
+import { caltrainServiceData } from './@caltrainServiceData.js';
+import { CaltrainService } from './CaltrainService.js';
+
+export class CaltrainTrip {
 
   /**
   * A train with times for each station stop.
@@ -53,5 +55,4 @@ class CaltrainTrip {
   directionString() {
     return this.direction[0] + 'B';
   }
-
 }

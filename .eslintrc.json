@@ -21,6 +21,14 @@
             "error",
             "unix"
         ],
+        "no-sparse-arrays": [
+            "off",
+            "always"
+        ],
+        "no-undef": [
+            "off",
+            "always"
+        ],
         "quotes": [
             "error",
             "single"

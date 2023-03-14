@@ -170,6 +170,7 @@ def write_schedule_data(times, stops):
         f.write('},\n')
     f.write("\n  scheduleDate: %d\n" % creation)
     f.write('\n};\n')
+    f.write('export { caltrainServiceData };\n')
 
 if __name__ == "__main__":
     main()

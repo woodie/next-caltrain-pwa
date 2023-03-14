@@ -2,7 +2,7 @@ import { GoodTimes } from '../src/GoodTimes.js';
 const expect = require('chai').expect;
 
 describe('GoodTimes', () => {
-  const gt = new GoodTimes();
+  const gt = new GoodTimes('2020-10-15T12:00:00');
 
   describe('.partTime()', () => {
     it('should return an array', () => {
@@ -19,6 +19,18 @@ describe('GoodTimes', () => {
   describe('.dateString()', () => {
     it('should return a string', () => {
       expect(GoodTimes.dateString(0)).to.equal('Dec 31 1969');
+    });
+  });
+
+  describe('#partTime()', () => {
+    it('should return an array', () => {
+      expect(gt.partTime()).deep.to.equal(['12:00', 'pm']);
+    });
+  });
+
+  describe('#fullTime()', () => {
+    it('should return a string', () => {
+      expect(gt.fullTime()).to.equal('12:00pm');
     });
   });
 

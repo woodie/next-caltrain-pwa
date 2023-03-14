@@ -1,10 +1,7 @@
-/* exported GoodTimes */
 export class GoodTimes {
 
-  constructor() {
-    //let now = new Date('2020-10-15T08:10:10'); // force weekday
-    //let now = new Date('2020-02-17T08:10:10'); // force modified
-    let now = new Date(); // run day goes until 2am
+  constructor(str = null) {
+    let now = !str ? new Date() : new Date(str);
     let run = new Date(now.getTime() - (2 * 60 * 60 * 1000));
     this.date = run.toJSON().slice(0, 10);
     this.minutes = (run.getHours() + 2) * 60 + run.getMinutes();
