@@ -34,5 +34,11 @@
     "jsdom-global": "3.0.2",
     "mocha": "^10.2.0",
     "mock-local-storage": "^1.1.23"
+  },
+  "dependencies": {
+    "install": "^0.13.0",
+    "mock-mocha": "^1.0.0",
+    "npm": "^9.6.1",
+    "sinon": "^15.0.2"
   }
 }
