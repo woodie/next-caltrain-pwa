@@ -50,8 +50,7 @@ let hints = [
   ['Bookmark app', ['r'],
     'Press the [RIGHT] softkey<br/>twice to "Pin to Apps Menu".']];
 
-/* exported NextCaltrain */
-class NextCaltrain {
+export class NextCaltrain {
 
   static startApp() {
     if (document.location.search === '?app') app = true;
@@ -60,7 +59,7 @@ class NextCaltrain {
     else if (document.location.search === '?kaiWeb2' ||
       navigator.userAgent.toLowerCase().indexOf('kaios') > -1) kaiWeb2 = true;
     kaiWeb = (kaiWeb1 || kaiWeb2);
-    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) android = true;
+    if (navigator.userAgent.toLowerCase().indexOf('android') > -1) android = true;
     if (!kaiWeb) {
       document.getElementById('softkey-menu').style['display'] = 'flex';
       document.getElementById('about-filler').style['display'] = 'flex';

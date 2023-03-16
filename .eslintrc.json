@@ -9,6 +9,7 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
+        "sourceType": "module",
         "ecmaVersion": 2018
     },
     "rules": {
@@ -19,6 +20,14 @@
         "linebreak-style": [
             "error",
             "unix"
+        ],
+        "no-sparse-arrays": [
+            "off",
+            "always"
+        ],
+        "no-undef": [
+            "off",
+            "always"
         ],
         "quotes": [
             "error",

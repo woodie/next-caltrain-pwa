@@ -1,5 +1,4 @@
-/* exported LocalStorage */
-class LocalStorage {
+export class LocalStorage {
 
   constructor(stations) {
     this.stations = stations;
