@@ -2,11 +2,7 @@ import { GoodTimes } from '../src/GoodTimes.js';
 const expect = require('chai').expect;
 
 describe('GoodTimes', () => {
-  let gt;
-
-  beforeEach(() => {
-    gt = new GoodTimes('2020-10-15T12:00:00');
-  });
+  let gt = new GoodTimes('2020-10-15T12:00:00');
 
   describe('.partTime()', () => {
     it('should return an array', () => {
