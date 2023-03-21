@@ -4,7 +4,8 @@
   "description": "Caltrain operates a commuter rail service along the San Francisco Peninsula. Next Caltrain is a train schedule for KaiOS phones.",
   "main": "script.js",
   "scripts": {
-    "lint": "eslint --fix src; eslint --fix test",
+    "lint": "eslint --fix src test",
+    "style": "npx prettier --write src test;",
     "test": "mocha",
     "build": "babel --plugins remove-import-export src --minified --out-file webapp/script.js",
     "deploy": "gcloud app deploy app.yaml --quiet --project=next-caltrain-pwa"
@@ -33,7 +34,8 @@
     "jsdom": "21.1.1",
     "jsdom-global": "3.0.2",
     "mocha": "^10.2.0",
-    "mock-local-storage": "^1.1.23"
+    "mock-local-storage": "^1.1.23",
+    "prettier": "^2.8.5"
   },
   "dependencies": {
     "install": "^0.13.0",
