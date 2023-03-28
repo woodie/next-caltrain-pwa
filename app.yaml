@@ -11,6 +11,12 @@ handlers:
   static_files: webapp/index.html
   upload: webapp/index.html
 
+- url: /(.+\.(webmanifest))
+  static_files: webapp/manifest.webmanifest
+  upload: webapp/manifest.webmanifest
+  mime_type: application/manifest+json
+  expiration: "0s"
+
 - url: /(.+\.(webapp))
   static_files: webapp/manifest.webapp
   upload: webapp/manifest.webapp

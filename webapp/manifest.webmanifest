@@ -1,0 +1,38 @@
+{
+  "lang": "en",
+  "name": "Caltrain",
+  "short_name": "Caltrain",
+  "description": "Train schedule for Caltrain which operates along the San Francisco Peninsula.",
+  "icons": [{
+    "src": "icons/favicon-32x32.png",
+    "sizes": "32x32",
+    "type": "image/png"
+  }, {
+    "src": "icons/ic_NextCaltrain_56.png",
+    "sizes": "56x56",
+    "type": "image/png"
+  }, {
+    "src": "icons/favicon-64x64.png",
+    "sizes": "64x64",
+    "type": "image/png"
+  }, {
+    "src": "icons/ic_NextCaltrain_112.png",
+    "sizes": "112x112",
+    "type": "image/png"
+  }, {
+    "src": "icons/favicon-128x128.png",
+    "sizes": "128x128",
+    "type": "image/png"
+  }],
+  "developer": {
+    "name": "John Woodell",
+    "email": "woodie@netpress.com",
+    "url": "http://www.netpress.com"
+  },
+  "id": "caltrain",
+  "start_url": "/index.html?app",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "theme_color": "aliceblue",
+  "background_color": "red"
+}
