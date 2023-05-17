@@ -34,7 +34,6 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/register": "^7.21.0",
     "babel-plugin-remove-import-export": "^1.1.1",
-    "chai": "^4.3.7",
     "install": "^0.13.0",
     "jest-environment-jsdom": "^29.5.0",
     "jsdom": "21.1.1",
