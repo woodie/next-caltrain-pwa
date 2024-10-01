@@ -49,6 +49,8 @@ def parse_station_data():
       stop_name = stop_name.replace("Avenue", "Ave")
       if stop_name == 'Atherton':
         continue # should be dropped from GTFS
+      stop_name = stop_name.replace(" Northbound", "")
+      stop_name = stop_name.replace(" Southbound", "")
       _stops['labels'][stop_id] = stop_name
       if (stop_id % 2 == 1):
         _stops['north'].insert(0, stop_id)
