@@ -28,9 +28,11 @@ def _other_schedule(td, schedule):
   if not td.has_attr('data-route-id'):
     return True
   if schedule == 'weekday':
-    return True if td['data-route-id'] == 'L2' else False
+    # return True if td['data-service-type'] != 'weekend' else False
+    return True if td['data-route-id'] == 'Local Weekend' else False
   elif schedule == 'weekend':
-    return True if td['data-route-id'] != 'L2' else False
+    # return True if td['data-service-type'] == 'weekend' else False
+    return True if td['data-route-id'] != 'Local Weekend' else False
 
 def parse_schedule_data(schedule, direction):
   # with open('data/%s.htm' % schedule) as f:
