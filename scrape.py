@@ -73,6 +73,8 @@ def _parse_stop(text):
   text = text.replace('Departs ', '').replace('Arrives ', '')
   text = text.replace("South San", "So San")
   text = text.replace("Avenue", "Ave")
+  text = text.replace(" Caltrain Station", "")
+  text = text.replace(" Station", "")
   return text.replace(u'\xa0', u' ')
 
 def _parse_time(text):
