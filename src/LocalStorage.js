@@ -2,21 +2,21 @@ export class LocalStorage {
   constructor(stations) {
     this.stations = stations;
     this.flipped = new Date().getHours() >= 12;
-    let savedAM = parseInt(localStorage.getItem("stopAM"));
-    let savedPM = parseInt(localStorage.getItem("stopPM"));
+    let savedAM = parseInt(localStorage.getItem('stopAM'));
+    let savedPM = parseInt(localStorage.getItem('stopPM'));
     if (Number.isNaN(savedAM) || savedAM < 0 || savedAM >= stations.length) {
-      localStorage.setItem("stopAM", 15);
+      localStorage.setItem('stopAM', 15);
     }
     if (Number.isNaN(savedAM) || savedPM < 0 || savedPM >= stations.length) {
-      localStorage.setItem("stopPM", 0);
+      localStorage.setItem('stopPM', 0);
     }
-    this.stopAM = parseInt(localStorage.getItem("stopAM"));
-    this.stopPM = parseInt(localStorage.getItem("stopPM"));
+    this.stopAM = parseInt(localStorage.getItem('stopAM'));
+    this.stopPM = parseInt(localStorage.getItem('stopPM'));
   }
 
   saveStops() {
-    localStorage.setItem("stopAM", this.stopAM);
-    localStorage.setItem("stopPM", this.stopPM);
+    localStorage.setItem('stopAM', this.stopAM);
+    localStorage.setItem('stopPM', this.stopPM);
   }
 
   flipStations() {

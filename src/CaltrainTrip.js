@@ -1,5 +1,5 @@
-import { caltrainServiceData } from "./@caltrainServiceData.js";
-import { CaltrainService } from "./CaltrainService.js";
+import { caltrainServiceData } from './@caltrainServiceData.js';
+import { CaltrainService } from './CaltrainService.js';
 
 export class CaltrainTrip {
   /**
@@ -13,7 +13,7 @@ export class CaltrainTrip {
     this.schedule = schedule;
     this.stops = [];
     this.times = [];
-    this.direction = trip % 2 === 0 ? "South" : "North";
+    this.direction = trip % 2 === 0 ? 'South' : 'North';
     this.setService();
   }
 
@@ -27,7 +27,7 @@ export class CaltrainTrip {
       this.schedule
     );
     let strs =
-      this.direction === "North"
+      this.direction === 'North'
         ? caltrainServiceData.northStops
         : caltrainServiceData.southStops;
     this.times = [];
@@ -42,18 +42,18 @@ export class CaltrainTrip {
 
   static type(trip) {
     if (trip > 900) {
-      return "Unknown";
+      return 'Unknown';
     } else if (trip > 700) {
       // New Weekday
-      return "Baby Bullet";
+      return 'Baby Bullet';
     } else if (trip > 300) {
       // Weekday
-      return "Limited";
+      return 'Limited';
     } else if (trip > 100) {
       // Weekday
-      return "Local";
+      return 'Local';
     } else {
-      return "Unknown";
+      return 'Unknown';
     }
   }
 
@@ -64,6 +64,6 @@ export class CaltrainTrip {
   }
 
   directionString() {
-    return this.direction[0] + "B";
+    return this.direction[0] + 'B';
   }
 }
