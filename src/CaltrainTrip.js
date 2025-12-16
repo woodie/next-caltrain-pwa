@@ -43,14 +43,13 @@ export class CaltrainTrip {
   static type(trip) {
     if (trip > 900) {
       return 'Unknown';
-    } else if (trip > 700) {
-      // New Weekday
-      return 'Baby Bullet';
-    } else if (trip > 300) {
-      // Weekday
+    } else if (trip > 800) {
+      return 'South County';
+    } else if (trip > 500) {
+      return 'Express';
+    } else if (trip > 400) {
       return 'Limited';
     } else if (trip > 100) {
-      // Weekday
       return 'Local';
     } else {
       return 'Unknown';
