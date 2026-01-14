@@ -13,6 +13,7 @@ const special = {
   //'2024-12-24': 2, // Christmas Eve
   '2025-11-28': 2, // Day After Thanksgiving
   '2025-12-24': 2, // Christmas Eve
+  '2026-01-19': 2, // Martin Luther King Jr. Day
 };
 
 const scheduleOptions = [
