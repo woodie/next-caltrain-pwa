@@ -2,16 +2,16 @@
 // 0 = Weekday, 1 = Weekend, 2 = Modified
 
 const special = {
-//'2023-01-01': 1, // New Year's Day
-//'2023-01-02': 1, // New Year's Day (Observed)
-//'2023-01-16': 2, // Martin Luther King Jr. Day
-//'2023-02-20': 2, // Presidents' Day
-//'2023-05-29': 1, // Memorial Day
-//'2023-11-23': 1, // Thanksgiving Day
-//'2023-11-24': 2, // Black Friday
-//'2023-12-24': 2, // Christmas Eve
-//'2024-11-29': 2, // Black Friday
-//'2024-12-24': 2, // Christmas Eve
+  '2023-01-01': 1, // New Year's Day
+  '2023-01-02': 1, // New Year's Day (Observed)
+  '2023-01-16': 2, // Martin Luther King Jr. Day
+  '2023-02-20': 2, // Presidents' Day
+  '2023-05-29': 1, // Memorial Day
+  '2023-11-23': 1, // Thanksgiving Day
+  '2023-11-24': 2, // Black Friday
+  '2023-12-24': 2, // Christmas Eve
+  '2024-11-29': 2, // Black Friday
+  '2024-12-24': 2, // Christmas Eve
   '2025-11-27': 1, // Thanksgiving Day
   '2025-11-28': 2, // Black Friday
   '2025-12-24': 2, // Christmas Eve
