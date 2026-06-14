@@ -251,8 +251,17 @@ export class NextCaltrain {
     goodTime = new GoodTimes();
     clearTimeout(countdown);
     NextCaltrain.populateStops(prefs.tripLabels());
-    // Load the schedule
+
+    // Build today's routes
     let routes = service.routes(prefs.origin, prefs.destin, schedule.label());
+
+    // Append tomorrow's routes shifted by +1440 minutes, tagged isFuture
+    const tomorrowLabel = schedule.tomorrowLabel(goodTime);
+    const tomorrowRoutes = service
+      .routes(prefs.origin, prefs.destin, tomorrowLabel)
+      .map(([train, depart, arrive]) => [train, depart + 1440, arrive + 1440, true]);
+    routes = routes.concat(tomorrowRoutes);
+
     let minutes = 0;
     if (offset === null) {
       minutes = goodTime.minutes;
@@ -285,9 +294,14 @@ export class NextCaltrain {
         tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
         continue; // clear previous values.
       }
-      minutes = route[1];
-      let originTime = GoodTimes.partTime(minutes);
-      let destinTime = GoodTimes.partTime(route[2]);
+      // A route tagged isFuture is a tomorrow trip (depart time shifted +1440)
+      const isFuture = route[3] === true;
+      // For display, use the unshifted time (subtract 1440 for tomorrow trips)
+      const displayDepart = isFuture ? route[1] - 1440 : route[1];
+      const displayArrive = isFuture ? route[2] - 1440 : route[2];
+      minutes = route[1]; // keep shifted time for nextIndex comparisons
+      let originTime = GoodTimes.partTime(displayDepart);
+      let destinTime = GoodTimes.partTime(displayArrive);
       let card = `<div class="train-number">#${route[0]}</div>
           <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
           <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
@@ -299,7 +313,13 @@ export class NextCaltrain {
         document.getElementById('trip').innerHTML = tripTime;
         trainId = route[0];
         let message, textClass, tripClass, wrapClass;
-        if (schedule.swapped()) {
+        if (isFuture) {
+          // Tomorrow's trip: show schedule label, inactive/departed styling, no countdown
+          message = tomorrowLabel + ' Schedule';
+          textClass = 'message-departed';
+          tripClass = 'message-departed';
+          wrapClass = 'selection-departed';
+        } else if (schedule.swapped()) {
           message = schedule.label() + ' Schedule';
           textClass = 'message-departed';
           tripClass = goodTime.inThePast(minutes) ? 'message-departed' : '';
@@ -341,7 +361,7 @@ export class NextCaltrain {
         delaySpan.innerHTML =
           trainId in delays ? `${delays[trainId]} minutes late` : '';
       } else {
-        if (goodTime.inThePast(minutes)) {
+        if (isFuture || goodTime.inThePast(minutes)) {
           tripCardElement.className = 'trip-card message-departed';
         } else {
           tripCardElement.className = 'trip-card';

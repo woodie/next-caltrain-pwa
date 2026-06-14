@@ -34,10 +34,20 @@ export class CaltrainSchedule {
   swapped() {
     return this.forToday !== this.selected;
   }
+  // Returns the schedule label for tomorrow's date/dotw
+  tomorrowLabel(goodTime) {
+    return scheduleOptions[
+      CaltrainSchedule.optionIndexFor(goodTime.tomorrowDate, goodTime.tomorrowDotw)
+    ];
+  }
   static optionIndex(goodTime) {
-    if (goodTime.date in special) {
-      return special[goodTime.date];
-    } else if (goodTime.dotw === 6 || goodTime.dotw === 0) {
+    return CaltrainSchedule.optionIndexFor(goodTime.date, goodTime.dotw);
+  }
+  // Factored out so tomorrow's schedule can be computed without a full GoodTimes object
+  static optionIndexFor(date, dotw) {
+    if (date in special) {
+      return special[date];
+    } else if (dotw === 6 || dotw === 0) {
       return 1; // WEEKEND
     } else {
       return 0; // WEEKDAY
