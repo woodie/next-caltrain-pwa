@@ -6,6 +6,12 @@ export class GoodTimes {
     this.minutes = (run.getHours() + 2) * 60 + run.getMinutes();
     this.seconds = run.getSeconds();
     this.dotw = run.getDay();
+
+    // Tomorrow's date and day-of-week (used for appending next-day trips)
+    let tomorrow = new Date(run);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.tomorrowDate = tomorrow.toJSON().slice(0, 10);
+    this.tomorrowDotw = (this.dotw + 1) % 7;
   }
 
   static partTime(minutes) {
