@@ -27,7 +27,7 @@ export class CaltrainService {
   * Station name maps to index of column with stop times
   * @param train is train number.
   * @param direction is North or South.
-  * @param schedule is Weekday, Weekend (Saturday, Sunday or Modified)
+  * @param schedule is Weekday, Weekend (Saturday, Sunday or Holiday)
 /
   * @return array of Station stop times.
   */
@@ -70,14 +70,13 @@ export class CaltrainService {
    * @param trains the train IDs
    * @param departStop the departing stop name string
    * @param arriveStop the arriving stop name string
-   * @param schedule is Weekday, Weekend (Saturday, Sunday or Modified)
+   * @param schedule is Weekday, Weekend (Saturday, Sunday or Holiday)
    * @return a two dementional array or ints
    */
   routes(departStop, arriveStop, schedule) {
     const direction = CaltrainService.direction(departStop, arriveStop);
     const departTimes = this.times(departStop, direction, schedule);
     const arriveTimes = this.times(arriveStop, direction, schedule);
-    // let skip = (schedule === 'Sunday') ? caltrainServiceData.saturdayTripIds : [];
     const skip = [];
     return CaltrainService.merge(departTimes, arriveTimes, skip);
   }
@@ -121,7 +120,7 @@ export class CaltrainService {
    * For direction and day-of-the-week: train times
    * @param stop the Stop name
    * @param direction is North or South
-   * @param schedule is Weekday, Saturday, Sunday or Modified
+   * @param schedule is Weekday, Saturday, Sunday or Holiday
    * @return Map of stopID times
    */
   times(stop, direction, schedule) {
@@ -137,14 +136,14 @@ export class CaltrainService {
   /**
    * Select a schedule for direction and day-of-the-week.
    * @param direction is North or South
-   * @param schedule is Weekday, Saturday, Sunday or Modified
+   * @param schedule is Weekday, Saturday, Sunday or Holiday
    * @return a two dementional array or ints
    */
   static select(direction, schedule) {
-    if (schedule === 'Modified') {
+    if (schedule === 'Holiday') {
       return direction === 'North'
-        ? caltrainServiceData.northModified
-        : caltrainServiceData.southModified;
+        ? caltrainServiceData.northHoliday
+        : caltrainServiceData.southHoliday;
     } else if (schedule === 'Weekday') {
       return direction === 'North'
         ? caltrainServiceData.northWeekday

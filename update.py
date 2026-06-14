@@ -66,9 +66,9 @@ def parse_station_data():
 def parse_web_schedule_data(stops):
     _times = {'weekday': {'north': OrderedDict(), 'south': OrderedDict()},
               'weekend': {'north': OrderedDict(), 'south': OrderedDict()},
-              'modified': {'north': OrderedDict(), 'south': OrderedDict()}}
+              'holiday': {'north': OrderedDict(), 'south': OrderedDict()}}
     for direction in ['north', 'south']:
-        for schedule in ['weekday', 'weekend', 'modified']:
+        for schedule in ['weekday', 'weekend', 'holiday']:
             filename = 'data/%s_%s.csv' % (schedule, direction)
             with open(filename, 'r', encoding=None) as modFile:
                 labels = []
@@ -101,10 +101,10 @@ def parse_web_schedule_data(stops):
 def parse_gtfs_schedule_data(stops):
     _times = {'weekday': {'north': OrderedDict(), 'south': OrderedDict()},
               'weekend': {'north': OrderedDict(), 'south': OrderedDict()},
-              'modified': {'north': OrderedDict(), 'south': OrderedDict()}}
+              'holiday': {'north': OrderedDict(), 'south': OrderedDict()}}
     for direction in ['north', 'south']:
-        filename = 'data/modified_%s.csv' % direction
-        schedule = 'modified'
+        filename = 'data/holiday_%s.csv' % direction
+        schedule = 'holiday'
         try:
             with open(filename, 'r') as modFile:
                 labels = []
@@ -178,7 +178,7 @@ def write_schedule_data(times, stops):
                 labels.append(stops['labels'][stop_id])
             f.write("','".join(labels))
             f.write("'],\n")
-            for schedule in ['weekday', 'weekend', 'modified']:
+            for schedule in ['weekday', 'weekend', 'holiday']:
                 comma = ''
                 f.write("\n  %s%s: {" % (direction, schedule.capitalize()))
                 for trip_id in times[schedule][direction]:

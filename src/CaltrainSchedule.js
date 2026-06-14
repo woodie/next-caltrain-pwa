@@ -1,8 +1,7 @@
 // https://www.caltrain.com/schedules/holiday-service
-
 const special = {
-  //'2023-01-01': 1, // New Year’s Day
-  //'2023-01-02': 1, // New Year’s Day (Observed)
+  //'2023-01-01': 1, // New Year's Day
+  //'2023-01-02': 1, // New Year's Day (Observed)
   //'2023-01-16': 2, // Martin Luther King Jr. Day
   //'2023-02-20': 2, // Presidents Day
   //'2023-05-29": 1, // Memorial Day
@@ -15,32 +14,26 @@ const special = {
   '2025-12-24': 2, // Christmas Eve
   '2026-01-19': 2, // Martin Luther King Jr. Day
 };
-
 const scheduleOptions = [
   'Weekday',  // 0
   'Weekend',  // 1
-  'Modified', // 2
+  'Holiday',  // 2
 ];
-
 export class CaltrainSchedule {
   constructor(goodTime) {
     this.forToday = CaltrainSchedule.optionIndex(goodTime);
     this.selected = this.forToday;
   }
-
   label() {
     return scheduleOptions[this.selected];
   }
-
   next() {
     this.selected =
       this.selected >= scheduleOptions.length - 1 ? 0 : this.selected + 1;
   }
-
   swapped() {
     return this.forToday !== this.selected;
   }
-
   static optionIndex(goodTime) {
     if (goodTime.date in special) {
       return special[goodTime.date];
