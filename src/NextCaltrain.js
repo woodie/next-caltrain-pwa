@@ -8,6 +8,8 @@ let kaiWeb = false;
 let schedule = null;
 let countdown = null;
 let trainId = null;
+let currentRoute = null;
+let currentRouteLabel = null;
 let offset = null;
 let goodTime = null;
 let skip = false;
@@ -219,32 +221,70 @@ export class NextCaltrain {
     document.getElementById('softkey-right').innerHTML = right;
   }
 
-  static loadTrip(train) {
+  /**
+   * Build the stop list for a trip detail view.
+   * For transfer routes, renders both legs sequentially, skipping the
+   * duplicate transfer station at the start of the second leg.
+   * route: [train, depart, arrive] or [train, depart, arrive, transferTrain, transferDepart]
+   */
+  static loadTrip(route, label) {
     goodTime = new GoodTimes();
-    let trip = new CaltrainTrip(train, schedule.label());
-    let lines = [];
-    for (let i = 0; i < trip.times.length; i++) {
-      let stop = trip.times[i];
-      let spacer = i === 0 ? '' : '|';
-      let fullTime = GoodTimes.fullTime(stop[1]);
-      let filler = fullTime.length > 6 ? '' : '0';
-      let style = goodTime.inThePast(stop[1])
-        ? 'message-departed'
-        : 'message-arriving';
-      let target =
-        prefs.origin === stop[0] || prefs.destin === stop[0] ? 'target' : '';
-      let bullet = android ? '&#x2022;' : '&#9679;';
-      let dot_is = android ? 'android' : 'station';
-      lines.push(`<div class="station-stop">
+    const isTransfer = route.length >= 5;
+    const legs = isTransfer
+      ? [
+          new CaltrainTrip(route[0], label),
+          new CaltrainTrip(route[3], label),
+        ]
+      : [new CaltrainTrip(route[0], label)];
+
+    // Title: use second leg if its depart is already in the past (mirrors iOS currentLeg)
+    const titleLeg =
+      isTransfer && goodTime.inThePast(route[4]) ? legs[1] : legs[0];
+    const titleTrain = isTransfer && goodTime.inThePast(route[4]) ? route[3] : route[0];
+
+    const TRANSFER_STATION = 'San Jose Diridon';
+    const lines = [];
+    const bullet = android ? '&#x2022;' : '&#9679;';
+    const dot_is = android ? 'android' : 'station';
+
+    legs.forEach((leg, legIndex) => {
+      const isSecondLeg = legIndex > 0;
+      for (let i = 0; i < leg.times.length; i++) {
+        const stop = leg.times[i];
+        const stationName = stop[0];
+        const time = stop[1];
+
+        // Skip the transfer station at the top of the second leg (already shown as last of leg 1)
+        if (isSecondLeg && stationName === TRANSFER_STATION) continue;
+
+        const spacer = lines.length === 0 ? '' : '|';
+        const fullTime = GoodTimes.fullTime(time);
+        const filler = fullTime.length > 6 ? '' : '0';
+        const style = goodTime.inThePast(time) ? 'message-departed' : 'message-arriving';
+
+        // Mark origin, destination, and transfer station
+        const isOrigin = stationName === prefs.origin && legIndex === 0 && i === 0;
+        const isDest = stationName === prefs.destin;
+        const isXfer = isTransfer && legIndex === 0 && stationName === TRANSFER_STATION;
+        const target = isOrigin || isDest ? 'target' : isXfer ? 'transfer' : '';
+
+        // Sublabel at transfer station
+        const sublabel = isXfer
+          ? `<div class="transfer-label">transfer to #${route[3]}</div>`
+          : '';
+
+        lines.push(`<div class="station-stop">
           <div class="station-time"><br/><span
                class="hour-filler">${filler}</span>${fullTime}</div>
           <div class="station-spacer ${style}">${spacer}<br/><span
                class="${dot_is}-dot ${target}">${bullet}</span></div>
-          <div class="station-name"><br/>${stop[0]}</div></div>`);
-    }
+          <div class="station-name"><br/>${stationName}${sublabel}</div></div>`);
+      }
+    });
+
     listing.innerHTML = lines.join('\n');
-    document.getElementById('trip-filler').innerHTML = trip.label();
-    document.title = trip.label();
+    document.getElementById('trip-filler').innerHTML = titleLeg.label();
+    document.title = titleLeg.label();
   }
 
   static loadSchedule() {
@@ -255,11 +295,20 @@ export class NextCaltrain {
     // Build today's routes
     let routes = service.routes(prefs.origin, prefs.destin, schedule.label());
 
-    // Append tomorrow's routes shifted by +1440 minutes, tagged isFuture
+    // Append tomorrow's routes shifted by +1440 minutes, tagged isFuture.
+    // Preserve transfer fields: [train, depart, arrive, transferTrain, transferDepart] -> [..., true]
     const tomorrowLabel = schedule.tomorrowLabel(goodTime);
     const tomorrowRoutes = service
       .routes(prefs.origin, prefs.destin, tomorrowLabel)
-      .map(([train, depart, arrive]) => [train, depart + 1440, arrive + 1440, true]);
+      .map((route) => {
+        if (route.length === 5) {
+          // transfer route
+          return [route[0], route[1] + 1440, route[2] + 1440, route[3], route[4] + 1440, true];
+        } else {
+          // direct route
+          return [route[0], route[1] + 1440, route[2] + 1440, true];
+        }
+      });
     routes = routes.concat(tomorrowRoutes);
 
     let minutes = 0;
@@ -282,6 +331,7 @@ export class NextCaltrain {
       if (i > routes.length - 1) {
         if (i === 0) {
           trainId = null;
+          currentRoute = null;
           NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink');
           document.getElementById('circle').className = 'selection-departed';
           document.getElementById('trip0').className = 'selection-none';
@@ -294,24 +344,37 @@ export class NextCaltrain {
         tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
         continue; // clear previous values.
       }
-      // A route tagged isFuture is a tomorrow trip (depart time shifted +1440)
-      const isFuture = route[3] === true;
+
+      // Detect route shape:
+      //   direct:           [train, depart, arrive]
+      //   direct+future:    [train, depart, arrive, true]
+      //   transfer:         [train, depart, arrive, transferTrain, transferDepart]
+      //   transfer+future:  [train, depart, arrive, transferTrain, transferDepart, true]
+      const isTransfer = route.length === 5 || route.length === 6;
+      const isFuture = (route.length === 4 && route[3] === true) ||
+                       (route.length === 6 && route[5] === true);
+
       // For display, use the unshifted time (subtract 1440 for tomorrow trips)
       const displayDepart = isFuture ? route[1] - 1440 : route[1];
       const displayArrive = isFuture ? route[2] - 1440 : route[2];
       minutes = route[1]; // keep shifted time for nextIndex comparisons
       let originTime = GoodTimes.partTime(displayDepart);
       let destinTime = GoodTimes.partTime(displayArrive);
-      let card = `<div class="train-number">#${route[0]}</div>
+
+      // For transfer routes, show both train numbers
+      const trainLabel = isTransfer ? `#${route[0]}+#${route[3]}` : `#${route[0]}`;
+      let card = `<div class="train-number">${trainLabel}</div>
           <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
           <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
       tripCardElement.innerHTML = card;
       if (i === 0) {
-        let tripTime = `<span class="train-hero">#${route[0]}</span>
+        let tripTime = `<span class="train-hero">${trainLabel}</span>
             <span class="time-hero">${originTime[0]}</span>
             <span class="meridiem-hero">${originTime[1]}</span>`;
         document.getElementById('trip').innerHTML = tripTime;
         trainId = route[0];
+        currentRoute = route;
+        currentRouteLabel = isFuture ? tomorrowLabel : schedule.label();
         let message, textClass, tripClass, wrapClass;
         if (isFuture) {
           // Tomorrow's trip: show schedule label, inactive/departed styling, no countdown
@@ -607,7 +670,7 @@ export class NextCaltrain {
       trainId !== null
     ) {
       NextCaltrain.displayScreen('trip');
-      NextCaltrain.loadTrip(trainId);
+      NextCaltrain.loadTrip(currentRoute, currentRouteLabel);
     } else {
       // Handle events for the hero and grid screens.
       if (code === BACK) {
