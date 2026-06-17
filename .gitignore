@@ -4,3 +4,5 @@ CT-GTFS
 downloads
 node_modules
 data/*htm
+__pycache__
+.venv
