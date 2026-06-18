@@ -96,8 +96,16 @@ def schedule_date_ms(data_dir):
     scheduleDate only changes when Caltrain actually republishes the feed,
     not every time someone reruns the generate sequence with no real change.
 
-    holiday_*.csv is hand-maintained, not derived from the GTFS feed, so a
-    hand edit there wouldn't otherwise be reflected - fold in its mtime too.
+    Used to also fold in holiday_*.csv's filesystem mtime, since that file
+    is hand-maintained rather than GTFS-derived. Dropped: git checkout/reset
+    stamps mtimes with "now" regardless of content, so that fold-in made
+    scheduleDate (and therefore schedule.json/@caltrainServiceData.js)
+    change on every fresh checkout too - the same instability this function
+    exists to avoid, just from a different trigger. A holiday-only PDF edit
+    (no GTFS feed change) now won't bump scheduleDate until the next real
+    feed update; that's an acceptable trade for "rerunning/checking out the
+    pipeline with nothing changed never produces a diff."
+
     Falls back fully to latest_mtime_ms() if feed_version.json is missing
     (e.g. an older data/ directory that predates this).
     """
@@ -111,13 +119,7 @@ def schedule_date_ms(data_dir):
             print(f"WARNING: could not read {version_file} ({e})")
     if feed_ms is None:
         return latest_mtime_ms(data_dir)
-
-    holiday_ms = 0
-    for name in ("holiday_north.csv", "holiday_south.csv"):
-        path = data_dir / name
-        if path.exists():
-            holiday_ms = max(holiday_ms, int(path.stat().st_mtime * 1000))
-    return max(feed_ms, holiday_ms)
+    return feed_ms
 
 
 def main():

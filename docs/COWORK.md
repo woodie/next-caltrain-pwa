@@ -152,11 +152,18 @@ own `feed_info.txt` `feed_version` field — Trillium's build timestamp for
 the feed, e.g. `UTC: 10-Jun-2026 22:25` — not from local CSV mtimes. mtimes
 only reflected when someone last ran the generate sequence, so
 `scheduleDate` (and the PWA bundle/JSON themselves) used to change on every
-rerun even when Caltrain hadn't published anything new. `holiday_*.csv` is
-hand-maintained rather than GTFS-derived, so its own mtime is folded in too
-(via `max()`), so a manual holiday fix still bumps the date between feed
-updates. Both `update_json.py` and `update_pwa.py` fall back to the old
-mtime-based calculation if `data/feed_version.json` is missing.
+rerun even when Caltrain hadn't published anything new. Both
+`update_json.py` and `update_pwa.py` fall back to the old mtime-based
+calculation if `data/feed_version.json` is missing.
+
+An earlier version of this also folded in `holiday_*.csv`'s filesystem
+mtime via `max()`, on the theory that a hand-edit to that hand-maintained
+file should bump the date too. Dropped on 2026-06-18: `git checkout`/`reset`
+stamp file mtimes with "now" regardless of content, so that fold-in made
+`scheduleDate` change on every fresh checkout - the exact instability this
+mechanism exists to prevent, just triggered a different way. `scheduleDate`
+is now `feedVersionMs` alone; a holiday-only PDF edit (no GTFS feed change)
+won't bump it until Caltrain's next feed update.
 
 The PWA itself is live at the same App Engine app's root,
 https://next-caltrain-pwa.appspot.com/ — it's an actively published app, not

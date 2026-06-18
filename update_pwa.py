@@ -127,8 +127,16 @@ def schedule_date_ms():
     its twin function in update_json.py / docs/COWORK.md for why), rather
     than local CSV mtimes that change on every run with no real data change.
 
-    holiday_*.csv is hand-maintained, not derived from the GTFS feed, so a
-    hand edit there wouldn't otherwise be reflected - fold in its mtime too.
+    Used to also fold in holiday_*.csv's filesystem mtime, since that file
+    is hand-maintained rather than GTFS-derived. Dropped: git checkout/reset
+    stamps mtimes with "now" regardless of content, so that fold-in made
+    scheduleDate change on every fresh checkout too - the same instability
+    this function exists to avoid, just from a different trigger. A
+    holiday-only PDF edit (no GTFS feed change) now won't bump scheduleDate
+    until the next real feed update; that's an acceptable trade for
+    "rerunning/checking out the pipeline with nothing changed never
+    produces a diff."
+
     Falls back fully to newest_data_mtime() if feed_version.json is missing.
     """
     feed_ms = None
@@ -140,13 +148,7 @@ def schedule_date_ms():
             print('WARNING: could not read data/feed_version.json (%s)' % e)
     if feed_ms is None:
         return newest_data_mtime()
-
-    holiday_ms = 0
-    for direction in ['north', 'south']:
-        path = 'data/holiday_%s.csv' % direction
-        if os.path.exists(path):
-            holiday_ms = max(holiday_ms, int(os.stat(path).st_mtime * 1000))
-    return max(feed_ms, holiday_ms)
+    return feed_ms
 
 
 if __name__ == "__main__":
