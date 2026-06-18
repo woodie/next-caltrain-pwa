@@ -22,6 +22,7 @@ Usage:
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 DIRECTIONS = ["north", "south"]
@@ -32,6 +33,17 @@ SCHEDULES = ["Weekday", "Weekend", "Holiday"]
 # which is far past anything Caltrain would ever run.
 MIN_MINUTES = 0
 MAX_MINUTES = 1800
+
+# scheduleDate (epoch ms, derived from the GTFS feed's feed_version) only
+# ever feeds a "Schedule data: <date>" display line in the apps - it's never
+# used to decide whether to trust/replace cached trip data. Still, a wildly
+# broken value here (wrong units, bad parse, garbage feed_version string) is
+# a strong signal something upstream went wrong, so it should block publish
+# rather than ship a confusing date to every device. A legitimately stale
+# feed_version (Caltrain just hasn't republished in a while) is fine and
+# expected, so the floor is an absolute sanity date, not relative to "now".
+SCHEDULE_DATE_MIN_MS = 1577836800000  # 2020-01-01 00:00:00 UTC
+SCHEDULE_DATE_MAX_FUTURE_DAYS = 30
 
 
 def load(path):
@@ -88,9 +100,33 @@ def check_structure(data, errors, warnings):
                             '%s%s trip %s has an out-of-range time: %r' % (d, s, trip_id, t))
 
 
+def check_schedule_date(data, errors):
+    """Fatal check: scheduleDate must be a plausible epoch-ms timestamp.
+
+    This never grants the date extra trust - it's a circuit breaker only. A
+    future-dated value is not treated as "newer, therefore more authoritative";
+    an implausible value just fails validation like any other structural
+    problem, regardless of how the rest of the data looks.
+    """
+    value = data.get('scheduleDate')
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        errors.append('scheduleDate is not a number: %r' % (value,))
+        return
+    now_ms = time.time() * 1000
+    max_ms = now_ms + SCHEDULE_DATE_MAX_FUTURE_DAYS * 86400 * 1000
+    if value < SCHEDULE_DATE_MIN_MS:
+        errors.append(
+            'scheduleDate %r is before 2020-01-01 - looks like a bad parse, '
+            'not a real feed_version' % (value,))
+    elif value > max_ms:
+        errors.append(
+            'scheduleDate %r is more than %d days in the future - looks '
+            'corrupted, not a real feed_version' % (value, SCHEDULE_DATE_MAX_FUTURE_DAYS))
+
+
 def check_against_head(data, head, warnings):
     if head is None:
-        warnings.append('no committed webapp/schedule.json at HEAD to diff against (first run?)')
+        warnings.append('no committed webapp/data/schedule.json at HEAD to diff against (first run?)')
         return
 
     for d in DIRECTIONS:
@@ -123,7 +159,7 @@ def check_against_head(data, head, warnings):
 
 
 def main():
-    candidate_path = sys.argv[1] if len(sys.argv) > 1 else 'webapp/schedule.json'
+    candidate_path = sys.argv[1] if len(sys.argv) > 1 else 'webapp/data/schedule.json'
     if not Path(candidate_path).exists():
         print('ERROR: %s does not exist (run python3 update_json.py first)' % candidate_path)
         sys.exit(1)
@@ -133,6 +169,8 @@ def main():
 
     errors, warnings = [], []
     check_structure(data, errors, warnings)
+    if not errors:
+        check_schedule_date(data, errors)
     if not errors:
         check_against_head(data, head, warnings)
 

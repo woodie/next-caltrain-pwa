@@ -1,5 +1,12 @@
 runtime: python313
 
+# Handler order matters: App Engine evaluates these top-to-bottom and uses
+# the FIRST regex that matches the request path - this is plain file order,
+# not "most specific wins" or "longest match wins". Every handler below that
+# needs non-default behavior (a custom expiration, a script route) MUST
+# appear above the catch-all `- url: /(.+)` at the very bottom, or the
+# catch-all will claim the request first and the rule below it will never
+# run. Read top-to-bottom as "exceptions, then the default".
 handlers:
 - url: /
   static_files: webapp/index.html
@@ -17,6 +24,20 @@ handlers:
   mime_type: application/x-web-app-manifest+json
   expiration: "0s"
 
+  # this URL has appropriate expiration for our data
+- url: /data/schedule.json
+  static_files: webapp/data/schedule.json
+  upload: webapp/data/schedule.json
+  mime_type: application/json
+  expiration: "10m"
+
+  # this is a legacy URL that we intend to abandon
+- url: /schedule.json
+  static_files: webapp/data/schedule.json
+  upload: webapp/data/schedule.json
+  mime_type: application/json
+  expiration: "10m"
+
 - url: /alerts
   script: auto
 
@@ -26,6 +47,9 @@ handlers:
 - url: /delays
   script: auto
 
+  # Catch-all: must stay LAST. Everything above this line is a deliberate
+  # exception with its own comment explaining why; anything not explicitly
+  # handled above falls through to here with App Engine's default caching.
 - url: /(.+)
   static_files: webapp/\1
   upload: webapp/(.+)
