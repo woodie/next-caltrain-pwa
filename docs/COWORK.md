@@ -1,4 +1,4 @@
-# Working with Claude on next-caltrain-pwa
+# Working on next-caltrain-pwa
 
 This repo started as a Caltrain schedule PWA for KaiOS phones and is also
 becoming the canonical tool for validating and publishing the schedule used
@@ -65,7 +65,7 @@ implementation that lives here is part of the mission shift in ROADMAP.md.
 Caltrain publishes a "Modified Schedule" timetable PDF covering a handful of
 upcoming holiday/modified-schedule days at a time (e.g.
 https://www.caltrain.com/media/36013/, covering Nov 28 2025, Dec 24 2025, and
-Jan 19 2026). Each time Caltrain publishes a new one, have Claude/AI fetch and
+Jan 19 2026). Each time Caltrain publishes a new one, have AI fetch and
 read the PDF and update `holiday_north.csv`/`holiday_south.csv` by hand to
 match it exactly — station list, train numbers, and every departure time.
 This should recur a few times a year, not on every schedule change.
