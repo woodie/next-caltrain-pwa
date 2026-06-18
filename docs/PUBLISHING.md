@@ -37,7 +37,7 @@ python3 update_json.py
 
 | Step | Command | Produces |
 |---|---|---|
-| 1 | `python3 generate.py` | `data/weekday_*.csv`, `data/weekend_*.csv`, plus a GTFS comparison pair `data/_holiday_*.csv` (not shipped — see below) |
+| 1 | `python3 generate.py` | `data/weekday_*.csv`, `data/weekend_*.csv`, a GTFS comparison pair `data/_holiday_*.csv` (not shipped — see below), and `data/feed_version.json` (the feed's own build timestamp, used for `scheduleDate` — see `docs/COWORK.md` "Published endpoint") |
 | 2 | `python3 update_pwa.py` | `src/@caltrainServiceData.js` |
 | 3 | `npm run build` | `webapp/script.js` (bakes in step 2's data) |
 | 4 | `python3 update_json.py` | `webapp/schedule.json` |

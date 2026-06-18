@@ -76,8 +76,10 @@ def read_csv(path):
 def latest_mtime_ms(data_dir):
     """Return the most recent mtime (in epoch ms) among the schedule CSVs.
 
-    Mirrors the PWA's `scheduleDate` field, which uses the GTFS
-    stop_times.txt mtime as a freshness/version marker.
+    Fallback only - see schedule_date_ms() below for the preferred source.
+    This changes on every generate.py run regardless of whether the
+    underlying schedule actually changed, since generate.py rewrites all
+    six CSVs fresh each time.
     """
     latest = 0.0
     for name in CSV_FILES:
@@ -85,6 +87,37 @@ def latest_mtime_ms(data_dir):
         if path.exists():
             latest = max(latest, path.stat().st_mtime)
     return int(latest * 1000)
+
+
+def schedule_date_ms(data_dir):
+    """Preferred source for scheduleDate: Caltrain/Trillium's own GTFS feed
+    build timestamp (data/feed_version.json, written by generate.py from
+    feed_info.txt's feed_version field), rather than local CSV mtimes - so
+    scheduleDate only changes when Caltrain actually republishes the feed,
+    not every time someone reruns the generate sequence with no real change.
+
+    holiday_*.csv is hand-maintained, not derived from the GTFS feed, so a
+    hand edit there wouldn't otherwise be reflected - fold in its mtime too.
+    Falls back fully to latest_mtime_ms() if feed_version.json is missing
+    (e.g. an older data/ directory that predates this).
+    """
+    version_file = data_dir / "feed_version.json"
+    feed_ms = None
+    if version_file.exists():
+        try:
+            with open(version_file) as f:
+                feed_ms = json.load(f)["feedVersionMs"]
+        except Exception as e:
+            print(f"WARNING: could not read {version_file} ({e})")
+    if feed_ms is None:
+        return latest_mtime_ms(data_dir)
+
+    holiday_ms = 0
+    for name in ("holiday_north.csv", "holiday_south.csv"):
+        path = data_dir / name
+        if path.exists():
+            holiday_ms = max(holiday_ms, int(path.stat().st_mtime * 1000))
+    return max(feed_ms, holiday_ms)
 
 
 def main():
@@ -101,7 +134,7 @@ def main():
     _, holiday_north = read_csv(data_dir / "holiday_north.csv")
     _, holiday_south = read_csv(data_dir / "holiday_south.csv")
 
-    schedule_date = latest_mtime_ms(data_dir)
+    schedule_date = schedule_date_ms(data_dir)
 
     schedule = {
         "specialDates": special_dates,

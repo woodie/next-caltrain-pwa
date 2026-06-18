@@ -139,8 +139,21 @@ live — no separate config needed.
 - **GTFS lead time**: how many days before the effective date does Caltrain
   publish the updated GTFS? This determines how much runway there is to catch
   validation failures before go-live. Worth asking Caltrain's developer
-  resources contact directly. The `feed_info.txt` file inside the zip may also
-  carry `feed_start_date` / `feed_end_date` as a clue.
+  resources contact directly. `feed_info.txt`'s `feed_start_date` /
+  `feed_end_date` give the *service* date range, not the publish date — see
+  the resolved item below for what we found instead.
+
+**Resolved, 2026-06-18 — feed build timestamp:** `feed_info.txt`'s
+`feed_version` field carries Trillium's own build timestamp for the feed
+(e.g. `UTC: 10-Jun-2026 22:25`), confirmed against the per-file timestamps
+inside the zip itself (`unzip` preserves these — `stop_times.txt` showed
+`2026-06-10 22:30`, 5 minutes after `feed_version`). `generate.py` now
+parses this into `data/feed_version.json`, and `update_json.py`/
+`update_pwa.py` use it for `scheduleDate` instead of local CSV mtimes — see
+docs/COWORK.md "Published endpoint". This fixed a real annoyance: every
+local generate rerun was bumping `scheduleDate` (producing a spurious
+one-line diff in `webapp/schedule.json` and `src/@caltrainServiceData.js`)
+even when Caltrain hadn't published anything new.
 - **Holiday schedule**: answered — Caltrain does encode holiday service in
   GTFS (`calendar_dates.txt`), but GTFS's holiday output doesn't match
   Caltrain's published Modified Schedule PDF closely enough to trust (four

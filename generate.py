@@ -68,8 +68,10 @@ which is a data-flagging convention, not a heuristic that touches the data.
 
 import csv
 import functools
+import json
 import os
 import subprocess
+from datetime import datetime, timezone
 
 import partridge as ptg
 
@@ -94,6 +96,41 @@ def fetch_gtfs():
     os.chdir('CT-GTFS')
     subprocess.call(['unzip', '-o', '-j', '../downloads/CT-GTFS.zip'])
     os.chdir(basedir)
+
+
+def read_feed_version(path='CT-GTFS/feed_info.txt'):
+    """Parse feed_info.txt's feed_version field into (raw string, epoch ms).
+
+    Trillium stamps every Caltrain GTFS feed with its own build time, e.g.
+    'UTC: 10-Jun-2026 22:25' - this is the real "did the source data change"
+    signal, unlike any local file mtime (which only reflects when someone
+    last ran this script, even if the feed content is identical). Returns
+    (None, None) if the file or field is missing or doesn't parse - this is
+    a third-party format we don't control, so callers fall back to mtimes
+    rather than crash.
+    """
+    try:
+        with open(path, newline='') as f:
+            row = next(csv.DictReader(f))
+        raw = row['feed_version']
+        dt = datetime.strptime(raw, 'UTC: %d-%b-%Y %H:%M').replace(tzinfo=timezone.utc)
+        return raw, int(dt.timestamp() * 1000)
+    except Exception as e:
+        print('WARNING: could not parse feed_version from %s (%s)' % (path, e))
+        return None, None
+
+
+def write_feed_version():
+    """Write data/feed_version.json so update_json.py/update_pwa.py can use
+    Caltrain/Trillium's own feed build timestamp for scheduleDate, instead of
+    local CSV mtimes that change on every run even when nothing did."""
+    raw, ms = read_feed_version()
+    if ms is None:
+        print('WARNING: feed_version unavailable; scheduleDate will fall back to file mtimes')
+        return
+    with open('data/feed_version.json', 'w') as f:
+        json.dump({'feedVersionRaw': raw, 'feedVersionMs': ms}, f, indent=2)
+    print('feed_version: %s -> %d' % (raw, ms))
 
 
 def station_lists(feed):
@@ -242,6 +279,7 @@ def write_csv(path, rows):
 
 def main():
     fetch_gtfs()
+    write_feed_version()
     feed = ptg.load_feed('CT-GTFS')
     stations = station_lists(feed)
     weekday_id, weekend_id, holiday_id = resolve_service_ids(feed)

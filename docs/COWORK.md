@@ -37,7 +37,9 @@ the *how*.
   data pipeline" below)
 - `generate.py` — generates `weekday_*.csv`/`weekend_*.csv` from Caltrain's
   GTFS feed via partridge, plus a GTFS-parsed `_holiday_*.csv` comparison
-  pair (not shipped — see "Holiday schedule" below)
+  pair (not shipped — see "Holiday schedule" below) and
+  `data/feed_version.json` (the feed's own build timestamp, used for
+  `scheduleDate` — see "Published endpoint" below)
 - `update_pwa.py` — parses the CSVs and produces `src/@caltrainServiceData.js`,
   baked into the PWA's own bundle by `npm run build`
 - `update_json.py` — parses the same CSVs and produces `webapp/schedule.json`,
@@ -62,7 +64,9 @@ not wrapped in `package.json` — they're not npm/node concerns):
 **Generate:**
 1. `generate.py` — GTFS feed → `weekday_*.csv`/`weekend_*.csv` in `data/`,
    plus a GTFS-parsed `_holiday_*.csv` comparison pair (`holiday_*.csv`
-   itself stays hand-maintained — see "Holiday schedule" below)
+   itself stays hand-maintained — see "Holiday schedule" below) and
+   `data/feed_version.json` (the feed's build timestamp, used for
+   `scheduleDate`)
 2. `update_pwa.py` — the six canonical CSVs → `src/@caltrainServiceData.js`
 3. `npm run build` — `src/` → `webapp/script.js` (bakes in the data from
    step 2); the one genuinely npm-native step here (babel transpile)
@@ -140,8 +144,19 @@ three schedules.
 ### Published endpoint
 `https://next-caltrain-pwa.appspot.com/schedule.json`
 
-The `scheduleDate` field in the JSON is an epoch-ms timestamp (newest source
-file mtime) used by clients as a freshness/version marker.
+The `scheduleDate` field (also baked into the PWA bundle) is an epoch-ms
+timestamp, shown to users in the apps' About screens as the date the
+schedule data is "as of". As of 2026-06-18 it's sourced from
+`data/feed_version.json`, which `generate.py` writes from the GTFS feed's
+own `feed_info.txt` `feed_version` field — Trillium's build timestamp for
+the feed, e.g. `UTC: 10-Jun-2026 22:25` — not from local CSV mtimes. mtimes
+only reflected when someone last ran the generate sequence, so
+`scheduleDate` (and the PWA bundle/JSON themselves) used to change on every
+rerun even when Caltrain hadn't published anything new. `holiday_*.csv` is
+hand-maintained rather than GTFS-derived, so its own mtime is folded in too
+(via `max()`), so a manual holiday fix still bumps the date between feed
+updates. Both `update_json.py` and `update_pwa.py` fall back to the old
+mtime-based calculation if `data/feed_version.json` is missing.
 
 The PWA itself is live at the same App Engine app's root,
 https://next-caltrain-pwa.appspot.com/ — it's an actively published app, not
