@@ -126,7 +126,7 @@ def check_schedule_date(data, errors):
 
 def check_against_head(data, head, warnings):
     if head is None:
-        warnings.append('no committed webapp/data/schedule.json at HEAD to diff against (first run?)')
+        warnings.append('no committed feed/schedule.json at HEAD to diff against (first run?)')
         return
 
     for d in DIRECTIONS:
@@ -159,7 +159,7 @@ def check_against_head(data, head, warnings):
 
 
 def main():
-    candidate_path = sys.argv[1] if len(sys.argv) > 1 else 'webapp/data/schedule.json'
+    candidate_path = sys.argv[1] if len(sys.argv) > 1 else 'feed/schedule.json'
     if not Path(candidate_path).exists():
         print('ERROR: %s does not exist (run python3 update_json.py first)' % candidate_path)
         sys.exit(1)

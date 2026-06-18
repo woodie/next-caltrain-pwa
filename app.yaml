@@ -25,27 +25,18 @@ handlers:
   expiration: "0s"
 
   # this URL has appropriate expiration for our data
-- url: /data/schedule.json
-  static_files: webapp/data/schedule.json
-  upload: webapp/data/schedule.json
+- url: /feed/schedule.json
+  static_files: feed/schedule.json
+  upload: feed/schedule.json
   mime_type: application/json
   expiration: "10m"
 
   # this is a legacy URL that we intend to abandon
 - url: /schedule.json
-  static_files: webapp/data/schedule.json
-  upload: webapp/data/schedule.json
+  static_files: webapp/schedule.json
+  upload: webapp/schedule.json
   mime_type: application/json
   expiration: "10m"
-
-- url: /alerts
-  script: auto
-
-- url: /scrape
-  script: auto
-
-- url: /delays
-  script: auto
 
   # Catch-all: must stay LAST. Everything above this line is a deliberate
   # exception with its own comment explaining why; anything not explicitly

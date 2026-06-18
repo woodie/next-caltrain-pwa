@@ -7,7 +7,7 @@ Gemfile.lock
 LICENSE
 README.md
 app.rb
-data
+/data
 docs
 downloads
 index.yaml

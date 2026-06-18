@@ -124,7 +124,7 @@ def schedule_date_ms(data_dir):
 
 def main():
     data_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data")
-    out_file = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("webapp/data/schedule.json")
+    out_file = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("feed/schedule.json")
 
     special_dates = load_special_dates(data_dir)
     print(f"Loaded {len(special_dates)} special dates from holiday_service.js")

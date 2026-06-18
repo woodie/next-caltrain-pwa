@@ -40,7 +40,7 @@ python3 update_json.py
 | 1 | `python3 generate.py` | `data/weekday_*.csv`, `data/weekend_*.csv`, a GTFS comparison pair `data/_holiday_*.csv` (not shipped — see below), and `data/feed_version.json` (the feed's own build timestamp, used for `scheduleDate` — see `docs/COWORK.md` "Published endpoint") |
 | 2 | `python3 update_pwa.py` | `src/@caltrainServiceData.js` |
 | 3 | `npm run build` | `webapp/script.js` (bakes in step 2's data) |
-| 4 | `python3 update_json.py` | `webapp/data/schedule.json` |
+| 4 | `python3 update_json.py` | `feed/schedule.json` |
 
 `generate.py`, `update_pwa.py`, and `update_json.py` are plain python
 scripts, run directly — they're not wrapped in `package.json` since they're
@@ -49,9 +49,11 @@ npm task (babel transpile). Both the PWA bundle and `schedule.json` come out
 of this same sequence, from the same source CSVs, so they can't drift out
 of sync with each other.
 
-`schedule.json` is published once but served from two URLs — see
-[Schedule JSON URLs](#schedule-json-urls) below for why, and which one is
-canonical.
+This pipeline only ever touches `feed/schedule.json`. There's a second,
+separate file — `webapp/schedule.json` — that this pipeline does **not**
+write to; it's a deliberately frozen copy for the iOS 1.0 App Store review
+build. See [Schedule JSON URLs](#schedule-json-urls) below for the full
+picture of both files and both URLs.
 
 This does **not** commit, push, or deploy anything — that's manual, see
 Publish below. Validate next (see below) before publishing.
@@ -84,7 +86,7 @@ npm test
 **Structural + diff check:**
 `validate_schedule.py` flags missing keys, empty weekday/weekend tables,
 stop/time-array length mismatches, and out-of-range times; also diffs
-`webapp/data/schedule.json` against the version currently committed at HEAD
+`feed/schedule.json` against the version currently committed at HEAD
 so you can eyeball stop/trip-count changes.
 
 **Test suite:**
@@ -97,8 +99,8 @@ Beyond these two commands, also do these manual checks before publishing:
 
 **Spot-check with `jq`:**
 ```bash
-jq '.northStops | length' webapp/data/schedule.json
-jq '.northWeekday | to_entries | map(.value | length) | unique' webapp/data/schedule.json
+jq '.northStops | length' feed/schedule.json
+jq '.northWeekday | to_entries | map(.value | length) | unique' feed/schedule.json
 ```
 The second command should return a single number — every trip's time array
 should be the same length as the stop list. More than one distinct value
@@ -123,7 +125,7 @@ under Generate above.
 Once the diff looks right:
 
 ```bash
-git add data/ src/@caltrainServiceData.js webapp/script.js webapp/data/schedule.json
+git add data/ src/@caltrainServiceData.js webapp/script.js feed/schedule.json
 git commit -m "Update schedule: <describe what changed>"
 git push
 npm run deploy
@@ -138,30 +140,54 @@ Engine immediately — there's no date gate yet (planned, see
 - **PWA** (`next-caltrain-pwa`): the new `webapp/script.js` (with data
   baked in via `update_pwa.py`) goes live at
   https://next-caltrain-pwa.appspot.com/ immediately on deploy.
-- **iOS / Android**: these apps fetch `schedule.json` at runtime — no app
-  release or store submission needed to ship a schedule update. They pick
-  up the new file on their next fetch (`next-caltrain-swift` fetches once
-  per schedule-day, around the 2am boundary). See
-  [Schedule JSON URLs](#schedule-json-urls) for which URL and why.
+- **iOS / Android (new versions)**: these apps fetch `/feed/schedule.json`
+  at runtime — no app release or store submission needed to ship a
+  schedule update. They pick up the new file on their next fetch
+  (`next-caltrain-swift` fetches once per schedule-day, around the 2am
+  boundary).
+- **iOS 1.0 (in App Store review)**: fetches the legacy `/schedule.json`
+  URL, which serves `webapp/schedule.json` — a separate, frozen file this
+  pipeline never touches. This routine publish flow has no effect on it.
+  See [Schedule JSON URLs](#schedule-json-urls) for the full picture.
 
 ## Schedule JSON URLs
 
-`webapp/data/schedule.json` is the one file on disk; `app.yaml` serves it at
-two URLs:
+There are **two distinct files**, each served at its own URL:
 
-- **`/schedule.json`** — temporary alias. The iOS 1.0 build submitted for
-  App Store review on 2026-06-17 reads this exact URL at runtime (hardcoded
-  fallback in `CaltrainSchedule.swift`, default in `schedule-endpoint.env`),
-  as does the Kotlin app's current default. Apple's reviewers fetch it
-  directly during review, and any already-installed app version keeps
-  depending on it until the user updates. **Do not rename, remove, or
-  repoint this handler** until no shipped app build relies on it anymore
-  and a newer app version has switched to `/data/schedule.json`.
-- **`/data/schedule.json`** — final location going forward, and the only
-  one that matches the file's actual on-disk path. Point all new app
-  versions here. Once every shipped app depends on this URL instead of the
-  legacy one, delete the `/schedule.json` handler in `app.yaml` (and the
-  "temporary alias" bullet above).
+- **`feed/schedule.json`** → **`/feed/schedule.json`** — the live file,
+  regenerated by this pipeline (`update_json.py`, step 4 above). Its
+  `scheduleDate` tracks the current GTFS feed's `feed_version`. Point all
+  new app versions here.
+- **`webapp/schedule.json`** → **`/schedule.json`** (legacy URL) — a
+  hand-frozen copy, not touched by `update_json.py` or any pipeline step.
+  Its `scheduleDate` is hardcoded to Jan 31, 2026 (`1769860800000`, noon
+  UTC — chosen so it renders as Jan 31 in any US timezone, since
+  `GoodTimes.dateString()` formats in local time), matching the
+  schedule-effective date Caltrain publishes at caltrain.com/status. This
+  exists solely for the iOS 1.0 build submitted for App Store review on
+  2026-06-17, which reads this exact URL at runtime (hardcoded fallback in
+  `CaltrainSchedule.swift`, default in `schedule-endpoint.env`). Apple's
+  reviewers fetch it directly during review, and any already-installed 1.0
+  app keeps depending on it until the user updates. **Do not change
+  `webapp/schedule.json`'s content** until no shipped app build relies on
+  it anymore — newer app versions (Swift and Kotlin) have been switched to
+  `/feed/schedule.json` instead, so this only matters for the 1.0 build.
+  Once that's no longer in the wild, delete `webapp/schedule.json` and the
+  `/schedule.json` handler in `app.yaml`.
+
+**Why `feed/` and not `data/`:** `.gcloudignore` excludes the repo-root
+`data/` pipeline directory (CSVs, `feed_version.json`) from deploys. An
+earlier attempt put `schedule.json` at `webapp/data/schedule.json`; that
+directory name matched `.gcloudignore`'s `data` pattern too (unanchored
+gitignore-style patterns match at any depth, not just the repo root), so
+the file silently never made it into the deployed bundle and
+`/data/schedule.json` 404'd in production while the old `/schedule.json`
+kept serving a stale, previously-deployed copy. Fixed by anchoring the
+ignore pattern to `/data` (root only) and moving the live file to `feed/`,
+a name that doesn't collide. Don't reintroduce a directory literally named
+`data` anywhere under the deploy path. (Neither `feed/` nor `webapp/` is
+excluded, so both `feed/schedule.json` and `webapp/schedule.json` deploy
+correctly.)
 
 Both handlers carry `expiration: "10m"` in `app.yaml`. That's a deliberate
 middle ground: leaving `expiration` unset defaults to a much longer and
@@ -179,7 +205,8 @@ wrong-schedule fallback at any value). `validate_schedule.py` still rejects
 implausible values (before 2020, or more than 30 days in the future) as a
 circuit breaker — but per design, a future-dated value is never treated as
 "newer, therefore more trustworthy"; see `check_schedule_date()` in that
-script.
+script. This applies to both files — run it against `webapp/schedule.json`
+too if you ever touch that file.
 
 ## Rollback
 
@@ -190,9 +217,10 @@ git revert <bad-commit-sha>
 npm run deploy
 ```
 
-This restores the previous `webapp/data/schedule.json` (and PWA bundle) and
-redeploys. Since clients fetch `schedule.json` at runtime rather than
-bundling it, a rollback takes effect on their next fetch with no app
+This restores the previous `feed/schedule.json` (and PWA bundle) and
+redeploys. It does not touch `webapp/schedule.json`, which isn't part of
+this pipeline. Since clients fetch their schedule JSON at runtime rather
+than bundling it, a rollback takes effect on their next fetch with no app
 update required.
 
 ## Escalation / when GTFS doesn't match Caltrain's PDF
