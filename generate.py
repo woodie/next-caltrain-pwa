@@ -19,12 +19,20 @@ those two files remain hand-maintained and authoritative. This script writes
 its GTFS-derived holiday output to the underscore-prefixed _holiday_*.csv
 files instead, so the two can be diffed and the discrepancy tracked over
 time without risking the authoritative files.
+
+The feed also attaches a stop_times.txt row at Tamien to many ordinary
+Local trips that never run the South County branch - this represents a
+real, Caltrain-surfaced rider transfer (get off one train, get onto
+another), not an actual stop on those trips. Since this app only shows
+departure times and not transfer/connection detail, build_columns() drops
+those rows; see resolve_branch_filter().
 """
 
 import csv
 import functools
 import os
 import subprocess
+from collections import Counter, defaultdict
 
 import partridge as ptg
 
@@ -35,6 +43,16 @@ GTFS_SOURCE = 'http://data.trilliumtransit.com/gtfs/caltrain-ca-us/caltrain-ca-u
 # the holiday/modified schedule. This excludes one-off single-trip overlays
 # (e.g. World Cup specials) that also show up as calendar_dates-only.
 HOLIDAY_MIN_TRIPS = 10
+
+# A station the Connector route serves is treated as a major shared hub
+# (exempt from the South County branch filter below) if more than this
+# fraction of same-direction non-Connector trips also stop there. San Jose
+# Diridon, where the Connector route ends, is served by ~98-100% of
+# same-direction trips; Tamien - the one branch station that's NOT
+# exclusive to the Connector route - by ~44-45%. (Comparing against
+# same-direction trips, rather than all trips in the feed, matters because
+# each physical platform's stop_id is direction-specific.)
+HUB_STOP_THRESHOLD = 0.5
 
 
 def fetch_gtfs():
@@ -108,7 +126,72 @@ def resolve_service_ids(feed):
     return weekday_id, weekend_id, holiday_id
 
 
-def build_columns(feed, service_id, stations, strip_m=False):
+def resolve_branch_filter(feed):
+    """
+    Resolve which trips are genuine South County Connector workings, and
+    which stations should only ever show a stop for those trips.
+
+    The Connector route is the only one that physically runs the Gilroy -
+    San Martin - Morgan Hill - Blossom Hill - Capitol - Tamien branch.
+    Caltrain's GTFS feed also attaches a stop_times.txt row at Tamien to
+    many ordinary Local trips that never run the branch - this represents
+    the scheduled VTA/walk transfer connection at Tamien (riders do get off
+    one train and onto another there), not an actual stop on those trips'
+    own pattern, and no field distinguishes it from a real stop.
+
+    We filter it out generically rather than hardcoding Tamien's stop_id:
+    any station the Connector route serves that ISN'T also a major shared
+    hub most same-direction trips in the feed stop at (e.g. San Jose
+    Diridon, where the Connector terminates) should only appear on
+    Connector trips themselves. Concretely, of the Connector's own stops,
+    the ones serving at most HUB_STOP_THRESHOLD of same-direction
+    non-Connector trips are branch-only; trips not on the Connector route
+    get those stop_times rows dropped (see build_columns).
+    """
+    route_id = None
+    for _, row in feed.routes.iterrows():
+        desc = '%s %s' % (row.get('route_desc', ''), row.get('route_short_name', ''))
+        if 'south county' in desc.lower():
+            route_id = row['route_id']
+            break
+    if route_id is None:
+        return frozenset(), frozenset()
+
+    trip_route = dict(zip(feed.trips['trip_id'], feed.trips['route_id']))
+    trip_dir = dict(zip(feed.trips['trip_id'], feed.trips['direction_id']))
+    branch_trip_ids = {tid for tid, rid in trip_route.items() if rid == route_id}
+
+    non_connector_dir_counts = Counter(
+        trip_dir[tid] for tid, rid in trip_route.items() if rid != route_id)
+
+    branch_stop_ids = set()
+    nonconnector_stop_dirs = defaultdict(Counter)
+    nonconnector_stop_trips = defaultdict(set)
+    for trip_id, stop_id in zip(feed.stop_times['trip_id'], feed.stop_times['stop_id']):
+        sid = int(stop_id)
+        if trip_id in branch_trip_ids:
+            branch_stop_ids.add(sid)
+        else:
+            nonconnector_stop_dirs[sid][trip_dir[trip_id]] += 1
+            nonconnector_stop_trips[sid].add(trip_id)
+
+    branch_only_stop_ids = set()
+    for sid in branch_stop_ids:
+        dirs = nonconnector_stop_dirs.get(sid)
+        if not dirs:
+            branch_only_stop_ids.add(sid)  # no non-Connector trip ever touches it
+            continue
+        majority_dir = dirs.most_common(1)[0][0]
+        denom = non_connector_dir_counts.get(majority_dir, 0)
+        frac = (len(nonconnector_stop_trips[sid]) / denom) if denom else 0
+        if frac <= HUB_STOP_THRESHOLD:
+            branch_only_stop_ids.add(sid)
+
+    return frozenset(branch_trip_ids), frozenset(branch_only_stop_ids)
+
+
+def build_columns(feed, service_id, stations, strip_m=False,
+                   branch_trip_ids=frozenset(), branch_only_stop_ids=frozenset()):
     """
     Compute, for one service and one direction's station list:
       - col_order: trip_ids in the correct left-to-right column order
@@ -123,6 +206,10 @@ def build_columns(feed, service_id, stations, strip_m=False):
     their shared origin) and South County "connector" trips that only serve
     a partial segment of the route (compared at whichever station they
     first share with the other trip, not a single fixed anchor).
+
+    branch_trip_ids/branch_only_stop_ids (see resolve_branch_filter) drop
+    the synthetic Tamien-transfer stop_times row that the feed attaches to
+    non-Connector trips, so it doesn't show up as a fake stop.
     """
     stop_ids = set(stations)
     trips = feed.trips[feed.trips['service_id'] == service_id]
@@ -137,6 +224,11 @@ def build_columns(feed, service_id, stations, strip_m=False):
     stf = feed.stop_times[feed.stop_times['trip_id'].isin(trip_name.keys())].copy()
     stf['stop_id'] = stf['stop_id'].astype(int)
     stf = stf[stf['stop_id'].isin(stop_ids)]
+
+    if branch_only_stop_ids:
+        is_branch_only_stop = stf['stop_id'].isin(branch_only_stop_ids)
+        is_branch_trip = stf['trip_id'].isin(branch_trip_ids)
+        stf = stf[~is_branch_only_stop | is_branch_trip]
 
     keep_tids = list(stf['trip_id'].unique())
 
@@ -167,9 +259,12 @@ def build_columns(feed, service_id, stations, strip_m=False):
     return col_order, trip_name, time_at
 
 
-def build_csv_rows(feed, service_id, direction, stations, labels, strip_m=False):
+def build_csv_rows(feed, service_id, direction, stations, labels, strip_m=False,
+                    branch_trip_ids=frozenset(), branch_only_stop_ids=frozenset()):
     """Build the full row matrix (header + one row per station) for one service/direction."""
-    col_order, trip_name, time_at = build_columns(feed, service_id, stations, strip_m=strip_m)
+    col_order, trip_name, time_at = build_columns(
+        feed, service_id, stations, strip_m=strip_m,
+        branch_trip_ids=branch_trip_ids, branch_only_stop_ids=branch_only_stop_ids)
 
     rows = [[''] + [trip_name[tid] for tid in col_order]]
     for sid in stations:
@@ -193,6 +288,7 @@ def main():
     feed = ptg.load_feed('CT-GTFS')
     stations = station_lists(feed)
     weekday_id, weekend_id, holiday_id = resolve_service_ids(feed)
+    branch_trip_ids, branch_only_stop_ids = resolve_branch_filter(feed)
 
     jobs = [
         ('weekday', weekday_id, False),
@@ -207,7 +303,8 @@ def main():
         for direction in ['north', 'south']:
             rows = build_csv_rows(
                 feed, service_id, direction,
-                stations[direction], stations['labels'], strip_m=strip_m)
+                stations[direction], stations['labels'], strip_m=strip_m,
+                branch_trip_ids=branch_trip_ids, branch_only_stop_ids=branch_only_stop_ids)
             if schedule == 'holiday':
                 # holiday_north.csv/holiday_south.csv remain hand-maintained and
                 # authoritative (see docs/CLAUDE.md); write the GTFS-derived
