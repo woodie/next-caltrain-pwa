@@ -125,7 +125,7 @@ def check_against_head(data, head, warnings):
 def main():
     candidate_path = sys.argv[1] if len(sys.argv) > 1 else 'webapp/schedule.json'
     if not Path(candidate_path).exists():
-        print('ERROR: %s does not exist (run npm run convert first)' % candidate_path)
+        print('ERROR: %s does not exist (run python3 update_json.py first)' % candidate_path)
         sys.exit(1)
 
     data = load(candidate_path)

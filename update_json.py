@@ -8,9 +8,9 @@ Missing stops are null.
 This lives in next-caltrain-pwa (rather than next-caltrain-swift, where it
 used to live) because this repo is the canonical source for the schedule
 CSVs (see generate.py) and is becoming the single publish point for
-schedule.json — see docs/ROADMAP.md "Repo mission shift". Run it via
-`npm run convert`, or as part of the full pipeline via `npm run schedule`
-(see docs/COWORK.md).
+schedule.json — see docs/ROADMAP.md "Repo mission shift". Run it directly:
+`python3 update_json.py` (see docs/PUBLISHING.md for the full generate
+sequence).
 
 Usage:
     python3 update_json.py
