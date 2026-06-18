@@ -8,14 +8,19 @@
 (e.g. https://www.caltrain.com/media/36013/), which uses the same recurring
 train pattern for every holiday/modified-schedule day
 
-As of 2026-06-17, `next-caltrain-pwa` switched its holiday schedule from a
-hand-transcribed copy of this PDF over to parsing this GTFS service
-directly (see `generate.py`). One real GTFS encoding (a stop_times row for
-the Tamien transfer connection on ordinary Local trains) turned out to be
-intentional, not a bug, and is now filtered out in our own code — not
-listed here. The items below are genuine disagreements between the GTFS
-data and Caltrain's own published timetable that we can't resolve on our
-end, since we don't know which side is correct.
+`data/holiday_north.csv`/`data/holiday_south.csv` are hand-transcribed from
+this PDF and remain the canonical files shipped to riders. `generate.py`
+also parses the same GTFS service directly, but writes that output to
+`data/_holiday_north.csv`/`data/_holiday_south.csv` - an underscore-prefixed
+pair of comparison/diagnostic files, not the canonical names - because the
+two disagree on the items below and we don't know which side Caltrain
+considers correct. This mirrors the policy used elsewhere in `generate.py`:
+GTFS is the default source of truth, but where it disagrees with Caltrain's
+own published PDF, the GTFS output gets the `_` prefix instead of
+overwriting the canonical file, so the discrepancy stays visible and the
+diff is ready to hand to Caltrain. Re-diff `_holiday_*.csv` against
+`holiday_*.csv` whenever the GTFS feed is refreshed, to check whether
+Caltrain has fixed the underlying data.
 
 ## 1. Wrong calendar date for Martin Luther King Jr. Day
 
@@ -29,11 +34,14 @@ end, since we don't know which side is correct.
 | **2027-01-27** | **Martin Luther King Jr. Day** |
 
 January 27, 2027 is a **Wednesday**. MLK Day is always the third Monday in
-January; in 2027 that's **Monday, January 18**. The other three dates are
-all correctly placed (President's Day, day-after-Thanksgiving, and
+January; in 2027 that's **Monday, January 18** — which is also exactly what
+`data/holiday_service.js` (a hand-maintained list sourced from
+https://www.caltrain.com/schedules/holiday-service, kept independently of
+this GTFS feed) lists for MLK Day 2027. The other three dates are all
+correctly placed too (President's Day, day-after-Thanksgiving, and
 Christmas Eve all land on their real calendar dates that year), so this
-looks like an isolated data-entry slip on the MLK entry specifically, not a
-systemic pattern problem.
+looks like an isolated data-entry slip on the MLK entry specifically —
+`2027-01-27` should be `2027-01-18`.
 
 ## 2. San Jose Diridon times disagree with the published timetable
 
@@ -57,12 +65,29 @@ timetable instead shows College Park served by trip **139**, at 15:01
 transcription error in the feed that shifted both a stop and its time onto
 the wrong trip — but we're flagging the data, not guessing at the fix.
 
-## What we're not reporting
+## 4. Tamien stop attached to ordinary Local trains, not on the published timetable
 
-The feed also attaches a stop_times row at Tamien (and the other South
-County branch stations) to many ordinary Local trains that don't run the
-South County branch. We initially treated this as a candidate GTFS bug, but
-it represents a real, scheduled rider transfer at Tamien that Caltrain
-intentionally surfaces — `next-caltrain-pwa` just doesn't display transfer
-detail, only departure times, so we filter it out in our own generator
-instead of asking Caltrain to change it.
+The holiday/modified-schedule GTFS attaches a stop_times row at Tamien to
+about 19 northbound and 20 southbound ordinary Local trips that never run
+the South County Connector branch (trips 101, 105, 109, 113, 117, 121, 125,
+129, 133, 137, 141, 145, 149, 153, 157, 161, 165, 169, 173 northbound;
+104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 148, 152, 156, 160,
+164, 168, 172, 176 southbound). Caltrain's published Modified Schedule PDF
+(media/36013) shows Tamien served only by the two genuine South County
+Connector trips each direction (819/825 northbound, 840/848 southbound) -
+none of the Local trips above show a Tamien departure on the PDF.
+
+This looked, at first, like the same "spurious row" pattern this project
+previously (and incorrectly) filtered out of the regular weekday/weekend
+schedule too - see `generate.py`'s module docstring for that story. The
+key difference: when checked against Caltrain's published *weekday and
+weekend* timetables, the equivalent Tamien rows on Local trips turned out
+to be genuine, scheduled stops. When this holiday/modified-schedule case is
+checked the same way against the holiday PDF, the Tamien rows on Local
+trips do *not* appear on the published timetable. So unlike weekday/
+weekend, this looks like a real holiday-specific GTFS data problem - one of
+four reasons (alongside items 1-3 above) we're not trusting GTFS's holiday
+output outright. Rather than silently correcting it in code (see the lesson
+in `generate.py`), we keep the hand-transcribed PDF version as canonical
+and write GTFS's version to `_holiday_north.csv`/`_holiday_south.csv` so
+the mismatch stays visible and documented here for Caltrain.
