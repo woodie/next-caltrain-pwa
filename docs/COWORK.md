@@ -1,4 +1,4 @@
-# Working on next-caltrain-pwa
+# Working with next-caltrain-pwa
 
 This repo started as a Caltrain schedule PWA for KaiOS phones and is also
 becoming the canonical tool for validating and publishing the schedule used
