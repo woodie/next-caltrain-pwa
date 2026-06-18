@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import csv
+import json
 import os
 from collections import OrderedDict
 
@@ -80,7 +81,7 @@ def parse_web_schedule_data(stops):
 def write_schedule_data(times, stops):
     with open('src/@caltrainServiceData.js', 'w') as f:
         f.write("var caltrainServiceData = {\n")
-        creation = newest_data_mtime()
+        creation = schedule_date_ms()
         for direction in ['north', 'south']:
             f.write("\n  %sStops: [" % (direction))
             f.write("\n    '")
@@ -107,7 +108,10 @@ def write_schedule_data(times, stops):
 def newest_data_mtime():
     """
     Epoch-ms timestamp of the most recently updated schedule CSV, shown in
-    the app as the date the schedule data is "as of".
+    the app as the date the schedule data is "as of". Fallback only - see
+    schedule_date_ms() below for the preferred source. This changes on
+    every generate.py run regardless of whether the schedule actually
+    changed, since generate.py rewrites all six CSVs fresh each time.
     """
     newest = 0
     for schedule in ['weekday', 'weekend', 'holiday']:
@@ -115,6 +119,34 @@ def newest_data_mtime():
             stat = os.stat('data/%s_%s.csv' % (schedule, direction))
             newest = max(newest, stat.st_mtime)
     return int(newest * 1000)
+
+
+def schedule_date_ms():
+    """Preferred source for scheduleDate: Caltrain/Trillium's own GTFS feed
+    build timestamp (data/feed_version.json, written by generate.py - see
+    its twin function in update_json.py / docs/COWORK.md for why), rather
+    than local CSV mtimes that change on every run with no real data change.
+
+    holiday_*.csv is hand-maintained, not derived from the GTFS feed, so a
+    hand edit there wouldn't otherwise be reflected - fold in its mtime too.
+    Falls back fully to newest_data_mtime() if feed_version.json is missing.
+    """
+    feed_ms = None
+    if os.path.exists('data/feed_version.json'):
+        try:
+            with open('data/feed_version.json') as f:
+                feed_ms = json.load(f)['feedVersionMs']
+        except Exception as e:
+            print('WARNING: could not read data/feed_version.json (%s)' % e)
+    if feed_ms is None:
+        return newest_data_mtime()
+
+    holiday_ms = 0
+    for direction in ['north', 'south']:
+        path = 'data/holiday_%s.csv' % direction
+        if os.path.exists(path):
+            holiday_ms = max(holiday_ms, int(os.stat(path).st_mtime * 1000))
+    return max(feed_ms, holiday_ms)
 
 
 if __name__ == "__main__":
