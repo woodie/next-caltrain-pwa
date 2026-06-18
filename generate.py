@@ -6,19 +6,17 @@ Generates schedule CSV files in data/ directly from Caltrain's published
 GTFS feed, using the partridge library:
   - weekday_north.csv, weekday_south.csv
   - weekend_north.csv, weekend_south.csv
-  - _holiday_north.csv, _holiday_south.csv (shadow files only - see below)
+  - holiday_north.csv, holiday_south.csv
 
-This replaces the manual process of hand-transcribing the weekday/weekend
-schedules from Caltrain's website/timetables into those CSVs (see
-docs/ROADMAP.md).
-
-holiday_north.csv/holiday_south.csv are NOT written by this script. The
-GTFS feed's holiday/modified-schedule service has known discrepancies
-against Caltrain's published holiday timetable PDF (see docs/CLAUDE.md), so
-those two files remain hand-maintained and authoritative. This script writes
-its GTFS-derived holiday output to the underscore-prefixed _holiday_*.csv
-files instead, so the two can be diffed and the discrepancy tracked over
-time without risking the authoritative files.
+This replaces the manual process of hand-transcribing these schedules from
+Caltrain's website/timetables into CSVs (see docs/ROADMAP.md). holiday_*.csv
+was hand-maintained from Caltrain's published holiday timetable PDF until
+2026-06; GTFS's holiday/modified-schedule service had a confirmed data
+problem (a spurious stop_times row at Tamien on Local trips - see below)
+that's now filtered out here, so this script writes holiday_*.csv directly
+like the other schedules. A handful of remaining GTFS-vs-PDF discrepancies
+(wrong dates/times on specific trips) are tracked in docs/HOLIDAY.md for
+reporting to Caltrain, rather than blocking on hand-maintaining the CSVs.
 
 The feed also attaches a stop_times.txt row at Tamien to many ordinary
 Local trips that never run the South County branch - this represents a
@@ -305,13 +303,7 @@ def main():
                 feed, service_id, direction,
                 stations[direction], stations['labels'], strip_m=strip_m,
                 branch_trip_ids=branch_trip_ids, branch_only_stop_ids=branch_only_stop_ids)
-            if schedule == 'holiday':
-                # holiday_north.csv/holiday_south.csv remain hand-maintained and
-                # authoritative (see docs/CLAUDE.md); write the GTFS-derived
-                # version to a shadow file instead, for ongoing comparison.
-                path = 'data/_holiday_%s.csv' % direction
-            else:
-                path = 'data/%s_%s.csv' % (schedule, direction)
+            path = 'data/%s_%s.csv' % (schedule, direction)
             write_csv(path, rows)
             print('wrote', path)
 

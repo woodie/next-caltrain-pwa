@@ -33,17 +33,19 @@ Caltrain review and update the website, making it the authoritative source, but
 scraping is brittle and could break without warning.
 
 **Update (2026-06):** `generate.py` now parses GTFS directly (via partridge)
-for the weekday/weekend CSVs, verified byte-for-byte identical to the
-scraped versions — `scrape.py` is obsolete. Holiday is the exception: GTFS's
-holiday/modified-schedule service has confirmed data-quality problems (see
-docs/CLAUDE.md "Holiday schedule"), so `holiday_north.csv`/`holiday_south.csv`
-remain hand-maintained, kept current by having AI transcribe Caltrain's
-published Modified Schedule PDF each time a new one comes out.
-`generate.py` writes its GTFS-derived holiday output to
-`data/_holiday_*.csv` shadow files purely so the two can be compared over
-time; the goal is still to drop the manual PDF step once GTFS's holiday data
-is trustworthy. A validation layer (catching a bad feed before it reaches
-users) is still needed for the weekday/weekend path.
+for all six CSVs, including holiday — `scrape.py` and the hand-maintained
+holiday CSVs are obsolete. Weekday/weekend were already verified
+byte-for-byte identical to the scraped versions. Holiday needed one fix
+first: the feed attached a spurious stop_times row at Tamien (and the other
+South County branch stations) to ordinary Local trips that don't run the
+branch — this is `generate.py`'s `resolve_branch_filter()`/`build_columns()`
+filtering it out generically (by route, not a hardcoded station list) rather
+than something to report to Caltrain, since it represents a real rider
+transfer this app simply doesn't display. A handful of smaller GTFS-vs-PDF
+discrepancies remain (wrong dates/times on specific trips) — tracked in
+docs/HOLIDAY.md for reporting to Caltrain rather than blocking the switch.
+A validation layer (catching a bad feed before it reaches users) is still
+needed for all three schedules.
 
 ### Target workflow
 
@@ -81,9 +83,8 @@ live — no separate config needed.
 
 - ~~`tools/parse_gtfs.py`~~ — done, exists as `generate.py` in the repo root;
   uses [partridge](https://pypi.org/project/partridge/) to load the GTFS zip
-  and produce the weekday/weekend CSVs (and GTFS-derived holiday shadow
-  CSVs) that the rest of the pipeline expects. Not yet wired into a
-  date-folder/auto-deploy pipeline.
+  and produce all six CSVs (weekday/weekend/holiday) that the rest of the
+  pipeline expects. Not yet wired into a date-folder/auto-deploy pipeline.
 - `tools/validate.py` — compares a candidate `schedule.json` against the
   current deployed one; flags missing stops, missing trips, or implausible
   changes in trip count.
@@ -97,13 +98,13 @@ live — no separate config needed.
   validation failures before go-live. Worth asking Caltrain's developer
   resources contact directly. The `feed_info.txt` file inside the zip may also
   carry `feed_start_date` / `feed_end_date` as a clue.
-- **Holiday schedule**: answered, partially — Caltrain does encode holiday
-  service in GTFS (`calendar_dates.txt`), but as of 2026-06-17 that data has
-  confirmed errors against Caltrain's own published Modified Schedule PDF
-  (wrong times, spurious/missing stops — see docs/CLAUDE.md). The holiday
-  CSV stays hand-maintained, kept current via AI transcription of the PDF,
-  with the GTFS version tracked in `data/_holiday_*.csv` shadow files until
-  it's trustworthy enough to switch to.
+- **Holiday schedule**: answered — Caltrain does encode holiday service in
+  GTFS (`calendar_dates.txt`); the worst problem (spurious Tamien/branch
+  stops on Local trips) is now filtered out generically in `generate.py`,
+  so `holiday_north.csv`/`holiday_south.csv` are GTFS-generated like the
+  other four CSVs as of 2026-06-17. A few smaller discrepancies against
+  Caltrain's published Modified Schedule PDF remain (see docs/HOLIDAY.md)
+  and are pending a report to Caltrain rather than a code fix.
 
 ### Deployment infrastructure
 
