@@ -165,6 +165,14 @@ mechanism exists to prevent, just triggered a different way. `scheduleDate`
 is now `feedVersionMs` alone; a holiday-only PDF edit (no GTFS feed change)
 won't bump it until Caltrain's next feed update.
 
+That's an intentional, not just expedient, choice: weekday/weekend service
+is what the overwhelming majority of riders see day to day, while holiday
+service affects well under 1% of trips. The GTFS feed's own build
+timestamp is the one unambiguous, externally-verifiable signal for "has the
+schedule that matters to almost everyone changed" - a hand edit to the
+holiday CSVs is real, but rare and low-impact enough that it doesn't need
+its own freshness signal mixed into the same field.
+
 The PWA itself is live at the same App Engine app's root,
 https://next-caltrain-pwa.appspot.com/ — it's an actively published app, not
 just a hosting shell for the JSON.
