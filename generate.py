@@ -74,8 +74,11 @@ import csv
 import functools
 import json
 import os
+import re
 import subprocess
+import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 import partridge as ptg
 
@@ -124,17 +127,100 @@ def read_feed_version(path='CT-GTFS/feed_info.txt'):
         return None, None
 
 
-def write_feed_version():
+def previous_feed_version_ms(path='data/feed_version.json'):
+    """Return the feedVersionMs data/feed_version.json was left at by the
+    last generate.py run, or None if it doesn't exist yet or doesn't parse.
+    Read *before* this run's write_feed_version() call, so main() can tell
+    whether the feed actually changed since last time."""
+    try:
+        with open(path) as f:
+            return json.load(f).get('feedVersionMs')
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def write_feed_version(raw, ms):
     """Write data/feed_version.json so update_json.py/update_pwa.py can use
     Caltrain/Trillium's own feed build timestamp for scheduleDate, instead of
-    local CSV mtimes that change on every run even when nothing did."""
-    raw, ms = read_feed_version()
-    if ms is None:
-        print('WARNING: feed_version unavailable; scheduleDate will fall back to file mtimes')
-        return
+    local CSV mtimes that change on every run even when nothing did.
+
+    Takes the already-parsed (raw, ms) from read_feed_version() rather than
+    calling it again itself, so main() can look at the value once, decide
+    whether anything needs to happen at all (see the unchanged-feed bailout
+    there), and only then write it.
+    """
     with open('data/feed_version.json', 'w') as f:
         json.dump({'feedVersionRaw': raw, 'feedVersionMs': ms}, f, indent=2)
-    print('feed_version: %s -> %d' % (raw, ms))
+
+
+def _schedule_date_from_json(path):
+    """Read the scheduleDate baked into a previously-written schedule.json."""
+    try:
+        return json.loads(path.read_text()).get('scheduleDate')
+    except Exception as e:
+        print('WARNING: could not read scheduleDate from %s (%s)' % (path, e))
+        return None
+
+
+def _schedule_date_from_js(path):
+    """Read the scheduleDate baked into a previously-written
+    @caltrainServiceData.js (it's JS, not JSON, so a regex instead of a
+    parser - see write_schedule_data() in update_pwa.py for the line this
+    matches: '  scheduleDate: 1234567890\\n')."""
+    m = re.search(r'scheduleDate:\s*(\d+)', path.read_text())
+    if not m:
+        print('WARNING: could not find scheduleDate in %s' % path)
+        return None
+    return int(m.group(1))
+
+
+def report_schedule_currency():
+    """Compare the feed_version just fetched (data/feed_version.json) against
+    the scheduleDate baked into the last-published downstream artifacts
+    (feed/schedule.json, src/@caltrainServiceData.js - both source
+    scheduleDate from data/feed_version.json the same way, in
+    update_json.py/update_pwa.py - see docs/COWORK.md "Published endpoint").
+
+    This only reports; it doesn't regenerate anything. If something's
+    stale or missing, the fix is to run the rest of the publish sequence
+    (update_pwa.py / npm run build / update_json.py - see docs/PUBLISHING.md)
+    so those artifacts catch up to the feed_version this run just fetched.
+    """
+    version_file = Path('data/feed_version.json')
+    if not version_file.exists():
+        print('Cannot check schedule currency: data/feed_version.json unavailable.')
+        return
+    try:
+        feed_ms = json.loads(version_file.read_text())['feedVersionMs']
+    except Exception as e:
+        print('Cannot check schedule currency: could not read %s (%s)' % (version_file, e))
+        return
+
+    artifacts = {
+        Path('feed/schedule.json'): _schedule_date_from_json,
+        Path('src/@caltrainServiceData.js'): _schedule_date_from_js,
+    }
+
+    stale, missing = [], []
+    for path, reader in artifacts.items():
+        if not path.exists():
+            missing.append(path)
+            continue
+        artifact_ms = reader(path)
+        if artifact_ms != feed_ms:
+            stale.append((path, artifact_ms))
+
+    if not stale and not missing:
+        print('Schedule is current according to timestamp on feeds.\n')
+        return
+
+    print('Schedule needs to be updated:')
+    for path in missing:
+        print('  - %s: not generated yet' % path)
+    for path, artifact_ms in stale:
+        print('  - %s: scheduleDate=%s, feed_version is %s' % (path, artifact_ms, feed_ms))
+    print('Run update_pwa.py / npm run build / update_json.py to refresh '
+          '(see docs/PUBLISHING.md).\n')
 
 
 def station_lists(feed):
@@ -282,8 +368,26 @@ def write_csv(path, rows):
 
 
 def main():
+    force = any(a in ('--force', '-force', '-f') for a in sys.argv[1:])
+
     fetch_gtfs()
-    write_feed_version()
+    previous_ms = previous_feed_version_ms()
+    raw, ms = read_feed_version()
+
+    if ms is None:
+        print('WARNING: feed_version unavailable; scheduleDate will fall back to file mtimes')
+    elif ms == previous_ms and not force:
+        # Same feed as last run -- partridge would parse it and we'd write
+        # out six byte-identical CSVs. Skip the expensive part entirely
+        # unless told otherwise; data/feed_version.json is left as-is since
+        # it's already correct.
+        print('\nGTFS feed_version unchanged: %s' % raw)
+        print('Use ./generate.py --force to write files anyway.')
+        report_schedule_currency()
+        return
+    else:
+        write_feed_version(raw, ms)
+
     feed = ptg.load_feed('CT-GTFS')
     stations = station_lists(feed)
     weekday_id, weekend_id, holiday_id = resolve_service_ids(feed)
@@ -314,6 +418,13 @@ def main():
                 path = 'data/%s_%s.csv' % (schedule, direction)
             write_csv(path, rows)
             print('wrote', path)
+
+    # Printed last, after all the "wrote ..." lines above, so this summary
+    # is the last thing on screen instead of scrolling by and getting
+    # buried under them.
+    if raw is not None:
+        print('\nGTFS feed_version: %s' % raw)
+    report_schedule_currency()
 
 
 if __name__ == '__main__':
