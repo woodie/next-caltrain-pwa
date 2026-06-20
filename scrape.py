@@ -1,4 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
+
+import bootstrap_venv
+
+bootstrap_venv.ensure_venv(__file__)
 
 import csv
 import os

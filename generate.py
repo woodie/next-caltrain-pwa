@@ -66,6 +66,10 @@ using the _holiday_*.csv shadow-file mechanism described up top instead,
 which is a data-flagging convention, not a heuristic that touches the data.
 """
 
+import bootstrap_venv
+
+bootstrap_venv.ensure_venv(__file__)
+
 import csv
 import functools
 import json
