@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""
+scrape.py
+
+Scrapes Caltrain's own route-explorer widget (HTML, not GTFS) and writes
+weekday/weekend schedules to underscore-prefixed shadow files:
+  data/_weekday_north.csv, data/_weekday_south.csv
+  data/_weekend_north.csv, data/_weekend_south.csv
+
+These are a comparison/diagnostic pair against generate.py's GTFS-based
+weekday_*.csv/weekend_*.csv - the same underscore-shadow convention
+generate.py uses for holiday (see its docstring and docs/COWORK.md). Diff
+the two sources against each other; this script never overwrites the
+canonical, GTFS-sourced files.
+"""
 
 import bootstrap_venv
 
@@ -20,14 +34,10 @@ def main():
 
 def fetch_schedule_data():
     schedule_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab'
-    # weekday_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekday'
-    # weekend_url = 'https://www.caltrain.com/?active_tab=route_explorer_tab&service=weekend'
     basedir = os.getcwd()
     subprocess.call(['mkdir', '-p', 'data'])
     os.chdir('data')
     subprocess.call(['curl', '-o', 'schedule.htm', schedule_url])
-    # subprocess.call(['curl', '-o', 'weekday.htm', weekday_url])
-    # subprocess.call(['curl', '-o', 'weekend.htm', weekend_url])
     os.chdir(basedir)
 
 
@@ -35,15 +45,12 @@ def _other_schedule(td, schedule):
     if not td.has_attr('data-route-id'):
         return True
     if schedule == 'weekday':
-        # return True if td['data-service-type'] != 'weekend' else False
         return True if td['data-route-id'] == 'Local Weekend' else False
     elif schedule == 'weekend':
-        # return True if td['data-service-type'] == 'weekend' else False
         return True if td['data-route-id'] != 'Local Weekend' else False
 
 
 def parse_schedule_data(schedule, direction):
-    # with open('data/%s.htm' % schedule) as f:
     with open('data/schedule.htm') as f:
         soup = BeautifulSoup(f, 'html.parser')
     tbl = soup.findAll('table', {'data-direction': "%sbound" % direction})[0]
@@ -73,7 +80,7 @@ def parse_schedule_data(schedule, direction):
         if len(row) < len(header):
             row.extend([None] * (len(header) - len(row)))
         rows.append(row[0:len(header)])
-    with open('data/%s_%s.csv' % (schedule, direction), mode='w') as out_file:
+    with open('data/_%s_%s.csv' % (schedule, direction), mode='w') as out_file:
         csv_writer = csv.writer(
             out_file,
             delimiter=',',
