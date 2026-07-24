@@ -14,7 +14,7 @@ This app runs in the KaiOS browser for phones without access to the store. The a
 
 ## History and Goals
 
-This project started as a port of our [our other project](https://github.com/woodie/Caltrain-Schedule-MIDlet)
+This project started as a port of our [our other project](https://github.com/woodie/next-caltrain-j2me)
 that runs on J2ME phones. This app will function on any device with an ES 2015 capable browser.
 
 Early on, we decided not to use any frameworks, not even jQuery. This app is just vanilla JS, HTML and CSS.
