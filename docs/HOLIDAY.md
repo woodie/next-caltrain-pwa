@@ -59,11 +59,19 @@ trip/station combinations.
 ## 3. College Park stop attached to the wrong trip number (northbound)
 
 GTFS has a College Park stop on trip **143** at 15:31 (3:31p). The published
-timetable instead shows College Park served by trip **139**, at 15:01
-(3:01p), with no College Park stop on 143. Combined with item 2 above (both
-141 and 143's Diridon times being off), this looks like a single
-transcription error in the feed that shifted both a stop and its time onto
-the wrong trip — but we're flagging the data, not guessing at the fix.
+timetable instead shows College Park served by trip **141**, at 15:01
+(3:01p), between its Diridon (2:53p) and Santa Clara (3:04p) stops, with no
+College Park stop on 139 or 143. Combined with item 2 above (both 141 and
+143's Diridon times being off), this looks like a single transcription error
+in the feed that shifted both a stop and its time onto the wrong trip — but
+we're flagging the data, not guessing at the fix.
+
+**Correction (2026-10-20, #36):** this item previously said the published
+timetable shows the stop on trip **139**. That was our own transcription
+slip, not Caltrain's: `holiday_north.csv` had 15:01 one column left, under
+139, which put College Park after Santa Clara (14:34) on that train. A
+re-read of media/36013 confirmed the 3:01p sits under 141, and the CSV was
+fixed to match. The GTFS-vs-PDF discrepancy above (143 vs 141) still stands.
 
 ## 4. Tamien stop attached to ordinary Local trains, not on the published timetable
 
