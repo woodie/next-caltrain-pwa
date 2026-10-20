@@ -31,11 +31,6 @@ export class CaltrainSchedule {
     ]
   }
 
-  // Schedule label (Weekday, Weekend, Holiday) for an ISO date and day-of-week
-  static labelFor (date, dotw) {
-    return scheduleOptions[CaltrainSchedule.optionIndexFor(date, dotw)]
-  }
-
   static optionIndex (goodTime) {
     return CaltrainSchedule.optionIndexFor(goodTime.date, goodTime.dotw)
   }
