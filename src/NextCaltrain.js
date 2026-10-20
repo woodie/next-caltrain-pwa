@@ -1,5 +1,6 @@
 /* global getKaiAd */
 import { ScheduleFeed, scheduleData } from './ScheduleFeed.js'
+import { CalendarTrip } from './CalendarTrip.js'
 import { CaltrainSchedule } from './CaltrainSchedule.js'
 import { CaltrainService } from './CaltrainService.js'
 import { CaltrainTrip } from './CaltrainTrip.js'
@@ -26,6 +27,8 @@ let splash = false
 let hintIndex = -1
 let menuIndex = 0
 let listing = null
+let calendarReturn = 'hero'
+let calendarUrl = null
 const vh = 228
 // window.innerWidth  240
 // window.innerHeight 228
@@ -42,8 +45,8 @@ const DOWN = 40
 // const POUND = 163;
 // const ZERO = 48;
 
-const screens = 'splash hero grid trip menu about commands prefs'.split(' ')
-const titles = { about: 'About Next Caltrain', commands: 'Keypad commands' }
+const screens = 'splash hero grid trip menu about commands prefs calendar'.split(' ')
+const titles = { about: 'About Next Caltrain', commands: 'Keypad commands', calendar: 'Add to Calendar' }
 
 let hints = [
   [
@@ -95,6 +98,10 @@ export class NextCaltrain {
       document.getElementById('about-filler').style['display'] = 'flex'
       document.getElementById('commands-filler').style['display'] = 'flex'
       document.getElementById('content').className = 'full-screen'
+      // Touch-screen phones only: KaiOS has no touch screen or clipboard
+      for (const button of document.getElementsByClassName('calendar-button')) {
+        button.style['display'] = 'block'
+      }
     } else {
       document.getElementById('content').className = 'part-screen'
       document.getElementById('hero-screen').style['display'] = 'none'
@@ -436,6 +443,73 @@ export class NextCaltrain {
     }
   }
 
+  /**
+   * Open the calendar panel, defaulting to the selected train ("Leave at" its
+   * departure) on the next date that matches the schedule on screen.
+   */
+  static openCalendar () {
+    if (service === null) return
+    calendarReturn = NextCaltrain.currentScreen()
+    const now = new Date()
+    const label = currentRouteLabel || schedule.label()
+    const isFuture = currentRoute !== null && currentRoute[currentRoute.length - 1] === true
+    let date = CalendarTrip.isoDate(now, isFuture ? 1 : 0)
+    for (let days = isFuture ? 1 : 0; days < 14; days++) {
+      const candidate = CalendarTrip.isoDate(now, days)
+      if (CaltrainSchedule.labelFor(candidate, CalendarTrip.dotw(candidate)) === label) {
+        date = candidate
+        break
+      }
+    }
+    const depart = currentRoute === null
+      ? new GoodTimes().minutes
+      : currentRoute[1] - (isFuture ? 1440 : 0)
+    const hours = Math.floor(depart / 60) % 24
+    const minutes = depart % 60
+    document.getElementById('calendar-mode').value = 'leave'
+    document.getElementById('calendar-time').value =
+      `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`
+    document.getElementById('calendar-date').value = date
+    document.getElementById('calendar-route').innerHTML = `${prefs.origin} to ${prefs.destin}`
+    NextCaltrain.displayScreen('calendar')
+    document.getElementById('title').innerHTML = titles.calendar
+    NextCaltrain.updateCalendar()
+  }
+
+  static updateCalendar () {
+    const mode = document.getElementById('calendar-mode').value
+    const time = document.getElementById('calendar-time').value
+    const date = document.getElementById('calendar-date').value
+    const trains = document.getElementById('calendar-trains')
+    calendarUrl = null
+    NextCaltrain.populateSoftkeyMenu('', '', '')
+    if (!time || !date) {
+      trains.innerHTML = ''
+      return
+    }
+    const label = CaltrainSchedule.labelFor(date, CalendarTrip.dotw(date))
+    document.getElementById('calendar-schedule').innerHTML = label
+    const [hh, mm] = time.split(':').map(Number)
+    const routes = service.routes(prefs.origin, prefs.destin, label)
+    const index = CalendarTrip.find(routes, mode, hh * 60 + mm)
+    if (index === -1) {
+      trains.innerHTML = 'No train fits that time.'
+      return
+    }
+    const list = CalendarTrip.neighbors(routes, index)
+    trains.innerHTML = list.map((train) =>
+      `<div class="${train.selected ? 'selection selection-arriving' : ''}">${CalendarTrip.line(train)}</div>`).join('')
+    calendarUrl = CalendarTrip.googleUrl(CalendarTrip.title(prefs.destin), date,
+      list.find((train) => train.selected), CalendarTrip.html(prefs.origin, prefs.destin, list))
+    NextCaltrain.populateSoftkeyMenu('', 'GOOGLE', '')
+  }
+
+  // Open the prefilled Google Calendar event; must run from a click or key
+  // press (not touchstart), or the browser blocks the new tab
+  static openGoogleCalendar () {
+    if (calendarUrl !== null) window.open(calendarUrl, '_blank', 'noopener')
+  }
+
   static currentScreen () {
     for (let i = 0; i < screens.length; i++) {
       if (
@@ -469,6 +543,9 @@ export class NextCaltrain {
         NextCaltrain.populateSoftkeyMenu('', 'OK', '')
       } else if (target === 'commands') {
         NextCaltrain.populateSoftkeyMenu('', 'NEXT', '')
+      } else if (target === 'calendar') {
+        // updateCalendar() labels the center softkey GOOGLE once a train fits
+        NextCaltrain.populateSoftkeyMenu('', '', '')
       }
     }
     // set the title
@@ -499,6 +576,8 @@ export class NextCaltrain {
     document.addEventListener('touchstart', function (e) {
       let code = null
       if (e.target.id === 'softkey-center') {
+        // The calendar screen's GOOGLE softkey opens a tab, so it needs 'click'
+        if (NextCaltrain.currentScreen() === 'calendar') return
         code = OK
       } else if (e.target.id === 'softkey-left') {
         code = 'sl'
@@ -514,6 +593,18 @@ export class NextCaltrain {
         return
       }
       NextCaltrain.press(code)
+    })
+    for (const button of document.getElementsByClassName('calendar-button')) {
+      button.addEventListener('click', () => NextCaltrain.openCalendar())
+    }
+    for (const id of ['calendar-mode', 'calendar-time', 'calendar-date']) {
+      // iOS date/time pickers may only fire 'change'
+      for (const type of ['input', 'change']) {
+        document.getElementById(id).addEventListener(type, () => NextCaltrain.updateCalendar())
+      }
+    }
+    document.getElementById('softkey-center').addEventListener('click', () => {
+      if (NextCaltrain.currentScreen() === 'calendar') NextCaltrain.openGoogleCalendar()
     })
     document.addEventListener('mousemove', function (e) {
       if (!kaiWeb) return
@@ -555,6 +646,8 @@ export class NextCaltrain {
     })
     // Catch keydown events.
     document.addEventListener('keydown', function (e) {
+      // Let the calendar form's fields have their keys
+      if (/^(INPUT|SELECT|BUTTON)$/.test(e.target.tagName)) return
       let code = e.keyCode ? e.keyCode : e.which
       if (code === HANGUP) {
         // Catch and convert HANGUP to BACK
@@ -591,6 +684,14 @@ export class NextCaltrain {
 
   static press (code) {
     if (splash || service === null) return
+    if (NextCaltrain.currentScreen() === 'calendar') {
+      if (code === OK) {
+        NextCaltrain.openGoogleCalendar()
+      } else if (code === BACK || code === ESC) {
+        NextCaltrain.displayScreen(calendarReturn)
+      }
+      return
+    }
     if (code === ESC) {
       // Simulate EXIT.
       NextCaltrain.displayScreen('hero')

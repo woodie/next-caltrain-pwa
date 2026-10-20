@@ -92,6 +92,7 @@
     <div id="hero-screen" style="display: flex;">
       <div id="hero-filler" class="fake-titlebar"></div>
       <div id="hero-content">
+        <div class="calendar-button" style="display: none;">&#x1F4C5;</div>
         <div id="fade">
           <div id="main-hints" style="display: none;">
             <div><span class="btn">5</span> &#9650;</div>
@@ -134,7 +135,8 @@
 
     <div id="grid-screen" class="full-screen" style="display: none;">
       <div class="fillbar"></div>
-      <div>
+      <div id="grid-header">
+        <div class="calendar-button" style="display: none;">&#x1F4C5;</div>
         <span id="origin-grid">Origin to</span><br>
         <span id="destin-grid">Destination</span>
       </div>
@@ -146,6 +148,24 @@
         <div id="trip3" class="trip-card"></div>
         <div id="trip4" class="trip-card"></div>
         <div id="trip5" class="trip-card"></div>
+      </div>
+    </div>
+
+    <div id="calendar-screen" style="display: none;">
+      <div id="calendar-content">
+        <div id="calendar-route"></div>
+        <div class="calendar-row">
+          <select id="calendar-mode">
+            <option value="leave">Leave at</option>
+            <option value="arrive">Arrive by</option>
+          </select>
+          <input id="calendar-time" type="time">
+        </div>
+        <div class="calendar-row">
+          <input id="calendar-date" type="date">
+          <span id="calendar-schedule"></span>
+        </div>
+        <div id="calendar-trains"></div>
       </div>
     </div>
 
