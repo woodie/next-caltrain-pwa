@@ -90,10 +90,8 @@ stop/time-array length mismatches, and out-of-range times; also diffs
 so you can eyeball stop/trip-count changes.
 
 **Test suite:**
-`npm test` runs the existing Jest unit tests against the routing logic in
-`src/`. All tests should pass except the known, pre-existing, unrelated
-`GoodTimes.dateString()` UTC failure (tracked separately, not
-schedule-data-related).
+`npm test` runs the Vitest unit tests against the routing logic in
+`src/`. All tests should pass, in any time zone.
 
 Beyond these two commands, also do these manual checks before publishing:
 

@@ -1,67 +1,98 @@
-import { GoodTimes } from '../src/GoodTimes.js';
+import { beforeEach, describe, expect, it } from 'vitest'
+import { justBeforeEach } from 'penultimate'
+import { GoodTimes } from '../src/GoodTimes.js'
+
+const context = describe
+
 describe('GoodTimes', () => {
-  let gt = new GoodTimes('2020-10-15T12:00:00');
   describe('.partTime()', () => {
-    it('should return an array', () => {
-      expect(GoodTimes.partTime(720)).toEqual(['12:00', 'pm']);
-    });
-  });
+    it('returns noon as the time and "pm"', () => {
+      expect(GoodTimes.partTime(720)).toEqual(['12:00', 'pm'])
+    })
+  })
+
   describe('.fullTime()', () => {
-    it('should return a string', () => {
-      expect(GoodTimes.fullTime(720)).toEqual('12:00pm');
-    });
-  });
+    it('returns noon as one string', () => {
+      expect(GoodTimes.fullTime(720)).toBe('12:00pm')
+    })
+  })
+
   describe('.dateString()', () => {
-    it('should return a string', () => {
-      expect(GoodTimes.dateString(0)).toEqual('Dec 31 1969');
-    });
-  });
-  describe('#partTime()', () => {
-    it('should return an array', () => {
-      expect(gt.partTime()).toEqual(['12:00', 'pm']);
-    });
-  });
-  describe('#fullTime()', () => {
-    it('should return a string', () => {
-      expect(gt.fullTime()).toEqual('12:00pm');
-    });
-  });
-  describe('#inThePast()', () => {
-    it('should identify minutes in the past and future', () => {
-      expect(gt.inThePast(gt.minutes - 2)).toBe.true;
-      expect(gt.inThePast(gt.minutes + 2)).toBe.false;
-    });
-  });
-  describe('#departing()', () => {
-    it('should identify a departing train', () => {
-      expect(gt.departing(gt.minutes)).toBe.true;
-    });
-  });
-  describe('#countdown()', () => {
-    it('should provice a countdown', () => {
-      expect(gt.countdown(gt.minutes + 66)).toEqual('in 1 hr 5 min');
-    });
-  });
-  describe('#tomorrowDate', () => {
-    it('should return the next calendar date', () => {
-      // 2020-10-15T12:00 - 2hrs = 10:00am Thursday Oct 15; tomorrow = Oct 16
-      expect(gt.tomorrowDate).toEqual('2020-10-16');
-    });
-  });
+    it('formats a timestamp as a short date', () => {
+      expect(GoodTimes.dateString(Date.UTC(2020, 9, 15, 12))).toBe('Oct 15 2020')
+    })
+  })
+
+  describe('an instance at noon on Thursday, October 15, 2020', () => {
+    let gt
+
+    beforeEach(() => { gt = new GoodTimes('2020-10-15T12:00:00') })
+
+    describe('#partTime()', () => {
+      it('returns the time and "pm"', () => {
+        expect(gt.partTime()).toEqual(['12:00', 'pm'])
+      })
+    })
+
+    describe('#fullTime()', () => {
+      it('returns the time as one string', () => {
+        expect(gt.fullTime()).toBe('12:00pm')
+      })
+    })
+
+    describe('#inThePast()', () => {
+      it('returns true for two minutes ago', () => {
+        expect(gt.inThePast(gt.minutes - 2)).toBe(true)
+      })
+
+      it('returns false for two minutes from now', () => {
+        expect(gt.inThePast(gt.minutes + 2)).toBe(false)
+      })
+    })
+
+    describe('#departing()', () => {
+      it('returns true for the current minute', () => {
+        expect(gt.departing(gt.minutes)).toBe(true)
+      })
+    })
+
+    describe('#countdown()', () => {
+      it('counts down to a train 66 minutes away', () => {
+        expect(gt.countdown(gt.minutes + 66)).toBe('in 1 hr 5 min')
+      })
+    })
+
+    describe('#tomorrowDate', () => {
+      it('returns the next calendar date', () => {
+        // the service day starts at 2am, so noon is still Thursday, October 15
+        expect(gt.tomorrowDate).toBe('2020-10-16')
+      })
+    })
+  })
+
   describe('#tomorrowDotw', () => {
-    it('should return the next day of the week', () => {
-      // Thursday (4) -> Friday (5)
-      expect(gt.tomorrowDotw).toEqual(5);
-    });
-    it('should wrap Sunday (0) to Monday (1)', () => {
-      const sunday = new GoodTimes('2020-10-18T12:00:00'); // Sunday
-      expect(sunday.dotw).toEqual(0);
-      expect(sunday.tomorrowDotw).toEqual(1);
-    });
-    it('should compute Saturday (6) -> Sunday (0)', () => {
-      const saturday = new GoodTimes('2020-10-17T12:00:00'); // Saturday
-      expect(saturday.dotw).toEqual(6);
-      expect(saturday.tomorrowDotw).toEqual(0);
-    });
-  });
-});
+    let when, gt
+
+    justBeforeEach(() => { gt = new GoodTimes(when) })
+
+    context('when today is Thursday (4)', () => {
+      beforeEach(() => { when = '2020-10-15T12:00:00' })
+
+      it('returns Friday (5)', () => { expect(gt.tomorrowDotw).toBe(5) })
+    })
+
+    context('when today is Saturday (6)', () => {
+      beforeEach(() => { when = '2020-10-17T12:00:00' })
+
+      it('is Saturday', () => { expect(gt.dotw).toBe(6) })
+      it('returns Sunday (0), wrapping the week', () => { expect(gt.tomorrowDotw).toBe(0) })
+    })
+
+    context('when today is Sunday (0)', () => {
+      beforeEach(() => { when = '2020-10-18T12:00:00' })
+
+      it('is Sunday', () => { expect(gt.dotw).toBe(0) })
+      it('returns Monday (1)', () => { expect(gt.tomorrowDotw).toBe(1) })
+    })
+  })
+})

@@ -75,7 +75,7 @@ not wrapped in `package.json` — they're not npm/node concerns):
 **Validate:**
 1. `validate_schedule.py` — structural sanity check of `webapp/schedule.json`,
    plus a diff against the version currently committed at HEAD for human review
-2. `npm test` — existing Jest unit tests against the routing logic in `src/`
+2. `npm test` — Vitest unit tests against the routing logic in `src/`
 
 It stops there — nothing is committed, pushed, or deployed automatically.
 Review the diff (`git diff`, `git status`), commit, then deploy manually

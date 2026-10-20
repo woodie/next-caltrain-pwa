@@ -1,59 +1,101 @@
-import { GoodTimes } from '../src/GoodTimes.js';
-import { CaltrainSchedule } from '../src/CaltrainSchedule.js';
+import { beforeEach, describe, expect, it } from 'vitest'
+import { justBeforeEach } from 'penultimate'
+import { CaltrainSchedule } from '../src/CaltrainSchedule.js'
+import { GoodTimes } from '../src/GoodTimes.js'
+
+const context = describe
+
 describe('CaltrainSchedule', () => {
-  const gt = new GoodTimes('2020-10-15T08:10:10');
-  const ct = new CaltrainSchedule(gt);
   describe('.optionIndex()', () => {
-    it('should return option index', () => {
-      expect(CaltrainSchedule.optionIndex(gt)).toEqual(0);
-    });
-  });
+    it('returns 0 (Weekday) on a Thursday', () => {
+      expect(CaltrainSchedule.optionIndex(new GoodTimes('2020-10-15T08:10:10'))).toBe(0)
+    })
+  })
+
   describe('.optionIndexFor()', () => {
-    it('should return 0 for a weekday', () => {
-      expect(CaltrainSchedule.optionIndexFor('2020-10-15', 4)).toEqual(0); // Thursday
-    });
-    it('should return 1 for Saturday', () => {
-      expect(CaltrainSchedule.optionIndexFor('2020-10-17', 6)).toEqual(1);
-    });
-    it('should return 1 for Sunday', () => {
-      expect(CaltrainSchedule.optionIndexFor('2020-10-18', 0)).toEqual(1);
-    });
-    it('should return 2 for a special/holiday date', () => {
-      expect(CaltrainSchedule.optionIndexFor('2025-11-28', 5)).toEqual(2);
-    });
-  });
-  describe('#label()', () => {
-    it('should return label', () => {
-      expect(ct.label()).toEqual('Weekday');
-    });
-  });
-  describe('#next()', () => {
-    it('should increment seleted', () => {
-      expect(ct.selected).toEqual(0);
-      ct.next();
-      expect(ct.selected).toEqual(1);
-    });
-  });
-  describe('#swapped()', () => {
-    it('should return true', () => {
-      expect(ct.swapped()).toBe.true;
-    });
-  });
-  describe('#tomorrowLabel()', () => {
-    it('should return Weekday for Thursday -> Friday', () => {
-      const thursday = new GoodTimes('2020-10-15T12:00:00');
-      const cs = new CaltrainSchedule(thursday);
-      expect(cs.tomorrowLabel(thursday)).toEqual('Weekday');
-    });
-    it('should return Weekend for Friday -> Saturday', () => {
-      const friday = new GoodTimes('2020-10-16T12:00:00');
-      const cs = new CaltrainSchedule(friday);
-      expect(cs.tomorrowLabel(friday)).toEqual('Weekend');
-    });
-    it('should return Weekday for Sunday -> Monday', () => {
-      const sunday = new GoodTimes('2020-10-18T12:00:00');
-      const cs = new CaltrainSchedule(sunday);
-      expect(cs.tomorrowLabel(sunday)).toEqual('Weekday');
-    });
-  });
-});
+    let date, dotw, result
+
+    justBeforeEach(() => { result = CaltrainSchedule.optionIndexFor(date, dotw) })
+
+    context('on a weekday (Thursday, dotw=4)', () => {
+      beforeEach(() => { date = '2020-10-15'; dotw = 4 })
+
+      it('returns 0 (Weekday)', () => { expect(result).toBe(0) })
+    })
+
+    context('on Saturday (dotw=6)', () => {
+      beforeEach(() => { date = '2020-10-17'; dotw = 6 })
+
+      it('returns 1 (Weekend)', () => { expect(result).toBe(1) })
+    })
+
+    context('on Sunday (dotw=0)', () => {
+      beforeEach(() => { date = '2020-10-18'; dotw = 0 })
+
+      it('returns 1 (Weekend)', () => { expect(result).toBe(1) })
+    })
+
+    context('on a special date (the day after Thanksgiving 2025)', () => {
+      beforeEach(() => { date = '2025-11-28'; dotw = 5 })
+
+      it('returns 2 (Holiday) regardless of dotw', () => { expect(result).toBe(2) })
+    })
+  })
+
+  describe('an instance', () => {
+    let goodTime, schedule
+
+    beforeEach(() => { goodTime = new GoodTimes('2020-10-15T08:10:10') }) // Thursday morning
+
+    justBeforeEach(() => { schedule = new CaltrainSchedule(goodTime) })
+
+    describe('#label()', () => {
+      it("returns today's schedule, Weekday on a Thursday", () => {
+        expect(schedule.label()).toBe('Weekday')
+      })
+    })
+
+    describe('#swapped()', () => {
+      it("returns false while today's schedule is selected", () => {
+        expect(schedule.swapped()).toBe(false)
+      })
+    })
+
+    describe('#next()', () => {
+      justBeforeEach(() => { schedule.next() })
+
+      it('selects the next schedule', () => {
+        expect(schedule.selected).toBe(1)
+        expect(schedule.label()).toBe('Weekend')
+      })
+
+      it('marks the schedule as swapped', () => {
+        expect(schedule.swapped()).toBe(true)
+      })
+    })
+
+    describe('#tomorrowLabel()', () => {
+      let result
+
+      justBeforeEach(() => { result = schedule.tomorrowLabel(goodTime) })
+
+      context('when today is Thursday', () => {
+        beforeEach(() => { goodTime = new GoodTimes('2020-10-15T12:00:00') })
+
+        it('returns Weekday for tomorrow (Friday)', () => { expect(result).toBe('Weekday') })
+      })
+
+      context('when today is Friday', () => {
+        beforeEach(() => { goodTime = new GoodTimes('2020-10-16T12:00:00') })
+
+        it('returns Weekend for tomorrow (Saturday)', () => { expect(result).toBe('Weekend') })
+      })
+
+      context('when today is Sunday', () => {
+        beforeEach(() => { goodTime = new GoodTimes('2020-10-18T12:00:00') })
+
+        it('returns Weekday for tomorrow (Monday)', () => { expect(result).toBe('Weekday') })
+      })
+    })
+  })
+})

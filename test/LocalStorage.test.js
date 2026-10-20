@@ -1,34 +1,67 @@
-import { LocalStorage } from '../src/LocalStorage.js';
-import { caltrainServiceData } from '../src/@caltrainServiceData.js';
-const sinon = require('sinon');
+// @vitest-environment jsdom
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { justBeforeEach } from 'penultimate'
+import { LocalStorage } from '../src/LocalStorage.js'
+import { caltrainServiceData } from '../src/@caltrainServiceData.js'
+
+const context = describe
 
 describe('LocalStorage', () => {
-  sinon.stub(Date.prototype, 'getHours').returns(10);
-  let ls;
+  let hour, ls
 
   beforeEach(() => {
-    ls = new LocalStorage(caltrainServiceData.southStops);
-  });
+    localStorage.clear()
+    hour = 10
+    vi.spyOn(Date.prototype, 'getHours').mockImplementation(() => hour)
+  })
+
+  afterEach(() => { vi.restoreAllMocks() })
+
+  justBeforeEach(() => { ls = new LocalStorage(caltrainServiceData.southStops) })
 
   describe('#tripLabels()', () => {
-    it('should return trip labels', () => {
-      expect(ls.tripLabels()).toEqual(['Palo Alto to', 'San Francisco']);
-    });
-  });
+    context('in the morning', () => {
+      it('goes from the morning stop to the evening stop', () => {
+        expect(ls.tripLabels()).toEqual(['Palo Alto to', 'San Francisco'])
+      })
+    })
+
+    context('in the afternoon', () => {
+      beforeEach(() => { hour = 14 })
+
+      it('goes the other way', () => {
+        expect(ls.tripLabels()).toEqual(['San Francisco', 'to Palo Alto'])
+      })
+    })
+  })
 
   describe('#flipStations()', () => {
-    it('should flip stations', () => {
-      ls.flipStations();
-      expect(ls.tripLabels()).toEqual(['San Francisco', 'to Palo Alto']);
-    });
-  });
+    justBeforeEach(() => { ls.flipStations() })
+
+    it('swaps origin and destination', () => {
+      expect(ls.tripLabels()).toEqual(['San Francisco', 'to Palo Alto'])
+    })
+  })
 
   describe('#bumpStations()', () => {
-    it('should bump stations', () => {
-      ls.bumpStations(true, true);
-      expect(ls.tripLabels()).toEqual(['Menlo Park', 'to San Francisco']);
-      ls.bumpStations(false, false);
-      expect(ls.tripLabels()).toEqual(['Menlo Park', 'to 22nd Street']);
-    });
-  });
-});
+    let origin, increment
+
+    justBeforeEach(() => { ls.bumpStations(origin, increment) })
+
+    context('when bumping the origin', () => {
+      beforeEach(() => { origin = true; increment = true })
+
+      it('moves the origin one stop', () => {
+        expect(ls.tripLabels()).toEqual(['Menlo Park', 'to San Francisco'])
+      })
+
+      context('and then the destination', () => {
+        justBeforeEach(() => { ls.bumpStations(false, false) })
+
+        it('moves the destination one stop too', () => {
+          expect(ls.tripLabels()).toEqual(['Menlo Park', 'to 22nd Street'])
+        })
+      })
+    })
+  })
+})

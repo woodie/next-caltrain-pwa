@@ -1,42 +1,50 @@
-let prefs = new LocalStorage(caltrainServiceData.southStops);
-let service = new CaltrainService();
-let app = false;
-let android = false;
-let kaiWeb1 = false;
-let kaiWeb2 = false;
-let kaiWeb = false;
-let schedule = null;
-let countdown = null;
-let trainId = null;
-let currentRoute = null;
-let currentRouteLabel = null;
-let offset = null;
-let goodTime = null;
-let skip = false;
-let splash = false;
-let hintIndex = -1;
-let menuIndex = 0;
-let delays = {};
-let delaySpan = null;
-let listing = null;
-let vh = 228;
+/* global getKaiAd */
+import { caltrainServiceData } from './@caltrainServiceData.js'
+import { CaltrainSchedule } from './CaltrainSchedule.js'
+import { CaltrainService } from './CaltrainService.js'
+import { CaltrainTrip } from './CaltrainTrip.js'
+import { GoodTimes } from './GoodTimes.js'
+import { LocalStorage } from './LocalStorage.js'
+
+const prefs = new LocalStorage(caltrainServiceData.southStops)
+const service = new CaltrainService()
+let app = false
+let android = false
+let kaiWeb1 = false
+let kaiWeb2 = false
+let kaiWeb = false
+let schedule = null
+let countdown = null
+let trainId = null
+let currentRoute = null
+let currentRouteLabel = null
+let offset = null
+let goodTime = null
+let skip = false
+let splash = false
+let hintIndex = -1
+let menuIndex = 0
+let delays = {}
+let delaySpan = null
+let listing = null
+const vh = 228
 // window.innerWidth  240
 // window.innerHeight 228
 // window.outerWidth  240
 // window.outerHeight 320
 
-const OK = 13;
-const BACK = 95;
-const HANGUP = 8;
-const ESC = 27;
-const UP = 38;
-const DOWN = 40;
+const OK = 13
+const BACK = 95
+const HANGUP = 8
+const ESC = 27
+const UP = 38
+const DOWN = 40
 // const SPLAT = 170;
 // const POUND = 163;
 // const ZERO = 48;
 
-const screens = 'splash hero grid trip menu about commands prefs'.split(' ');
-const titles = { about: 'About Next Caltrain', commands: 'Keypad commands' };
+const screens = 'splash hero grid trip menu about commands prefs'.split(' ')
+const titles = { about: 'About Next Caltrain', commands: 'Keypad commands' }
 
 let hints = [
   [
@@ -69,156 +77,151 @@ let hints = [
     ['r'],
     'Press the [RIGHT] softkey<br/>twice to "Pin to Apps Menu".',
   ],
-];
+]
 
 export class NextCaltrain {
-  static startApp() {
-    if (document.location.search === '?app') app = true;
+  static startApp () {
+    if (document.location.search === '?app') app = true
     else if (
       document.location.search === '?kaiWeb1' ||
       navigator.userAgent.toLowerCase().indexOf('kaios/1') > -1
-    )
-      kaiWeb1 = true;
-    else if (
+    ) { kaiWeb1 = true } else if (
       document.location.search === '?kaiWeb2' ||
       navigator.userAgent.toLowerCase().indexOf('kaios') > -1
-    )
-      kaiWeb2 = true;
-    kaiWeb = kaiWeb1 || kaiWeb2;
-    if (navigator.userAgent.toLowerCase().indexOf('android') > -1)
-      android = true;
+    ) { kaiWeb2 = true }
+    kaiWeb = kaiWeb1 || kaiWeb2
+    if (navigator.userAgent.toLowerCase().indexOf('android') > -1) { android = true }
     if (!kaiWeb) {
-      document.getElementById('softkey-menu').style['display'] = 'flex';
-      document.getElementById('about-filler').style['display'] = 'flex';
-      document.getElementById('commands-filler').style['display'] = 'flex';
-      document.getElementById('content').className = 'full-screen';
+      document.getElementById('softkey-menu').style['display'] = 'flex'
+      document.getElementById('about-filler').style['display'] = 'flex'
+      document.getElementById('commands-filler').style['display'] = 'flex'
+      document.getElementById('content').className = 'full-screen'
     } else {
-      document.getElementById('content').className = 'part-screen';
-      document.getElementById('hero-screen').style['display'] = 'none';
-      document.getElementById('splash-screen').style['display'] = 'flex';
-      splash = true;
+      document.getElementById('content').className = 'part-screen'
+      document.getElementById('hero-screen').style['display'] = 'none'
+      document.getElementById('splash-screen').style['display'] = 'flex'
+      splash = true
     }
     // render a keyboard
     if (window.outerHeight > 320 && !kaiWeb) {
-      document.getElementById('keypad').style['display'] = 'flex';
+      document.getElementById('keypad').style['display'] = 'flex'
     }
     // setup the app state
-    const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate);
-    delaySpan = document.getElementById('delay-span');
-    listing = document.getElementById('listing');
-    document.getElementById('date-string').innerHTML = dateString;
-    NextCaltrain.attachListeners();
-    NextCaltrain.setTheTime();
-    NextCaltrain.formatHints();
+    const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate)
+    delaySpan = document.getElementById('delay-span')
+    listing = document.getElementById('listing')
+    document.getElementById('date-string').innerHTML = dateString
+    NextCaltrain.attachListeners()
+    NextCaltrain.setTheTime()
+    NextCaltrain.formatHints()
     // get the deplay message once
     fetch('/delays')
       .then((response) => response.json())
       .then((data) => (delays = data))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
   }
 
-  static formatHints() {
-    if (!kaiWeb) hints = hints.slice(0, 5);
+  static formatHints () {
+    if (!kaiWeb) hints = hints.slice(0, 5)
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2]
           .replace(/\[/g, '<span class=\'btn\'>')
-          .replace(/\]/g, '</span>');
-        if (kaiWeb1)
-          hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites');
+          .replace(/\]/g, '</span>')
+        if (kaiWeb1) { hints[i][n * 2] = hints[i][n * 2].replace(/Apps Menu/, 'Top Sites') }
       }
     }
   }
 
-  static bumpKeypadHint() {
-    hintIndex++;
+  static bumpKeypadHint () {
+    hintIndex++
     if (hintIndex >= hints.length) {
-      hintIndex = -1;
-      NextCaltrain.displayScreen('hero');
-      return;
+      hintIndex = -1
+      NextCaltrain.displayScreen('hero')
+      return
     } else if (hintIndex === hints.length - 1) {
-      NextCaltrain.populateSoftkeyMenu('', 'OK', '');
+      NextCaltrain.populateSoftkeyMenu('', 'OK', '')
     }
-    document.getElementById('hint-above').innerHTML = hints[hintIndex][0];
-    document.getElementById('hint-below').innerHTML = hints[hintIndex][2];
+    document.getElementById('hint-above').innerHTML = hints[hintIndex][0]
+    document.getElementById('hint-below').innerHTML = hints[hintIndex][2]
     if (Array.isArray(hints[hintIndex][1])) {
-      document.getElementById('mini-keypad').style['display'] = 'flex';
-      document.getElementById('hint-center').style['display'] = 'none';
+      document.getElementById('mini-keypad').style['display'] = 'flex'
+      document.getElementById('hint-center').style['display'] = 'none'
       for (let i = 1; i < 15; i++) {
-        let key = i < 10 ? i : ['l', 'r', 'c', 'o', 'h'][i - 10];
-        let cls =
-          hints[hintIndex][1].indexOf(key) === -1 ? 'default' : 'selected';
-        document.getElementById(`k${key}`).className = cls;
+        const key = i < 10 ? i : ['l', 'r', 'c', 'o', 'h'][i - 10]
+        const cls =
+          hints[hintIndex][1].indexOf(key) === -1 ? 'default' : 'selected'
+        document.getElementById(`k${key}`).className = cls
       }
     } else {
-      document.getElementById('mini-keypad').style['display'] = 'none';
-      document.getElementById('hint-center').style['display'] = 'block';
-      document.getElementById('hint-center').innerHTML = hints[hintIndex][1];
+      document.getElementById('mini-keypad').style['display'] = 'none'
+      document.getElementById('hint-center').style['display'] = 'block'
+      document.getElementById('hint-center').innerHTML = hints[hintIndex][1]
     }
   }
 
-  static moveMenuSelection() {
-    let menuOptions = document
+  static moveMenuSelection () {
+    const menuOptions = document
       .getElementById('menu-list')
-      .getElementsByTagName('li');
+      .getElementsByTagName('li')
     if (menuIndex >= menuOptions.length) {
-      menuIndex = 0;
+      menuIndex = 0
     } else if (menuIndex < 0) {
-      menuIndex = menuOptions.length - 1;
+      menuIndex = menuOptions.length - 1
     }
     for (let i = 0; i < menuOptions.length; i++) {
-      menuOptions[i].className = menuIndex === i ? 'selected' : '';
+      menuOptions[i].className = menuIndex === i ? 'selected' : ''
     }
   }
 
-  static setTheTime() {
-    let ourTime = new GoodTimes();
-    let partTime = ourTime.partTime();
-    schedule = new CaltrainSchedule(ourTime);
-    document.getElementById('time').innerHTML = partTime[0];
-    document.getElementById('ampm').innerHTML = partTime[1].toUpperCase();
+  static setTheTime () {
+    const ourTime = new GoodTimes()
+    const partTime = ourTime.partTime()
+    schedule = new CaltrainSchedule(ourTime)
+    document.getElementById('time').innerHTML = partTime[0]
+    document.getElementById('ampm').innerHTML = partTime[1].toUpperCase()
     setTimeout(function () {
-      NextCaltrain.setTheTime();
-    }, (60 - ourTime.seconds) * 1000);
-    NextCaltrain.loadSchedule();
+      NextCaltrain.setTheTime()
+    }, (60 - ourTime.seconds) * 1000)
+    NextCaltrain.loadSchedule()
   }
 
-  static setCountdown(minutes) {
-    let downTime = new GoodTimes();
-    let blurb = downTime.countdown(minutes);
-    document.getElementById('blurb-grid').innerHTML = blurb;
-    document.getElementById('blurb-hero').innerHTML = blurb;
+  static setCountdown (minutes) {
+    const downTime = new GoodTimes()
+    const blurb = downTime.countdown(minutes)
+    document.getElementById('blurb-grid').innerHTML = blurb
+    document.getElementById('blurb-hero').innerHTML = blurb
     if (blurb !== '') {
-      let refresh = blurb.endsWith('sec')
+      const refresh = blurb.endsWith('sec')
         ? 1000
-        : (60 - downTime.seconds) * 1000;
+        : (60 - downTime.seconds) * 1000
       countdown = setTimeout(function () {
-        NextCaltrain.setCountdown(minutes);
-      }, refresh);
+        NextCaltrain.setCountdown(minutes)
+      }, refresh)
     }
   }
 
-  static populateStops(labels) {
-    document.getElementById('origin-grid').innerHTML = labels[0];
-    document.getElementById('destin-grid').innerHTML = labels[1];
-    document.getElementById('origin-hero').innerHTML = labels[0];
-    document.getElementById('destin-hero').innerHTML = labels[1];
+  static populateStops (labels) {
+    document.getElementById('origin-grid').innerHTML = labels[0]
+    document.getElementById('destin-grid').innerHTML = labels[1]
+    document.getElementById('origin-hero').innerHTML = labels[0]
+    document.getElementById('destin-hero').innerHTML = labels[1]
   }
 
-  static populateBlurb(message, textClass) {
-    document.getElementById('blurb-grid').innerHTML = message;
-    document.getElementById('blurb-grid').className = textClass;
+  static populateBlurb (message, textClass) {
+    document.getElementById('blurb-grid').innerHTML = message
+    document.getElementById('blurb-grid').className = textClass
     document.getElementById('blurb-hero').innerHTML = message.replace(
       ' Schedule',
       ''
-    );
-    document.getElementById('blurb-hero').className = textClass;
+    )
+    document.getElementById('blurb-hero').className = textClass
   }
 
-  static populateSoftkeyMenu(left, center, right) {
-    document.getElementById('softkey-left').innerHTML = left;
-    document.getElementById('softkey-center').innerHTML = center;
-    document.getElementById('softkey-right').innerHTML = right;
+  static populateSoftkeyMenu (left, center, right) {
+    document.getElementById('softkey-left').innerHTML = left
+    document.getElementById('softkey-center').innerHTML = center
+    document.getElementById('softkey-right').innerHTML = right
   }
 
   /**
@@ -227,122 +230,121 @@ export class NextCaltrain {
    * duplicate transfer station at the start of the second leg.
    * route: [train, depart, arrive] or [train, depart, arrive, transferTrain, transferDepart]
    */
-  static loadTrip(route, label) {
-    goodTime = new GoodTimes();
-    const isTransfer = route.length >= 5;
+  static loadTrip (route, label) {
+    goodTime = new GoodTimes()
+    const isTransfer = route.length >= 5
     const legs = isTransfer
       ? [
           new CaltrainTrip(route[0], label),
           new CaltrainTrip(route[3], label),
         ]
-      : [new CaltrainTrip(route[0], label)];
+      : [new CaltrainTrip(route[0], label)]
 
     // Title: use second leg if its depart is already in the past (mirrors iOS currentLeg)
     const titleLeg =
-      isTransfer && goodTime.inThePast(route[4]) ? legs[1] : legs[0];
-    const titleTrain = isTransfer && goodTime.inThePast(route[4]) ? route[3] : route[0];
+      isTransfer && goodTime.inThePast(route[4]) ? legs[1] : legs[0]
 
-    const TRANSFER_STATION = 'San Jose Diridon';
-    const lines = [];
-    const bullet = android ? '&#x2022;' : '&#9679;';
-    const dot_is = android ? 'android' : 'station';
+    const TRANSFER_STATION = 'San Jose Diridon'
+    const lines = []
+    const bullet = android ? '&#x2022;' : '&#9679;'
+    const dotIs = android ? 'android' : 'station'
 
     legs.forEach((leg, legIndex) => {
-      const isSecondLeg = legIndex > 0;
+      const isSecondLeg = legIndex > 0
       for (let i = 0; i < leg.times.length; i++) {
-        const stop = leg.times[i];
-        const stationName = stop[0];
-        const time = stop[1];
+        const stop = leg.times[i]
+        const stationName = stop[0]
+        const time = stop[1]
 
         // Skip the transfer station at the top of the second leg (already shown as last of leg 1)
-        if (isSecondLeg && stationName === TRANSFER_STATION) continue;
+        if (isSecondLeg && stationName === TRANSFER_STATION) continue
 
-        const spacer = lines.length === 0 ? '' : '|';
-        const fullTime = GoodTimes.fullTime(time);
-        const filler = fullTime.length > 6 ? '' : '0';
-        const style = goodTime.inThePast(time) ? 'message-departed' : 'message-arriving';
+        const spacer = lines.length === 0 ? '' : '|'
+        const fullTime = GoodTimes.fullTime(time)
+        const filler = fullTime.length > 6 ? '' : '0'
+        const style = goodTime.inThePast(time) ? 'message-departed' : 'message-arriving'
 
         // Mark origin, destination, and transfer station
-        const isOrigin = stationName === prefs.origin && legIndex === 0 && i === 0;
-        const isDest = stationName === prefs.destin;
-        const isXfer = isTransfer && legIndex === 0 && stationName === TRANSFER_STATION;
-        const target = isOrigin || isDest ? 'target' : isXfer ? 'transfer' : '';
+        const isOrigin = stationName === prefs.origin && legIndex === 0 && i === 0
+        const isDest = stationName === prefs.destin
+        const isXfer = isTransfer && legIndex === 0 && stationName === TRANSFER_STATION
+        const target = isOrigin || isDest ? 'target' : isXfer ? 'transfer' : ''
 
         // Sublabel at transfer station
         const sublabel = isXfer
           ? `<div class="transfer-label">transfer to #${route[3]}</div>`
-          : '';
+          : ''
 
         lines.push(`<div class="station-stop">
           <div class="station-time"><br/><span
                class="hour-filler">${filler}</span>${fullTime}</div>
           <div class="station-spacer ${style}">${spacer}<br/><span
-               class="${dot_is}-dot ${target}">${bullet}</span></div>
-          <div class="station-name"><br/>${stationName}${sublabel}</div></div>`);
+               class="${dotIs}-dot ${target}">${bullet}</span></div>
+          <div class="station-name"><br/>${stationName}${sublabel}</div></div>`)
       }
-    });
+    })
 
-    listing.innerHTML = lines.join('\n');
-    document.getElementById('trip-filler').innerHTML = titleLeg.label();
-    document.title = titleLeg.label();
+    listing.innerHTML = lines.join('\n')
+    document.getElementById('trip-filler').innerHTML = titleLeg.label()
+    document.title = titleLeg.label()
   }
 
-  static loadSchedule() {
-    goodTime = new GoodTimes();
-    clearTimeout(countdown);
-    NextCaltrain.populateStops(prefs.tripLabels());
+  static loadSchedule () {
+    goodTime = new GoodTimes()
+    clearTimeout(countdown)
+    NextCaltrain.populateStops(prefs.tripLabels())
 
     // Build today's routes
-    let routes = service.routes(prefs.origin, prefs.destin, schedule.label());
+    let routes = service.routes(prefs.origin, prefs.destin, schedule.label())
 
     // Append tomorrow's routes shifted by +1440 minutes, tagged isFuture.
     // Preserve transfer fields: [train, depart, arrive, transferTrain, transferDepart] -> [..., true]
-    const tomorrowLabel = schedule.tomorrowLabel(goodTime);
+    const tomorrowLabel = schedule.tomorrowLabel(goodTime)
     const tomorrowRoutes = service
       .routes(prefs.origin, prefs.destin, tomorrowLabel)
       .map((route) => {
         if (route.length === 5) {
           // transfer route
-          return [route[0], route[1] + 1440, route[2] + 1440, route[3], route[4] + 1440, true];
+          return [route[0], route[1] + 1440, route[2] + 1440, route[3], route[4] + 1440, true]
         } else {
           // direct route
-          return [route[0], route[1] + 1440, route[2] + 1440, true];
+          return [route[0], route[1] + 1440, route[2] + 1440, true]
         }
-      });
-    routes = routes.concat(tomorrowRoutes);
+      })
+    routes = routes.concat(tomorrowRoutes)
 
-    let minutes = 0;
+    let minutes = 0
     if (offset === null) {
-      minutes = goodTime.minutes;
-      offset = CaltrainService.nextIndex(routes, minutes);
+      minutes = goodTime.minutes
+      offset = CaltrainService.nextIndex(routes, minutes)
     } else if (offset > routes.length - 1) {
-      offset = 0;
+      offset = 0
     } else if (offset < 0) {
-      offset = routes.length - 1;
+      offset = routes.length - 1
     }
     // Populate the grid view
     for (let i = 0; i < 6; i++) {
-      let tripCardElement = document.getElementById(`trip${i}`);
-      let n =
+      const tripCardElement = document.getElementById(`trip${i}`)
+      const n =
         offset + i > routes.length - 1
           ? offset + i - routes.length
-          : offset + i;
-      let route = routes[n];
+          : offset + i
+      const route = routes[n]
       if (i > routes.length - 1) {
         if (i === 0) {
-          trainId = null;
-          currentRoute = null;
-          NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink');
-          document.getElementById('circle').className = 'selection-departed';
-          document.getElementById('trip0').className = 'selection-none';
+          trainId = null
+          currentRoute = null
+          NextCaltrain.populateBlurb('NO TRAINS', 'message-departed blink')
+          document.getElementById('circle').className = 'selection-departed'
+          document.getElementById('trip0').className = 'selection-none'
           document.getElementById('trip').innerHTML =
-            '<span class="time-hero">&nbsp;</span>';
-          document.getElementById('trip-type').innerHTML = '&nbsp;';
-          document.getElementById('title').innerHTML = 'Next Caltrain';
-          document.title = 'Next Caltrain';
+            '<span class="time-hero">&nbsp;</span>'
+          document.getElementById('trip-type').innerHTML = '&nbsp;'
+          document.getElementById('title').innerHTML = 'Next Caltrain'
+          document.title = 'Next Caltrain'
         }
-        tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>';
-        continue; // clear previous values.
+        tripCardElement.innerHTML = '<div class="train-time">&nbsp;</div>'
+        continue // clear previous values.
       }
 
       // Detect route shape:
@@ -350,135 +352,134 @@ export class NextCaltrain {
       //   direct+future:    [train, depart, arrive, true]
       //   transfer:         [train, depart, arrive, transferTrain, transferDepart]
       //   transfer+future:  [train, depart, arrive, transferTrain, transferDepart, true]
-      const isTransfer = route.length === 5 || route.length === 6;
+      const isTransfer = route.length === 5 || route.length === 6
       const isFuture = (route.length === 4 && route[3] === true) ||
-                       (route.length === 6 && route[5] === true);
+                       (route.length === 6 && route[5] === true)
 
       // For display, use the unshifted time (subtract 1440 for tomorrow trips)
-      const displayDepart = isFuture ? route[1] - 1440 : route[1];
-      const displayArrive = isFuture ? route[2] - 1440 : route[2];
-      minutes = route[1]; // keep shifted time for nextIndex comparisons
-      let originTime = GoodTimes.partTime(displayDepart);
-      let destinTime = GoodTimes.partTime(displayArrive);
+      const displayDepart = isFuture ? route[1] - 1440 : route[1]
+      const displayArrive = isFuture ? route[2] - 1440 : route[2]
+      minutes = route[1] // keep shifted time for nextIndex comparisons
+      const originTime = GoodTimes.partTime(displayDepart)
+      const destinTime = GoodTimes.partTime(displayArrive)
 
       // For transfer routes, show both train numbers
-      const trainLabel = isTransfer ? `#${route[0]}+#${route[3]}` : `#${route[0]}`;
-      let card = `<div class="train-number">${trainLabel}</div>
+      const trainLabel = isTransfer ? `#${route[0]}+#${route[3]}` : `#${route[0]}`
+      const card = `<div class="train-number">${trainLabel}</div>
           <div class="train-time">${originTime[0]}<span class="meridiem">${originTime[1]}</span></div>
-          <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`;
-      tripCardElement.innerHTML = card;
+          <div class="train-time">${destinTime[0]}<span class="meridiem">${destinTime[1]}</span></div>`
+      tripCardElement.innerHTML = card
       if (i === 0) {
-        let tripTime = `<span class="train-hero">${trainLabel}</span>
+        const tripTime = `<span class="train-hero">${trainLabel}</span>
             <span class="time-hero">${originTime[0]}</span>
-            <span class="meridiem-hero">${originTime[1]}</span>`;
-        document.getElementById('trip').innerHTML = tripTime;
-        trainId = route[0];
-        currentRoute = route;
-        currentRouteLabel = isFuture ? tomorrowLabel : schedule.label();
-        let message, textClass, tripClass, wrapClass;
+            <span class="meridiem-hero">${originTime[1]}</span>`
+        document.getElementById('trip').innerHTML = tripTime
+        trainId = route[0]
+        currentRoute = route
+        currentRouteLabel = isFuture ? tomorrowLabel : schedule.label()
+        let message, textClass, tripClass, wrapClass
         if (isFuture) {
           // Tomorrow's trip: show schedule label, inactive/departed styling, no countdown
-          message = tomorrowLabel + ' Schedule';
-          textClass = 'message-departed';
-          tripClass = 'message-departed';
-          wrapClass = 'selection-departed';
+          message = tomorrowLabel + ' Schedule'
+          textClass = 'message-departed'
+          tripClass = 'message-departed'
+          wrapClass = 'selection-departed'
         } else if (schedule.swapped()) {
-          message = schedule.label() + ' Schedule';
-          textClass = 'message-departed';
-          tripClass = goodTime.inThePast(minutes) ? 'message-departed' : '';
-          wrapClass = 'selection-departed';
+          message = schedule.label() + ' Schedule'
+          textClass = 'message-departed'
+          tripClass = goodTime.inThePast(minutes) ? 'message-departed' : ''
+          wrapClass = 'selection-departed'
         } else if (goodTime.inThePast(minutes)) {
-          message = schedule.label() + ' Schedule';
-          textClass = 'message-departed';
-          tripClass = 'message-departed';
-          wrapClass = 'selection-departed';
+          message = schedule.label() + ' Schedule'
+          textClass = 'message-departed'
+          tripClass = 'message-departed'
+          wrapClass = 'selection-departed'
         } else if (goodTime.departing(minutes)) {
-          message = 'DEPARTING';
-          textClass = 'message-departing blink';
-          wrapClass = 'selection-departing';
+          message = 'DEPARTING'
+          textClass = 'message-departing blink'
+          wrapClass = 'selection-departing'
         } else {
-          message = goodTime.countdown(minutes);
-          textClass = 'message-arriving';
-          wrapClass = 'selection-arriving';
+          message = goodTime.countdown(minutes)
+          textClass = 'message-arriving'
+          wrapClass = 'selection-arriving'
           if (minutes > 0) {
-            NextCaltrain.setCountdown(minutes);
+            NextCaltrain.setCountdown(minutes)
           }
         }
-        document.getElementById('circle').className = wrapClass;
-        document.getElementById('trip').className = tripClass;
+        document.getElementById('circle').className = wrapClass
+        document.getElementById('trip').className = tripClass
         document.getElementById('trip-type').innerHTML =
-          CaltrainTrip.type(trainId);
+          CaltrainTrip.type(trainId)
         if (trainId && NextCaltrain.currentScreen() === 'grid') {
           document.getElementById('title').innerHTML = `${CaltrainTrip.type(
             trainId
-          )} Service`;
-          document.title = `${CaltrainTrip.type(trainId)} Service`;
+          )} Service`
+          document.title = `${CaltrainTrip.type(trainId)} Service`
         }
         tripCardElement.className = [
           'trip-card',
           'selection',
           tripClass,
           wrapClass,
-        ].join(' ');
-        NextCaltrain.populateBlurb(message, textClass);
+        ].join(' ')
+        NextCaltrain.populateBlurb(message, textClass)
         delaySpan.innerHTML =
-          trainId in delays ? `${delays[trainId]} minutes late` : '';
+          trainId in delays ? `${delays[trainId]} minutes late` : ''
       } else {
         if (isFuture || goodTime.inThePast(minutes)) {
-          tripCardElement.className = 'trip-card message-departed';
+          tripCardElement.className = 'trip-card message-departed'
         } else {
-          tripCardElement.className = 'trip-card';
+          tripCardElement.className = 'trip-card'
         }
       }
     }
   }
 
-  static currentScreen() {
+  static currentScreen () {
     for (let i = 0; i < screens.length; i++) {
       if (
         document.getElementById(`${screens[i]}-screen`).style['display'] ===
         'flex'
-      )
-        return screens[i];
+      ) { return screens[i] }
     }
-    return screens[0];
+    return screens[0]
   }
 
-  static displayScreen(target) {
+  static displayScreen (target) {
     // set the target screen
     for (let i = 0; i < screens.length; i++) {
-      let display = target === screens[i] ? 'flex' : 'none';
+      const display = target === screens[i] ? 'flex' : 'none'
       document.getElementById(`${screens[i]}-screen`).style['display'] =
-        display;
+        display
     }
     // set softkey menu
     if (!kaiWeb) {
       if (target === 'hero') {
-        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Options');
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Options')
       } else if (target === 'grid') {
-        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Options');
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', 'Options')
       } else if (target === 'trip') {
-        NextCaltrain.populateSoftkeyMenu('', 'BACK', 'Options');
+        NextCaltrain.populateSoftkeyMenu('', 'BACK', 'Options')
       } else if (target === 'menu') {
-        NextCaltrain.populateSoftkeyMenu('', 'SELECT', '');
+        NextCaltrain.populateSoftkeyMenu('', 'SELECT', '')
       } else if (target === 'prefs') {
-        NextCaltrain.populateSoftkeyMenu('Cancel', '', 'OK');
+        NextCaltrain.populateSoftkeyMenu('Cancel', '', 'OK')
       } else if (target === 'about') {
-        NextCaltrain.populateSoftkeyMenu('', 'OK', '');
+        NextCaltrain.populateSoftkeyMenu('', 'OK', '')
       } else if (target === 'commands') {
-        NextCaltrain.populateSoftkeyMenu('', 'NEXT', '');
+        NextCaltrain.populateSoftkeyMenu('', 'NEXT', '')
       }
     }
     // set the title
-    document.getElementById('title').innerHTML = 'Next Caltrain';
-    document.title = target in titles ? titles[target] : 'Next Caltrain';
+    document.getElementById('title').innerHTML = 'Next Caltrain'
+    document.title = target in titles ? titles[target] : 'Next Caltrain'
     // load schedule (and override the title)
     if (target === 'grid' || target === 'hero') {
-      NextCaltrain.loadSchedule();
+      NextCaltrain.loadSchedule()
     }
   }
 
-  static attachListeners() {
+  static attachListeners () {
     // https://www.kaiads.com/publishers/sdk.html
     document.addEventListener('DOMContentLoaded', () => {
       if (app && navigator.userAgent.toLowerCase().indexOf('kaios/2') > -1) {
@@ -489,225 +490,224 @@ export class NextCaltrain {
           test: 0,
           onerror: (err) => console.error('Custom catch:', err),
           onready: (ad) => {
-            ad.call('display');
+            ad.call('display')
           },
-        });
+        })
       }
-    });
+    })
     document.addEventListener('touchstart', function (e) {
-      let code = null;
+      let code = null
       if (e.target.id === 'softkey-center') {
-        code = OK;
+        code = OK
       } else if (e.target.id === 'softkey-left') {
-        code = 'sl';
+        code = 'sl'
       } else if (e.target.id === 'softkey-right') {
-        code = 'sr';
+        code = 'sr'
       } else if (e.target.getAttribute('value') === 'about') {
-        code = 'about';
+        code = 'about'
       } else if (e.target.getAttribute('value') === 'commands') {
-        code = 'commands';
+        code = 'commands'
       } else if (e.target.getAttribute('value') === 'prefs') {
-        code = 'prefs';
+        code = 'prefs'
       } else {
-        return;
+        return
       }
-      NextCaltrain.press(code);
-    });
+      NextCaltrain.press(code)
+    })
     document.addEventListener('mousemove', function (e) {
-      if (!kaiWeb) return;
-      skip = skip ? false : true;
+      if (!kaiWeb) return
+      skip = !skip
       // Display splash screen unless cursor all-the-way right
       if (kaiWeb && splash && e.clientX >= 239) {
-        splash = false;
-        NextCaltrain.displayScreen('hero');
+        splash = false
+        NextCaltrain.displayScreen('hero')
       } else if (kaiWeb && !splash && e.clientX < 239) {
-        splash = true;
-        NextCaltrain.displayScreen('splash');
+        splash = true
+        NextCaltrain.displayScreen('splash')
         // Convert cursor movements to UP/DOWN events
       } else if (e.movementY > 0) {
-        NextCaltrain.press(DOWN);
+        NextCaltrain.press(DOWN)
         if (skip) {
-          NextCaltrain.press(DOWN);
-          skip = false;
+          NextCaltrain.press(DOWN)
+          skip = false
         }
       } else if (e.movementY < 0) {
-        NextCaltrain.press(UP);
+        NextCaltrain.press(UP)
         if (skip) {
-          NextCaltrain.press(UP);
-          skip = false;
+          NextCaltrain.press(UP)
+          skip = false
         }
         // Infer UP/DOWN when cursor bottoms/tops out
       } else if (e.movementX === 0 && !skip) {
         if (e.clientY === 0) {
-          NextCaltrain.press(UP);
+          NextCaltrain.press(UP)
         } else if (e.clientY >= vh - 1) {
-          NextCaltrain.press(DOWN);
+          NextCaltrain.press(DOWN)
         }
       }
-    });
+    })
     // Catch and convert cursor click to OK event.
     document.addEventListener('click', function () {
       if (kaiWeb) {
-        NextCaltrain.press(OK);
+        NextCaltrain.press(OK)
       }
-    });
+    })
     // Catch keydown events.
     document.addEventListener('keydown', function (e) {
-      let code = e.keyCode ? e.keyCode : e.which;
+      let code = e.keyCode ? e.keyCode : e.which
       if (code === HANGUP) {
         // Catch and convert HANGUP to BACK
-        code = BACK;
+        code = BACK
         if (NextCaltrain.currentScreen() !== 'hero') {
           // Support native EXIT on hero screen.
-          e.preventDefault();
+          e.preventDefault()
         } else {
-          return;
+          return
         }
       } else if (e.key === 'Call' || code === 220) {
-        code = 'call';
+        code = 'call'
       } else if (e.key === 'SoftLeft' || e.key === '[') {
-        code = 'sl';
+        code = 'sl'
         // Supress native SEARCH action.
-        e.preventDefault();
+        e.preventDefault()
       } else if (e.key === 'SoftRight' || e.key === ']') {
-        code = 'sr';
+        code = 'sr'
         // Support native OPTIONS on menu screen.
-        if (NextCaltrain.currentScreen() !== 'menu') e.preventDefault();
+        if (NextCaltrain.currentScreen() !== 'menu') e.preventDefault()
       } else if (e.key === '1' || e.key === '3') {
         // Catch 1,3 to stifle zoom in/out.
-        e.preventDefault();
+        e.preventDefault()
       } else if (e.key === '2') {
         // Catch 2 to stifle screen lock.
-        e.preventDefault();
+        e.preventDefault()
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
-        e.preventDefault();
+        e.preventDefault()
       }
-      NextCaltrain.press(code);
-    });
+      NextCaltrain.press(code)
+    })
   }
 
-  static press(code) {
-    if (splash) return;
+  static press (code) {
+    if (splash) return
     if (code === ESC) {
       // Simulate EXIT.
-      NextCaltrain.displayScreen('hero');
+      NextCaltrain.displayScreen('hero')
     } else if (code === 'prefs') {
       // Display the 'Save stations' confirmation.
-      let confirmation = [
+      const confirmation = [
         'Save',
         prefs.flipped ? prefs.destin : prefs.origin,
         'as morning and',
         prefs.flipped ? prefs.origin : prefs.destin,
         'as evening default stations?',
-      ].join(' ');
-      //if (confirm(confirmation)) prefs.saveStops();
-      document.getElementById('confirmation').innerHTML = confirmation;
-      NextCaltrain.displayScreen('prefs');
+      ].join(' ')
+      // if (confirm(confirmation)) prefs.saveStops();
+      document.getElementById('confirmation').innerHTML = confirmation
+      NextCaltrain.displayScreen('prefs')
     } else if (code === 'about') {
       // Display the 'About' screen.
-      NextCaltrain.displayScreen('about');
+      NextCaltrain.displayScreen('about')
     } else if (code === 'commands') {
       // Display the 'Keypad commands' screen.
-      NextCaltrain.bumpKeypadHint();
-      NextCaltrain.displayScreen('commands');
+      NextCaltrain.bumpKeypadHint()
+      NextCaltrain.displayScreen('commands')
     } else if (NextCaltrain.currentScreen() === 'about') {
       // Handle events on the 'About' screen.
       if (code === OK || code === BACK) {
-        NextCaltrain.displayScreen('hero');
+        NextCaltrain.displayScreen('hero')
       }
     } else if (NextCaltrain.currentScreen() === 'commands') {
       // Handle events on the 'Keypad commands' screen.
       if (code === OK) {
-        NextCaltrain.bumpKeypadHint();
+        NextCaltrain.bumpKeypadHint()
       } else if (code === BACK) {
-        hintIndex = -1;
+        hintIndex = -1
         // set title
-        NextCaltrain.displayScreen('hero');
+        NextCaltrain.displayScreen('hero')
       }
     } else if (NextCaltrain.currentScreen() === 'prefs') {
       if ((kaiWeb && code === OK) || (!kaiWeb && code === 'sr')) {
-        prefs.saveStops();
-        NextCaltrain.displayScreen('hero');
+        prefs.saveStops()
+        NextCaltrain.displayScreen('hero')
       } else if ((kaiWeb && code === BACK) || (!kaiWeb && code === 'sl')) {
-        NextCaltrain.displayScreen('hero');
+        NextCaltrain.displayScreen('hero')
       }
     } else if (NextCaltrain.currentScreen() === 'menu') {
       // Handle and catch events intended for the menu.
       if (code === OK) {
-        let menuOptions = document
+        const menuOptions = document
           .getElementById('menu-list')
-          .getElementsByTagName('li');
-        let action = menuOptions[menuIndex].getAttribute('value');
-        menuIndex = 0;
-        //if (action === 'prefs') NextCaltrain.displayScreen('hero');
-        NextCaltrain.press(action);
+          .getElementsByTagName('li')
+        const action = menuOptions[menuIndex].getAttribute('value')
+        menuIndex = 0
+        // if (action === 'prefs') NextCaltrain.displayScreen('hero');
+        NextCaltrain.press(action)
       } else if (code === UP) {
-        menuIndex--;
+        menuIndex--
       } else if (code === DOWN) {
-        menuIndex++;
+        menuIndex++
       } else if (code === BACK) {
-        menuIndex = 0;
-        NextCaltrain.displayScreen('hero');
+        menuIndex = 0
+        NextCaltrain.displayScreen('hero')
       }
-      NextCaltrain.moveMenuSelection();
+      NextCaltrain.moveMenuSelection()
     } else if (code === 'sr') {
-      menuIndex = 0;
-      NextCaltrain.displayScreen('menu');
+      menuIndex = 0
+      NextCaltrain.displayScreen('menu')
     } else if (NextCaltrain.currentScreen() === 'trip') {
       // Handle events for the trip screen.
       if (code === OK || code === BACK) {
-        NextCaltrain.displayScreen('grid');
+        NextCaltrain.displayScreen('grid')
       } else if (code === UP) {
-        if (listing.scrollTop > 0) listing.scrollTo(0, listing.scrollTop - 72);
+        if (listing.scrollTop > 0) listing.scrollTo(0, listing.scrollTop - 72)
       } else if (code === DOWN) {
-        if (listing.scrollTop < listing.scrollHeight - 228)
-          listing.scrollTo(0, listing.scrollTop + 72);
+        if (listing.scrollTop < listing.scrollHeight - 228) { listing.scrollTo(0, listing.scrollTop + 72) }
       }
     } else if (
       code === OK &&
       NextCaltrain.currentScreen() === 'grid' &&
       trainId !== null
     ) {
-      NextCaltrain.displayScreen('trip');
-      NextCaltrain.loadTrip(currentRoute, currentRouteLabel);
+      NextCaltrain.displayScreen('trip')
+      NextCaltrain.loadTrip(currentRoute, currentRouteLabel)
     } else {
       // Handle events for the hero and grid screens.
       if (code === BACK) {
-        NextCaltrain.displayScreen('hero');
+        NextCaltrain.displayScreen('hero')
       } else if (code === OK) {
-        NextCaltrain.displayScreen('grid');
+        NextCaltrain.displayScreen('grid')
       } else if (code === UP) {
-        offset--;
+        offset--
       } else if (code === DOWN) {
-        offset++;
+        offset++
       } else if (code === 49 || code === 55) {
         // 1 or 7
-        offset = null;
-        prefs.bumpStations(true, false);
+        offset = null
+        prefs.bumpStations(true, false)
       } else if (code === 51 || code === 57) {
         // 3 or 9
-        offset = null;
-        prefs.bumpStations(true, true);
+        offset = null
+        prefs.bumpStations(true, true)
       } else if (code === 52) {
         // 4
-        offset = null;
-        prefs.bumpStations(false, false);
+        offset = null
+        prefs.bumpStations(false, false)
       } else if (code === 54) {
         // 6
-        offset = null;
-        prefs.bumpStations(false, true);
+        offset = null
+        prefs.bumpStations(false, true)
       } else if (code === 'call') {
-        offset = null;
-        prefs.flipStations();
+        offset = null
+        prefs.flipStations()
       } else if (code === 'sl') {
         // clearTimeout(countdown);
-        schedule.next();
-        offset = null;
+        schedule.next()
+        offset = null
       } else {
-        return;
+        return
       }
-      NextCaltrain.loadSchedule();
+      NextCaltrain.loadSchedule()
     }
   }
 }

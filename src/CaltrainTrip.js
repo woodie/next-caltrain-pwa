@@ -1,5 +1,16 @@
-import { caltrainServiceData } from './@caltrainServiceData.js';
-import { CaltrainService } from './CaltrainService.js';
+import { caltrainServiceData } from './@caltrainServiceData.js'
+import { CaltrainService } from './CaltrainService.js'
+
+// Caltrain numbers trains by service: the first digit is the type
+// (100s weekday Local, 600s weekend Local, ...), the last digit's parity the direction.
+const trainTypes = {
+  1: 'Local',
+  4: 'Limited',
+  5: 'Express',
+  6: 'Local',
+  8: 'South County',
+  9: 'Special'
+}
 
 export class CaltrainTrip {
   /**
@@ -8,61 +19,49 @@ export class CaltrainTrip {
    * @param schedule string
    * @return a list of service stops.
    */
-  constructor(trip, schedule) {
-    this.trip = trip;
-    this.schedule = schedule;
-    this.stops = [];
-    this.times = [];
-    this.direction = trip % 2 === 0 ? 'South' : 'North';
-    this.setService();
+  constructor (trip, schedule) {
+    this.trip = trip
+    this.schedule = schedule
+    this.stops = []
+    this.times = []
+    this.direction = trip % 2 === 0 ? 'South' : 'North'
+    this.setService()
   }
 
   /**
    * Set the time and station name for a trip ID.
    */
-  setService() {
-    let mins = CaltrainService.tripStops(
+  setService () {
+    const mins = CaltrainService.tripStops(
       this.trip,
       this.direction,
       this.schedule
-    );
-    let strs =
+    )
+    const strs =
       this.direction === 'North'
         ? caltrainServiceData.northStops
-        : caltrainServiceData.southStops;
-    this.times = [];
-    this.stops = [];
+        : caltrainServiceData.southStops
+    this.times = []
+    this.stops = []
     // populate instance
     for (let i = 0; i < mins.length; i++) {
-      if (mins[i] == undefined) continue;
-      this.times.push(mins[i]);
-      this.stops.push(strs[i]);
+      if (mins[i] == null) continue
+      this.times.push(mins[i])
+      this.stops.push(strs[i])
     }
   }
 
-  static type(trip) {
-    if (trip > 900) {
-      return 'Unknown';
-    } else if (trip > 800) {
-      return 'South County';
-    } else if (trip > 500) {
-      return 'Express';
-    } else if (trip > 400) {
-      return 'Limited';
-    } else if (trip > 100) {
-      return 'Local';
-    } else {
-      return 'Unknown';
-    }
+  static type (trip) {
+    return trainTypes[Math.floor(trip / 100)] ?? 'Unknown'
   }
 
-  label() {
+  label () {
     return `${this.directionString()} #${this.trip} ${CaltrainTrip.type(
       this.trip
-    )}`;
+    )}`
   }
 
-  directionString() {
-    return this.direction[0] + 'B';
+  directionString () {
+    return this.direction[0] + 'B'
   }
 }

@@ -1,176 +1,183 @@
-import { CaltrainService } from '../src/CaltrainService.js';
+import { beforeEach, describe, expect, it } from 'vitest'
+import { justBeforeEach } from 'penultimate'
+import { CaltrainService } from '../src/CaltrainService.js'
+
+const context = describe
+
 describe('CaltrainService', () => {
-  let schedule = 'Weekday';
-  let direction = 'North';
-  let departStop = 0;
-  let arriveStop = 6;
-  let routes = [];
-  let skip = [];
-  let minutes = 700;
-  let train = 101;
-  const cs = new CaltrainService();
-  let departTimes = cs.times(departStop, direction, schedule);
-  let arriveTimes = cs.times(arriveStop, direction, schedule);
+  let service
+
+  beforeEach(() => { service = new CaltrainService() })
+
   describe('.mapStops()', () => {
-    let mapStops = CaltrainService.mapStops(direction);
-    it('should contain stations', () => {
-      expect(mapStops.has('Gilroy')).toBe(true);
-      expect(mapStops.has('San Francisco')).toBe(true);
-    });
-  });
+    it('maps northbound station names', () => {
+      const stops = CaltrainService.mapStops('North')
+      expect(stops.has('Gilroy')).toBe(true)
+      expect(stops.has('San Francisco')).toBe(true)
+    })
+  })
+
   describe('.tripStops()', () => {
-    let tripStops = CaltrainService.tripStops(train, direction, schedule);
-    it('should contain stations', () => {
-      expect(tripStops[0]).toContain('Tamien');
-      expect(tripStops[tripStops.length - 1]).toContain('San Francisco');
-    });
-  });
+    it('lists the stops for train 101, from Tamien to San Francisco', () => {
+      const stops = CaltrainService.tripStops(101, 'North', 'Weekday')
+      expect(stops[0]).toContain('Tamien')
+      expect(stops[stops.length - 1]).toContain('San Francisco')
+    })
+  })
+
   describe('.direction()', () => {
-    let direction = CaltrainService.direction(departStop, arriveStop);
-    it('should be North', () => {
-      expect(direction).toEqual('North');
-    });
-  });
-  describe('.nextIndex()', () => {
-    let nextIndex = CaltrainService.nextIndex(routes, minutes);
-    it('should be zero', () => {
-      expect(nextIndex).toEqual(0);
-    });
-  });
-  describe('.merge()', () => {
-    let merge = CaltrainService.merge(departTimes, arriveTimes, skip);
-    it('should be empty', () => {
-      expect(merge).toEqual([]);
-    });
-  });
-  describe('.select()', () => {
-    let select = CaltrainService.select(direction, schedule);
-    it('should have empty members', () => {
-      expect(select['101'][0]).toBeUndefined();
-    });
-  });
-  describe('#stopMap()', () => {
-    it('should contain stations', () => {
-      expect(cs.stopMap('North').has('Gilroy')).toBe(true);
-      expect(cs.stopMap('North').has('San Francisco')).toBe(true);
-    });
-  });
-  describe('#routes()', () => {
-    it('should be empty for unknown station', () => {
-      let routes = cs.routes('Unknown', 'Palo Alto', 'Weekday');
-      expect(routes).toEqual([]);
-    });
-  });
-  describe('#times()', () => {
-    it('should be empty for unknown stop', () => {
-      let times = cs.times('Unknown Stop', 'North', 'Weekday');
-      expect(times.size).toEqual(0);
-    });
-  });
+    let origin, destination, direction
+
+    justBeforeEach(() => { direction = CaltrainService.direction(origin, destination) })
+
+    context('when traveling from San Francisco to Gilroy', () => {
+      beforeEach(() => { origin = 'San Francisco'; destination = 'Gilroy' })
+
+      it('is South', () => { expect(direction).toBe('South') })
+    })
+
+    context('when traveling from Gilroy to San Francisco', () => {
+      beforeEach(() => { origin = 'Gilroy'; destination = 'San Francisco' })
+
+      it('is North', () => { expect(direction).toBe('North') })
+    })
+  })
 
   describe('.isSouthCounty()', () => {
-    it('should return true for South County trains (801-900)', () => {
-      expect(CaltrainService.isSouthCounty(801)).toBe(true);
-      expect(CaltrainService.isSouthCounty(814)).toBe(true);
-      expect(CaltrainService.isSouthCounty(900)).toBe(true);
-    });
-    it('should return false for electric trains', () => {
-      expect(CaltrainService.isSouthCounty(101)).toBe(false);
-      expect(CaltrainService.isSouthCounty(514)).toBe(false);
-    });
-  });
+    it('returns true for South County trains (the 800s)', () => {
+      expect(CaltrainService.isSouthCounty(801)).toBe(true)
+      expect(CaltrainService.isSouthCounty(814)).toBe(true)
+      expect(CaltrainService.isSouthCounty(899)).toBe(true)
+    })
 
-  describe('#routes() transfer routes', () => {
-    describe('southbound SF -> Gilroy on Weekday', () => {
-      let routes;
-      beforeEach(() => {
-        routes = cs.routes('San Francisco', 'Gilroy', 'Weekday');
-      });
-      it('should return trips', () => {
-        expect(routes.length).toBeGreaterThan(0);
-      });
-      it('each route should be a 5-element transfer array', () => {
-        for (const route of routes) {
-          expect(route.length).toEqual(5);
-        }
-      });
-      it('lead train should be an electric (non-South County)', () => {
-        for (const route of routes) {
-          expect(CaltrainService.isSouthCounty(route[0])).toBe(false);
-        }
-      });
-      it('second train should be a South County train', () => {
-        for (const route of routes) {
-          expect(CaltrainService.isSouthCounty(route[3])).toBe(true);
-        }
-      });
-      it('transfer depart should be >= electric arrive at SJD', () => {
-        for (const route of routes) {
-          expect(route[4]).toBeGreaterThanOrEqual(route[1]);
-        }
-      });
-      it('trips should be sorted by departure time', () => {
-        for (let i = 1; i < routes.length; i++) {
-          expect(routes[i][1]).toBeGreaterThanOrEqual(routes[i - 1][1]);
-        }
-      });
-    });
+    it('returns false for electric trains', () => {
+      expect(CaltrainService.isSouthCounty(101)).toBe(false)
+      expect(CaltrainService.isSouthCounty(514)).toBe(false)
+      expect(CaltrainService.isSouthCounty(601)).toBe(false)
+    })
 
-    describe('northbound Gilroy -> SF on Weekday', () => {
-      let routes;
-      beforeEach(() => {
-        routes = cs.routes('Gilroy', 'San Francisco', 'Weekday');
-      });
-      it('should return trips', () => {
-        expect(routes.length).toBeGreaterThan(0);
-      });
-      it('each route should be a 5-element transfer array', () => {
-        for (const route of routes) {
-          expect(route.length).toEqual(5);
-        }
-      });
-      it('lead train should be a South County train', () => {
-        for (const route of routes) {
-          expect(CaltrainService.isSouthCounty(route[0])).toBe(true);
-        }
-      });
-      it('second train should be an electric', () => {
-        for (const route of routes) {
-          expect(CaltrainService.isSouthCounty(route[3])).toBe(false);
-        }
-      });
-      it('trips should be sorted by departure time', () => {
-        for (let i = 1; i < routes.length; i++) {
-          expect(routes[i][1]).toBeGreaterThanOrEqual(routes[i - 1][1]);
-        }
-      });
-    });
+    it('returns false for Special trains (the 900s)', () => {
+      expect(CaltrainService.isSouthCounty(900)).toBe(false)
+      expect(CaltrainService.isSouthCounty(901)).toBe(false)
+    })
+  })
 
-    describe('SF -> Gilroy on Weekend', () => {
-      it('should return no trips (no South County weekend service)', () => {
-        const routes = cs.routes('San Francisco', 'Gilroy', 'Weekend');
-        expect(routes.length).toEqual(0);
-      });
-    });
+  describe('.nextIndex()', () => {
+    it('returns 0 when there are no routes', () => {
+      expect(CaltrainService.nextIndex([], 700)).toBe(0)
+    })
+  })
 
-    describe('direct route SF -> Palo Alto on Weekday', () => {
-      it('should return 3-element direct arrays (no transfer)', () => {
-        const routes = cs.routes('San Francisco', 'Palo Alto', 'Weekday');
-        expect(routes.length).toBeGreaterThan(0);
-        for (const route of routes) {
-          expect(route.length).toEqual(3);
-        }
-      });
-    });
+  describe('.merge()', () => {
+    it('returns no trips when neither stop has times', () => {
+      const none = service.times('Unknown Stop', 'North', 'Weekday')
+      expect(CaltrainService.merge(none, new Map(), [])).toEqual([])
+    })
+  })
 
-    describe('Morgan Hill -> Gilroy on Weekday', () => {
-      it('should return direct trips (both South County, no transfer needed)', () => {
-        const routes = cs.routes('Morgan Hill', 'Gilroy', 'Weekday');
-        expect(routes.length).toBeGreaterThan(0);
-        for (const route of routes) {
-          expect(route.length).toEqual(3);
-        }
-      });
-    });
-  });
-});
+  describe('.select()', () => {
+    it('leaves stops a train skips empty', () => {
+      expect(CaltrainService.select('North', 'Weekday')['101'][0]).toBeUndefined()
+    })
+  })
+
+  describe('#stopMap()', () => {
+    it('maps northbound station names', () => {
+      expect(service.stopMap('North').has('Gilroy')).toBe(true)
+      expect(service.stopMap('North').has('San Francisco')).toBe(true)
+    })
+  })
+
+  describe('#times()', () => {
+    it('is empty for an unknown stop', () => {
+      expect(service.times('Unknown Stop', 'North', 'Weekday').size).toBe(0)
+    })
+  })
+
+  describe('#routes()', () => {
+    let origin, destination, schedule, routes
+
+    beforeEach(() => { schedule = 'Weekday' })
+
+    justBeforeEach(() => { routes = service.routes(origin, destination, schedule) })
+
+    context('for an unknown station', () => {
+      beforeEach(() => { origin = 'Unknown'; destination = 'Palo Alto' })
+
+      it('returns no trips', () => { expect(routes).toEqual([]) })
+    })
+
+    context('for a direct trip (San Francisco to Palo Alto)', () => {
+      beforeEach(() => { origin = 'San Francisco'; destination = 'Palo Alto' })
+
+      it('returns trips', () => { expect(routes.length).toBeGreaterThan(0) })
+
+      it('returns 3-element direct routes, with no transfer', () => {
+        for (const route of routes) expect(route).toHaveLength(3)
+      })
+    })
+
+    context('within South County (Morgan Hill to Gilroy)', () => {
+      beforeEach(() => { origin = 'Morgan Hill'; destination = 'Gilroy' })
+
+      it('returns direct routes, with no transfer needed', () => {
+        expect(routes.length).toBeGreaterThan(0)
+        for (const route of routes) expect(route).toHaveLength(3)
+      })
+    })
+
+    context('southbound with a transfer (San Francisco to Gilroy)', () => {
+      beforeEach(() => { origin = 'San Francisco'; destination = 'Gilroy' })
+
+      it('returns trips', () => { expect(routes.length).toBeGreaterThan(0) })
+
+      it('returns 5-element transfer routes', () => {
+        for (const route of routes) expect(route).toHaveLength(5)
+      })
+
+      it('leads with an electric train', () => {
+        for (const route of routes) expect(CaltrainService.isSouthCounty(route[0])).toBe(false)
+      })
+
+      it('transfers to a South County train', () => {
+        for (const route of routes) expect(CaltrainService.isSouthCounty(route[3])).toBe(true)
+      })
+
+      it('departs from the transfer after the electric train arrives at San Jose Diridon', () => {
+        for (const route of routes) expect(route[4]).toBeGreaterThanOrEqual(route[1])
+      })
+
+      it('sorts trips by departure time', () => {
+        for (let i = 1; i < routes.length; i++) expect(routes[i][1]).toBeGreaterThanOrEqual(routes[i - 1][1])
+      })
+
+      context('on a weekend', () => {
+        beforeEach(() => { schedule = 'Weekend' })
+
+        it('returns no trips (no South County weekend service)', () => { expect(routes).toEqual([]) })
+      })
+    })
+
+    context('northbound with a transfer (Gilroy to San Francisco)', () => {
+      beforeEach(() => { origin = 'Gilroy'; destination = 'San Francisco' })
+
+      it('returns trips', () => { expect(routes.length).toBeGreaterThan(0) })
+
+      it('returns 5-element transfer routes', () => {
+        for (const route of routes) expect(route).toHaveLength(5)
+      })
+
+      it('leads with a South County train', () => {
+        for (const route of routes) expect(CaltrainService.isSouthCounty(route[0])).toBe(true)
+      })
+
+      it('transfers to an electric train', () => {
+        for (const route of routes) expect(CaltrainService.isSouthCounty(route[3])).toBe(false)
+      })
+
+      it('sorts trips by departure time', () => {
+        for (let i = 1; i < routes.length; i++) expect(routes[i][1]).toBeGreaterThanOrEqual(routes[i - 1][1])
+      })
+    })
+  })
+})
