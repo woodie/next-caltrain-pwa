@@ -28,7 +28,7 @@ let hintIndex = -1
 let menuIndex = 0
 let listing = null
 let calendarReturn = 'hero'
-let calendarRoute = null
+let calendarUrl = null
 const vh = 228
 // window.innerWidth  240
 // window.innerHeight 228
@@ -471,7 +471,6 @@ export class NextCaltrain {
       `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`
     document.getElementById('calendar-date').value = date
     document.getElementById('calendar-route').innerHTML = `${prefs.origin} to ${prefs.destin}`
-    document.getElementById('calendar-status').innerHTML = ''
     NextCaltrain.displayScreen('calendar')
     document.getElementById('title').innerHTML = titles.calendar
     NextCaltrain.updateCalendar()
@@ -482,11 +481,8 @@ export class NextCaltrain {
     const time = document.getElementById('calendar-time').value
     const date = document.getElementById('calendar-date').value
     const trains = document.getElementById('calendar-trains')
-    const google = document.getElementById('calendar-google')
-    const ics = document.getElementById('calendar-ics')
-    calendarRoute = null
-    google.removeAttribute('href')
-    ics.removeAttribute('href')
+    calendarUrl = null
+    NextCaltrain.populateSoftkeyMenu('', '', '')
     if (!time || !date) {
       trains.innerHTML = ''
       return
@@ -503,52 +499,15 @@ export class NextCaltrain {
     const list = CalendarTrip.neighbors(routes, index)
     trains.innerHTML = list.map((train) =>
       `<div class="${train.selected ? 'selection selection-arriving' : ''}">${CalendarTrip.line(train)}</div>`).join('')
-    const selected = list.find((train) => train.selected)
-    const title = CalendarTrip.title(prefs.destin)
-    calendarRoute = {
-      title,
-      text: CalendarTrip.text(prefs.origin, prefs.destin, list),
-      html: CalendarTrip.html(prefs.origin, prefs.destin, list),
-    }
-    google.href = CalendarTrip.googleUrl(title, date, selected, calendarRoute.html)
-    const blob = new Blob([CalendarTrip.ics(title, date, selected, calendarRoute.text)],
-      { type: 'text/calendar' })
-    if (ics.dataset.url) URL.revokeObjectURL(ics.dataset.url)
-    ics.dataset.url = URL.createObjectURL(blob)
-    ics.href = ics.dataset.url
+    calendarUrl = CalendarTrip.googleUrl(CalendarTrip.title(prefs.destin), date,
+      list.find((train) => train.selected), CalendarTrip.html(prefs.origin, prefs.destin, list))
+    NextCaltrain.populateSoftkeyMenu('', 'GOOGLE', '')
   }
 
-  // Copy the event title and body, rich text where the clipboard allows it
-  static copyCalendar () {
-    const status = document.getElementById('calendar-status')
-    if (calendarRoute === null) return
-    const text = `${calendarRoute.title}\n\n${calendarRoute.text}`
-    const html = `<b>${calendarRoute.title}</b><br><br>${calendarRoute.html}`
-    let copied
-    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
-      copied = navigator.clipboard.write([new window.ClipboardItem({
-        'text/plain': new Blob([text], { type: 'text/plain' }),
-        'text/html': new Blob([html], { type: 'text/html' }),
-      })])
-    } else if (navigator.clipboard && navigator.clipboard.writeText) {
-      copied = navigator.clipboard.writeText(text)
-    } else {
-      copied = Promise.reject(new Error('No clipboard'))
-    }
-    copied
-      .catch((error) => {
-        // Older browsers, or a refused permission: copy plain text the old way
-        console.log(error)
-        const area = document.createElement('textarea')
-        area.value = text
-        document.body.appendChild(area)
-        area.select()
-        const ok = document.execCommand('copy')
-        document.body.removeChild(area)
-        if (!ok) throw error
-      })
-      .then(() => { status.innerHTML = 'Copied' })
-      .catch(() => { status.innerHTML = 'Could not copy' })
+  // Open the prefilled Google Calendar event; must run from a click or key
+  // press (not touchstart), or the browser blocks the new tab
+  static openGoogleCalendar () {
+    if (calendarUrl !== null) window.open(calendarUrl, '_blank', 'noopener')
   }
 
   static currentScreen () {
@@ -585,7 +544,7 @@ export class NextCaltrain {
       } else if (target === 'commands') {
         NextCaltrain.populateSoftkeyMenu('', 'NEXT', '')
       } else if (target === 'calendar') {
-        // The phone's own back button closes the panel
+        // updateCalendar() labels the center softkey GOOGLE once a train fits
         NextCaltrain.populateSoftkeyMenu('', '', '')
       }
     }
@@ -617,6 +576,8 @@ export class NextCaltrain {
     document.addEventListener('touchstart', function (e) {
       let code = null
       if (e.target.id === 'softkey-center') {
+        // The calendar screen's GOOGLE softkey opens a tab, so it needs 'click'
+        if (NextCaltrain.currentScreen() === 'calendar') return
         code = OK
       } else if (e.target.id === 'softkey-left') {
         code = 'sl'
@@ -642,8 +603,9 @@ export class NextCaltrain {
         document.getElementById(id).addEventListener(type, () => NextCaltrain.updateCalendar())
       }
     }
-    document.getElementById('calendar-copy')
-      .addEventListener('click', () => NextCaltrain.copyCalendar())
+    document.getElementById('softkey-center').addEventListener('click', () => {
+      if (NextCaltrain.currentScreen() === 'calendar') NextCaltrain.openGoogleCalendar()
+    })
     document.addEventListener('mousemove', function (e) {
       if (!kaiWeb) return
       skip = !skip
@@ -723,7 +685,9 @@ export class NextCaltrain {
   static press (code) {
     if (splash || service === null) return
     if (NextCaltrain.currentScreen() === 'calendar') {
-      if (code === OK || code === BACK || code === ESC) {
+      if (code === OK) {
+        NextCaltrain.openGoogleCalendar()
+      } else if (code === BACK || code === ESC) {
         NextCaltrain.displayScreen(calendarReturn)
       }
       return

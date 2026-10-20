@@ -2,7 +2,6 @@ import { GoodTimes } from './GoodTimes.js'
 
 // Caltrain runs on Pacific time, whatever the phone's own time zone is.
 const CALTRAIN_TZ = 'America/Los_Angeles'
-const REMINDER_MINUTES = 10
 
 export class CalendarTrip {
   /**
@@ -49,10 +48,6 @@ export class CalendarTrip {
     return `Caltrain to ${destin}`
   }
 
-  static text (origin, destin, trains) {
-    return [`${origin} to ${destin}`].concat(trains.map(CalendarTrip.line)).join('\n')
-  }
-
   static html (origin, destin, trains) {
     // HTML collapses the two spaces after the train number; keep both
     const lines = trains.map((train) => CalendarTrip.line(train).replace('  ', '&nbsp; '))
@@ -78,48 +73,6 @@ export class CalendarTrip {
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
       `&text=${encodeURIComponent(title)}&dates=${dates}` +
       `&ctz=${encodeURIComponent(CALTRAIN_TZ)}&details=${encodeURIComponent(details)}`
-  }
-
-  static ics (title, isoDate, train, description) {
-    const escape = (s) => s.replace(/[\\;,]/g, (c) => '\\' + c).replace(/\n/g, '\\n')
-    const now = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'
-    return [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Next Caltrain//EN',
-      'BEGIN:VTIMEZONE',
-      `TZID:${CALTRAIN_TZ}`,
-      'BEGIN:DAYLIGHT',
-      'TZOFFSETFROM:-0800',
-      'TZOFFSETTO:-0700',
-      'TZNAME:PDT',
-      'DTSTART:19700308T020000',
-      'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU',
-      'END:DAYLIGHT',
-      'BEGIN:STANDARD',
-      'TZOFFSETFROM:-0700',
-      'TZOFFSETTO:-0800',
-      'TZNAME:PST',
-      'DTSTART:19701101T020000',
-      'RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU',
-      'END:STANDARD',
-      'END:VTIMEZONE',
-      'BEGIN:VEVENT',
-      `UID:${CalendarTrip.stamp(isoDate, train.depart)}-${train.label.replace(/\W/g, '')}@next-caltrain-pwa.appspot.com`,
-      `DTSTAMP:${now}`,
-      `DTSTART;TZID=${CALTRAIN_TZ}:${CalendarTrip.stamp(isoDate, train.depart)}`,
-      `DTEND;TZID=${CALTRAIN_TZ}:${CalendarTrip.stamp(isoDate, train.arrive)}`,
-      `SUMMARY:${escape(title)}`,
-      `DESCRIPTION:${escape(description)}`,
-      'BEGIN:VALARM',
-      `TRIGGER:-PT${REMINDER_MINUTES}M`,
-      'ACTION:DISPLAY',
-      `DESCRIPTION:${escape(title)}`,
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR',
-      '',
-    ].join('\r\n')
   }
 
   /**

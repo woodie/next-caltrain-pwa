@@ -38,12 +38,12 @@ describe('CalendarTrip', () => {
     })
   })
 
-  describe('.text() and .html()', () => {
+  describe('.line() and .html()', () => {
     const trains = CalendarTrip.neighbors(routes, CalendarTrip.find(routes, 'leave', 17 * 60 + 55))
 
-    it('formats one train per line', () => {
-      expect(CalendarTrip.text('Palo Alto', 'San Mateo', trains)).toBe(
-        'Palo Alto to San Mateo\n#523  5:43pm – 5:59pm\n#151  5:55pm – 6:17pm\n#425  6:10pm – 6:28pm')
+    it('formats a train', () => {
+      expect(trains.map(CalendarTrip.line)).toEqual(
+        ['#523  5:43pm – 5:59pm', '#151  5:55pm – 6:17pm', '#425  6:10pm – 6:28pm'])
     })
 
     it('bolds the planned train', () => {
@@ -67,21 +67,6 @@ describe('CalendarTrip', () => {
         { depart: 17 * 60 + 55, arrive: 18 * 60 + 17 }, 'details'))
       expect(url.searchParams.get('dates')).toBe('20260521T175500/20260521T181700')
       expect(url.searchParams.get('ctz')).toBe('America/Los_Angeles')
-    })
-  })
-
-  describe('.ics()', () => {
-    const ics = CalendarTrip.ics('Caltrain to San Mateo', '2026-05-21',
-      { label: '#151', depart: 17 * 60 + 55, arrive: 18 * 60 + 17 }, 'a, b\nc')
-
-    it('has the event times and a 10 minute reminder', () => {
-      expect(ics).toContain('DTSTART;TZID=America/Los_Angeles:20260521T175500')
-      expect(ics).toContain('DTEND;TZID=America/Los_Angeles:20260521T181700')
-      expect(ics).toContain('TRIGGER:-PT10M')
-    })
-
-    it('escapes the description', () => {
-      expect(ics).toContain('DESCRIPTION:a\\, b\\nc')
     })
   })
 

@@ -504,9 +504,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 }
 
 #calendar-content select,
-#calendar-content input,
-#calendar-content button,
-#calendar-content a {
+#calendar-content input {
   font: inherit;
   color: white;
   background-color: #222;
@@ -514,15 +512,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   border-radius: 6px;
   padding: 4px 6px;
   color-scheme: dark;
-}
-
-#calendar-content a {
-  text-decoration: none;
-}
-
-#calendar-content a:not([href]) {
-  opacity: 0.4;
-  pointer-events: none;
 }
 
 #calendar-schedule {
@@ -547,11 +536,6 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 
 #calendar-trains > div.selection-arriving {
   border-color: var(--msg-arriving-color);
-}
-
-#calendar-status {
-  min-height: 20px;
-  color: var(--msg-arriving-color);
 }
 
 #content.full-screen > #statusbar { display: flex; }
