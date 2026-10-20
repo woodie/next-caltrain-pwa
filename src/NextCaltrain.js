@@ -1,5 +1,6 @@
 /* global getKaiAd */
 import { ScheduleFeed, scheduleData } from './ScheduleFeed.js'
+import { CalendarTrip } from './CalendarTrip.js'
 import { CaltrainSchedule } from './CaltrainSchedule.js'
 import { CaltrainService } from './CaltrainService.js'
 import { CaltrainTrip } from './CaltrainTrip.js'
@@ -26,6 +27,8 @@ let splash = false
 let hintIndex = -1
 let menuIndex = 0
 let listing = null
+let calendarReturn = 'hero'
+let calendarRoute = null
 const vh = 228
 // window.innerWidth  240
 // window.innerHeight 228
@@ -42,8 +45,8 @@ const DOWN = 40
 // const POUND = 163;
 // const ZERO = 48;
 
-const screens = 'splash hero grid trip menu about commands prefs'.split(' ')
-const titles = { about: 'About Next Caltrain', commands: 'Keypad commands' }
+const screens = 'splash hero grid trip menu about commands prefs calendar'.split(' ')
+const titles = { about: 'About Next Caltrain', commands: 'Keypad commands', calendar: 'Add to Calendar' }
 
 let hints = [
   [
@@ -95,6 +98,10 @@ export class NextCaltrain {
       document.getElementById('about-filler').style['display'] = 'flex'
       document.getElementById('commands-filler').style['display'] = 'flex'
       document.getElementById('content').className = 'full-screen'
+      // Touch-screen phones only: KaiOS has no touch screen or clipboard
+      for (const button of document.getElementsByClassName('calendar-button')) {
+        button.style['display'] = 'block'
+      }
     } else {
       document.getElementById('content').className = 'part-screen'
       document.getElementById('hero-screen').style['display'] = 'none'
@@ -436,6 +443,114 @@ export class NextCaltrain {
     }
   }
 
+  /**
+   * Open the calendar panel, defaulting to the selected train ("Leave at" its
+   * departure) on the next date that matches the schedule on screen.
+   */
+  static openCalendar () {
+    if (service === null) return
+    calendarReturn = NextCaltrain.currentScreen()
+    const now = new Date()
+    const label = currentRouteLabel || schedule.label()
+    const isFuture = currentRoute !== null && currentRoute[currentRoute.length - 1] === true
+    let date = CalendarTrip.isoDate(now, isFuture ? 1 : 0)
+    for (let days = isFuture ? 1 : 0; days < 14; days++) {
+      const candidate = CalendarTrip.isoDate(now, days)
+      if (CaltrainSchedule.labelFor(candidate, CalendarTrip.dotw(candidate)) === label) {
+        date = candidate
+        break
+      }
+    }
+    const depart = currentRoute === null
+      ? new GoodTimes().minutes
+      : currentRoute[1] - (isFuture ? 1440 : 0)
+    const hours = Math.floor(depart / 60) % 24
+    const minutes = depart % 60
+    document.getElementById('calendar-mode').value = 'leave'
+    document.getElementById('calendar-time').value =
+      `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`
+    document.getElementById('calendar-date').value = date
+    document.getElementById('calendar-route').innerHTML = `${prefs.origin} to ${prefs.destin}`
+    document.getElementById('calendar-status').innerHTML = ''
+    NextCaltrain.displayScreen('calendar')
+    document.getElementById('title').innerHTML = titles.calendar
+    NextCaltrain.updateCalendar()
+  }
+
+  static updateCalendar () {
+    const mode = document.getElementById('calendar-mode').value
+    const time = document.getElementById('calendar-time').value
+    const date = document.getElementById('calendar-date').value
+    const trains = document.getElementById('calendar-trains')
+    const google = document.getElementById('calendar-google')
+    const ics = document.getElementById('calendar-ics')
+    calendarRoute = null
+    google.removeAttribute('href')
+    ics.removeAttribute('href')
+    if (!time || !date) {
+      trains.innerHTML = ''
+      return
+    }
+    const label = CaltrainSchedule.labelFor(date, CalendarTrip.dotw(date))
+    document.getElementById('calendar-schedule').innerHTML = label
+    const [hh, mm] = time.split(':').map(Number)
+    const routes = service.routes(prefs.origin, prefs.destin, label)
+    const index = CalendarTrip.find(routes, mode, hh * 60 + mm)
+    if (index === -1) {
+      trains.innerHTML = 'No train fits that time.'
+      return
+    }
+    const list = CalendarTrip.neighbors(routes, index)
+    trains.innerHTML = list.map((train) =>
+      `<div class="${train.selected ? 'selection selection-arriving' : ''}">${CalendarTrip.line(train)}</div>`).join('')
+    const selected = list.find((train) => train.selected)
+    const title = CalendarTrip.title(prefs.destin)
+    calendarRoute = {
+      title,
+      text: CalendarTrip.text(prefs.origin, prefs.destin, list),
+      html: CalendarTrip.html(prefs.origin, prefs.destin, list),
+    }
+    google.href = CalendarTrip.googleUrl(title, date, selected, calendarRoute.html)
+    const blob = new Blob([CalendarTrip.ics(title, date, selected, calendarRoute.text)],
+      { type: 'text/calendar' })
+    if (ics.dataset.url) URL.revokeObjectURL(ics.dataset.url)
+    ics.dataset.url = URL.createObjectURL(blob)
+    ics.href = ics.dataset.url
+  }
+
+  // Copy the event title and body, rich text where the clipboard allows it
+  static copyCalendar () {
+    const status = document.getElementById('calendar-status')
+    if (calendarRoute === null) return
+    const text = `${calendarRoute.title}\n\n${calendarRoute.text}`
+    const html = `<b>${calendarRoute.title}</b><br><br>${calendarRoute.html}`
+    let copied
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      copied = navigator.clipboard.write([new window.ClipboardItem({
+        'text/plain': new Blob([text], { type: 'text/plain' }),
+        'text/html': new Blob([html], { type: 'text/html' }),
+      })])
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      copied = navigator.clipboard.writeText(text)
+    } else {
+      copied = Promise.reject(new Error('No clipboard'))
+    }
+    copied
+      .catch((error) => {
+        // Older browsers, or a refused permission: copy plain text the old way
+        console.log(error)
+        const area = document.createElement('textarea')
+        area.value = text
+        document.body.appendChild(area)
+        area.select()
+        const ok = document.execCommand('copy')
+        document.body.removeChild(area)
+        if (!ok) throw error
+      })
+      .then(() => { status.innerHTML = 'Copied' })
+      .catch(() => { status.innerHTML = 'Could not copy' })
+  }
+
   static currentScreen () {
     for (let i = 0; i < screens.length; i++) {
       if (
@@ -469,6 +584,9 @@ export class NextCaltrain {
         NextCaltrain.populateSoftkeyMenu('', 'OK', '')
       } else if (target === 'commands') {
         NextCaltrain.populateSoftkeyMenu('', 'NEXT', '')
+      } else if (target === 'calendar') {
+        // The phone's own back button closes the panel
+        NextCaltrain.populateSoftkeyMenu('', '', '')
       }
     }
     // set the title
@@ -515,6 +633,17 @@ export class NextCaltrain {
       }
       NextCaltrain.press(code)
     })
+    for (const button of document.getElementsByClassName('calendar-button')) {
+      button.addEventListener('click', () => NextCaltrain.openCalendar())
+    }
+    for (const id of ['calendar-mode', 'calendar-time', 'calendar-date']) {
+      // iOS date/time pickers may only fire 'change'
+      for (const type of ['input', 'change']) {
+        document.getElementById(id).addEventListener(type, () => NextCaltrain.updateCalendar())
+      }
+    }
+    document.getElementById('calendar-copy')
+      .addEventListener('click', () => NextCaltrain.copyCalendar())
     document.addEventListener('mousemove', function (e) {
       if (!kaiWeb) return
       skip = !skip
@@ -555,6 +684,8 @@ export class NextCaltrain {
     })
     // Catch keydown events.
     document.addEventListener('keydown', function (e) {
+      // Let the calendar form's fields have their keys
+      if (/^(INPUT|SELECT|BUTTON)$/.test(e.target.tagName)) return
       let code = e.keyCode ? e.keyCode : e.which
       if (code === HANGUP) {
         // Catch and convert HANGUP to BACK
@@ -591,6 +722,12 @@ export class NextCaltrain {
 
   static press (code) {
     if (splash || service === null) return
+    if (NextCaltrain.currentScreen() === 'calendar') {
+      if (code === OK || code === BACK || code === ESC) {
+        NextCaltrain.displayScreen(calendarReturn)
+      }
+      return
+    }
     if (code === ESC) {
       // Simulate EXIT.
       NextCaltrain.displayScreen('hero')
