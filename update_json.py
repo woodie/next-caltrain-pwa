@@ -99,7 +99,7 @@ def schedule_date_ms(data_dir):
     Used to also fold in holiday_*.csv's filesystem mtime, since that file
     is hand-maintained rather than GTFS-derived. Dropped: git checkout/reset
     stamps mtimes with "now" regardless of content, so that fold-in made
-    scheduleDate (and therefore schedule.json/@caltrainServiceData.js)
+    scheduleDate (and therefore schedule.json)
     change on every fresh checkout too - the same instability this function
     exists to avoid, just from a different trigger. A holiday-only PDF edit
     (no GTFS feed change) now won't bump scheduleDate until the next real

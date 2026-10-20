@@ -1,4 +1,4 @@
-import { caltrainServiceData } from './@caltrainServiceData.js'
+import { scheduleData } from './ScheduleFeed.js'
 
 const SOUTH_COUNTY_STATIONS = new Set([
   'Gilroy', 'San Martin', 'Morgan Hill', 'Blossom Hill', 'Capitol'
@@ -20,8 +20,8 @@ export class CaltrainService {
     const out = new Map()
     const stops =
       direction === 'North'
-        ? caltrainServiceData.northStops
-        : caltrainServiceData.southStops
+        ? scheduleData.northStops
+        : scheduleData.southStops
     for (let i = 0; i < stops.length; i++) {
       out.set(stops[i], i)
     }
@@ -39,8 +39,8 @@ export class CaltrainService {
   static tripStops (train, direction, schedule) {
     const stops =
       direction === 'North'
-        ? caltrainServiceData.northStops
-        : caltrainServiceData.southStops
+        ? scheduleData.northStops
+        : scheduleData.southStops
     const times = this.select(direction, schedule)[train] || []
     const out = []
     for (let i = 0; i < times.length; i++) {
@@ -65,8 +65,8 @@ export class CaltrainService {
    * @return the direction of this trip: North or South
    */
   static direction (departStop, arriveStop) {
-    const depart = caltrainServiceData.southStops.indexOf(departStop)
-    const arrive = caltrainServiceData.southStops.indexOf(arriveStop)
+    const depart = scheduleData.southStops.indexOf(departStop)
+    const arrive = scheduleData.southStops.indexOf(arriveStop)
     return depart < arrive ? 'South' : 'North'
   }
 
@@ -257,16 +257,16 @@ export class CaltrainService {
   static select (direction, schedule) {
     if (schedule === 'Holiday') {
       return direction === 'North'
-        ? caltrainServiceData.northHoliday
-        : caltrainServiceData.southHoliday
+        ? scheduleData.northHoliday
+        : scheduleData.southHoliday
     } else if (schedule === 'Weekday') {
       return direction === 'North'
-        ? caltrainServiceData.northWeekday
-        : caltrainServiceData.southWeekday
+        ? scheduleData.northWeekday
+        : scheduleData.southWeekday
     } else {
       return direction === 'North'
-        ? caltrainServiceData.northWeekend
-        : caltrainServiceData.southWeekend
+        ? scheduleData.northWeekend
+        : scheduleData.southWeekend
     }
   }
 }

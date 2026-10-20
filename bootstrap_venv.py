@@ -1,12 +1,11 @@
 """Shared venv bootstrap for this repo's standalone python scripts.
 
-Problem this solves: generate.py, update_json.py, update_pwa.py,
-validate_schedule.py, and scrape.py are all run directly (./generate.py),
+Problem this solves: generate.py is run directly (./generate.py),
 which invokes whatever `python3` happens to be first on PATH via the
 `#!/usr/bin/env python3` shebang -- never this project's .venv, even if one
 exists. On a Homebrew-managed Mac, that PATH python3 is "externally
-managed" (PEP 668) and the project's actual dependencies (partridge,
-beautifulsoup4) live in .venv instead, so the script fails with
+managed" (PEP 668) and the project's actual dependency (partridge)
+lives in .venv instead, so the script fails with
 ModuleNotFoundError even though the venv has everything it needs.
 
 ensure_venv() fixes this by re-exec'ing the running script under

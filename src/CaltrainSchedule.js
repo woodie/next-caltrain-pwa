@@ -1,19 +1,5 @@
-// https://www.caltrain.com/schedules/holiday-service
-const special = {
-  // '2023-01-01': 1, // New Year's Day
-  // '2023-01-02': 1, // New Year's Day (Observed)
-  // '2023-01-16': 2, // Martin Luther King Jr. Day
-  // '2023-02-20': 2, // Presidents Day
-  // '2023-05-29": 1, // Memorial Day
-  // '2023-11-23": 1, // Thanksgiving Day
-  // '2023-11-24': 2, // Day After Thanksgiving
-  // '2023-12-24': 2, // Christmas Eve
-  // '2024-11-29': 2, // Day After Thanksgiving
-  // '2024-12-24': 2, // Christmas Eve
-  '2025-11-28': 2, // Day After Thanksgiving
-  '2025-12-24': 2, // Christmas Eve
-  '2026-01-19': 2, // Martin Luther King Jr. Day
-}
+import { scheduleData } from './ScheduleFeed.js'
+
 const scheduleOptions = [
   'Weekday',  // 0
   'Weekend',  // 1
@@ -51,6 +37,8 @@ export class CaltrainSchedule {
 
   // Factored out so tomorrow's schedule can be computed without a full GoodTimes object
   static optionIndexFor (date, dotw) {
+    // specialDates maps 'YYYY-MM-DD' to a scheduleOptions index, from the feed
+    const special = scheduleData.specialDates || {}
     if (date in special) {
       return special[date]
     } else if (dotw === 6 || dotw === 0) {

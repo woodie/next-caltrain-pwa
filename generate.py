@@ -74,7 +74,6 @@ import csv
 import functools
 import json
 import os
-import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -92,7 +91,7 @@ HOLIDAY_MIN_TRIPS = 10
 
 
 def fetch_gtfs():
-    """Download and expand the GTFS feed (mirrors update_pwa.py's old fetch_schedule_data())."""
+    """Download and expand the GTFS feed."""
     basedir = os.getcwd()
     subprocess.call(['mkdir', '-p', 'downloads'])
     os.chdir('downloads')
@@ -140,7 +139,7 @@ def previous_feed_version_ms(path='data/feed_version.json'):
 
 
 def write_feed_version(raw, ms):
-    """Write data/feed_version.json so update_json.py/update_pwa.py can use
+    """Write data/feed_version.json so update_json.py can use
     Caltrain/Trillium's own feed build timestamp for scheduleDate, instead of
     local CSV mtimes that change on every run even when nothing did.
 
@@ -162,29 +161,16 @@ def _schedule_date_from_json(path):
         return None
 
 
-def _schedule_date_from_js(path):
-    """Read the scheduleDate baked into a previously-written
-    @caltrainServiceData.js (it's JS, not JSON, so a regex instead of a
-    parser - see write_schedule_data() in update_pwa.py for the line this
-    matches: '  scheduleDate: 1234567890\\n')."""
-    m = re.search(r'scheduleDate:\s*(\d+)', path.read_text())
-    if not m:
-        print('WARNING: could not find scheduleDate in %s' % path)
-        return None
-    return int(m.group(1))
-
-
 def report_schedule_currency():
     """Compare the feed_version just fetched (data/feed_version.json) against
-    the scheduleDate baked into the last-published downstream artifacts
-    (feed/schedule.json, src/@caltrainServiceData.js - both source
-    scheduleDate from data/feed_version.json the same way, in
-    update_json.py/update_pwa.py - see docs/COWORK.md "Published endpoint").
+    the scheduleDate baked into the last-published feed/schedule.json
+    (update_json.py sources it from data/feed_version.json - see
+    docs/COWORK.md "Published endpoint").
 
     This only reports; it doesn't regenerate anything. If something's
     stale or missing, the fix is to run the rest of the publish sequence
-    (update_pwa.py / npm run build / update_json.py - see docs/PUBLISHING.md)
-    so those artifacts catch up to the feed_version this run just fetched.
+    (update_json.py - see docs/PUBLISHING.md) so it catches up to the
+    feed_version this run just fetched.
     """
     version_file = Path('data/feed_version.json')
     if not version_file.exists():
@@ -198,7 +184,6 @@ def report_schedule_currency():
 
     artifacts = {
         Path('feed/schedule.json'): _schedule_date_from_json,
-        Path('src/@caltrainServiceData.js'): _schedule_date_from_js,
     }
 
     stale, missing = [], []
@@ -219,12 +204,12 @@ def report_schedule_currency():
         print('  - %s: not generated yet' % path)
     for path, artifact_ms in stale:
         print('  - %s: scheduleDate=%s, feed_version is %s' % (path, artifact_ms, feed_ms))
-    print('Run update_pwa.py / npm run build / update_json.py to refresh '
+    print('Run update_json.py to refresh '
           '(see docs/PUBLISHING.md).\n')
 
 
 def station_lists(feed):
-    """Build station lists/labels (mirrors update_pwa.py's old parse_station_data())."""
+    """Build station lists/labels."""
     extra = ['Caltrain', 'Station']
     north, south, labels = [], [], {}
     for _, row in feed.stops.iterrows():

@@ -77,7 +77,7 @@ describe('CaltrainService', () => {
 
   describe('.select()', () => {
     it('leaves stops a train skips empty', () => {
-      expect(CaltrainService.select('North', 'Weekday')['101'][0]).toBeUndefined()
+      expect(CaltrainService.select('North', 'Weekday')['101'][0]).toBeNull()
     })
   })
 

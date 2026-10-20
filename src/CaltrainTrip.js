@@ -1,4 +1,4 @@
-import { caltrainServiceData } from './@caltrainServiceData.js'
+import { scheduleData } from './ScheduleFeed.js'
 import { CaltrainService } from './CaltrainService.js'
 
 // Caltrain numbers trains by service: the first digit is the type
@@ -39,8 +39,8 @@ export class CaltrainTrip {
     )
     const strs =
       this.direction === 'North'
-        ? caltrainServiceData.northStops
-        : caltrainServiceData.southStops
+        ? scheduleData.northStops
+        : scheduleData.southStops
     this.times = []
     this.stops = []
     // populate instance

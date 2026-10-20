@@ -9,14 +9,15 @@ https://next-caltrain-pwa.appspot.com/, and browsing it against a candidate
 `schedule.json` is itself the manual/visual validation step before that
 schedule gets published.
 
-The published `webapp/schedule.json` is fetched at runtime by the iOS and
-Android clients. The PWA itself does *not* fetch it — `update_pwa.py` bakes
-the same six CSVs into `src/@caltrainServiceData.js`, which `npm run build`
-compiles straight into `webapp/script.js`, so the PWA's own bundle has no
-runtime dependency on the published JSON. Both outputs come from the same
-six CSVs in `data/` — four GTFS-generated, two (`holiday_*.csv`)
-hand-maintained — read together by the generate sequence (see "Schedule
-data pipeline" below), so they can't drift out of sync with each other.
+The published `feed/schedule.json` (served at `/feed/schedule.json`) is
+fetched at runtime by the PWA and by the iOS and Android clients alike —
+`src/ScheduleFeed.js` loads it on launch and keeps the last good copy in
+`localStorage` for offline use. It's generated from six CSVs in `data/` —
+four GTFS-generated, two (`holiday_*.csv`) hand-maintained — by the
+generate sequence (see "Schedule data pipeline" below). Until 2026-10-20
+the PWA instead baked the same CSVs into its bundle via `update_pwa.py` →
+`src/@caltrainServiceData.js`; both were dropped so every client reads one
+file, and so the PWA picks up a schedule update without a rebuild.
 
 For the step-by-step procedure to generate, validate, and publish a
 schedule update, see `docs/PUBLISHING.md`. This doc (COWORK.md) covers the
@@ -30,7 +31,10 @@ the *how*.
   `schedule.json` to the iOS/Android clients; doubles as the manual
   validation tool — browse it against a candidate schedule before
   publishing (see ROADMAP.md)
-- `src/` — JS source including `CaltrainService.js`, the reference routing implementation
+- `src/` — JS source including `CaltrainService.js`, the reference routing
+  implementation, and `ScheduleFeed.js`, which fetches `/feed/schedule.json`
+- `feed/` — `schedule.json`, the live published schedule (see
+  `feed/README.md`)
 - `data/` — schedule CSVs, flat (not yet organized into date folders — see
   ROADMAP.md); `weekday_*.csv`/`weekend_*.csv` are GTFS-generated,
   `holiday_*.csv` is hand-maintained from Caltrain's PDF (see "Schedule
@@ -40,17 +44,15 @@ the *how*.
   pair (not shipped — see "Holiday schedule" below) and
   `data/feed_version.json` (the feed's own build timestamp, used for
   `scheduleDate` — see "Published endpoint" below)
-- `update_pwa.py` — parses the CSVs and produces `src/@caltrainServiceData.js`,
-  baked into the PWA's own bundle by `npm run build`
-- `update_json.py` — parses the same CSVs and produces `webapp/schedule.json`,
-  fetched at runtime by the iOS/Android clients (moved here from
+- `update_json.py` — parses the CSVs and produces `feed/schedule.json`,
+  fetched at runtime by the PWA and the iOS/Android clients (moved here from
   `next-caltrain-swift/tools/convert_schedule.py` — see "Schedule data
   pipeline" below)
-- `validate_schedule.py` — sanity-checks a candidate `webapp/schedule.json`
+- `validate_schedule.py` — sanity-checks a candidate `feed/schedule.json`
   (structure, stop/trip counts) before it's committed
-- `app.rb`, `lib/scrape.rb`, `lib/status.rb` — Ruby/Sinatra backend serving
-  `/alerts`, `/delays`, `/scrape`; deployed alongside the static `webapp/` via
-  the same `app.yaml`
+- `app.yaml` — App Engine config; static files only (`webapp/` and
+  `feed/schedule.json`), no backend. The Ruby/Sinatra backend that once
+  served `/alerts` and `/delays` was removed on 2026-10-20.
 
 ## Schedule data pipeline
 
@@ -58,8 +60,9 @@ See `docs/PUBLISHING.md` for the full step-by-step runbook (generate,
 validate, publish, rollback). This section is the architecture summary.
 
 ### Current approach
-Two stages, each a short sequence of plain python scripts (run directly,
-not wrapped in `package.json` — they're not npm/node concerns):
+Two stages, each a short sequence of plain python scripts, also wrapped as
+npm scripts (`npm run generate`, `convert`, `validate`, or `npm run
+schedule` for all three in order):
 
 **Generate:**
 1. `generate.py` — GTFS feed → `weekday_*.csv`/`weekend_*.csv` in `data/`,
@@ -67,13 +70,10 @@ not wrapped in `package.json` — they're not npm/node concerns):
    itself stays hand-maintained — see "Holiday schedule" below) and
    `data/feed_version.json` (the feed's build timestamp, used for
    `scheduleDate`)
-2. `update_pwa.py` — the six canonical CSVs → `src/@caltrainServiceData.js`
-3. `npm run build` — `src/` → `webapp/script.js` (bakes in the data from
-   step 2); the one genuinely npm-native step here (babel transpile)
-4. `update_json.py` — CSVs → `webapp/schedule.json`
+2. `update_json.py` — the six canonical CSVs → `feed/schedule.json`
 
 **Validate:**
-1. `validate_schedule.py` — structural sanity check of `webapp/schedule.json`,
+1. `validate_schedule.py` — structural sanity check of `feed/schedule.json`,
    plus a diff against the version currently committed at HEAD for human review
 2. `npm test` — Vitest unit tests against the routing logic in `src/`
 
@@ -100,10 +100,8 @@ deploy — that's planned (see ROADMAP.md) but not built.
 documented cross-repo publish workflow (see swift's `docs/GIT_WORKFLOW.md`,
 now updated). It moved here as of 2026-06-18, since this repo is the
 canonical source for the CSVs it reads — see ROADMAP.md "Repo mission
-shift". It is not redundant with `update_pwa.py`: the two produce different
-artifacts (`webapp/schedule.json` vs `src/@caltrainServiceData.js`) for
-different consumers (iOS/Android at runtime vs the PWA's own build), from
-the same source CSVs.
+shift". Since 2026-10-20 it's the only output of the pipeline — the PWA
+reads the same `feed/schedule.json` the iOS/Android clients do.
 
 ### Holiday schedule: hand-maintained again, with a GTFS shadow file
 Caltrain publishes a "Modified Schedule" timetable PDF covering a handful of
@@ -142,18 +140,20 @@ layer described in ROADMAP.md — the GTFS parsing itself is done for all
 three schedules.
 
 ### Published endpoint
-`https://next-caltrain-pwa.appspot.com/schedule.json`
+`https://next-caltrain-pwa.appspot.com/feed/schedule.json` (the legacy
+`/schedule.json` serves the frozen `webapp/schedule.json` — see
+`feed/README.md`)
 
-The `scheduleDate` field (also baked into the PWA bundle) is an epoch-ms
+The `scheduleDate` field is an epoch-ms
 timestamp, shown to users in the apps' About screens as the date the
 schedule data is "as of". As of 2026-06-18 it's sourced from
 `data/feed_version.json`, which `generate.py` writes from the GTFS feed's
 own `feed_info.txt` `feed_version` field — Trillium's build timestamp for
 the feed, e.g. `UTC: 10-Jun-2026 22:25` — not from local CSV mtimes. mtimes
 only reflected when someone last ran the generate sequence, so
-`scheduleDate` (and the PWA bundle/JSON themselves) used to change on every
+`scheduleDate` (and the JSON itself) used to change on every
 rerun even when Caltrain hadn't published anything new. Both
-`update_json.py` and `update_pwa.py` fall back to the old mtime-based
+`update_json.py` falls back to the old mtime-based
 calculation if `data/feed_version.json` is missing.
 
 An earlier version of this also folded in `holiday_*.csv`'s filesystem
@@ -190,13 +190,16 @@ Frontend (vanilla JS/HTML/CSS — there is no `npm start`; it's static):
 ```bash
 npm install
 npm run build     # babel-transpiles src/ into webapp/script.js
-open webapp/index.html
 ```
 
-Backend (Ruby/Sinatra — `/alerts`, `/delays`, `/scrape`):
+Serve it rather than opening `webapp/index.html` from disk, since the PWA
+fetches its schedule from `/feed/schedule.json`. `npm run server` runs
+`serve.mjs`, a dependency-free Node server mirroring `app.yaml`'s handlers
+(`webapp/` at the root, the feed at `/feed/schedule.json`) — keep the two in
+step:
 ```bash
-bundle exec ruby app.rb
-open http://localhost:4567/alerts
+npm run server
+open http://localhost:8000/
 ```
 
 ## Deploying
@@ -208,6 +211,6 @@ publish, and rollback in order.
 For non-schedule frontend changes, just rebuild and deploy:
 ```bash
 npm run build    # rebuild webapp/script.js from src/
-npm run deploy   # gcloud app deploy app.yaml --quiet — ships webapp/ + the
-                  # Ruby backend to App Engine, immediately, no date gate
+npm run deploy   # gcloud app deploy app.yaml --quiet — ships webapp/ and
+                  # feed/ to App Engine, immediately, no date gate
 ```

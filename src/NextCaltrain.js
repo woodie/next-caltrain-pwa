@@ -1,13 +1,14 @@
 /* global getKaiAd */
-import { caltrainServiceData } from './@caltrainServiceData.js'
+import { ScheduleFeed, scheduleData } from './ScheduleFeed.js'
 import { CaltrainSchedule } from './CaltrainSchedule.js'
 import { CaltrainService } from './CaltrainService.js'
 import { CaltrainTrip } from './CaltrainTrip.js'
 import { GoodTimes } from './GoodTimes.js'
 import { LocalStorage } from './LocalStorage.js'
 
-const prefs = new LocalStorage(caltrainServiceData.southStops)
-const service = new CaltrainService()
+// Both need the schedule feed, so they're set up once it loads.
+let prefs = null
+let service = null
 let app = false
 let android = false
 let kaiWeb1 = false
@@ -24,8 +25,6 @@ let skip = false
 let splash = false
 let hintIndex = -1
 let menuIndex = 0
-let delays = {}
-let delaySpan = null
 let listing = null
 const vh = 228
 // window.innerWidth  240
@@ -107,18 +106,21 @@ export class NextCaltrain {
       document.getElementById('keypad').style['display'] = 'flex'
     }
     // setup the app state
-    const dateString = GoodTimes.dateString(caltrainServiceData.scheduleDate)
-    delaySpan = document.getElementById('delay-span')
     listing = document.getElementById('listing')
-    document.getElementById('date-string').innerHTML = dateString
     NextCaltrain.attachListeners()
-    NextCaltrain.setTheTime()
     NextCaltrain.formatHints()
-    // get the deplay message once
-    fetch('/delays')
-      .then((response) => response.json())
-      .then((data) => (delays = data))
-      .catch((error) => console.log(error))
+    ScheduleFeed.fetch()
+      .then(() => {
+        prefs = new LocalStorage(scheduleData.southStops)
+        service = new CaltrainService()
+        document.getElementById('date-string').innerHTML =
+          GoodTimes.dateString(scheduleData.scheduleDate)
+        NextCaltrain.setTheTime()
+      })
+      .catch((error) => {
+        console.log(error)
+        NextCaltrain.populateBlurb('NO SCHEDULE', 'message-departed blink')
+      })
   }
 
   static formatHints () {
@@ -290,6 +292,7 @@ export class NextCaltrain {
   }
 
   static loadSchedule () {
+    if (service === null) return // schedule feed not loaded yet
     goodTime = new GoodTimes()
     clearTimeout(countdown)
     NextCaltrain.populateStops(prefs.tripLabels())
@@ -423,8 +426,6 @@ export class NextCaltrain {
           wrapClass,
         ].join(' ')
         NextCaltrain.populateBlurb(message, textClass)
-        delaySpan.innerHTML =
-          trainId in delays ? `${delays[trainId]} minutes late` : ''
       } else {
         if (isFuture || goodTime.inThePast(minutes)) {
           tripCardElement.className = 'trip-card message-departed'
@@ -589,7 +590,7 @@ export class NextCaltrain {
   }
 
   static press (code) {
-    if (splash) return
+    if (splash || service === null) return
     if (code === ESC) {
       // Simulate EXIT.
       NextCaltrain.displayScreen('hero')

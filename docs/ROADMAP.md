@@ -37,8 +37,8 @@ scraping is brittle and could break without warning.
 
 **Update (2026-06):** `generate.py` now parses GTFS directly (via partridge)
 for all six CSVs. Weekday/weekend were verified byte-for-byte identical to
-the scraped versions they replaced, and `scrape.py` is obsolete for those
-two. Holiday turned out differently — see the 2026-06-18 update below. A
+the scraped versions they replaced, so `scrape.py` became obsolete for
+those two (removed 2026-10-20). Holiday turned out differently — see the 2026-06-18 update below. A
 validation layer (catching a bad feed before it reaches users) is still
 needed for all three schedules.
 
@@ -131,7 +131,7 @@ live — no separate config needed.
   validate sequence above (see docs/PUBLISHING.md), and `npm run deploy`;
   safe to run from cron just after 2am daily. (All the scripts above live
   flat at the repo root, matching
-  `generate.py`/`update_pwa.py`/`scrape.py` — not under a `tools/`
+  `generate.py`/`update_json.py`/`validate_schedule.py` — not under a `tools/`
   subdirectory.)
 
 ### Open questions

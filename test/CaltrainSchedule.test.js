@@ -35,8 +35,8 @@ describe('CaltrainSchedule', () => {
       it('returns 1 (Weekend)', () => { expect(result).toBe(1) })
     })
 
-    context('on a special date (the day after Thanksgiving 2025)', () => {
-      beforeEach(() => { date = '2025-11-28'; dotw = 5 })
+    context('on a special date (the day after Thanksgiving 2026)', () => {
+      beforeEach(() => { date = '2026-11-27'; dotw = 5 })
 
       it('returns 2 (Holiday) regardless of dotw', () => { expect(result).toBe(2) })
     })

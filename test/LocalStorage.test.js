@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { justBeforeEach } from 'penultimate'
 import { LocalStorage } from '../src/LocalStorage.js'
-import { caltrainServiceData } from '../src/@caltrainServiceData.js'
+import { scheduleData } from '../src/ScheduleFeed.js'
 
 const context = describe
 
@@ -17,7 +17,7 @@ describe('LocalStorage', () => {
 
   afterEach(() => { vi.restoreAllMocks() })
 
-  justBeforeEach(() => { ls = new LocalStorage(caltrainServiceData.southStops) })
+  justBeforeEach(() => { ls = new LocalStorage(scheduleData.southStops) })
 
   describe('#tripLabels()', () => {
     context('in the morning', () => {
