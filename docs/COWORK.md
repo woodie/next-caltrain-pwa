@@ -177,12 +177,36 @@ The PWA itself is live at the same App Engine app's root,
 https://next-caltrain-pwa.appspot.com/ — it's an actively published app, not
 just a hosting shell for the JSON.
 
-## CaltrainService.js — reference implementation
+## CaltrainService.js: no longer the reference
 
-`src/CaltrainService.js` is the canonical routing logic. When debugging
-schedule or routing issues in the iOS/Android apps, compare their
-`CaltrainService.swift` / `CaltrainService.kt` against the JS equivalents:
-`direction()`, `select()`, `times()`, `merge()`.
+`src/CaltrainService.js` was the canonical routing logic, but since
+2026-10-21 **next-caltrain-swift is the baseline** (Woodie agreed): the
+Swift and Kotlin apps grew past this one (`TripViewModel`, tomorrow's
+trips, saved stations), and next-caltrain-react ports from Swift. When
+debugging routing in any app, compare against `CaltrainService.swift`.
+
+## This feed, and next-caltrain-react's GTFS feed
+
+**This repo's `feed/schedule.json` is still production:** the iOS and
+Android apps read `https://next-caltrain-pwa.appspot.com/feed/schedule.json`.
+Woodie is meeting Caltrain staff before anything changes.
+
+Since 2026-10-21, next-caltrain-react also builds a feed, from GTFS alone
+and with no server: GitHub Actions port `generate.py` and `update_json.py`
+to TypeScript, open a pull request for each new timetable (with a proposed
+go-live date a person corrects), and switch it live on its date. It's at
+`https://next-caltrain-app.appspot.com/feed/schedule.json`. Compared with
+this feed: stations, weekday, weekend and `scheduleDate` are identical;
+the holiday tables and special dates differ exactly where GTFS disagrees
+with Caltrain's PDF (`docs/HOLIDAY.md`: Tamien stops on Local trains,
+Diridon times, College Park on #143 vs #141, MLK Day 2027-01-27 vs 01-18),
+plus this feed's hand-maintained special dates running past the GTFS
+timetable's end (2027-01-31). To compare, download both with
+`curl --compressed` (App Engine sometimes sends gzip unasked) and compare
+each key with `jq -S`.
+
+The Ruby-free PWA here also gained the "Create Calendar Event" planner
+(issue #39, PR #40).
 
 ## Running locally
 
@@ -207,6 +231,15 @@ open http://localhost:8000/
 For a schedule update (new GTFS feed or holiday PDF), follow
 `docs/PUBLISHING.md` start to finish — it covers generate, validate,
 publish, and rollback in order.
+
+**Deploys here are still by hand** (`npm run deploy`, from Woodie's Mac).
+Woodie's other App Engine sites (netpress, johnwoodell, liamwoodell,
+next-caltrain-react) deploy from GitHub Actions on every push to their
+default branch, through a shared Workload Identity pool; this repo isn't
+on it yet. Adding it is one deploy account plus a workflow (see the
+cross-project notes), but since this repo serves the production feed,
+deploying on every push to `master` is a decision for Woodie. Deploying
+also redeploys `feed/schedule.json`; check it afterwards.
 
 For non-schedule frontend changes, just rebuild and deploy:
 ```bash
