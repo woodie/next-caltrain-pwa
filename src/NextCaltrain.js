@@ -46,7 +46,7 @@ const DOWN = 40
 // const ZERO = 48;
 
 const screens = 'splash hero grid trip menu about commands prefs calendar'.split(' ')
-const titles = { about: 'About Next Caltrain', commands: 'Keypad commands', calendar: 'Add to Calendar' }
+const titles = { about: 'About Next Caltrain', commands: 'Keypad commands', calendar: 'Create Calendar Event' }
 
 let hints = [
   [
