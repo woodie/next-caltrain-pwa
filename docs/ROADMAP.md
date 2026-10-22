@@ -65,7 +65,7 @@ timetable before writing code that discards GTFS data as a "phantom" or
 weekend, and holiday schedules can legitimately differ.** On that note: the
 same check against the holiday/modified-schedule PDF (media/36013)
 suggests holiday's Tamien-on-Local-trips rows really are absent from that
-PDF, unlike weekday/weekend - see docs/HOLIDAY.md item 4 (one of four
+PDF, unlike weekday/weekend - see docs/DATA_QUALITY.md item 4 (one of four
 known GTFS-vs-PDF discrepancies on holiday, alongside a wrong calendar
 date, wrong Diridon times, and a misattributed College Park stop). Given
 that, holiday went back to being hand-maintained: `data/holiday_north.csv`/
@@ -157,7 +157,7 @@ even when Caltrain hadn't published anything new.
 - **Holiday schedule**: answered — Caltrain does encode holiday service in
   GTFS (`calendar_dates.txt`), but GTFS's holiday output doesn't match
   Caltrain's published Modified Schedule PDF closely enough to trust (four
-  discrepancies tracked in docs/HOLIDAY.md, including a holiday-specific
+  discrepancies tracked in docs/DATA_QUALITY.md, including a holiday-specific
   Tamien/Local one found 2026-06-18). So unlike weekday/weekend,
   `holiday_north.csv`/`holiday_south.csv` are hand-maintained from the PDF
   again; `generate.py` writes the GTFS-parsed version to

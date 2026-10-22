@@ -109,7 +109,7 @@ writes `holiday_*.csv` from GTFS again.
 GTFS is assumed to be the most recent data, but Caltrain doesn't consume
 it, so it can have bugs — e.g. MLK Day 2027 dated 2027-01-27, a Wednesday.
 `generate.py` warns where GTFS's holiday dates disagree with
-`holiday_service.js`. Known issues are in docs/HOLIDAY.md, for reporting to
+`holiday_service.js`. Known issues are in docs/DATA_QUALITY.md, for reporting to
 Caltrain.
 
 ### Target approach (see ROADMAP.md)
@@ -176,7 +176,7 @@ go-live date a person corrects), and switch it live on its date. It's at
 `https://next-caltrain-app.appspot.com/feed/schedule.json`. Compared with
 this feed: stations, weekday, weekend and `scheduleDate` are identical;
 since 2026-10-22 the holiday tables are too. Special dates differ: GTFS has
-MLK Day 2027-01-27 instead of 01-18 (`docs/HOLIDAY.md`), plus this feed's hand-maintained special dates running past the GTFS
+MLK Day 2027-01-27 instead of 01-18 (`docs/DATA_QUALITY.md`), plus this feed's hand-maintained special dates running past the GTFS
 timetable's end (2027-01-31). To compare, download both with
 `curl --compressed` (App Engine sometimes sends gzip unasked) and compare
 each key with `jq -S`.

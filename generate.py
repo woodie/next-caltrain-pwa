@@ -13,7 +13,7 @@ Caltrain's website/timetables into CSVs (see docs/ROADMAP.md). GTFS is
 assumed to be Caltrain's most recent data - the web is full of stale links
 to old timetables - but Caltrain doesn't consume its own GTFS, so it can
 have bugs. check_holiday_dates() warns where GTFS's holiday dates disagree
-with data/holiday_service.js; see docs/HOLIDAY.md for the history.
+with data/holiday_service.js; see docs/DATA_QUALITY.md for the history.
 
 CAUTION - lesson learned 2026-06-18, do not repeat this mistake:
 A previous version of this script (2026-06-17 to 2026-06-18) included a

@@ -4,7 +4,7 @@ A step-by-step runbook for generating, validating, and publishing the
 schedule data consumed by the PWA itself and by the iOS (`next-caltrain-swift`)
 and Android (`next-caltrain-kotlin`) apps. For the *why* behind any of these
 steps — repo architecture, holiday schedule history,
-known GTFS-vs-PDF discrepancies — see `docs/COWORK.md`, `docs/HOLIDAY.md`,
+known GTFS-vs-PDF discrepancies — see `docs/COWORK.md`, `docs/DATA_QUALITY.md`,
 and `docs/ROADMAP.md`. This doc is just the *how*.
 
 ## When to use this
@@ -14,7 +14,7 @@ and `docs/ROADMAP.md`. This doc is just the *how*.
 - Caltrain has published a new "Modified Schedule" PDF covering upcoming
   holidays (e.g. a new media/##### link on caltrain.com/schedules).
 - You want to re-check whether a previously-reported GTFS discrepancy
-  (see `docs/HOLIDAY.md`) has been fixed upstream.
+  (see `docs/DATA_QUALITY.md`) has been fixed upstream.
 
 ## Prerequisites
 
@@ -61,7 +61,7 @@ https://www.caltrain.com/schedules/holiday-service-schedules). `generate.py`
 prints a `WARNING` for each GTFS holiday date that file doesn't mark
 Modified, and each Modified date in GTFS's range that GTFS lacks. Decide
 which side is right, fix `holiday_service.js` if it's ours, and add it to
-`docs/HOLIDAY.md` if it's Caltrain's.
+`docs/DATA_QUALITY.md` if it's Caltrain's.
 
 ## 2. Validate
 
@@ -107,7 +107,7 @@ timetable by eye.
 
 **If holiday changed:** check a few trains against Caltrain's current
 Modified Schedule PDF, linked from the holiday page. Old PDFs are all over
-the web, so check its date first (see `docs/HOLIDAY.md`).
+the web, so check its date first (see `docs/DATA_QUALITY.md`).
 
 ## 3. Publish
 
@@ -220,7 +220,7 @@ docstring for why that went wrong once already. Instead:
 1. Confirm the mismatch against Caltrain's actual published PDF timetable
    (not assumption or memory).
    Make sure that PDF is the current one; stale timetables are everywhere.
-2. Document it for reporting to Caltrain (`docs/HOLIDAY.md` for holiday).
+2. Document it for reporting to Caltrain (`docs/DATA_QUALITY.md` for holiday).
 3. If you're confident GTFS is wrong, write the PDF's version to the
    canonical CSV by hand, and the GTFS output to an `_`-prefixed file so
    the difference stays visible.
