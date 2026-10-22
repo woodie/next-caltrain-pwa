@@ -22,19 +22,12 @@ before its holiday)
 | https://www.caltrain.com/media/36013/ | `CT_Modified_Schedule_2025-2026_FINAL.pdf` | 2025–2026 holidays; superseded |
 | https://www.caltrain.com/media/34616/ | `CT_Modified_Schedule_MLK_2025_FINAL_0.pdf` | MLK Day 2025 |
 
-`data/holiday_north.csv`/`data/holiday_south.csv` are hand-transcribed from
-media/36013 and remain the canonical files shipped to riders. `generate.py`
-also parses the same GTFS service directly, but writes that output to
-`data/_holiday_north.csv`/`data/_holiday_south.csv` - an underscore-prefixed
-pair of comparison/diagnostic files, not the canonical names - because the
-two disagreed on items 2–4 and we don't know which side Caltrain
-considers correct. This mirrors the policy used elsewhere in `generate.py`:
-GTFS is the default source of truth, but where it disagrees with Caltrain's
-own published PDF, the GTFS output gets the `_` prefix instead of
-overwriting the canonical file, so the discrepancy stays visible and the
-diff is ready to hand to Caltrain. Re-diff `_holiday_*.csv` against
-`holiday_*.csv` whenever the GTFS feed is refreshed, to check whether
-Caltrain has fixed the underlying data.
+Since 2026-10-22, `generate.py` writes `data/holiday_north.csv`/
+`data/holiday_south.csv` from GTFS, and prints a `WARNING` where GTFS's
+holiday dates disagree with `data/holiday_service.js` (item 1 triggers it).
+We assume GTFS is Caltrain's most recent data, since stale timetable links
+are everywhere, but Caltrain doesn't consume its GTFS, so it can have bugs.
+Before 2026-10-22 the CSVs were hand-transcribed from media/36013.
 
 ## 1. Wrong calendar date for Martin Luther King Jr. Day
 
@@ -65,9 +58,9 @@ Items 2–4 below compared GTFS with media/36013, which predates the
 Jan 31, 2026 service change. GTFS already had the new timetable; our PDF
 didn't. Nothing here to report to Caltrain.
 
-Our hand-transcribed `holiday_north.csv`/`holiday_south.csv` (and so the
-production feed) still have the old timetable: 44 differences from
-media/36463, all of them items 2–4:
+Our hand-transcribed CSVs had the old timetable: 44 differences from
+media/36463, all of them items 2–4. Fixed and deployed 2026-10-22 by
+switching to GTFS:
 
 | Was | Old PDF (our CSVs) | Current PDF = GTFS |
 |---|---|---|
@@ -81,5 +74,4 @@ media/36463, all of them items 2–4:
 The 2026-10-20 College Park correction (#36) still holds for the old PDF:
 3:01p is under 141 on media/36013.
 
-Next: switch the canonical holiday CSVs to the GTFS output, and check the
-Nov 27 and Dec 24 timetables when Caltrain releases them.
+Next: check the Nov 27 and Dec 24 timetables when Caltrain releases them.

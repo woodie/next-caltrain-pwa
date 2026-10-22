@@ -6,27 +6,14 @@ Generates schedule CSV files in data/ directly from Caltrain's published
 GTFS feed, using the partridge library:
   - weekday_north.csv, weekday_south.csv
   - weekend_north.csv, weekend_south.csv
-  - _holiday_north.csv, _holiday_south.csv
+  - holiday_north.csv, holiday_south.csv
 
 This replaces the manual process of hand-transcribing these schedules from
-Caltrain's website/timetables into CSVs (see docs/ROADMAP.md) - except where
-GTFS doesn't match Caltrain's own published PDF timetable closely enough to
-trust. Policy: GTFS is the source of truth by default, but if the generated
-schedule for a service doesn't match the published PDF, write it to an
-underscore-prefixed shadow file instead of the canonical name. That (1)
-keeps a visibly-wrong file from silently shipping and (2) gives us a
-GTFS-vs-PDF diff to use when reporting the discrepancy to Caltrain.
-
-holiday is currently the one case where this applies: weekday_*.csv and
-weekend_*.csv are written straight from GTFS (verified against
-media/36422 and media/36421 - see the CAUTION note below). holiday_*.csv
-remains hand-maintained from Caltrain's Modified Schedule PDF (media/36013)
-because GTFS disagrees with it on several specific trips - see
-docs/HOLIDAY.md. This script writes GTFS's holiday output to
-_holiday_north.csv/_holiday_south.csv (not the canonical holiday_*.csv
-names) purely as a comparison/diagnostic artifact: re-diff it against the
-hand-maintained holiday_*.csv whenever the GTFS feed changes, to see if
-Caltrain has fixed the underlying data yet.
+Caltrain's website/timetables into CSVs (see docs/ROADMAP.md). GTFS is
+assumed to be Caltrain's most recent data - the web is full of stale links
+to old timetables - but Caltrain doesn't consume its own GTFS, so it can
+have bugs. check_holiday_dates() warns where GTFS's holiday dates disagree
+with data/holiday_service.js; see docs/HOLIDAY.md for the history.
 
 CAUTION - lesson learned 2026-06-18, do not repeat this mistake:
 A previous version of this script (2026-06-17 to 2026-06-18) included a
@@ -55,15 +42,10 @@ timetable is the ground truth - check it first, for every schedule type
 this might affect (weekday/weekend/holiday can legitimately differ from
 each other), before writing code that discards GTFS rows as synthetic.
 
-For the curious: cross-checking the *holiday/modified-schedule* GTFS the
-same way against Caltrain's Modified Schedule PDF (media/36013) suggests
-the Tamien rows attached to ordinary Local trips there genuinely are absent
-from the published PDF (unlike weekday/weekend) - i.e. there's a real,
-holiday-specific GTFS data problem (one of several - see docs/HOLIDAY.md).
-We are NOT writing a code-level filter to patch GTFS's holiday output (same
-reasoning as above - we're not confident enough to guess at the fix); we're
-using the _holiday_*.csv shadow-file mechanism described up top instead,
-which is a data-flagging convention, not a heuristic that touches the data.
+The holiday schedule taught the same lesson from the other side: its
+Tamien rows on Local trips looked absent from the Modified Schedule PDF
+(media/36013), but that PDF was stale - the current one (media/36463)
+matches GTFS exactly. Check that the timetable is current, too.
 """
 
 import bootstrap_venv
@@ -74,6 +56,7 @@ import csv
 import functools
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -265,6 +248,25 @@ def resolve_service_ids(feed):
     return weekday_id, weekend_id, holiday_id
 
 
+def check_holiday_dates(feed, service_id, js_path='data/holiday_service.js'):
+    """Warn where GTFS's holiday dates disagree with holiday_service.js's Modified (2) dates."""
+    special = {}
+    for d, kind in re.findall(r"'(\d{4}-\d{2}-\d{2})':\s*(\d)", Path(js_path).read_text()):
+        special[d] = int(kind)
+    cd = feed.calendar_dates
+    gtfs = sorted(str(d)[:10] for d in cd[(cd['service_id'] == service_id) & (cd['exception_type'] == 1)]['date'])
+    if not gtfs:
+        return
+    modified = sorted(d for d, kind in special.items() if kind == 2 and gtfs[0] <= d <= gtfs[-1])
+    for d in gtfs:
+        if special.get(d) != 2:
+            day = datetime.strptime(d, '%Y-%m-%d').strftime('%A')
+            print('WARNING: GTFS holiday %s (%s) is not a Modified date in %s' % (d, day, js_path))
+    for d in modified:
+        if d not in gtfs:
+            print('WARNING: %s has Modified %s, missing from GTFS holiday dates' % (js_path, d))
+
+
 def build_columns(feed, service_id, stations, strip_m=False):
     """
     Compute, for one service and one direction's station list:
@@ -377,6 +379,9 @@ def main():
     stations = station_lists(feed)
     weekday_id, weekend_id, holiday_id = resolve_service_ids(feed)
 
+    if holiday_id is not None:
+        check_holiday_dates(feed, holiday_id)
+
     jobs = [
         ('weekday', weekday_id, False),
         ('weekend', weekend_id, False),
@@ -391,16 +396,7 @@ def main():
             rows = build_csv_rows(
                 feed, service_id, direction,
                 stations[direction], stations['labels'], strip_m=strip_m)
-            # holiday_*.csv is hand-maintained from Caltrain's published PDF
-            # (see docs/HOLIDAY.md for why GTFS isn't trusted outright here);
-            # write GTFS's version to the underscore-prefixed shadow name so
-            # it doesn't overwrite the canonical file, but is still around
-            # to diff against next time the feed changes. See the policy
-            # note in this module's docstring.
-            if schedule == 'holiday':
-                path = 'data/_holiday_%s.csv' % direction
-            else:
-                path = 'data/%s_%s.csv' % (schedule, direction)
+            path = 'data/%s_%s.csv' % (schedule, direction)
             write_csv(path, rows)
             print('wrote', path)
 

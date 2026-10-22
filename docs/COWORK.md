@@ -13,7 +13,7 @@ The published `feed/schedule.json` (served at `/feed/schedule.json`) is
 fetched at runtime by the PWA and by the iOS and Android clients alike —
 `src/ScheduleFeed.js` loads it on launch and keeps the last good copy in
 `localStorage` for offline use. It's generated from six CSVs in `data/` —
-four GTFS-generated, two (`holiday_*.csv`) hand-maintained — by the
+all GTFS-generated — by the
 generate sequence (see "Schedule data pipeline" below). Until 2026-10-20
 the PWA instead baked the same CSVs into its bundle via `update_pwa.py` →
 `src/@caltrainServiceData.js`; both were dropped so every client reads one
@@ -36,12 +36,10 @@ the *how*.
 - `feed/` — `schedule.json`, the live published schedule (see
   `feed/README.md`)
 - `data/` — schedule CSVs, flat (not yet organized into date folders — see
-  ROADMAP.md); `weekday_*.csv`/`weekend_*.csv` are GTFS-generated,
-  `holiday_*.csv` is hand-maintained from Caltrain's PDF (see "Schedule
-  data pipeline" below)
-- `generate.py` — generates `weekday_*.csv`/`weekend_*.csv` from Caltrain's
-  GTFS feed via partridge, plus a GTFS-parsed `_holiday_*.csv` comparison
-  pair (not shipped — see "Holiday schedule" below) and
+  ROADMAP.md); the six schedule CSVs are GTFS-generated, and
+  `holiday_service.js` (the holiday dates) is hand-maintained
+- `generate.py` — generates the weekday, weekend and holiday CSVs from
+  Caltrain's GTFS feed via partridge, plus
   `data/feed_version.json` (the feed's own build timestamp, used for
   `scheduleDate` — see "Published endpoint" below)
 - `update_json.py` — parses the CSVs and produces `feed/schedule.json`,
@@ -65,9 +63,7 @@ npm scripts (`npm run generate`, `convert`, `validate`, or `npm run
 schedule` for all three in order):
 
 **Generate:**
-1. `generate.py` — GTFS feed → `weekday_*.csv`/`weekend_*.csv` in `data/`,
-   plus a GTFS-parsed `_holiday_*.csv` comparison pair (`holiday_*.csv`
-   itself stays hand-maintained — see "Holiday schedule" below) and
+1. `generate.py` — GTFS feed → the six CSVs in `data/`, plus
    `data/feed_version.json` (the feed's build timestamp, used for
    `scheduleDate`)
 2. `update_json.py` — the six canonical CSVs → `feed/schedule.json`
@@ -88,9 +84,7 @@ attached a synthetic Tamien stop to some Local trips - that theory was
 wrong (see ROADMAP.md's 2026-06-18 update and the cautionary note in
 `generate.py`'s docstring), so it's been removed; weekday/weekend are back
 to using every stop_times row GTFS provides, unfiltered. Holiday took a
-different path - briefly GTFS-generated like the other four, then reverted
-back to hand-maintained once a holiday-specific GTFS-vs-PDF mismatch turned
-up (see "Holiday schedule" below).
+detour through hand-maintained CSVs (see "Holiday schedule" below).
 
 There's no `data/YYYY-MM-DD/` folder structure yet and no automated, date-gated
 deploy — that's planned (see ROADMAP.md) but not built.
@@ -103,36 +97,20 @@ canonical source for the CSVs it reads — see ROADMAP.md "Repo mission
 shift". Since 2026-10-20 it's the only output of the pipeline — the PWA
 reads the same `feed/schedule.json` the iOS/Android clients do.
 
-### Holiday schedule: hand-maintained again, with a GTFS shadow file
-Caltrain publishes a "Modified Schedule" timetable PDF covering a handful of
-upcoming holiday/modified-schedule days at a time (e.g.
-https://www.caltrain.com/media/36013/, covering Nov 28 2025, Dec 24 2025, and
-Jan 19 2026). `holiday_north.csv`/`holiday_south.csv` are hand-maintained
-against this PDF (by having AI transcribe it exactly — station list, train
-numbers, every departure time) and are the canonical files the pipeline
-ships. Briefly, on 2026-06-17, these were switched to being written
-directly by `generate.py` from GTFS, like weekday/weekend — but GTFS's
-holiday output disagrees with the published PDF on four specific points
-(see docs/HOLIDAY.md), so as of 2026-06-18 the canonical files are
-hand-maintained again.
+### Holiday schedule: from GTFS, dates checked
+Caltrain publishes a "Modified Schedule" timetable PDF a few weeks before
+each modified-schedule holiday, and the web is full of stale links to old
+ones. From 2026-06-18 to 2026-10-22, `holiday_*.csv` was hand-transcribed
+from media/36013, because GTFS disagreed with it on Diridon times, College
+Park and Tamien. Those turned out to be the Jan 31, 2026 service change:
+the current PDF (media/36463) matches GTFS exactly. So `generate.py`
+writes `holiday_*.csv` from GTFS again.
 
-`generate.py` still parses holiday from GTFS, but writes that output to
-`data/_holiday_north.csv`/`data/_holiday_south.csv` instead of the
-canonical names — an underscore-prefixed comparison/diagnostic pair, not
-something any downstream script reads. This is the general policy for any
-schedule type where GTFS doesn't match Caltrain's published PDF: write the
-GTFS output to an `_`-prefixed shadow file rather than overwriting the
-canonical one, so the discrepancy (1) stays visible and (2) has a ready
-diff to hand to Caltrain when reporting it. Weekday/weekend don't need this
-— they match their PDFs — so `generate.py` writes them straight to the
-canonical names.
-
-The four known discrepancies — wrong Diridon times on a few specific trips,
-a College Park stop attached to the wrong trip number, a wrong date in
-`calendar_dates.txt` for one holiday, and a Tamien stop attached to
-ordinary Local trips that the published PDF doesn't show (found
-2026-06-18) — are documented with specifics in docs/HOLIDAY.md, for
-reporting to Caltrain.
+GTFS is assumed to be the most recent data, but Caltrain doesn't consume
+it, so it can have bugs — e.g. MLK Day 2027 dated 2027-01-27, a Wednesday.
+`generate.py` warns where GTFS's holiday dates disagree with
+`holiday_service.js`. Known issues are in docs/HOLIDAY.md, for reporting to
+Caltrain.
 
 ### Target approach (see ROADMAP.md)
 The remaining gap is the date-folder/auto-deploy pipeline and a validation
@@ -197,10 +175,8 @@ to TypeScript, open a pull request for each new timetable (with a proposed
 go-live date a person corrects), and switch it live on its date. It's at
 `https://next-caltrain-app.appspot.com/feed/schedule.json`. Compared with
 this feed: stations, weekday, weekend and `scheduleDate` are identical;
-the holiday tables and special dates differ exactly where GTFS disagrees
-with Caltrain's PDF (`docs/HOLIDAY.md`: Tamien stops on Local trains,
-Diridon times, College Park on #143 vs #141, MLK Day 2027-01-27 vs 01-18),
-plus this feed's hand-maintained special dates running past the GTFS
+since 2026-10-22 the holiday tables are too. Special dates differ: GTFS has
+MLK Day 2027-01-27 instead of 01-18 (`docs/HOLIDAY.md`), plus this feed's hand-maintained special dates running past the GTFS
 timetable's end (2027-01-31). To compare, download both with
 `curl --compressed` (App Engine sometimes sends gzip unasked) and compare
 each key with `jq -S`.

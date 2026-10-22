@@ -162,7 +162,10 @@ even when Caltrain hadn't published anything new.
   `holiday_north.csv`/`holiday_south.csv` are hand-maintained from the PDF
   again; `generate.py` writes the GTFS-parsed version to
   `_holiday_north.csv`/`_holiday_south.csv` as a comparison file, pending a
-  report to Caltrain rather than a code fix.
+  report to Caltrain rather than a code fix. **Update 2026-10-22:** those
+  discrepancies came from a stale PDF; GTFS matches the current one
+  (media/36463), so `generate.py` writes `holiday_*.csv` from GTFS again
+  and warns on holiday dates that disagree with `holiday_service.js`.
 
 ### Deployment infrastructure
 

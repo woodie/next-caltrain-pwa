@@ -3,7 +3,7 @@
 A step-by-step runbook for generating, validating, and publishing the
 schedule data consumed by the PWA itself and by the iOS (`next-caltrain-swift`)
 and Android (`next-caltrain-kotlin`) apps. For the *why* behind any of these
-steps — repo architecture, the holiday hand-maintained/shadow-file split,
+steps — repo architecture, holiday schedule history,
 known GTFS-vs-PDF discrepancies — see `docs/COWORK.md`, `docs/HOLIDAY.md`,
 and `docs/ROADMAP.md`. This doc is just the *how*.
 
@@ -35,7 +35,7 @@ python3 update_json.py
 
 | Step | Command | Produces |
 |---|---|---|
-| 1 | `python3 generate.py` | `data/weekday_*.csv`, `data/weekend_*.csv`, a GTFS comparison pair `data/_holiday_*.csv` (not shipped — see below), and `data/feed_version.json` (the feed's own build timestamp, used for `scheduleDate` — see `docs/COWORK.md` "Published endpoint") |
+| 1 | `python3 generate.py` | `data/weekday_*.csv`, `data/weekend_*.csv`, `data/holiday_*.csv`, and `data/feed_version.json` (the feed's own build timestamp, used for `scheduleDate` — see `docs/COWORK.md` "Published endpoint") |
 | 2 | `python3 update_json.py` | `feed/schedule.json` |
 
 `generate.py` and `update_json.py` are plain python scripts, also available
@@ -54,21 +54,14 @@ picture of both files and both URLs.
 This does **not** commit, push, or deploy anything — that's manual, see
 Publish below. Validate next (see below) before publishing.
 
-**holiday is different from weekday/weekend.** `data/holiday_north.csv`/
-`data/holiday_south.csv` are hand-maintained, transcribed from Caltrain's
-published Modified Schedule PDF, and `generate.py` does not overwrite them.
-If you're updating the holiday schedule (new PDF published), do it by hand:
-
-1. Fetch the new PDF from caltrain.com/schedules (modified schedule link).
-2. Transcribe station list, train numbers, and every departure time into
-   `data/holiday_north.csv`/`data/holiday_south.csv`, matching the format
-   of the existing rows (`H:MM:00`, blank cells for stops not served).
-3. Re-run the Generate sequence above so the rest of the pipeline picks up
-   the new holiday CSVs.
-4. Diff the new `data/_holiday_*.csv` (GTFS's parse of the same service)
-   against your hand-transcribed files. Matches confirm you transcribed
-   correctly; mismatches are either a transcription slip (fix it) or a
-   genuine GTFS data problem worth adding to `docs/HOLIDAY.md`.
+**Holiday dates come from two places.** `generate.py` writes the holiday
+timetable from GTFS, but the days it runs come from the hand-maintained
+`data/holiday_service.js` (from
+https://www.caltrain.com/schedules/holiday-service-schedules). `generate.py`
+prints a `WARNING` for each GTFS holiday date that file doesn't mark
+Modified, and each Modified date in GTFS's range that GTFS lacks. Decide
+which side is right, fix `holiday_service.js` if it's ours, and add it to
+`docs/HOLIDAY.md` if it's Caltrain's.
 
 ## 2. Validate
 
@@ -112,10 +105,9 @@ from disk won't work — the PWA can't fetch the feed over `file://`.)
 Check a few known trips/stations you can verify against the source PDF or
 timetable by eye.
 
-**If you touched holiday:** confirm `data/_holiday_*.csv` vs.
-`data/holiday_*.csv` differences are understood (expected discrepancies
-already in `docs/HOLIDAY.md`, or new ones worth adding there) — see step 4
-under Generate above.
+**If holiday changed:** check a few trains against Caltrain's current
+Modified Schedule PDF, linked from the holiday page. Old PDFs are all over
+the web, so check its date first (see `docs/HOLIDAY.md`).
 
 ## 3. Publish
 
@@ -227,10 +219,8 @@ docstring for why that went wrong once already. Instead:
 
 1. Confirm the mismatch against Caltrain's actual published PDF timetable
    (not assumption or memory).
-2. If it's holiday, it likely belongs in `docs/HOLIDAY.md` as a known
-   discrepancy, with the GTFS value shipped to `data/_holiday_*.csv` (not
-   the canonical file) so it stays visible.
-3. If it's weekday/weekend and GTFS doesn't match the PDF, apply the same
-   policy: keep the GTFS file from overwriting a trustworthy canonical
-   source, prefix the GTFS output with `_`, and document the discrepancy
-   for reporting to Caltrain.
+   Make sure that PDF is the current one; stale timetables are everywhere.
+2. Document it for reporting to Caltrain (`docs/HOLIDAY.md` for holiday).
+3. If you're confident GTFS is wrong, write the PDF's version to the
+   canonical CSV by hand, and the GTFS output to an `_`-prefixed file so
+   the difference stays visible.
