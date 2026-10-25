@@ -1,21 +1,14 @@
-# Next Caltrain PWA
+# Next Caltrain for KaiOS
 
-Although this KaiOS app was a fun project it's now deprecated.
-Project now provides schedule data for the smartphone apps for
+A Caltrain schedule for KaiOS phones without a touchscreen. It runs as a
+progressive web app (PWA) in the KaiOS browser and as an installed app.
+The schedule comes from the feed that
+[next-caltrain-react](https://github.com/woodie/next-caltrain-react) builds
+from Caltrain's GTFS, the same feed the
 [iOS](https://github.com/woodie/next-caltrain-swift) and
-[Android](https://github.com/woodie/next-caltrain-kotlin),
+[Android](https://github.com/woodie/next-caltrain-kotlin) apps read.
 
-## Generate new schedule
-```bash
-npm run generate # download the GTFS feed and write the CSVs in data/
-npm run convert  # convert the CSVs into feed/schedule.json
-npm run validate # check feed/schedule.json and diff it against HEAD
-npm run schedule # all three of the above, in order
-npm run deploy   # publish to App Engine (commit first)
-```
-See [docs/PUBLISHING.md](docs/PUBLISHING.md) for the full runbook and rollback.
-
-## Run the legacy app
+## Run the app
 ```bash
 npm run build  # transpile src/ into webapp/script.js
 npm run server # serve the app at http://localhost:8000/
@@ -24,12 +17,9 @@ npm run lint   # lint with ESLint and fix what it can
 npm run check  # lint and test without fixing, before a push
 ```
 
-## Lagacy project status
+## Phones
 
-This Caltrain schedule is a progressive web app (PWA) designed for KaiOS phones without a touchscreen.
-This app runs in the KaiOS browser for phones without access to the store. The app can also be sideloaded.
-
-| Targeted Phones   | OS          | Browser    | Javascript | System chip    | Sideload |
+| Phone             | OS          | Browser    | JavaScript | System chip    | Sideload |
 | ----------------- | ----------- | ---------- | ---------- | -------------- | -------- |
 | Nokia 2780 Flip   | KaiOS 3.1   | Firefox 78 | ES 2018    | Snapdragon 215 |          |
 | Alcatel GO Flip 3 | KaiOS 2.5.2 | Firefox 48 | ES 2016    | Snapdragon 210 | No       |
@@ -38,10 +28,18 @@ This app runs in the KaiOS browser for phones without access to the store. The a
 | Nokia 8110 4G     | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
 | Alcatel GO Flip   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 | Yes      |
 
-This app is avialable from [the KaiStore](https://www.kaiostech.com/store/apps/?bundle_id=com.netpress.nextcaltrain).
+On KaiOS 2.5 it's available from
+[the KaiStore](https://www.kaiostech.com/store/apps/?bundle_id=com.netpress.nextcaltrain).
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
+![Phones running Next Caltrain](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
 
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
-![alt text](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
+![Screenshot](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.1.png) &nbsp;
+![Screenshot](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
+![Screenshot](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
+
+## Legacy schedule feed
+
+This repo used to build the schedule feed. iOS 1.3 and Android 1.2 still
+read it from `next-caltrain-pwa.appspot.com/feed/schedule.json`, so it stays
+up until riders have updated. [docs/PUBLISHING.md](docs/PUBLISHING.md) has
+the steps to rebuild and deploy it.
