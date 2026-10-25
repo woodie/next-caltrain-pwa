@@ -98,19 +98,18 @@ export class NextCaltrain {
       document.getElementById('about-filler').style['display'] = 'flex'
       document.getElementById('commands-filler').style['display'] = 'flex'
       document.getElementById('content').className = 'full-screen'
-      // Touch-screen phones only: KaiOS has no touch screen or clipboard
-      for (const button of document.getElementsByClassName('calendar-button')) {
-        button.style['display'] = 'block'
-      }
     } else {
       document.getElementById('content').className = 'part-screen'
       document.getElementById('hero-screen').style['display'] = 'none'
       document.getElementById('splash-screen').style['display'] = 'flex'
       splash = true
     }
-    // render a keyboard
+    // render a keyboard, and the calendar button that needs a touch screen
     if (window.outerHeight > 320 && !kaiWeb) {
       document.getElementById('keypad').style['display'] = 'flex'
+      for (const button of document.getElementsByClassName('calendar-button')) {
+        button.style['display'] = 'block'
+      }
     }
     // setup the app state
     listing = document.getElementById('listing')

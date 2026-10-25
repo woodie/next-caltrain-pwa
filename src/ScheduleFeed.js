@@ -1,6 +1,5 @@
-// The live schedule published by update_json.py (see feed/README.md), served
-// from the same origin in production and by `bundle exec ruby app.rb` locally.
-const FEED_URL = '/feed/schedule.json'
+// The live schedule, built from Caltrain's GTFS by next-caltrain-react.
+const FEED_URL = 'https://next-caltrain-app.appspot.com/feed/schedule.json'
 const FEED_CACHE_KEY = 'scheduleFeed'
 
 // Populated once by ScheduleFeed.load(), before anything else reads it.
