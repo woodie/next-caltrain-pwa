@@ -17,12 +17,18 @@ handlers:
   upload: webapp/.+\.webmanifest
   mime_type: application/manifest+json
   expiration: "0s"
+  # Open to any origin, so the KaiStore portal can read it
+  http_headers:
+    Access-Control-Allow-Origin: "*"
 
 - url: /(.+\.(webapp))
   static_files: webapp/manifest.webapp
   upload: webapp/manifest.webapp
   mime_type: application/x-web-app-manifest+json
   expiration: "0s"
+  # Open to any origin, so the KaiStore portal can read it
+  http_headers:
+    Access-Control-Allow-Origin: "*"
 
   # this URL has appropriate expiration for our data
 - url: /feed/schedule.json
