@@ -36,6 +36,11 @@
       "type": "image/png"
     }
   ],
+  "developer": {
+    "name": "John Woodell",
+    "email": "woodie@netpress.com",
+    "url": "http://www.netpress.com"
+  },
   "b2g_features": {
     "version": "3.0.0",
     "subtitle": "Train schedule and trip planner.",
