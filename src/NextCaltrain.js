@@ -115,6 +115,10 @@ export class NextCaltrain {
     listing = document.getElementById('listing')
     NextCaltrain.attachListeners()
     NextCaltrain.formatHints()
+    // The service worker lets KaiOS 3 install the app as a PWA; older browsers skip it
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch((error) => console.log(error))
+    }
     ScheduleFeed.fetch()
       .then(() => {
         prefs = new LocalStorage(scheduleData.southStops)

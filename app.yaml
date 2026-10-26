@@ -37,6 +37,13 @@ handlers:
   mime_type: application/json
   expiration: "10m"
 
+  # the service worker: never cached, so browsers always see the latest
+- url: /sw.js
+  static_files: webapp/sw.js
+  upload: webapp/sw.js
+  mime_type: text/javascript
+  expiration: "0s"
+
   # Catch-all: must stay LAST. Everything above this line is a deliberate
   # exception with its own comment explaining why; anything not explicitly
   # handled above falls through to here with App Engine's default caching.
