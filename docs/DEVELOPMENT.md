@@ -52,7 +52,18 @@ prints a "messages will be lost" error as it quits; the PNG still saves. If
 the circle says "Origin to Destination", the schedule hadn't loaded yet; run
 it again.
 
-### Not from the phone
+### From a KaiOS 2.5 phone, with WebIDE
 
-`adb` reaches the jailbroken 2780, but `screencap` hangs: KaiOS draws the
-screen itself, without the Android display service that `screencap` reads.
+The screenshots in `docs/` came from the phones themselves, status bar and
+all. WebIDE, in Firefox 59 and earlier, connects to a KaiOS 2.5 phone over
+`adb` and saves its whole screen from **Runtime** → **Screenshot**. This is
+the only way to get the phone's own status bar in a screenshot.
+
+### Not from the 2780
+
+WebIDE doesn't connect to KaiOS 3.1. Firefox 84's `about:debugging` would,
+but only with remote debugging turned on in the phone's settings, which its
+menus don't offer. `adb` reaches the jailbroken 2780, but `screencap` hangs:
+KaiOS draws the screen itself, without the Android display service that
+`screencap` reads. So screenshots of the 2780's screens come from Firefox 84
+on the Mac, without the phone's status bar.
