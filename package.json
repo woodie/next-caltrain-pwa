@@ -9,10 +9,6 @@
     "check": "eslint . && vitest run --reporter=dot",
     "build": "babel --plugins remove-import-export src --minified --out-file webapp/script.js",
     "server": "node serve.mjs",
-    "generate": "./generate.py",
-    "convert": "./update_json.py",
-    "validate": "./validate_schedule.py",
-    "schedule": "npm run -s generate && npm run -s convert && npm run -s validate",
     "deploy": "gcloud app deploy app.yaml --quiet --project=next-caltrain-pwa"
   },
   "repository": {

@@ -37,9 +37,8 @@ On KaiOS 2.5 it's available from
 ![Screenshot](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.2.png) &nbsp;
 ![Screenshot](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/0.3.png)
 
-## Legacy schedule feed
+## Schedule feed
 
-This repo used to build the schedule feed. iOS 1.3 and Android 1.2 still
-read it from `next-caltrain-pwa.appspot.com/feed/schedule.json`, so it stays
-up until riders have updated. [docs/PUBLISHING.md](docs/PUBLISHING.md) has
-the steps to rebuild and deploy it.
+This repo used to build the schedule feed; that pipeline is in git history.
+`feed/schedule.json` is a frozen copy kept only for the iOS 1.3 build in
+App Review (see [feed/README.md](feed/README.md)).

@@ -1,8 +1,7 @@
-CT-GTFS
 .DS_Store
 *.swp
-downloads
 node_modules
-data/*htm
-__pycache__
 .venv
+CT-GTFS
+downloads
+__pycache__

@@ -30,17 +30,10 @@ handlers:
   http_headers:
     Access-Control-Allow-Origin: "*"
 
-  # this URL has appropriate expiration for our data
+  # a frozen schedule for the iOS 1.3 build in App Review; remove once the next build is in (see feed/README.md)
 - url: /feed/schedule.json
   static_files: feed/schedule.json
   upload: feed/schedule.json
-  mime_type: application/json
-  expiration: "10m"
-
-  # this is a legacy URL that we intend to abandon
-- url: /schedule.json
-  static_files: webapp/schedule.json
-  upload: webapp/schedule.json
   mime_type: application/json
   expiration: "10m"
 

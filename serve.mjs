@@ -1,5 +1,5 @@
 // Local static server for `npm run server`, mirroring app.yaml's handlers:
-// webapp/ at the site root and the live feed at /feed/schedule.json.
+// webapp/ at the site root and the frozen feed at /feed/schedule.json.
 // Keep it in step with app.yaml.
 import { createReadStream, statSync } from 'node:fs'
 import { createServer } from 'node:http'
