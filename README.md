@@ -28,8 +28,7 @@ npm run check  # lint and test without fixing, before a push
 | Nokia 8110 4G     | KaiOS 2.5.1 | Firefox 48 | ES 2016    | Snapdragon 205 | Yes      |
 | Alcatel GO Flip   | KaiOS 1.0   | Firefox 37 | ES 2015    | Snapdragon 210 | Yes      |
 
-On KaiOS 2.5 it's available from
-[the KaiStore](https://www.kaiostech.com/store/apps/?bundle_id=com.netpress.nextcaltrain).
+On KaiOS 2.5 phones it's in the KaiStore: search for Next Caltrain.
 
 ![Phones running Next Caltrain](https://raw.githubusercontent.com/woodie/next-caltrain-pwa/master/docs/phones.jpg)
 
