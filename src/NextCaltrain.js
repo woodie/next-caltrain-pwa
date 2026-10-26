@@ -60,11 +60,6 @@ let hints = [
     'Use [4] and [6] keys to<br/>set destination station.',
   ],
   [
-    'Calendar trip',
-    [2],
-    'Press the [2] key to create<br/>a calendar event.',
-  ],
-  [
     'Flip direction',
     ['c'],
     'Press the [CALL] button to<br/>flip the selected stations',
@@ -135,7 +130,7 @@ export class NextCaltrain {
   }
 
   static formatHints () {
-    if (!kaiWeb) hints = hints.slice(0, 6)
+    if (!kaiWeb) hints = hints.slice(0, 5)
     for (let i = 0; i < hints.length; i++) {
       for (let n = 0; n < 2; n++) {
         hints[i][n * 2] = hints[i][n * 2]
@@ -676,7 +671,7 @@ export class NextCaltrain {
         // Catch 1,3 to stifle zoom in/out.
         e.preventDefault()
       } else if (e.key === '2') {
-        // Catch 2 to stifle screen lock; it opens the calendar.
+        // Catch 2 to stifle screen lock.
         e.preventDefault()
       } else if (code === OK) {
         // Catch OK to stifle fullscreen exit.
@@ -803,10 +798,6 @@ export class NextCaltrain {
         // 6
         offset = null
         prefs.bumpStations(false, true)
-      } else if (code === 50) {
-        // 2
-        NextCaltrain.openCalendar()
-        return
       } else if (code === 'call') {
         offset = null
         prefs.flipStations()
