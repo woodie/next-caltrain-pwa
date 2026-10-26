@@ -17,6 +17,9 @@ npm run lint   # lint with ESLint and fix what it can
 npm run check  # lint and test without fixing, before a push
 ```
 
+[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) covers trying the app in
+Firefox 84, the Mac keys for the phone's keys, and taking screenshots.
+
 ## Phones
 
 | Phone             | OS          | Browser    | JavaScript | System chip    | Sideload |
