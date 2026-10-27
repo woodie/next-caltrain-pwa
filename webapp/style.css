@@ -1,11 +1,42 @@
+/* The palette shared with the iOS, Android and React apps; light by day, dark at night. */
 :root {
-  --app-background-color: #000;
+  color-scheme: light;
+  --app-background: #FFF;
+  --app-text: #000;
+  --cal-arrive: #009E66;
+  --cal-depart: #CC9E12;
+  --cal-past: #00F;
+  --cal-swapped: #8C8C8C;
+  --input-background: #F2F2F2;
+  --input-line: #C6C6C8;
   --btn-default-color: #789AC7;
   --btn-selected-color: darkBlue;
-  --msg-arriving-color: #0F0;
-  --msg-departing-color: #FF0;
-  --msg-departed-color: #0AF;
-  --msg-selected-color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --app-background: #000;
+    --app-text: #FFF;
+    --cal-arrive: #0F0;
+    --cal-depart: #FF0;
+    --cal-past: #338CFF;
+    --cal-swapped: #666;
+    --input-background: #222;
+    --input-line: #666;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --app-background: #000;
+  --app-text: #FFF;
+  --cal-arrive: #0F0;
+  --cal-depart: #FF0;
+  --cal-past: #338CFF;
+  --cal-swapped: #666;
+  --input-background: #222;
+  --input-line: #666;
 }
 
 * {
@@ -15,8 +46,8 @@
 body {
   display: flex;
   justify-content: center;
-  background-color: var(--app-background-color);
-  color: white;
+  background-color: var(--app-background);
+  color: var(--app-text);
   margin: 0px;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
@@ -119,8 +150,8 @@ div:hover { cursor: default; }
   display: flex;
   justify-content: center;
   height: 35px;
-  background-color: black;
-  color: white;
+  background-color: var(--app-background);
+  color: var(--app-text);
   display: flex;
   line-height: 33px;
   white-space: nowrap;
@@ -147,8 +178,8 @@ div:hover { cursor: default; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: white;
-  background-color: black;
+  color: var(--app-text);
+  background-color: var(--app-background);
   width: 240px;
   height: 228px;
 }
@@ -252,7 +283,7 @@ div:hover { cursor: default; }
   border-width: 5px;
   border-style: solid;
   top: 8px;
-  background-color: black;
+  background-color: var(--app-background);
   border-radius: 190px;
   margin: 0 15px;
   position: absolute;
@@ -273,12 +304,12 @@ div:hover { cursor: default; }
 
 #fade {
   text-align: left;
-  background-image: linear-gradient(#CCC, black);
+  background-image: linear-gradient(#CCC, var(--app-background));
   height: 100px;
 }
 
 .fillbar {
-  background-image: linear-gradient(#888, black);
+  background-image: linear-gradient(#888, var(--app-background));
 }
 
 #popup-menu {
@@ -334,7 +365,7 @@ div:hover { cursor: default; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: black;
+  background-color: var(--app-background);
   width: 240px;
   overflow: hidden;
 }
@@ -346,7 +377,7 @@ div:hover { cursor: default; }
 #trip-screen {
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: var(--app-background);
   width: 240px;
 }
 
@@ -362,8 +393,8 @@ div:hover { cursor: default; }
   justify-content: space-between;
   font-family: 'Noto Sans', sans-serif;
   letter-spacing: 0.3px;
-  background-color: black;
-  color: white;
+  background-color: var(--app-background);
+  color: var(--app-text);
   font-size: 10.5pt;
   padding: 0 5px;
   line-height: 20pt;
@@ -378,14 +409,14 @@ div:hover { cursor: default; }
 #ampm { font-size: 9pt; }
 
 #message { margin-bottom: 2px; }
-.message-arriving { color: var(--msg-arriving-color); }
-.message-departing { color: var(--msg-departing-color); }
-.message-departed { color: var(--msg-departed-color); }
-div > .selection-none { border-color: black; }
-div > .selection-departing { border-color: var(--msg-departing-color); }
-div > .selection-arriving { border-color: var(--msg-arriving-color); }
-div > .selection-swapped { border-color: var(--msg-departed-color); }
-div > .selection-departed { border-color: var(--msg-selected-color);  }
+.message-arriving { color: var(--cal-arrive); }
+.message-departing { color: var(--cal-depart); }
+.message-departed { color: var(--cal-past); }
+div > .selection-none { border-color: var(--app-background); }
+div > .selection-departing { border-color: var(--cal-depart); }
+div > .selection-arriving { border-color: var(--cal-arrive); }
+div > .selection-swapped { border-color: var(--cal-past); }
+div > .selection-departed { border-color: var(--cal-swapped);  }
 
 .selection {
   border-width: 2px;
@@ -452,7 +483,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 
 #listing {
   scrollbar-width: thin;
-  scrollbar-color: #666 black;
+  scrollbar-color: var(--cal-swapped) var(--app-background);
   white-space: nowrap;
   font-size: 11pt;
   padding-left: 15px;
@@ -462,8 +493,8 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 }
 
 #listing::-webkit-scrollbar { width: 6px; }
-#listing::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px black; }
-#listing::-webkit-scrollbar-thumb { -webkit-box-shadow: inset 0 0 6px #666; }
+#listing::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px var(--app-background); }
+#listing::-webkit-scrollbar-thumb { -webkit-box-shadow: inset 0 0 6px var(--cal-swapped); }
 
 #grid-header {
   position: relative;
@@ -483,7 +514,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #calendar-screen {
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: var(--app-background);
   width: 240px;
   height: 263px;
 }
@@ -506,16 +537,15 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 #calendar-content select,
 #calendar-content input {
   font: inherit;
-  color: white;
-  background-color: #222;
-  border: thin solid #666;
+  color: var(--app-text);
+  background-color: var(--input-background);
+  border: thin solid var(--input-line);
   border-radius: 6px;
   padding: 4px 6px;
-  color-scheme: dark;
-}
+  }
 
 #calendar-schedule {
-  color: var(--msg-departed-color);
+  color: var(--cal-past);
 }
 
 #calendar-trains {
@@ -535,7 +565,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 }
 
 #calendar-trains > div.selection-arriving {
-  border-color: var(--msg-arriving-color);
+  border-color: var(--cal-arrive);
 }
 
 #content.full-screen > #statusbar { display: flex; }
@@ -585,7 +615,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 }
 
 .target {
-  color: white;
+  color: var(--app-text);
 }
 
 #mini-keypad {
@@ -615,8 +645,8 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
   justify-content: space-between;
   font-family: 'Noto Sans', sans-serif;
   line-height: 30px;
-  background-color: black;
-  color: white;
+  background-color: var(--app-background);
+  color: var(--app-text);
   width: 240px;
   height: 30px;
   font-size: 11pt;
@@ -643,7 +673,7 @@ div > .selection-departed { border-color: var(--msg-selected-color);  }
 }
 
 #keypad {
-  background-color: var(--app-background-color);
+  background-color: var(--app-background);
   padding-top: 5px;
   display: flex;
   flex-direction: row;

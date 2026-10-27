@@ -6,6 +6,7 @@ import { CaltrainService } from './CaltrainService.js'
 import { CaltrainTrip } from './CaltrainTrip.js'
 import { GoodTimes } from './GoodTimes.js'
 import { LocalStorage } from './LocalStorage.js'
+import { Sun } from './Sun.js'
 
 // Both need the schedule feed, so they're set up once it loads.
 let prefs = null
@@ -111,6 +112,9 @@ export class NextCaltrain {
         button.style['display'] = 'block'
       }
     }
+    NextCaltrain.applyTheme()
+    setInterval(NextCaltrain.applyTheme, 60 * 1000)
+    window.addEventListener('hashchange', NextCaltrain.applyTheme)
     // setup the app state
     listing = document.getElementById('listing')
     NextCaltrain.attachListeners()
@@ -131,6 +135,19 @@ export class NextCaltrain {
         console.log(error)
         NextCaltrain.populateBlurb('NO SCHEDULE', 'message-departed blink')
       })
+  }
+
+  // KaiOS has no light/dark setting, so it follows the sun; elsewhere the phone's setting decides.
+  static applyTheme () {
+    const forced = document.location.hash.slice(1)
+    let theme = null
+    if (forced === 'light' || forced === 'dark') {
+      theme = forced
+    } else if (navigator.userAgent.toLowerCase().indexOf('kaios') > -1) {
+      theme = Sun.isDark() ? 'dark' : 'light'
+    }
+    if (theme) document.documentElement.setAttribute('data-theme', theme)
+    else document.documentElement.removeAttribute('data-theme')
   }
 
   static formatHints () {
