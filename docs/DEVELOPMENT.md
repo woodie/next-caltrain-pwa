@@ -25,6 +25,29 @@ Opening Firefox 84 from Finder starts a blank profile, not the KaiOS one.
 | Arrows                | Arrow keys |
 | Back                  | Esc        |
 
+## Light and dark
+
+The app uses the same palette as the iOS, Android and React apps: the
+`--app-*` and `--cal-*` tokens at the top of `webapp/style.css`. Light is the
+default, and dark replaces the tokens. Menus, help, About and settings stay
+light in both.
+
+| Opened in | Mode |
+| --- | --- |
+| KaiOS: the installed app or the KaiOS browser | Light from sunrise to sunset, dark otherwise |
+| Any other browser | The device's own setting (`prefers-color-scheme`) |
+| A browser without that setting | Light |
+| Any browser, with `#light` or `#dark` in the URL | That mode |
+
+KaiOS has no light/dark setting, so `NextCaltrain.applyTheme()` sets
+`data-theme` on the page from `Sun.isDark()` and rechecks every minute.
+`src/Sun.js` computes sunrise and sunset with NOAA's equations for one point
+near Palo Alto, with no data to download. Along the line it's within about
+4 minutes, worst at Gilroy, which nobody notices at dusk.
+
+To check a mode, add `#light` or `#dark`, for example
+`http://localhost:8000/?kaiWeb2#dark`. The page switches without a reload.
+
 ## Screenshots
 
 ### Any screen
